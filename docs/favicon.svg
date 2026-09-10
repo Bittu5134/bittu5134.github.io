@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" shape-rendering="crispEdges">
+  <!-- Isometric Minecraft Grass Block -->
+  <!-- Top Grass Face -->
+  <polygon points="32,4 60,20 32,36 4,20" fill="#67a134" />
+  <!-- Top Grass Pixel Details -->
+  <polygon points="32,8 46,16 32,24 18,16" fill="#75b63b" />
+  <polygon points="25,12 32,16 25,20 18,16" fill="#84cc42" />
+  <polygon points="39,12 46,16 39,20 32,16" fill="#588a2c" />
+  <polygon points="32,20 39,24 32,28 25,24" fill="#588a2c" />
+  <polygon points="46,16 53,20 46,24 39,20" fill="#75b63b" />
+  <polygon points="18,16 25,20 18,24 11,20" fill="#588a2c" />
+
+  <!-- Left Dirt Face -->
+  <polygon points="4,20 32,36 32,60 4,44" fill="#866043" />
+  <!-- Left Dirt Pixel Texture -->
+  <polygon points="8,26 14,29 14,35 8,32" fill="#704e35" />
+  <polygon points="18,34 24,37 24,43 18,40" fill="#9c724c" />
+  <polygon points="10,38 16,41 16,47 10,44" fill="#573d26" />
+  <polygon points="22,46 28,49 28,55 22,52" fill="#704e35" />
+  <polygon points="6,34 10,36 10,40 6,38" fill="#9c724c" />
+  <polygon points="26,38 30,40 30,44 26,42" fill="#573d26" />
+  <!-- Left Grass Hanging Fringe -->
+  <polygon points="4,20 32,36 32,42 26,38 26,44 20,40 20,43 14,39 14,45 8,41 8,38 4,36" fill="#537f2a" />
+  <polygon points="6,23 12,26 12,30 6,27" fill="#67a134" />
+  <polygon points="16,29 22,32 22,36 16,33" fill="#67a134" />
+  <polygon points="24,33 30,36 30,40 24,37" fill="#436622" />
+
+  <!-- Right Dirt Face -->
+  <polygon points="32,36 60,20 60,44 32,60" fill="#6b4c34" />
+  <!-- Right Dirt Pixel Texture -->
+  <polygon points="38,39 44,36 44,42 38,45" fill="#573d26" />
+  <polygon points="48,33 54,30 54,36 48,39" fill="#7a573b" />
+  <polygon points="36,49 42,46 42,52 36,55" fill="#4a3420" />
+  <polygon points="48,43 54,40 54,46 48,49" fill="#573d26" />
+  <polygon points="42,43 46,41 46,45 42,47" fill="#7a573b" />
+  <!-- Right Grass Hanging Fringe -->
+  <polygon points="32,36 60,20 60,36 56,38 56,41 50,45 50,39 44,43 44,40 38,44 38,38 32,42" fill="#436622" />
+  <polygon points="34,35 40,32 40,36 34,39" fill="#537f2a" />
+  <polygon points="44,29 50,26 50,30 44,33" fill="#537f2a" />
+  <polygon points="52,25 58,22 58,26 52,29" fill="#35511b" />
+</svg>
