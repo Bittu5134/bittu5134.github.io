@@ -2,7 +2,7 @@
   {
     "title": "ORV-Reader",
     "category": "WEB / CLOUD",
-    "badge": "10.5M+ REQUESTS / MO",
+    "badge": "★ 253 STARS · 10.5M+ REQS",
     "description": "High-scale distributed web publishing platform serving 10.5M+ monthly HTTP requests (398+ GB bandwidth, 764k+ unique visits). Automated Python Markdown SSG dual-compilation into static web and compressed EPUBs with Cloudflare WAF bot defenses.",
     "tags": ["Python", "SSG", "Cloudflare WAF", "EPUB", "FastAPI"],
     "liveUrl": "https://orv.pages.dev",
@@ -22,6 +22,17 @@
     "statsText": "500 Concurrent Peers · Bare-metal"
   },
   {
+    "title": "LOTM-Reader",
+    "category": "WEB / READING",
+    "badge": "★ 117 STARS · SVELTE",
+    "description": "Community-driven webnovel reader engineered for ultra-fast reading ergonomics. Built with Svelte, Giscus comment synchronization, Pandoc EPUB compilation pipelines, and offline service worker caching.",
+    "tags": ["Svelte", "EPUB", "Pandoc", "Giscus", "Web"],
+    "liveUrl": "https://github.com/Bittu5134/LOTM-Reader",
+    "githubUrl": "https://github.com/Bittu5134/LOTM-Reader",
+    "headerBgClass": "bg-[#c4b5fd]",
+    "statsText": "117 GitHub Stars · Open Source"
+  },
+  {
     "title": "NetShip",
     "category": "SYSTEMS / EDR",
     "badge": "KERNEL TELEMETRY",
@@ -39,7 +50,7 @@
     "tags": ["Python", "PyMuPDF", "FastAPI", "LaTeX", "Spatial Geometry"],
     "liveUrl": "https://iitk-resume.bittu.dev",
     "githubUrl": "https://github.com/Bittu5134/IITK-Resume-Model",
-    "headerBgClass": "bg-[#c4b5fd]",
+    "headerBgClass": "bg-[#a7f3d0]",
     "statsText": "99.4% Parsing Precision · CDW IITK"
   },
   {
@@ -62,5 +73,25 @@
     "githubUrl": "https://github.com/Bittu5134/Sharelock",
     "headerBgClass": "bg-[#f472b6]",
     "statsText": "1st Place Winner · MCP Server"
+  },
+  {
+    "title": "SkyBlock-Sniper",
+    "category": "MINECRAFT / TOOLS",
+    "badge": "FAST BIN SNIPER",
+    "description": "High-frequency Hypixel Skyblock BIN auction sniping automation script in Python. Features real-time Hypixel API polling, memory-efficient profit margin calculation, and millisecond item snipe triggers.",
+    "tags": ["Python", "Hypixel API", "Minecraft", "Automation", "Bot"],
+    "githubUrl": "https://github.com/Bittu5134/SkyBlock-Sniper",
+    "headerBgClass": "bg-[#86efac]",
+    "statsText": "Sub-second Execution · Hypixel API"
+  },
+  {
+    "title": "GH-Follow-Tracker",
+    "category": "DEVTOOLS / CLOUD",
+    "badge": "WORKERS & ACTIONS",
+    "description": "Automated GitHub follower tracking engine with customizable real-time SVG status badges, Discord/Slack webhook notifications, and a REST API deployed on Cloudflare Workers edge network.",
+    "tags": ["JavaScript", "Cloudflare Workers", "GitHub Actions", "SVG", "API"],
+    "githubUrl": "https://github.com/Bittu5134/GH-Follow-Tracker",
+    "headerBgClass": "bg-[#fde047]",
+    "statsText": "Edge API · Dynamic SVG Cards"
   }
 ]

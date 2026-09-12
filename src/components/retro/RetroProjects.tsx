@@ -4,12 +4,19 @@ import { projects, Project } from "../../data/projects";
 export default function RetroProjects() {
   const [filter, setFilter] = useState("ALL");
 
+  const categories = ["ALL", "SYSTEMS", "AI", "WEB", "MINECRAFT", "TOOLS"];
+
   const filteredProjects: Project[] =
     filter === "ALL"
       ? projects
-      : projects.filter((p) => p.category.includes(filter));
+      : projects.filter((p) => {
+          if (filter === "TOOLS") {
+            return p.category.includes("TOOLS") || p.category.includes("DEVTOOLS");
+          }
+          return p.category.includes(filter);
+        });
 
-  // Show only 4 projects at once
+  // Show only 4 projects at once for the selected filter
   const displayedProjects = filteredProjects.slice(0, 4);
 
   return (
@@ -25,7 +32,7 @@ export default function RetroProjects() {
 
           {/* Filter Pills */}
           <div className="flex flex-wrap gap-1.5 sm:gap-2 font-mono text-xs font-bold">
-            {["ALL", "SYSTEMS", "AI", "WEB"].map((cat) => (
+            {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setFilter(cat)}
