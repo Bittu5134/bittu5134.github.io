@@ -10,8 +10,8 @@ export default function RetroHeader() {
 
   const navItems = [
     { label: "~/projects", icon: "📂", to: "projects" },
-    { label: "~/lab", icon: "🧪", to: "lab" },
-    { label: "~/zine", icon: "📰", to: "zine" },
+    { label: "~/skills", icon: "⚡", to: "skills" },
+    { label: "~/blog", icon: "📰", to: "blog" },
     { label: "~/about", icon: "👤", to: "about" },
     { label: "~/contact", icon: "✉️", to: "contact" },
   ];

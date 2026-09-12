@@ -33,7 +33,7 @@ export default function BlogPost() {
             to="/blog"
             className="px-3.5 py-1.5 bg-[#fffdf9] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs hover:bg-[#fde047] hover:shadow-brutal active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5"
           >
-            <span>← ALL ZINE ARTICLES</span>
+            <span>← ALL ARTICLES</span>
           </Link>
 
           <button

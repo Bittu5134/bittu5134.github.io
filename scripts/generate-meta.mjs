@@ -198,7 +198,7 @@ function generateLlmsTxt() {
     )
     .join("\n");
 
-  const llmsContent = `# Bittu's Portfolio & Tech Zine
+  const llmsContent = `# Bittu's Portfolio & Technical Blog
 > A portfolio and technical blog for a low-level systems builder, cybersecurity undergraduate at IIT Kanpur, and WebRTC developer.
 
 ## Projects
@@ -216,7 +216,7 @@ ${articlesList}
 
 ## Optional & Quick Links
 - [Website Home](${SITE_URL}): Interactive Neo-Brutalist portfolio home.
-- [Technical Blog Zine](${SITE_URL}/blog): Full web-rendered article archive.
+- [Technical Blog](${SITE_URL}/blog): Full web-rendered article archive.
 - [RSS 2.0 Feed](${SITE_URL}/rss.xml): Standard RSS syndication feed.
 - [GitHub Profile](https://github.com/Bittu5134): Open-source repositories and experimental code.
 - [Planet Minecraft](https://www.planetminecraft.com/member/bittu5134/): Minecraft technical datapacks and spotlighted game modifications.
@@ -244,7 +244,7 @@ ${post.content}`;
     })
     .join("\n\n================================================================================\n\n");
 
-  const fullContent = `# Bittu's Portfolio & Tech Zine — Full Context Payload
+  const fullContent = `# Bittu's Portfolio & Technical Blog — Full Context Payload
 > Complete plain-text and Markdown knowledge base for Divyanshu Anand (Bittu5134): low-level systems builder, cybersecurity undergraduate at IIT Kanpur, and WebRTC developer.
 
 Canonical URL: ${SITE_URL}

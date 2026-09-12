@@ -31,7 +31,7 @@ export default function BlogList() {
         {/* Page Title Box */}
         <div className="p-6 sm:p-8 bg-[#fffdf9] border-[3px] border-black shadow-brutal-lg mb-10">
           <div className="inline-block px-3 py-1 bg-[#fde047] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs mb-3">
-            TECHNICAL ZINE ARCHIVE
+            TECHNICAL BLOG ARCHIVE
           </div>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-mono font-black text-black mb-3 tracking-tight">
             ~/blog

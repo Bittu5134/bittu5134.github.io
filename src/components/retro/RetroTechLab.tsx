@@ -17,12 +17,12 @@ export default function RetroTechLab() {
   ];
 
   return (
-    <section id="lab" className="py-6 sm:py-8 px-3 sm:px-6">
+    <section id="skills" className="py-6 sm:py-8 px-3 sm:px-6">
       <div className="max-w-5xl mx-auto">
         {/* Section Header */}
         <div className="mb-6 sm:mb-8">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-mono font-black text-black tracking-tight">
-            ~/lab
+            ~/skills
           </h2>
         </div>
 

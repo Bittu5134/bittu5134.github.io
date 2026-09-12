@@ -2,13 +2,13 @@ import { blogPosts } from "../../data/blogs";
 
 export default function RetroZine() {
   return (
-    <section id="zine" className="py-6 sm:py-8 px-3 sm:px-6">
+    <section id="blog" className="py-6 sm:py-8 px-3 sm:px-6">
       <div className="max-w-5xl mx-auto">
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:gap-4 mb-6 sm:mb-8">
           <div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-mono font-black text-black tracking-tight">
-              ~/zine
+              ~/blog
             </h2>
           </div>
 

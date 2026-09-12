@@ -112,14 +112,14 @@ export default function RetroHero() {
               </ScrollLink>
 
               <ScrollLink
-                to="zine"
-                href="#zine"
+                to="blog"
+                href="#blog"
                 smooth={true}
                 offset={-30}
                 duration={400}
                 className="cursor-pointer px-4 sm:px-5 py-2.5 sm:py-3 bg-[#86efac] text-black font-mono font-bold text-xs sm:text-sm border-[3px] border-black shadow-brutal hover:shadow-brutal-lg hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5 sm:gap-2"
               >
-                <span>TECH ZINE</span>
+                <span>BLOG</span>
                 <span>→</span>
               </ScrollLink>
 
