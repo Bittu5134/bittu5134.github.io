@@ -139,7 +139,7 @@ export default function RetroProjects() {
                     {p.category}
                   </span>
                 </div>
-                <span className="font-mono text-[9px] sm:text-[10px] bg-black text-white px-2 py-0.5 font-bold shrink-0">
+                <span className="font-mono text-xs bg-black text-white px-2 py-0.5 font-bold shrink-0">
                   {p.badge}
                 </span>
               </div>
@@ -150,7 +150,7 @@ export default function RetroProjects() {
                   <h3 className="text-xl sm:text-2xl font-black text-black mb-1">
                     {p.title}
                   </h3>
-                  <div className="font-mono text-[11px] font-bold text-[#d97706] mb-3">
+                  <div className="font-mono text-xs font-bold text-[#d97706] mb-3">
                     {p.statsText}
                   </div>
                   <p className="font-mono text-xs sm:text-sm text-black/80 leading-relaxed mb-4">
@@ -164,7 +164,7 @@ export default function RetroProjects() {
                     {p.tags.map((tag, tIndex) => (
                       <span
                         key={tIndex}
-                        className="px-2 py-0.5 bg-[#f6eedb] border border-black font-mono text-[11px] font-bold text-black"
+                        className="px-2 py-0.5 bg-[#f6eedb] border border-black font-mono text-xs font-bold text-black"
                       >
                         #{tag}
                       </span>
@@ -203,7 +203,7 @@ export default function RetroProjects() {
         </div>
 
         {/* GitHub link note */}
-        <div className="mt-6 sm:mt-8 p-3.5 sm:p-4 bg-[#fffdf9] border-2 border-black shadow-brutal-xs flex items-center justify-between flex-wrap gap-3 sm:gap-4 font-mono text-xs font-bold">
+        <div className="mt-6 sm:mt-8 p-3.5 sm:p-4 bg-[#fffdf9] border-2 border-black shadow-brutal-xs flex items-center justify-between flex-wrap gap-3 sm:gap-4 font-mono text-xs sm:text-sm font-bold">
           <span className="text-black/70">
             Looking for more tools, prototypes, and scripts?
           </span>

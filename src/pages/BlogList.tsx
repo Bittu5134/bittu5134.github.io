@@ -13,7 +13,7 @@ export default function BlogList() {
         <div className="flex items-center justify-between gap-4 mb-8">
           <Link
             to="/"
-            className="px-3.5 py-1.5 bg-[#fffdf9] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs hover:bg-[#fde047] hover:shadow-brutal active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5"
+            className="px-3.5 py-1.5 bg-[#fffdf9] border-2 border-black font-mono text-xs sm:text-sm font-bold shadow-brutal-xs hover:bg-[#fde047] hover:shadow-brutal active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5"
           >
             <span>← RETURN HOME</span>
           </Link>
@@ -22,7 +22,7 @@ export default function BlogList() {
             href="/rss.xml"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-3.5 py-1.5 bg-[#fb923c] text-black border-2 border-black font-mono text-xs font-bold shadow-brutal-xs hover:shadow-brutal active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5"
+            className="px-3.5 py-1.5 bg-[#fb923c] text-black border-2 border-black font-mono text-xs sm:text-sm font-bold shadow-brutal-xs hover:shadow-brutal active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5"
           >
             <span>📡 RSS 2.0 FEED</span>
           </a>
@@ -36,7 +36,7 @@ export default function BlogList() {
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-mono font-black text-black mb-3 tracking-tight">
             ~/blog
           </h1>
-          <p className="font-mono text-xs sm:text-sm text-black/80 max-w-2xl leading-relaxed">
+          <p className="font-mono text-sm sm:text-base text-black/80 max-w-2xl leading-relaxed">
             Essays on low-level networking in Go, reverse-engineering the Minecraft Java wire format, 2D Cartesian spatial parsing in Python, and architecture blueprints.
           </p>
         </div>
@@ -50,10 +50,10 @@ export default function BlogList() {
             >
               <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 mb-3 pb-3 border-b-2 border-black/10">
                 <div className="flex items-center gap-2">
-                  <span className="px-2 py-0.5 bg-[#86efac] border border-black font-mono text-[11px] font-bold text-black">
+                  <span className="px-2.5 py-1 bg-[#86efac] border border-black font-mono text-xs font-bold text-black">
                     STAMP: {post.date.toUpperCase()}
                   </span>
-                  <span className="font-mono text-xs text-black/60 font-bold">
+                  <span className="font-mono text-xs sm:text-sm text-black/60 font-bold">
                     // {post.readTime.toUpperCase()}
                   </span>
                 </div>
@@ -62,7 +62,7 @@ export default function BlogList() {
                   {post.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-2 py-0.5 bg-[#f6eedb] border border-black font-mono text-[11px] font-bold text-black"
+                      className="px-2 py-0.5 bg-[#f6eedb] border border-black font-mono text-xs font-bold text-black"
                     >
                       #{tag}
                     </span>
@@ -83,13 +83,13 @@ export default function BlogList() {
               <div className="flex items-center justify-between pt-2">
                 <Link
                   to={`/blog/${post.slug}`}
-                  className="px-4 py-2 bg-[#fde047] text-black font-mono text-xs font-bold border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5"
+                  className="px-4 py-2 bg-[#fde047] text-black font-mono text-xs sm:text-sm font-bold border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5"
                 >
                   <span>READ DISPATCH</span>
                   <span>↗</span>
                 </Link>
 
-                <span className="font-mono text-[11px] text-black/40 font-bold">
+                <span className="font-mono text-xs text-black/40 font-bold">
                   /blog/{post.slug}
                 </span>
               </div>

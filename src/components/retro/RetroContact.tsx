@@ -45,24 +45,24 @@ export default function RetroContact() {
               {/* Email Button Box */}
               <div className="p-3 sm:p-4 bg-[#fef08a] border-2 border-black shadow-brutal-xs flex flex-wrap items-center justify-between gap-2.5">
                 <div>
-                  <div className="font-mono text-[10px] uppercase font-bold text-black/60">
+                  <div className="font-mono text-xs uppercase font-bold text-black/60">
                     EMAIL:
                   </div>
-                  <div className="font-mono text-xs sm:text-base font-bold text-black break-all">
+                  <div className="font-mono text-sm sm:text-base font-bold text-black break-all">
                     hello@bittu.dev
                   </div>
                 </div>
                 <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
                   <a
                     href="mailto:hello@bittu.dev"
-                    className="px-2.5 sm:px-3 py-1.5 bg-[#fffdf9] text-black font-mono text-xs font-bold border-2 border-black hover:bg-[#86efac] active:translate-x-0.5 active:translate-y-0.5 transition-all"
+                    className="px-2.5 sm:px-3 py-1.5 bg-[#fffdf9] text-black font-mono text-xs sm:text-sm font-bold border-2 border-black hover:bg-[#86efac] active:translate-x-0.5 active:translate-y-0.5 transition-all"
                   >
                     MAIL ↗
                   </a>
                   <button
                     onClick={copyEmail}
                     aria-label="Copy email address hello@bittu.dev"
-                    className="px-2.5 sm:px-3 py-1.5 bg-[#fde047] text-black font-mono text-xs font-bold border-2 border-black hover:bg-[#fb923c] active:translate-x-0.5 active:translate-y-0.5 transition-all cursor-pointer"
+                    className="px-2.5 sm:px-3 py-1.5 bg-[#fde047] text-black font-mono text-xs sm:text-sm font-bold border-2 border-black hover:bg-[#fb923c] active:translate-x-0.5 active:translate-y-0.5 transition-all cursor-pointer"
                   >
                     {copiedEmail ? "COPIED! ✓" : "COPY"}
                   </button>
@@ -72,10 +72,10 @@ export default function RetroContact() {
               {/* Discord Button Box */}
               <div className="p-3 sm:p-4 bg-[#c4b5fd] border-2 border-black shadow-brutal-xs flex flex-wrap items-center justify-between gap-2.5">
                 <div>
-                  <div className="font-mono text-[10px] uppercase font-bold text-black/60">
+                  <div className="font-mono text-xs uppercase font-bold text-black/60">
                     DISCORD:
                   </div>
-                  <div className="font-mono text-xs sm:text-base font-bold text-black">
+                  <div className="font-mono text-sm sm:text-base font-bold text-black">
                     bittu5134
                   </div>
                 </div>
@@ -84,14 +84,14 @@ export default function RetroContact() {
                     href="/discord"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-2.5 sm:px-3 py-1.5 bg-[#fffdf9] text-black font-mono text-xs font-bold border-2 border-black hover:bg-[#86efac] active:translate-x-0.5 active:translate-y-0.5 transition-all"
+                    className="px-2.5 sm:px-3 py-1.5 bg-[#fffdf9] text-black font-mono text-xs sm:text-sm font-bold border-2 border-black hover:bg-[#86efac] active:translate-x-0.5 active:translate-y-0.5 transition-all"
                   >
                     JOIN ↗
                   </a>
                   <button
                     onClick={copyDiscord}
                     aria-label="Copy Discord handle bittu5134"
-                    className="px-2.5 sm:px-3 py-1.5 bg-[#fde047] text-black font-mono text-xs font-bold border-2 border-black hover:bg-[#fb923c] active:translate-x-0.5 active:translate-y-0.5 transition-all cursor-pointer"
+                    className="px-2.5 sm:px-3 py-1.5 bg-[#fde047] text-black font-mono text-xs sm:text-sm font-bold border-2 border-black hover:bg-[#fb923c] active:translate-x-0.5 active:translate-y-0.5 transition-all cursor-pointer"
                   >
                     {copiedDiscord ? "COPIED! ✓" : "COPY"}
                   </button>
@@ -102,7 +102,7 @@ export default function RetroContact() {
             {/* Right Column: Other Platforms */}
             <div className="space-y-4">
               <div className="p-4 bg-[#fffdf9] border-2 border-black shadow-brutal-xs">
-                <div className="font-mono text-xs font-bold text-black uppercase mb-3 pb-1 border-b border-black">
+                <div className="font-mono text-xs sm:text-sm font-bold text-black uppercase mb-3 pb-1 border-b border-black">
                   PROFILES:
                 </div>
 
@@ -111,7 +111,7 @@ export default function RetroContact() {
                     href="https://github.com/Bittu5134"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-between p-2.5 bg-[#f6eedb] border border-black font-mono text-xs font-bold text-black hover:bg-[#fde047] transition-colors"
+                    className="flex items-center justify-between p-2.5 bg-[#f6eedb] border border-black font-mono text-xs sm:text-sm font-bold text-black hover:bg-[#fde047] transition-colors"
                   >
                     <span>GITHUB: @Bittu5134</span>
                     <span>↗</span>
@@ -121,7 +121,7 @@ export default function RetroContact() {
                     href="https://www.planetminecraft.com/member/bittu5134/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-between p-2.5 bg-[#f6eedb] border border-black font-mono text-xs font-bold text-black hover:bg-[#86efac] transition-colors"
+                    className="flex items-center justify-between p-2.5 bg-[#f6eedb] border border-black font-mono text-xs sm:text-sm font-bold text-black hover:bg-[#86efac] transition-colors"
                   >
                     <span>PLANET MINECRAFT: @bittu5134</span>
                     <span>↗</span>
@@ -131,7 +131,7 @@ export default function RetroContact() {
                     href="https://x.com/bittu5134"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-between p-2.5 bg-[#f6eedb] border border-black font-mono text-xs font-bold text-black hover:bg-[#38bdf8] transition-colors"
+                    className="flex items-center justify-between p-2.5 bg-[#f6eedb] border border-black font-mono text-xs sm:text-sm font-bold text-black hover:bg-[#38bdf8] transition-colors"
                   >
                     <span>X / TWITTER: @bittu5134</span>
                     <span>↗</span>
@@ -141,7 +141,7 @@ export default function RetroContact() {
                     href="/rss.xml"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-between p-2.5 bg-[#f6eedb] border border-black font-mono text-xs font-bold text-black hover:bg-[#fb923c] transition-colors"
+                    className="flex items-center justify-between p-2.5 bg-[#f6eedb] border border-black font-mono text-xs sm:text-sm font-bold text-black hover:bg-[#fb923c] transition-colors"
                   >
                     <span>RSS 2.0 FEED</span>
                     <span>📡</span>

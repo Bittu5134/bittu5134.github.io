@@ -31,14 +31,14 @@ export default function BlogPost() {
         <div className="flex items-center justify-between gap-4 mb-8">
           <Link
             to="/blog"
-            className="px-3.5 py-1.5 bg-[#fffdf9] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs hover:bg-[#fde047] hover:shadow-brutal active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5"
+            className="px-3.5 py-1.5 bg-[#fffdf9] border-2 border-black font-mono text-xs sm:text-sm font-bold shadow-brutal-xs hover:bg-[#fde047] hover:shadow-brutal active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5"
           >
             <span>← ALL ARTICLES</span>
           </Link>
 
           <button
             onClick={handleShare}
-            className="px-3.5 py-1.5 bg-[#fffdf9] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs hover:bg-[#86efac] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5"
+            className="px-3.5 py-1.5 bg-[#fffdf9] border-2 border-black font-mono text-xs sm:text-sm font-bold shadow-brutal-xs hover:bg-[#86efac] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5 cursor-pointer"
           >
             <span>{copied ? "LINK COPIED! ✓" : "SHARE ARTICLE ↗"}</span>
           </button>
@@ -48,7 +48,7 @@ export default function BlogPost() {
         <article className="p-6 sm:p-10 md:p-12 bg-[#fffdf9] border-[3px] border-black shadow-brutal-lg">
           {/* Metadata Header */}
           <div className="mb-8 pb-6 border-b-[3px] border-black">
-            <div className="flex flex-wrap items-center gap-2 mb-4 font-mono text-xs font-bold">
+            <div className="flex flex-wrap items-center gap-2 mb-4 font-mono text-xs sm:text-sm font-bold">
               <span className="px-2.5 py-1 bg-[#86efac] border border-black">
                 STAMP: {post.date.toUpperCase()}
               </span>
@@ -61,7 +61,7 @@ export default function BlogPost() {
               {post.title}
             </h1>
 
-            <p className="font-mono text-xs sm:text-sm text-black/80 font-bold leading-relaxed mb-4">
+            <p className="font-mono text-sm sm:text-base text-black/80 font-bold leading-relaxed mb-4">
               {post.summary}
             </p>
 
@@ -69,7 +69,7 @@ export default function BlogPost() {
               {post.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="px-2 py-0.5 bg-[#f6eedb] border border-black font-mono text-[11px] font-bold text-black"
+                  className="px-2 py-0.5 bg-[#f6eedb] border border-black font-mono text-xs font-bold text-black"
                 >
                   #{tag}
                 </span>
@@ -78,7 +78,7 @@ export default function BlogPost() {
           </div>
 
           {/* Article Markdown Content with Retro Styling */}
-          <div className="font-mono text-xs sm:text-sm leading-relaxed text-black/90 space-y-6">
+          <div className="font-mono text-sm sm:text-base leading-relaxed text-black/90 space-y-6">
             <Markdown
               components={{
                 h2: ({ ...props }) => (
@@ -89,7 +89,7 @@ export default function BlogPost() {
                 ),
                 h3: ({ ...props }) => (
                   <h3
-                    className="text-lg font-bold text-black mt-6 mb-2"
+                    className="text-lg sm:text-xl font-bold text-black mt-6 mb-2"
                     {...props}
                   />
                 ),
@@ -107,7 +107,7 @@ export default function BlogPost() {
                 ),
                 blockquote: ({ ...props }) => (
                   <blockquote
-                    className="border-l-4 border-[#f59e0b] bg-[#fef08a] p-4 my-4 font-mono text-xs text-black border-2 border-black shadow-brutal-xs"
+                    className="border-l-4 border-[#f59e0b] bg-[#fef08a] p-4 my-4 font-mono text-xs sm:text-sm text-black border-2 border-black shadow-brutal-xs"
                     {...props}
                   />
                 ),
@@ -115,7 +115,7 @@ export default function BlogPost() {
                   const isBlock = className?.includes("language-");
                   if (isBlock) {
                     return (
-                      <div className="my-5 border-2 border-black shadow-brutal bg-[#12151e] p-4 overflow-x-auto text-[#f5ede3] text-xs font-mono">
+                      <div className="my-5 border-2 border-black shadow-brutal bg-[#12151e] p-4 overflow-x-auto text-[#f5ede3] text-xs sm:text-sm font-mono">
                         <code className={className} {...props}>
                           {children}
                         </code>
@@ -124,7 +124,7 @@ export default function BlogPost() {
                   }
                   return (
                     <code
-                      className="px-1.5 py-0.5 bg-[#f6eedb] border border-black text-black font-mono text-xs font-bold"
+                      className="px-1.5 py-0.5 bg-[#f6eedb] border border-black text-black font-mono text-xs sm:text-sm font-bold"
                       {...props}
                     >
                       {children}
@@ -134,7 +134,7 @@ export default function BlogPost() {
                 pre: ({ children }) => <>{children}</>,
                 table: ({ ...props }) => (
                   <div className="overflow-x-auto my-6 border-2 border-black shadow-brutal-xs">
-                    <table className="w-full text-left font-mono text-xs border-collapse" {...props} />
+                    <table className="w-full text-left font-mono text-xs sm:text-sm border-collapse" {...props} />
                   </div>
                 ),
                 th: ({ ...props }) => (
@@ -162,7 +162,7 @@ export default function BlogPost() {
           </div>
 
           {/* Article Footer Note */}
-          <div className="mt-12 pt-6 border-t-2 border-black flex items-center justify-between flex-wrap gap-4 font-mono text-xs font-bold">
+          <div className="mt-12 pt-6 border-t-2 border-black flex items-center justify-between flex-wrap gap-4 font-mono text-xs sm:text-sm font-bold">
             <Link
               to="/blog"
               className="px-4 py-2 bg-[#fde047] border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 transition-all"

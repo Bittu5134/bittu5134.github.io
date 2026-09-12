@@ -1,4 +1,4 @@
-# Bittu's Portfolio & Tech Zine
+# Bittu's Portfolio & Technical Blog
 > A portfolio and technical blog for a low-level systems builder, cybersecurity undergraduate at IIT Kanpur, and WebRTC developer.
 
 ## Projects
@@ -18,7 +18,7 @@
 
 ## Optional & Quick Links
 - [Website Home](https://bittu.dev): Interactive Neo-Brutalist portfolio home.
-- [Technical Blog Zine](https://bittu.dev/blog): Full web-rendered article archive.
+- [Technical Blog](https://bittu.dev/blog): Full web-rendered article archive.
 - [RSS 2.0 Feed](https://bittu.dev/rss.xml): Standard RSS syndication feed.
 - [GitHub Profile](https://github.com/Bittu5134): Open-source repositories and experimental code.
 - [Planet Minecraft](https://www.planetminecraft.com/member/bittu5134/): Minecraft technical datapacks and spotlighted game modifications.

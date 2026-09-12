@@ -15,7 +15,7 @@ export default function RetroZine() {
           <div className="flex flex-wrap items-center gap-2 sm:gap-3">
             <a
               href="/blog"
-              className="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#fde047] text-black font-mono text-xs font-bold border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
+              className="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#fde047] text-black font-mono text-xs sm:text-sm font-bold border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
             >
               ALL ARTICLES (3) ↗
             </a>
@@ -23,7 +23,7 @@ export default function RetroZine() {
               href="/rss.xml"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 sm:px-3.5 py-1.5 sm:py-2 bg-[#fb923c] text-black font-mono text-xs font-bold border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
+              className="px-3 sm:px-3.5 py-1.5 sm:py-2 bg-[#fb923c] text-black font-mono text-xs sm:text-sm font-bold border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
             >
               RSS 2.0 📡
             </a>
@@ -39,10 +39,10 @@ export default function RetroZine() {
             >
               <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-2 mb-3 pb-3 border-b-2 border-black/10">
                 <div className="flex items-center gap-2">
-                  <span className="px-2 py-0.5 bg-[#86efac] border border-black font-mono text-[11px] font-bold text-black">
+                  <span className="px-2.5 py-1 bg-[#86efac] border border-black font-mono text-xs font-bold text-black">
                     {post.date.toUpperCase()}
                   </span>
-                  <span className="font-mono text-xs text-black/60 font-bold">
+                  <span className="font-mono text-xs sm:text-sm text-black/60 font-bold">
                     // {post.readTime.toUpperCase()}
                   </span>
                 </div>
@@ -51,7 +51,7 @@ export default function RetroZine() {
                   {post.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-2 py-0.5 bg-[#f6eedb] border border-black font-mono text-[11px] font-bold text-black"
+                      className="px-2 py-0.5 bg-[#f6eedb] border border-black font-mono text-xs font-bold text-black"
                     >
                       #{tag}
                     </span>
@@ -72,7 +72,7 @@ export default function RetroZine() {
               <div className="flex items-center justify-between pt-2">
                 <a
                   href={`/blog/${post.slug}`}
-                  className="px-4 py-2 bg-[#fde047] text-black font-mono text-xs font-bold border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5"
+                  className="px-4 py-2 bg-[#fde047] text-black font-mono text-xs sm:text-sm font-bold border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5"
                 >
                   <span>READ DISPATCH</span>
                   <span>↗</span>

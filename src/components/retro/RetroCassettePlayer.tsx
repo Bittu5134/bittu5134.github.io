@@ -90,7 +90,7 @@ export default function RetroCassettePlayer() {
         <button
           onClick={() => setMinimized(false)}
           aria-label="Open cassette player"
-          className="px-2.5 sm:px-3 py-1.5 sm:py-2 bg-[#fde047] text-black font-mono text-[11px] sm:text-xs font-bold border-2 border-black shadow-brutal flex items-center gap-1.5 sm:gap-2 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer"
+          className="px-2.5 sm:px-3 py-1.5 sm:py-2 bg-[#fde047] text-black font-mono text-xs font-bold border-2 border-black shadow-brutal flex items-center gap-1.5 sm:gap-2 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer"
         >
           <span>📼 {isPlaying ? "PLAYING..." : "TAPE DECK"}</span>
           <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
@@ -99,7 +99,7 @@ export default function RetroCassettePlayer() {
         <div className="w-[calc(100vw-24px)] sm:w-[280px] max-w-[280px] bg-[#fffdf9] border-[3px] border-black shadow-brutal-lg overflow-hidden">
           {/* Title Bar */}
           <div className="bg-[#fb923c] px-3 py-1.5 border-b-[2px] border-black flex items-center justify-between">
-            <span className="font-mono text-[11px] font-bold text-black flex items-center gap-1.5">
+            <span className="font-mono text-xs font-bold text-black flex items-center gap-1.5">
               <span>📼</span>
               <span>LO-FI CASSETTE DECK</span>
             </span>
@@ -186,7 +186,7 @@ export default function RetroCassettePlayer() {
             </div>
 
             {/* Volume Slider Bar */}
-            <div className="flex items-center gap-2 font-mono text-[10px] font-bold text-black">
+            <div className="flex items-center gap-2 font-mono text-xs font-bold text-black">
               <span>VOL:</span>
               <input
                 type="range"

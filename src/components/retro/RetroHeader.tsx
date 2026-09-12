@@ -10,7 +10,6 @@ export default function RetroHeader() {
 
   const navItems = [
     { label: "~/projects", icon: "📂", to: "projects" },
-    { label: "~/skills", icon: "⚡", to: "skills" },
     { label: "~/blog", icon: "📰", to: "blog" },
     { label: "~/about", icon: "👤", to: "about" },
     { label: "~/contact", icon: "✉️", to: "contact" },
@@ -62,7 +61,7 @@ export default function RetroHeader() {
                 className="group flex items-center gap-2 px-2.5 sm:px-3 py-1 bg-[#fde047] border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
               >
                 <span className="font-pixel text-lg sm:text-2xl font-bold tracking-wider">💾 BITTU.DEV</span>
-                <span className="hidden sm:inline-block text-[10px] font-mono bg-black text-white px-1.5 py-0.5 rounded-sm font-bold">
+                <span className="hidden sm:inline-block text-xs font-mono bg-black text-white px-2 py-0.5 rounded-sm font-bold">
                   ← HOME
                 </span>
               </RouterLink>
@@ -80,7 +79,7 @@ export default function RetroHeader() {
                   smooth={true}
                   offset={-70}
                   duration={400}
-                  className="cursor-pointer px-3 py-1 bg-[#fffdf9] border-2 border-black text-xs font-black shadow-brutal-xs hover:bg-[#fde047] hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all tracking-tight"
+                  className="cursor-pointer px-3 py-1 bg-[#fffdf9] border-2 border-black text-xs sm:text-sm font-black shadow-brutal-xs hover:bg-[#fde047] hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all tracking-tight"
                 >
                   {item.label}
                 </ScrollLink>
@@ -88,7 +87,7 @@ export default function RetroHeader() {
                 <RouterLink
                   key={item.to}
                   to={`/#${item.to}`}
-                  className="px-3 py-1 bg-[#fffdf9] border-2 border-black text-xs font-black shadow-brutal-xs hover:bg-[#fde047] hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all tracking-tight"
+                  className="px-3 py-1 bg-[#fffdf9] border-2 border-black text-xs sm:text-sm font-black shadow-brutal-xs hover:bg-[#fde047] hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all tracking-tight"
                 >
                   {item.label}
                 </RouterLink>
@@ -100,7 +99,7 @@ export default function RetroHeader() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="RSS Feed"
-              className="px-2.5 py-1 bg-[#fb923c] text-black border-2 border-black text-xs font-bold shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5"
+              className="px-2.5 py-1 bg-[#fb923c] text-black border-2 border-black text-xs sm:text-sm font-bold shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5"
             >
               <Rss className="w-3.5 h-3.5 text-black" />
               <span>RSS</span>
@@ -114,7 +113,7 @@ export default function RetroHeader() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub Profile (@Bittu5134)"
-              className="px-2.5 py-1 sm:py-1.5 bg-[#fffdf9] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs hover:bg-[#c4b5fd] hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-1.5"
+              className="px-2.5 py-1 sm:py-1.5 bg-[#fffdf9] border-2 border-black font-mono text-xs sm:text-sm font-bold shadow-brutal-xs hover:bg-[#c4b5fd] hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-1.5"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -128,13 +127,13 @@ export default function RetroHeader() {
                   d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
                 />
               </svg>
-              <span className="hidden sm:inline-block font-mono text-xs font-bold">GITHUB</span>
+              <span className="hidden sm:inline-block font-mono text-xs sm:text-sm font-bold">GITHUB</span>
             </a>
 
             {/* Android / Mobile Hamburger Toggle Button */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="lg:hidden px-3 py-1 sm:py-1.5 bg-[#fde047] border-2 border-black font-mono text-xs font-black shadow-brutal-xs hover:bg-[#fb923c] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5 select-none cursor-pointer"
+              className="lg:hidden px-3 py-1 sm:py-1.5 bg-[#fde047] border-2 border-black font-mono text-xs sm:text-sm font-black shadow-brutal-xs hover:bg-[#fb923c] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5 select-none cursor-pointer"
               aria-label="Toggle navigation menu"
               aria-expanded={isOpen}
             >
@@ -178,7 +177,7 @@ export default function RetroHeader() {
 
           {/* Navigation Links list */}
           <div className="p-4 space-y-2.5">
-            <div className="text-[10px] font-mono font-bold text-black/60 uppercase tracking-widest px-1">
+            <div className="text-xs font-mono font-bold text-black/60 uppercase tracking-widest px-1">
               NAVIGATION DIRECTORY:
             </div>
 

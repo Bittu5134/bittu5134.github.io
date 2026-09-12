@@ -24,7 +24,7 @@ export default function RetroHero() {
               💾 bittu@iitk: ~
             </span>
           </div>
-          <span className="font-mono text-[10px] sm:text-xs font-bold text-black tracking-wider shrink-0">
+          <span className="font-mono text-xs font-bold text-black tracking-wider shrink-0">
             KANPUR, INDIA
           </span>
         </div>
@@ -37,7 +37,7 @@ export default function RetroHero() {
             <div className="relative bg-[#fffdf9] p-3 sm:p-4 pb-6 sm:pb-8 border-[3px] border-black shadow-brutal rotate-[-1deg] sm:rotate-[-2deg] hover:rotate-0 transition-transform duration-300 w-full max-w-[240px] sm:max-w-[280px]">
               {/* Washi Tape Effect at top */}
               <div className="absolute -top-3 sm:-top-3.5 left-1/2 -translate-x-1/2 w-24 sm:w-28 h-5 sm:h-6 bg-[#fde047]/90 border border-black shadow-sm rotate-[2deg] sm:rotate-[3deg] z-10 flex items-center justify-center">
-                <span className="font-pixel text-[11px] sm:text-xs text-black uppercase font-bold tracking-widest">
+                <span className="font-pixel text-xs text-black uppercase font-bold tracking-widest">
                   ★ IT'S ME ★
                 </span>
               </div>
@@ -53,22 +53,22 @@ export default function RetroHero() {
 
               <div className="mt-2.5 sm:mt-3 text-center">
                 <p className="font-pixel text-xl sm:text-2xl text-black font-bold">BITTU (HE/HIM)</p>
-                <p className="font-mono text-[10px] sm:text-[11px] text-gray-600 uppercase font-bold">
-                  Systems Hacker & Modder
+                <p className="font-mono text-xs text-gray-700 uppercase font-bold mt-0.5">
+                  Systems Hacker &amp; Modder
                 </p>
               </div>
             </div>
 
             {/* Sticker Badges beneath Polaroid */}
             <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-4 sm:mt-6 justify-center max-w-xs">
-              <span className="px-2 py-0.5 sm:px-2.5 sm:py-1 bg-[#86efac] border-2 border-black font-mono text-[11px] sm:text-xs font-bold shadow-brutal-xs rotate-[1deg]">
+              <span className="px-2.5 py-1 bg-[#86efac] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs rotate-[1deg]">
                 ⛏️ MINECRAFT LIVE
               </span>
-              <span className="px-2 py-0.5 sm:px-2.5 sm:py-1 bg-[#c4b5fd] border-2 border-black font-mono text-[11px] sm:text-xs font-bold shadow-brutal-xs rotate-[-1deg]">
+              <span className="px-2.5 py-1 bg-[#c4b5fd] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs rotate-[-1deg]">
                 🛡️ IIT KANPUR '30
               </span>
-              <span className="px-2 py-0.5 sm:px-2.5 sm:py-1 bg-[#38bdf8] border-2 border-black font-mono text-[11px] sm:text-xs font-bold shadow-brutal-xs rotate-[2deg]">
-                ⚙️ GO & RUST
+              <span className="px-2.5 py-1 bg-[#38bdf8] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs rotate-[2deg]">
+                ⚙️ GO &amp; RUST
               </span>
             </div>
           </div>
@@ -84,14 +84,14 @@ export default function RetroHero() {
             </h1>
 
             {/* Sub-headline */}
-            <p className="font-mono text-xs sm:text-base md:text-lg text-black font-semibold leading-relaxed mb-4 sm:mb-6">
+            <p className="font-mono text-sm sm:text-base md:text-lg text-black font-semibold leading-relaxed mb-4 sm:mb-6">
               Low-level systems builder, WebRTC tinkerer, and Minecraft protocol reverse engineer.
               I write fast daemons in <span className="bg-[#38bdf8]/30 px-1 border-b-2 border-black font-bold">Go</span>,
               dissect network packets, and build high-throughput tools for the web.
             </p>
 
             {/* Sticky Note */}
-            <div className="p-3 sm:p-4 bg-[#fef08a] border-2 border-black shadow-brutal-xs mb-6 sm:mb-8 rotate-0 sm:rotate-[-0.5deg]">
+            <div className="p-3.5 sm:p-4 bg-[#fef08a] border-2 border-black shadow-brutal-xs mb-6 sm:mb-8 rotate-0 sm:rotate-[-0.5deg]">
               <p className="font-mono text-xs sm:text-sm text-black leading-relaxed">
                 Currently studying Cybersecurity at <strong>IIT Kanpur</strong>, serving 10.5M+ requests on <strong>ORV-Reader</strong>, and maintaining WebRTC peer-to-peer mesh tools.
               </p>

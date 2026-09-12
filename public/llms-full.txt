@@ -1,5 +1,5 @@
-# Bittu's Portfolio & Tech Zine — Full Context Payload
-> Complete plain-text and Markdown knowledge base for Divyanshu Anand (Bittu5134): low-level systems builder, cybersecurity undergraduate at IIT Kanpur, and WebRTC developer.
+# Bittu's Portfolio & Technical Blog — Full Context Payload
+> Complete plain-text and Markdown knowledge base for Bittu (Bittu5134): low-level systems builder, cybersecurity undergraduate at IIT Kanpur, and WebRTC developer.
 
 Canonical URL: https://bittu.dev
 Index File: https://bittu.dev/llms.txt
@@ -10,7 +10,7 @@ GitHub: https://github.com/Bittu5134
 SECTION 1: PROFILE & CORE EXPERTISE
 ================================================================================
 
-Name: Divyanshu Anand (Bittu / Bittu5134)
+Name: Bittu (Bittu5134)
 Education: Undergraduate in Cybersecurity & Computing at Indian Institute of Technology Kanpur (IIT Kanpur '30)
 Core Focus:
 - Low-Level Systems: Linux POSIX daemons, raw TCP/UDP socket interception, /proc lineage tracing with SHA-256 GUIDs, memory-mapped I/O, zero-allocation Go loops.

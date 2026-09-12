@@ -15,10 +15,10 @@ export default function ErrorPage() {
 
       {/* Error Content */}
       <div className="text-center px-4">
-        <h1 className="text-9xl md:text-[12rem] font-extrabold text-cream/[0.07] mb-4">
+        <h1 className="text-8xl sm:text-9xl font-extrabold text-cream/[0.07] mb-4 select-none">
           404
         </h1>
-        <div className="relative -mt-32 md:-mt-40">
+        <div className="relative -mt-24 sm:-mt-32 md:-mt-40">
           <h2 className="text-4xl md:text-6xl font-bold text-cream mb-4">
             page not found
           </h2>

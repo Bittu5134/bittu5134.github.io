@@ -119,7 +119,7 @@ function generateRss() {
   <channel>
     <title>Bittu - Systems &amp; Software Blog</title>
     <link>${SITE_URL}/blog</link>
-    <description>Essays and deep dives into low-level systems, reverse engineering, distributed networking, and software craft by Divyanshu Anand (Bittu5134).</description>
+    <description>Essays and deep dives into low-level systems, reverse engineering, distributed networking, and software craft by Bittu (Bittu5134).</description>
     <language>en-us</language>
     <lastBuildDate>${lastBuildDate}</lastBuildDate>
     <atom:link href="${SITE_URL}/rss.xml" rel="self" type="application/rss+xml" />
@@ -245,7 +245,7 @@ ${post.content}`;
     .join("\n\n================================================================================\n\n");
 
   const fullContent = `# Bittu's Portfolio & Technical Blog — Full Context Payload
-> Complete plain-text and Markdown knowledge base for Divyanshu Anand (Bittu5134): low-level systems builder, cybersecurity undergraduate at IIT Kanpur, and WebRTC developer.
+> Complete plain-text and Markdown knowledge base for Bittu (Bittu5134): low-level systems builder, cybersecurity undergraduate at IIT Kanpur, and WebRTC developer.
 
 Canonical URL: ${SITE_URL}
 Index File: ${SITE_URL}/llms.txt
@@ -256,7 +256,7 @@ GitHub: https://github.com/Bittu5134
 SECTION 1: PROFILE & CORE EXPERTISE
 ================================================================================
 
-Name: Divyanshu Anand (Bittu / Bittu5134)
+Name: Bittu (Bittu5134)
 Education: Undergraduate in Cybersecurity & Computing at Indian Institute of Technology Kanpur (IIT Kanpur '30)
 Core Focus:
 - Low-Level Systems: Linux POSIX daemons, raw TCP/UDP socket interception, /proc lineage tracing with SHA-256 GUIDs, memory-mapped I/O, zero-allocation Go loops.

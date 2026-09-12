@@ -2,7 +2,6 @@ import RetroHeader from "../components/retro/RetroHeader";
 import RetroHero from "../components/retro/RetroHero";
 import RetroTicker from "../components/retro/RetroTicker";
 import RetroProjects from "../components/retro/RetroProjects";
-import RetroTechLab from "../components/retro/RetroTechLab";
 import RetroZine from "../components/retro/RetroZine";
 import RetroAbout from "../components/retro/RetroAbout";
 import RetroContact from "../components/retro/RetroContact";
@@ -25,9 +24,6 @@ export default function App() {
 
         {/* Featured Projects */}
         <RetroProjects />
-
-        {/* Technical Capabilities & Lab */}
-        <RetroTechLab />
 
         {/* Technical Zine / Blog */}
         <RetroZine />
