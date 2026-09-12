@@ -8,8 +8,7 @@ export default function BlogList() {
   return (
     <div className="min-h-screen bg-[#f6eedb] retro-dots-bg text-[#14161f] font-sans selection:bg-[#fde047] selection:text-black">
       <RetroHeader />
-
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
+      <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         {/* Navigation & Feed header */}
         <div className="flex items-center justify-between gap-4 mb-8">
           <Link
@@ -34,8 +33,8 @@ export default function BlogList() {
           <div className="inline-block px-3 py-1 bg-[#fde047] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs mb-3">
             TECHNICAL ZINE ARCHIVE
           </div>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-black mb-3">
-            DEEP DIVES & NOTES.
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-mono font-black text-black mb-3 tracking-tight">
+            ~/blog
           </h1>
           <p className="font-mono text-xs sm:text-sm text-black/80 max-w-2xl leading-relaxed">
             Essays on low-level networking in Go, reverse-engineering the Minecraft Java wire format, 2D Cartesian spatial parsing in Python, and architecture blueprints.

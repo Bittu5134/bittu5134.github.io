@@ -1,17 +1,17 @@
 export default function RetroAbout() {
   return (
-    <section id="about" className="py-8 px-4 sm:px-6">
+    <section id="about" className="py-6 sm:py-8 px-3 sm:px-6">
       <div className="max-w-5xl mx-auto">
         {/* Section Header */}
-        <div className="mb-8">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-black">
-            ABOUT ME.
+        <div className="mb-6 sm:mb-8">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-mono font-black text-black tracking-tight">
+            ~/about
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8">
           {/* Main Story Box (7 cols) */}
-          <div className="lg:col-span-7 p-6 sm:p-8 bg-[#fffdf9] border-[3px] border-black shadow-brutal flex flex-col justify-between">
+          <div className="lg:col-span-7 p-4 sm:p-8 bg-[#fffdf9] border-[3px] border-black shadow-brutal flex flex-col justify-between">
             <div className="space-y-4 font-mono text-xs sm:text-sm text-black/85 leading-relaxed">
               <p>
                 I'm <strong>Divyanshu Anand (Bittu)</strong>. Currently an undergraduate studying <strong>Cybersecurity & Computing</strong> at{" "}
@@ -49,11 +49,11 @@ export default function RetroAbout() {
             </div>
 
             {/* Signature Strip */}
-            <div className="mt-6 pt-4 border-t-2 border-black/10 flex items-center justify-between flex-wrap gap-2">
-              <span className="font-pixel text-xl font-bold text-black">
+            <div className="mt-5 sm:mt-6 pt-4 border-t-2 border-black/10 flex items-center justify-between flex-wrap gap-2">
+              <span className="font-pixel text-lg sm:text-xl font-bold text-black">
                 — DIVYANSHU (BITTU5134)
               </span>
-              <span className="font-mono text-xs font-bold text-black/50">
+              <span className="font-mono text-[11px] sm:text-xs font-bold text-black/50">
                 IIT KANPUR
               </span>
             </div>
@@ -62,7 +62,7 @@ export default function RetroAbout() {
           {/* Side Summary Cards (5 cols) */}
           <div className="lg:col-span-5 flex flex-col gap-4">
             {/* Quick Summary Card */}
-            <div className="p-6 bg-[#fde047] border-[3px] border-black shadow-brutal">
+            <div className="p-4 sm:p-6 bg-[#fde047] border-[3px] border-black shadow-brutal">
               <h3 className="font-mono text-xs font-bold text-black uppercase tracking-wider mb-3 pb-1 border-b-2 border-black">
                 AT A GLANCE:
               </h3>

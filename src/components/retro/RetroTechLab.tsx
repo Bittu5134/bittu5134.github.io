@@ -17,25 +17,25 @@ export default function RetroTechLab() {
   ];
 
   return (
-    <section id="lab" className="py-8 px-4 sm:px-6">
+    <section id="lab" className="py-6 sm:py-8 px-3 sm:px-6">
       <div className="max-w-5xl mx-auto">
         {/* Section Header */}
-        <div className="mb-8">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-black">
-            TECHNICAL CAPABILITIES.
+        <div className="mb-6 sm:mb-8">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-mono font-black text-black tracking-tight">
+            ~/lab
           </h2>
         </div>
 
         {/* 4 Deep Domain Feature Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 mb-6 sm:mb-8">
           {/* Card 1: Low-Level Systems */}
-          <div className="p-6 bg-[#fffdf9] border-[3px] border-black shadow-brutal flex flex-col justify-between">
+          <div className="p-4 sm:p-6 bg-[#fffdf9] border-[3px] border-black shadow-brutal flex flex-col justify-between">
             <div>
-              <div className="flex items-center justify-between mb-3">
-                <span className="font-pixel text-2xl font-bold bg-[#fde047] px-2 py-0.5 border border-black">
+              <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                <span className="font-pixel text-xl sm:text-2xl font-bold bg-[#fde047] px-2 py-0.5 border border-black">
                   ⚙️ LOW-LEVEL SYSTEMS
                 </span>
-                <span className="font-mono text-xs font-bold bg-black text-white px-2 py-0.5">
+                <span className="font-mono text-[10px] sm:text-xs font-bold bg-black text-white px-2 py-0.5 shrink-0">
                   POSIX / GO
                 </span>
               </div>
@@ -51,13 +51,13 @@ export default function RetroTechLab() {
           </div>
 
           {/* Card 2: WebRTC & P2P */}
-          <div className="p-6 bg-[#fffdf9] border-[3px] border-black shadow-brutal flex flex-col justify-between">
+          <div className="p-4 sm:p-6 bg-[#fffdf9] border-[3px] border-black shadow-brutal flex flex-col justify-between">
             <div>
-              <div className="flex items-center justify-between mb-3">
-                <span className="font-pixel text-2xl font-bold bg-[#86efac] px-2 py-0.5 border border-black">
+              <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                <span className="font-pixel text-xl sm:text-2xl font-bold bg-[#86efac] px-2 py-0.5 border border-black">
                   📡 WEBRTC & P2P MESH
                 </span>
-                <span className="font-mono text-xs font-bold bg-black text-white px-2 py-0.5">
+                <span className="font-mono text-[10px] sm:text-xs font-bold bg-black text-white px-2 py-0.5 shrink-0">
                   SIGNALING
                 </span>
               </div>
@@ -73,13 +73,13 @@ export default function RetroTechLab() {
           </div>
 
           {/* Card 3: Minecraft Protocol & Modding */}
-          <div className="p-6 bg-[#fffdf9] border-[3px] border-black shadow-brutal flex flex-col justify-between">
+          <div className="p-4 sm:p-6 bg-[#fffdf9] border-[3px] border-black shadow-brutal flex flex-col justify-between">
             <div>
-              <div className="flex items-center justify-between mb-3">
-                <span className="font-pixel text-2xl font-bold bg-[#38bdf8] px-2 py-0.5 border border-black">
+              <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                <span className="font-pixel text-xl sm:text-2xl font-bold bg-[#38bdf8] px-2 py-0.5 border border-black">
                   ⛏️ MINECRAFT PROTOCOL
                 </span>
-                <span className="font-mono text-xs font-bold bg-black text-white px-2 py-0.5">
+                <span className="font-mono text-[10px] sm:text-xs font-bold bg-black text-white px-2 py-0.5 shrink-0">
                   FABRIC / JAVA
                 </span>
               </div>
@@ -95,13 +95,13 @@ export default function RetroTechLab() {
           </div>
 
           {/* Card 4: Spatial AI & PyTorch */}
-          <div className="p-6 bg-[#fffdf9] border-[3px] border-black shadow-brutal flex flex-col justify-between">
+          <div className="p-4 sm:p-6 bg-[#fffdf9] border-[3px] border-black shadow-brutal flex flex-col justify-between">
             <div>
-              <div className="flex items-center justify-between mb-3">
-                <span className="font-pixel text-2xl font-bold bg-[#c4b5fd] px-2 py-0.5 border border-black">
+              <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                <span className="font-pixel text-xl sm:text-2xl font-bold bg-[#c4b5fd] px-2 py-0.5 border border-black">
                   🧠 SPATIAL AI & VISION
                 </span>
-                <span className="font-mono text-xs font-bold bg-black text-white px-2 py-0.5">
+                <span className="font-mono text-[10px] sm:text-xs font-bold bg-black text-white px-2 py-0.5 shrink-0">
                   PYTORCH / PYMUPDF
                 </span>
               </div>
@@ -118,18 +118,18 @@ export default function RetroTechLab() {
         </div>
 
         {/* Tech Stash Box */}
-        <div className="p-6 sm:p-8 bg-[#fffdf9] border-[3px] border-black shadow-brutal">
-          <div className="mb-4">
+        <div className="p-4 sm:p-8 bg-[#fffdf9] border-[3px] border-black shadow-brutal">
+          <div className="mb-3 sm:mb-4">
             <span className="font-mono text-xs font-bold text-black uppercase">
               CORE TECHNOLOGIES & TOOLING:
             </span>
           </div>
 
-          <div className="flex flex-wrap gap-2.5 sm:gap-3">
+          <div className="flex flex-wrap gap-2 sm:gap-3">
             {techStack.map((tech, i) => (
               <span
                 key={i}
-                className="px-3.5 py-2 border-2 border-black font-mono text-xs sm:text-sm font-bold shadow-brutal-xs flex items-center gap-1.5 select-none"
+                className="px-2.5 sm:px-3.5 py-1.5 sm:py-2 border-2 border-black font-mono text-[11px] sm:text-sm font-bold shadow-brutal-xs flex items-center gap-1.5 select-none"
                 style={{ backgroundColor: tech.color }}
               >
                 <span>{tech.name}</span>

@@ -33,7 +33,9 @@ export default function RetroCassettePlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [volume, setVolume] = useState(0.3);
-  const [minimized, setMinimized] = useState(false);
+  const [minimized, setMinimized] = useState(() => {
+    return typeof window !== "undefined" && window.innerWidth < 640;
+  });
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
@@ -76,7 +78,7 @@ export default function RetroCassettePlayer() {
   const currentTrack = tracks[currentTrackIndex];
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 select-none">
+    <div className="fixed bottom-3 right-3 sm:bottom-4 sm:right-4 z-50 select-none max-w-[calc(100vw-24px)]">
       <audio
         ref={audioRef}
         src={currentTrack.url}
@@ -87,13 +89,13 @@ export default function RetroCassettePlayer() {
       {minimized ? (
         <button
           onClick={() => setMinimized(false)}
-          className="px-3 py-2 bg-[#fde047] text-black font-mono text-xs font-bold border-2 border-black shadow-brutal flex items-center gap-2 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
+          className="px-2.5 sm:px-3 py-1.5 sm:py-2 bg-[#fde047] text-black font-mono text-[11px] sm:text-xs font-bold border-2 border-black shadow-brutal flex items-center gap-1.5 sm:gap-2 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer"
         >
-          <span>📼 {isPlaying ? "PLAYING LO-FI..." : "TAPE DECK"}</span>
+          <span>📼 {isPlaying ? "PLAYING..." : "TAPE DECK"}</span>
           <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
         </button>
       ) : (
-        <div className="w-[260px] sm:w-[280px] bg-[#fffdf9] border-[3px] border-black shadow-brutal-lg overflow-hidden">
+        <div className="w-[calc(100vw-24px)] sm:w-[280px] max-w-[280px] bg-[#fffdf9] border-[3px] border-black shadow-brutal-lg overflow-hidden">
           {/* Title Bar */}
           <div className="bg-[#fb923c] px-3 py-1.5 border-b-[2px] border-black flex items-center justify-between">
             <span className="font-mono text-[11px] font-bold text-black flex items-center gap-1.5">

@@ -94,23 +94,23 @@ export default function RetroProjects() {
       : projects.filter((p) => p.category.includes(filter));
 
   return (
-    <section id="projects" className="py-8 px-4 sm:px-6">
+    <section id="projects" className="py-6 sm:py-8 px-3 sm:px-6">
       <div className="max-w-5xl mx-auto">
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:gap-4 mb-6 sm:mb-8">
           <div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-black">
-              FEATURED PROJECTS.
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-mono font-black text-black tracking-tight">
+              ~/projects
             </h2>
           </div>
 
           {/* Filter Pills */}
-          <div className="flex flex-wrap gap-2 font-mono text-xs font-bold">
+          <div className="flex flex-wrap gap-1.5 sm:gap-2 font-mono text-xs font-bold">
             {["ALL", "SYSTEMS", "AI", "WEB"].map((cat) => (
               <button
                 key={cat}
                 onClick={() => setFilter(cat)}
-                className={`px-3 py-1.5 border-2 border-black transition-all cursor-pointer ${
+                className={`px-2.5 sm:px-3 py-1 sm:py-1.5 border-2 border-black transition-all cursor-pointer ${
                   filter === cat
                     ? "bg-[#fde047] shadow-brutal-xs font-black -translate-y-0.5"
                     : "bg-[#fffdf9] hover:bg-[#f6eedb]"
@@ -123,32 +123,32 @@ export default function RetroProjects() {
         </div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8">
           {filteredProjects.map((p, index) => (
             <div
               key={index}
-              className="bg-[#fffdf9] border-[3px] border-black shadow-brutal hover:shadow-brutal-lg hover:-translate-y-1 transition-all flex flex-col justify-between"
+              className="bg-[#fffdf9] border-[3px] border-black shadow-brutal hover:shadow-brutal-lg hover:-translate-y-0.5 transition-all flex flex-col justify-between"
             >
               {/* Window Header */}
               <div
-                className="px-4 py-2 border-b-[3px] border-black flex items-center justify-between select-none"
+                className="px-3 sm:px-4 py-2 border-b-[3px] border-black flex items-center justify-between gap-2 select-none"
                 style={{ backgroundColor: p.headerColor }}
               >
-                <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 bg-black rounded-none"></span>
-                  <span className="font-mono text-xs font-bold text-black uppercase tracking-wider">
+                <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+                  <span className="w-2.5 h-2.5 bg-black rounded-none shrink-0"></span>
+                  <span className="font-mono text-xs font-bold text-black uppercase tracking-wider truncate">
                     {p.category}
                   </span>
                 </div>
-                <span className="font-mono text-[10px] bg-black text-white px-2 py-0.5 font-bold">
+                <span className="font-mono text-[9px] sm:text-[10px] bg-black text-white px-2 py-0.5 font-bold shrink-0">
                   {p.badge}
                 </span>
               </div>
 
               {/* Body */}
-              <div className="p-5 sm:p-6 flex flex-col flex-1 justify-between">
+              <div className="p-4 sm:p-6 flex flex-col flex-1 justify-between">
                 <div>
-                  <h3 className="text-2xl font-black text-black mb-1">
+                  <h3 className="text-xl sm:text-2xl font-black text-black mb-1">
                     {p.title}
                   </h3>
                   <div className="font-mono text-[11px] font-bold text-[#d97706] mb-3">
@@ -161,7 +161,7 @@ export default function RetroProjects() {
 
                 <div>
                   {/* Tag Pills */}
-                  <div className="flex flex-wrap gap-1.5 mb-5">
+                  <div className="flex flex-wrap gap-1.5 mb-4 sm:mb-5">
                     {p.tags.map((tag, tIndex) => (
                       <span
                         key={tIndex}
@@ -173,13 +173,13 @@ export default function RetroProjects() {
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="flex items-center gap-3 pt-3 border-t-2 border-black/10">
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 pt-3 border-t-2 border-black/10">
                     {p.liveUrl && (
                       <a
                         href={p.liveUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-3.5 py-2 bg-[#fde047] text-black font-mono text-xs font-bold border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1"
+                        className="px-3 sm:px-3.5 py-1.5 sm:py-2 bg-[#fde047] text-black font-mono text-xs font-bold border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1"
                       >
                         <span>LIVE DEMO</span>
                         <span>↗</span>
@@ -190,7 +190,7 @@ export default function RetroProjects() {
                         href={p.githubUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-3.5 py-2 bg-[#fffdf9] text-black font-mono text-xs font-bold border-2 border-black shadow-brutal-xs hover:bg-[#86efac] hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1"
+                        className="px-3 sm:px-3.5 py-1.5 sm:py-2 bg-[#fffdf9] text-black font-mono text-xs font-bold border-2 border-black shadow-brutal-xs hover:bg-[#86efac] hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1"
                       >
                         <span>SOURCE CODE</span>
                         <span>↗</span>
@@ -204,7 +204,7 @@ export default function RetroProjects() {
         </div>
 
         {/* GitHub link note */}
-        <div className="mt-8 p-4 bg-[#fffdf9] border-2 border-black shadow-brutal-xs flex items-center justify-between flex-wrap gap-4 font-mono text-xs font-bold">
+        <div className="mt-6 sm:mt-8 p-3.5 sm:p-4 bg-[#fffdf9] border-2 border-black shadow-brutal-xs flex items-center justify-between flex-wrap gap-3 sm:gap-4 font-mono text-xs font-bold">
           <span className="text-black/70">
             Looking for more tools, prototypes, and scripts?
           </span>

@@ -11,8 +11,8 @@ import RetroCassettePlayer from "../components/retro/RetroCassettePlayer";
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-[#f6eedb] retro-dots-bg text-[#14161f] font-sans selection:bg-[#fde047] selection:text-black">
-      {/* Top Header */}
+    <div className="min-h-screen bg-[#f6eedb] retro-dots-bg text-[#14161f] font-sans selection:bg-[#fde047] selection:text-black overflow-x-hidden">
+      {/* Top Header with Hamburger Navigation for Mobile */}
       <RetroHeader />
 
       {/* Main Content Area */}

@@ -26,8 +26,7 @@ export default function BlogPost() {
   return (
     <div className="min-h-screen bg-[#f6eedb] retro-dots-bg text-[#14161f] font-sans selection:bg-[#fde047] selection:text-black">
       <RetroHeader />
-
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         {/* Navigation & Share */}
         <div className="flex items-center justify-between gap-4 mb-8">
           <Link

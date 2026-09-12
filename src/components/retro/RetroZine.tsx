@@ -2,20 +2,20 @@ import { blogPosts } from "../../data/blogs";
 
 export default function RetroZine() {
   return (
-    <section id="zine" className="py-8 px-4 sm:px-6">
+    <section id="zine" className="py-6 sm:py-8 px-3 sm:px-6">
       <div className="max-w-5xl mx-auto">
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:gap-4 mb-6 sm:mb-8">
           <div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-black">
-              TECHNICAL DISPATCHES.
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-mono font-black text-black tracking-tight">
+              ~/zine
             </h2>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
             <a
               href="/blog"
-              className="px-4 py-2 bg-[#fde047] text-black font-mono text-xs font-bold border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
+              className="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#fde047] text-black font-mono text-xs font-bold border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
             >
               ALL ARTICLES (3) ↗
             </a>
@@ -23,7 +23,7 @@ export default function RetroZine() {
               href="/rss.xml"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 py-2 bg-[#fb923c] text-black font-mono text-xs font-bold border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
+              className="px-3 sm:px-3.5 py-1.5 sm:py-2 bg-[#fb923c] text-black font-mono text-xs font-bold border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
             >
               RSS 2.0 📡
             </a>
@@ -31,11 +31,11 @@ export default function RetroZine() {
         </div>
 
         {/* Zine Articles Stack */}
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           {blogPosts.map((post) => (
             <article
               key={post.slug}
-              className="p-6 sm:p-8 bg-[#fffdf9] border-[3px] border-black shadow-brutal hover:shadow-brutal-lg hover:-translate-y-0.5 transition-all group"
+              className="p-4 sm:p-8 bg-[#fffdf9] border-[3px] border-black shadow-brutal hover:shadow-brutal-lg hover:-translate-y-0.5 transition-all group"
             >
               <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-2 mb-3 pb-3 border-b-2 border-black/10">
                 <div className="flex items-center gap-2">

@@ -2,10 +2,10 @@ import { Link as ScrollLink } from "react-scroll";
 
 export default function RetroFooter() {
   return (
-    <footer className="mt-16 border-t-[3px] border-black bg-[#f6eedb] py-12 px-4 sm:px-6">
-      <div className="max-w-5xl mx-auto flex flex-col items-center text-center gap-6">
+    <footer className="mt-10 sm:mt-16 border-t-[3px] border-black bg-[#f6eedb] py-8 sm:py-12 px-3 sm:px-6">
+      <div className="max-w-5xl mx-auto flex flex-col items-center text-center gap-5 sm:gap-6">
         {/* Navigation / Links Box */}
-        <div className="p-4 bg-[#fffdf9] border-2 border-black shadow-brutal-xs flex flex-wrap items-center justify-center gap-3 font-mono text-xs font-bold text-black">
+        <div className="p-3 sm:p-4 bg-[#fffdf9] border-2 border-black shadow-brutal-xs flex flex-wrap items-center justify-center gap-2 sm:gap-3 font-mono text-[11px] sm:text-xs font-bold text-black">
           <a
             href="https://github.com/Bittu5134"
             target="_blank"
