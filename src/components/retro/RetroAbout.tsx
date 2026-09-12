@@ -1,4 +1,4 @@
-import { GraduationCap, Gamepad2, Trophy, Medal, Zap } from "lucide-react";
+import { GraduationCap, Gamepad2, Trophy, Medal, Zap } from "../icons";
 
 export default function RetroAbout() {
   const techStack = [

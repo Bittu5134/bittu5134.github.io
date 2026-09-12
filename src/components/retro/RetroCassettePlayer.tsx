@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Disc3, Play, Pause, SkipBack, SkipForward, Volume2, Minus } from "lucide-react";
+import { Disc3, Play, Pause, SkipBack, SkipForward, Volume2, Minus } from "../icons";
 
 interface Track {
   title: string;

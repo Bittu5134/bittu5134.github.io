@@ -1,5 +1,5 @@
 import { blogPosts } from "../../data/blogs";
-import { Rss, ArrowUpRight, BookOpen } from "lucide-react";
+import { Rss, ArrowUpRight, BookOpen } from "../icons";
 
 export default function RetroZine() {
   return (

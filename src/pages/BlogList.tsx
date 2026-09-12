@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { ArrowLeft, ArrowUpRight, Rss } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Rss } from "../components/icons";
 import { blogPosts } from "../data/blogs";
 import RetroHeader from "../components/retro/RetroHeader";
 import RetroFooter from "../components/retro/RetroFooter";

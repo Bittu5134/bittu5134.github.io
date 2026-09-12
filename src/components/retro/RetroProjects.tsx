@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { projects, categories, Project } from "../../data/projects";
-import { Coffee, Heart, ArrowUpRight } from "lucide-react";
+import { Coffee, Heart, ArrowUpRight } from "../icons";
 
 export default function RetroProjects() {
   const [filter, setFilter] = useState("ALL");
