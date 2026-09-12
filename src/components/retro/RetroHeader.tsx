@@ -1,18 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link as ScrollLink } from "react-scroll";
 import { Link as RouterLink, useLocation } from "react-router";
-import {
-  Rss,
-  Folder,
-  FileText,
-  User,
-  Mail,
-  Menu,
-  X,
-  HardDrive,
-  GithubIcon,
-  DiscordIcon,
-} from "../icons";
+import { Rss, Folder, FileText, User, Mail, Menu, X, HardDrive, GithubIcon, DiscordIcon } from "../icons";
 
 export default function RetroHeader() {
   const [isOpen, setIsOpen] = useState(false);
@@ -81,8 +70,8 @@ export default function RetroHeader() {
             )}
           </div>
 
-          {/* Desktop Nav Items */}
-          <nav className="hidden lg:flex items-center gap-1.5" aria-label="Main Navigation">
+          {/* Desktop Navigation Links */}
+          <nav className="hidden lg:flex items-center gap-2 font-mono">
             {navItems.map((item) => {
               const Icon = item.icon;
               return isHomePage ? (
@@ -93,18 +82,18 @@ export default function RetroHeader() {
                   smooth={true}
                   offset={-70}
                   duration={400}
-                  className="px-3 py-1.5 font-mono text-sm font-bold text-black border-2 border-transparent hover:border-black hover:bg-[#fffdf9] hover:shadow-brutal-xs active:translate-x-0.5 active:translate-y-0.5 transition-all cursor-pointer flex items-center gap-1.5"
+                  className="cursor-pointer px-3 py-1 bg-[#fffdf9] border-2 border-black text-xs sm:text-sm font-black shadow-brutal-xs hover:bg-[#fde047] hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all tracking-tight flex items-center gap-1.5"
                 >
-                  <Icon className="w-4 h-4 text-black shrink-0" />
+                  <Icon className="w-3.5 h-3.5 text-black shrink-0" />
                   <span>{item.label}</span>
                 </ScrollLink>
               ) : (
                 <RouterLink
                   key={item.to}
                   to={`/#${item.to}`}
-                  className="px-3 py-1.5 font-mono text-sm font-bold text-black border-2 border-transparent hover:border-black hover:bg-[#fffdf9] hover:shadow-brutal-xs active:translate-x-0.5 active:translate-y-0.5 transition-all cursor-pointer flex items-center gap-1.5"
+                  className="px-3 py-1 bg-[#fffdf9] border-2 border-black text-xs sm:text-sm font-black shadow-brutal-xs hover:bg-[#fde047] hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all tracking-tight flex items-center gap-1.5"
                 >
-                  <Icon className="w-4 h-4 text-black shrink-0" />
+                  <Icon className="w-3.5 h-3.5 text-black shrink-0" />
                   <span>{item.label}</span>
                 </RouterLink>
               );
@@ -115,14 +104,14 @@ export default function RetroHeader() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="RSS Feed"
-              className="px-2.5 py-1.5 font-mono text-sm font-bold text-black border-2 border-transparent hover:border-black hover:bg-[#fb923c] hover:shadow-brutal-xs active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5"
+              className="px-2.5 py-1 bg-[#fb923c] text-black border-2 border-black text-xs sm:text-sm font-bold shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5"
             >
-              <Rss className="w-4 h-4 text-black shrink-0" />
+              <Rss className="w-3.5 h-3.5 text-black shrink-0" />
               <span>RSS</span>
             </a>
           </nav>
 
-          {/* Right Action Icons & Mobile Drawer Toggle */}
+          {/* Actions & Mobile Hamburger */}
           <div className="flex items-center gap-2">
             <a
               href="https://github.com/Bittu5134"
@@ -143,87 +132,105 @@ export default function RetroHeader() {
               aria-expanded={isOpen}
             >
               {isOpen ? <X className="w-4 h-4 text-black shrink-0" /> : <Menu className="w-4 h-4 text-black shrink-0" />}
-              <span className="text-xs">{isOpen ? "CLOSE" : "MENU"}</span>
+              <span>{isOpen ? "CLOSE" : "MENU"}</span>
             </button>
           </div>
         </div>
       </header>
 
-      {/* Mobile Drawer Menu */}
+      {/* Android & Mobile Backdrop Overlay */}
       {isOpen && (
         <div
-          role="dialog"
-          aria-modal="true"
-          aria-label="Mobile Navigation"
-          className="fixed inset-0 z-40 bg-black/60 lg:hidden backdrop-blur-xs flex flex-col justify-start pt-16 px-4 pb-6 overflow-y-auto animate-fadeIn"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setIsOpen(false);
-          }}
-        >
-          <div className="bg-[#fffdf9] border-[3px] border-black shadow-brutal-lg p-5 space-y-4 max-w-sm w-full mx-auto mt-2">
-            <div className="flex items-center justify-between pb-3 border-b-2 border-black">
-              <span className="font-mono text-xs font-black tracking-wider text-black/60">
-                SYSTEM MENU
+          onClick={() => setIsOpen(false)}
+          className="fixed inset-0 top-[54px] sm:top-[58px] bg-black/50 backdrop-blur-sm z-40 lg:hidden transition-opacity duration-200"
+          aria-hidden="true"
+        />
+      )}
+
+      {/* Android / Mobile Slide-down Neo-Brutalist Drawer */}
+      {isOpen && (
+        <div className="fixed top-[54px] sm:top-[58px] left-0 right-0 z-50 lg:hidden bg-[#fffdf9] border-b-[4px] border-black shadow-brutal-lg max-h-[calc(100vh-65px)] overflow-y-auto">
+          {/* Drawer Window Titlebar */}
+          <div className="bg-[#fb923c] px-4 py-2 border-b-2 border-black flex items-center justify-between select-none">
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 bg-[#f87171] border border-black"></span>
+              <span className="w-2.5 h-2.5 bg-[#fde047] border border-black"></span>
+              <span className="w-2.5 h-2.5 bg-[#86efac] border border-black"></span>
+              <span className="font-mono text-xs font-bold text-black ml-1">
+                SYSTEM MENU: bittu@android
               </span>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="font-mono text-xs font-bold px-2 py-0.5 bg-[#fde047] border border-black shadow-brutal-xs active:translate-x-0.5 active:translate-y-0.5"
-                aria-label="Close menu"
-              >
-                ESC [X]
-              </button>
+            </div>
+            <button
+              onClick={() => setIsOpen(false)}
+              aria-label="Close menu"
+              className="font-mono text-xs font-bold px-1.5 py-0.5 bg-black text-white hover:bg-red-500 active:scale-95 flex items-center justify-center"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
+
+          {/* Navigation Links list */}
+          <div className="p-4 space-y-2.5">
+            <div className="text-xs font-mono font-bold text-black/60 uppercase tracking-widest px-1">
+              NAVIGATION DIRECTORY:
             </div>
 
-            <nav className="flex flex-col space-y-2">
-              {navItems.map((item) => {
-                const Icon = item.icon;
-                return isHomePage ? (
-                  <ScrollLink
-                    key={item.to}
-                    to={item.to}
-                    href={`#${item.to}`}
-                    smooth={true}
-                    offset={-70}
-                    duration={400}
-                    onClick={() => setIsOpen(false)}
-                    className="flex items-center gap-3 px-3 py-2.5 font-mono text-sm font-bold text-black bg-[#f6eedb] border-2 border-black shadow-brutal-xs hover:bg-[#fde047] active:translate-x-0.5 active:translate-y-0.5 transition-all"
-                  >
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              return isHomePage ? (
+                <ScrollLink
+                  key={item.to}
+                  to={item.to}
+                  href={`#${item.to}`}
+                  smooth={true}
+                  offset={-70}
+                  duration={400}
+                  onClick={() => setIsOpen(false)}
+                  className="w-full flex items-center justify-between px-3.5 py-2.5 bg-[#f6eedb] border-2 border-black font-mono text-sm font-bold shadow-brutal-xs hover:bg-[#fde047] active:translate-x-1 active:translate-y-0.5 transition-all cursor-pointer"
+                >
+                  <span className="flex items-center gap-2">
                     <Icon className="w-4 h-4 text-black shrink-0" />
-                    <span>{item.label}</span>
-                  </ScrollLink>
-                ) : (
-                  <RouterLink
-                    key={item.to}
-                    to={`/#${item.to}`}
-                    onClick={() => setIsOpen(false)}
-                    className="flex items-center gap-3 px-3 py-2.5 font-mono text-sm font-bold text-black bg-[#f6eedb] border-2 border-black shadow-brutal-xs hover:bg-[#fde047] active:translate-x-0.5 active:translate-y-0.5 transition-all"
-                  >
+                    <span className="text-black font-black">{item.label}</span>
+                  </span>
+                  <span className="text-black/60 font-mono text-xs">→</span>
+                </ScrollLink>
+              ) : (
+                <RouterLink
+                  key={item.to}
+                  to={`/#${item.to}`}
+                  onClick={() => setIsOpen(false)}
+                  className="w-full flex items-center justify-between px-3.5 py-2.5 bg-[#f6eedb] border-2 border-black font-mono text-sm font-bold shadow-brutal-xs hover:bg-[#fde047] active:translate-x-1 active:translate-y-0.5 transition-all"
+                >
+                  <span className="flex items-center gap-2">
                     <Icon className="w-4 h-4 text-black shrink-0" />
-                    <span>{item.label}</span>
-                  </RouterLink>
-                );
-              })}
+                    <span className="text-black font-black">{item.label}</span>
+                  </span>
+                  <span className="text-black/60 font-mono text-xs">→</span>
+                </RouterLink>
+              );
+            })}
 
+            {/* Quick External Actions */}
+            <div className="pt-2 border-t-2 border-black/15 grid grid-cols-2 gap-2">
               <a
                 href="/rss.xml"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 px-3 py-2.5 font-mono text-sm font-bold text-black bg-[#fb923c] border-2 border-black shadow-brutal-xs hover:bg-[#f97316] active:translate-x-0.5 active:translate-y-0.5 transition-all"
+                aria-label="RSS Feed"
+                className="flex items-center justify-center gap-1.5 px-3 py-2 bg-[#fb923c] text-black border-2 border-black font-mono text-xs font-bold shadow-brutal-xs hover:shadow-brutal active:translate-x-0.5 active:translate-y-0.5"
               >
-                <Rss className="w-4 h-4 text-black shrink-0" />
-                <span>~/rss.xml</span>
+                <Rss className="w-3.5 h-3.5 text-black shrink-0" />
+                <span>RSS FEED</span>
               </a>
-            </nav>
 
-            <div className="pt-2 border-t-2 border-black flex gap-2">
               <a
                 href="https://github.com/Bittu5134"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setIsOpen(false)}
                 aria-label="GitHub Profile (@Bittu5134)"
-                className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-[#fffdf9] text-black border-2 border-black font-mono text-xs font-bold shadow-brutal-xs hover:bg-[#c4b5fd] active:translate-x-0.5 active:translate-y-0.5"
+                className="flex items-center justify-center gap-1.5 px-3 py-2 bg-[#fffdf9] text-black border-2 border-black font-mono text-xs font-bold shadow-brutal-xs hover:bg-[#c4b5fd] active:translate-x-0.5 active:translate-y-0.5"
               >
                 <GithubIcon className="w-4 h-4 text-black shrink-0" />
                 <span>GITHUB</span>

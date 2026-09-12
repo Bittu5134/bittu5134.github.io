@@ -4,11 +4,11 @@ import {
   Check,
   Copy,
   ArrowUpRight,
-  Heart,
   Rss,
   GithubIcon,
   PlanetMinecraftIcon,
   TwitterIcon,
+  PatreonIcon,
   DiscordIcon,
 } from "../icons";
 
@@ -102,7 +102,7 @@ export default function RetroContact() {
               <div className="p-3 sm:p-4 bg-[#c4b5fd] border-2 border-black shadow-brutal-xs flex flex-wrap items-center justify-between gap-2.5">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-none bg-black text-[#c4b5fd] flex items-center justify-center border border-black shrink-0">
-                    <DiscordIcon className="w-4 h-4 fill-current" />
+                    <DiscordIcon className="w-4 h-4 text-[#c4b5fd]" />
                   </div>
                   <div>
                     <div className="font-mono text-xs uppercase font-bold text-black/60">
@@ -185,7 +185,7 @@ export default function RetroContact() {
                     className="flex items-center justify-between p-2.5 bg-[#f6eedb] border border-black font-mono text-xs sm:text-sm font-bold text-black hover:bg-[#38bdf8] transition-colors"
                   >
                     <span className="flex items-center gap-2">
-                      <TwitterIcon className="w-4 h-4 text-black" />
+                      <TwitterIcon className="w-4 h-4 text-sky-600" />
                       X / TWITTER: @bittu5134
                     </span>
                     <ArrowUpRight className="w-4 h-4" />
@@ -198,7 +198,7 @@ export default function RetroContact() {
                     className="flex items-center justify-between p-2.5 bg-[#f6eedb] border border-black font-mono text-xs sm:text-sm font-bold text-black hover:bg-[#f472b6] transition-colors"
                   >
                     <span className="flex items-center gap-2">
-                      <Heart className="w-4 h-4 fill-[#f43f5e] text-[#f43f5e]" />
+                      <PatreonIcon className="w-4 h-4 text-[#f43f5e]" />
                       PATREON: @lazybittu
                     </span>
                     <ArrowUpRight className="w-4 h-4" />
