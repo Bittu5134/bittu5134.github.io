@@ -4,15 +4,14 @@
   "version": "3.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
+    "dev": "node scripts/generate-meta.mjs && vite",
+    "generate-meta": "node scripts/generate-meta.mjs",
+    "build": "node scripts/generate-meta.mjs && tsc && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
-    "devicon": "^2.16.0",
     "lucide-react": "^0.483.0",
-    "motion": "^11.11.17",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-markdown": "^10.1.0",

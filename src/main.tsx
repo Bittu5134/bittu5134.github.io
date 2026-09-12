@@ -4,13 +4,13 @@ import App from "./pages/App.tsx";
 import DiscordRedirect from "./pages/DiscordRedirect.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router";
 
-import "../index.css";
+import "./index.css";
 import SimpleFlightController from "./pages/SimpleFlightController.tsx";
 import BlogList from "./pages/BlogList.tsx";
 import BlogPost from "./pages/BlogPost.tsx";
 import ErrorPage from "./pages/ErrorPage.tsx";
 
-let router = createBrowserRouter([
+const router = createBrowserRouter([
   {
     path: "/",
     Component: App,

@@ -1,0 +1,25 @@
+# Bittu (Divyanshu Anand)
+
+> Systems hacker, low-level network engineer, and undergraduate studying Cybersecurity & Computing at IIT Kanpur '30.
+
+## Overview
+Bittu specializes in low-level systems programming (Go, Rust, C++), high-throughput WebRTC peer-to-peer networking, Linux daemons and socket telemetry, and reverse engineering binary network protocols (e.g. Minecraft Java wire format).
+
+## Core Projects
+- [ORV-Reader](https://orv.pages.dev): High-scale distributed web publishing platform serving 10.5M+ monthly HTTP requests with dual static web and compressed EPUB compilation and Cloudflare WAF bot defenses.
+- [PeerBasket](https://peerbasket.bittu.dev): High-throughput lobby-based WebRTC signaling server in Go with Redis. Achieves 41ms average latency and 0.0% packet loss across 500 concurrent peers on bare-metal Proxmox infrastructure.
+- [NetShip](https://github.com/Bittu5134/NetShip): Host Telemetry and Endpoint Detection & Response (EDR) daemon in Go. Captures active TCP/UDP socket activity and maps process lineages via deterministic 24-character SHA-256 GUIDs.
+- [IITK-Resume-Engine](https://github.com/Bittu5134/IITK-Resume-Model): 2D Cartesian spatial coordinate geometry parser in PyMuPDF for academic LaTeX PDFs, recognizing 4,400+ IITK courses with a 6-track step-gradient scoring model.
+- [Sharelock](https://github.com/Bittu5134/Sharelock): 1st Place Winner at ShareIITK Hackathon. Retrieval pipeline and Model Context Protocol (MCP) server indexing 100+ pages of IIT Kanpur academic regulations.
+
+## Technical Articles & Dispatches
+- [Scaling WebRTC Signaling in Go: Lessons from 500 Concurrent Peers](https://bittu.dev/blog/scaling-webrtc-signaling-in-go): A deep dive into building PeerBasket low-latency signaling server in Go. How we achieved 41ms average latency and 0% packet loss across 500 concurrent peers with Redis TTL heartbeat pruning and IP token buckets.
+- [Reverse Engineering the Modern Minecraft Network Protocol](https://bittu.dev/blog/reverse-engineering-minecraft-protocol): Unpacking the binary wire format of Minecraft Java Edition. From variable-length integers (VarInt) and zlib packet compression to handshake state machines and live packet sniffing.
+- [Coordinate Geometry in PyMuPDF: Extracting Unruly Academic LaTeX PDFs](https://bittu.dev/blog/spatial-geometry-parsing-in-pymupdf): Why standard PDF parsers struggle with academic transcripts and resumes, and how we solved it for CDW IIT Kanpur using 2D spatial coordinate clustering and step-gradient scoring.
+
+## Quick Links
+- Website: https://bittu.dev
+- Technical Zine: https://bittu.dev/blog
+- RSS Feed: https://bittu.dev/rss.xml
+- GitHub: https://github.com/Bittu5134
+- Planet Minecraft: https://www.planetminecraft.com/member/bittu5134/
