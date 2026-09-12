@@ -1,44 +1,40 @@
-import Header from "../components/awhikax/Header";
-import HeroSection from "../components/awhikax/HeroSection";
-import StatsSection from "../components/awhikax/StatsSection";
-import ServicesSection from "../components/awhikax/ServicesSection";
-import ExperienceSection from "../components/awhikax/ExperienceSection";
-import ProjectsSection from "../components/awhikax/ProjectsSection";
-import AboutSection from "../components/awhikax/AboutSection";
-import BlogSection from "../components/awhikax/BlogSection";
-import ContactSection from "../components/awhikax/ContactSection";
-import Footer from "../components/awhikax/Footer";
-import AudioPlayer from "../components/AudioPlayer";
+import RetroHeader from "../components/retro/RetroHeader";
+import RetroTicker from "../components/retro/RetroTicker";
+import RetroHero from "../components/retro/RetroHero";
+import RetroBadgeWall from "../components/retro/RetroBadgeWall";
+import RetroProjects from "../components/retro/RetroProjects";
+import RetroTechLab from "../components/retro/RetroTechLab";
+import RetroZine from "../components/retro/RetroZine";
+import RetroAbout from "../components/retro/RetroAbout";
+import RetroContact from "../components/retro/RetroContact";
+import RetroFooter from "../components/retro/RetroFooter";
+import RetroCassettePlayer from "../components/retro/RetroCassettePlayer";
 
 export default function App() {
   return (
-    <div className="bg-[#080b12] text-[#f5ede3] overflow-x-hidden relative min-h-screen">
-      {/* Floating navbar */}
-      <Header />
+    <div className="min-h-screen bg-[#f6eedb] retro-dots-bg text-[#14161f] font-sans selection:bg-[#fde047] selection:text-black">
+      {/* Top Retro Header */}
+      <RetroHeader />
 
-      {/* Subtle radial ambient glows in the background */}
-      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        <div className="absolute top-0 left-1/4 w-[600px] h-[500px] bg-[#f49a60]/[0.025] blur-[120px] rounded-full" />
-        <div className="absolute bottom-1/3 right-1/4 w-[500px] h-[400px] bg-[#35a7ff]/[0.02] blur-[100px] rounded-full" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-[#9b9fed]/[0.015] blur-[140px] rounded-full" />
-      </div>
+      {/* Retro Continuous Marquee Ticker */}
+      <RetroTicker />
 
-      {/* Main content - all sections */}
-      <main className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <HeroSection />
-        <StatsSection />
-        <ServicesSection />
-        <ExperienceSection />
-        <ProjectsSection />
-        <AboutSection />
-        <BlogSection />
-        <ContactSection />
+      {/* Main Content Area */}
+      <main className="space-y-6 pt-4">
+        <RetroHero />
+        <RetroBadgeWall />
+        <RetroProjects />
+        <RetroTechLab />
+        <RetroZine />
+        <RetroAbout />
+        <RetroContact />
       </main>
 
-      <Footer />
+      {/* Footer */}
+      <RetroFooter />
 
-      {/* Ambient audio player widget */}
-      <AudioPlayer />
+      {/* Interactive Cassette Lo-Fi Deck Widget */}
+      <RetroCassettePlayer />
     </div>
   );
 }

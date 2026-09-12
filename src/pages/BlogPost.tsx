@@ -1,9 +1,9 @@
 import { useParams, Link, Navigate } from "react-router";
 import { blogPosts } from "../data/blogs";
-import SideBar from "../components/SideBar";
-import AudioPlayer from "../components/AudioPlayer";
+import RetroHeader from "../components/retro/RetroHeader";
+import RetroFooter from "../components/retro/RetroFooter";
+import RetroCassettePlayer from "../components/retro/RetroCassettePlayer";
 import Markdown from "react-markdown";
-import { ArrowLeft, Clock, Calendar, Share2, Check } from "lucide-react";
 import { useState } from "react";
 
 export default function BlogPost() {
@@ -24,178 +24,165 @@ export default function BlogPost() {
   };
 
   return (
-    <div className="flex bg-[#080b12] text-cream overflow-x-hidden relative min-h-screen">
-      <SideBar />
-      <div className="flex md:ml-[260px] ml-0 flex-col w-full min-h-screen relative px-6 md:px-14 lg:px-20 py-16">
-        
-        {/* Top Back Navigation */}
-        <div className="flex items-center justify-between max-w-3xl mb-12">
+    <div className="min-h-screen bg-[#f6eedb] retro-dots-bg text-[#14161f] font-sans selection:bg-[#fde047] selection:text-black">
+      <RetroHeader />
+
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
+        {/* Navigation & Share */}
+        <div className="flex items-center justify-between gap-4 mb-8">
           <Link
             to="/blog"
-            className="flex items-center gap-2 text-cream/70 hover:text-amber_glow transition-colors text-sm font-mono group"
+            className="px-3.5 py-1.5 bg-[#fffdf9] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs hover:bg-[#fde047] hover:shadow-brutal active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5"
           >
-            <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-            <span>all articles</span>
+            <span>← ALL ZINE ARTICLES</span>
           </Link>
 
           <button
             onClick={handleShare}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0e1322] border border-white/10 hover:border-amber_glow/50 text-cream/70 hover:text-amber_glow transition-colors text-xs font-mono"
-            aria-label="Copy article link"
+            className="px-3.5 py-1.5 bg-[#fffdf9] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs hover:bg-[#86efac] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5"
           >
-            {copied ? (
-              <>
-                <Check size={14} className="text-[#2ecc71]" />
-                <span className="text-[#2ecc71]">copied link!</span>
-              </>
-            ) : (
-              <>
-                <Share2 size={14} />
-                <span>share</span>
-              </>
-            )}
+            <span>{copied ? "LINK COPIED! ✓" : "SHARE ARTICLE ↗"}</span>
           </button>
         </div>
 
-        {/* Article Container */}
-        <article className="max-w-3xl w-full">
-          {/* Header */}
-          <header className="mb-12 pb-8 border-b border-cream/[0.08]">
-            <div className="flex items-center gap-3 text-xs font-mono text-cream/50 mb-4">
-              <span className="flex items-center gap-1.5">
-                <Calendar size={13} />
-                {post.date}
+        {/* Article Box */}
+        <article className="p-6 sm:p-10 md:p-12 bg-[#fffdf9] border-[3px] border-black shadow-brutal-lg">
+          {/* Metadata Header */}
+          <div className="mb-8 pb-6 border-b-[3px] border-black">
+            <div className="flex flex-wrap items-center gap-2 mb-4 font-mono text-xs font-bold">
+              <span className="px-2.5 py-1 bg-[#86efac] border border-black">
+                STAMP: {post.date.toUpperCase()}
               </span>
-              <span>•</span>
-              <span className="flex items-center gap-1.5">
-                <Clock size={13} />
-                {post.readTime}
+              <span className="px-2.5 py-1 bg-[#fde047] border border-black">
+                {post.readTime.toUpperCase()}
               </span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-cream mb-6 leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-black leading-tight mb-4">
               {post.title}
             </h1>
 
-            <div className="flex flex-wrap gap-2">
+            <p className="font-mono text-xs sm:text-sm text-black/80 font-bold leading-relaxed mb-4">
+              {post.summary}
+            </p>
+
+            <div className="flex flex-wrap gap-1.5">
               {post.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="px-2.5 py-0.5 rounded-full text-xs font-mono bg-[#0e1322] border border-white/10 text-lavender-light"
+                  className="px-2 py-0.5 bg-[#f6eedb] border border-black font-mono text-[11px] font-bold text-black"
                 >
                   #{tag}
                 </span>
               ))}
             </div>
-          </header>
+          </div>
 
-          {/* Markdown Body */}
-          <div className="prose prose-invert max-w-none text-cream/85 font-normal leading-relaxed">
+          {/* Article Markdown Content with Retro Styling */}
+          <div className="font-mono text-xs sm:text-sm leading-relaxed text-black/90 space-y-6">
             <Markdown
               components={{
-                h2: ({ children }) => (
-                  <h2 className="text-2xl sm:text-3xl font-bold mt-12 mb-4 text-cream tracking-tight pb-2 border-b border-white/5">
-                    {children}
-                  </h2>
+                h2: ({ ...props }) => (
+                  <h2
+                    className="text-xl sm:text-2xl font-black text-black mt-8 mb-4 pt-4 border-t-2 border-black/20 flex items-center gap-2"
+                    {...props}
+                  />
                 ),
-                h3: ({ children }) => (
-                  <h3 className="text-xl sm:text-2xl font-bold mt-8 mb-3 text-amber_glow tracking-tight">
-                    {children}
-                  </h3>
+                h3: ({ ...props }) => (
+                  <h3
+                    className="text-lg font-bold text-black mt-6 mb-2"
+                    {...props}
+                  />
                 ),
-                p: ({ children }) => (
-                  <p className="text-base sm:text-lg mb-6 leading-relaxed text-cream/85">
-                    {children}
-                  </p>
+                p: ({ ...props }) => (
+                  <p className="leading-relaxed mb-4" {...props} />
                 ),
-                a: ({ href, children }) => (
-                  <a
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-argentinian_blue hover:underline underline-offset-4 font-medium"
-                  >
-                    {children}
-                  </a>
+                ul: ({ ...props }) => (
+                  <ul className="list-disc list-inside space-y-2 mb-4 pl-2" {...props} />
                 ),
-                code: ({ className, children }) => {
-                  const isInline = !className && typeof children === "string" && !children.includes("\n");
-                  if (isInline) {
+                ol: ({ ...props }) => (
+                  <ol className="list-decimal list-inside space-y-2 mb-4 pl-2" {...props} />
+                ),
+                li: ({ ...props }) => (
+                  <li className="leading-relaxed" {...props} />
+                ),
+                blockquote: ({ ...props }) => (
+                  <blockquote
+                    className="border-l-4 border-[#f59e0b] bg-[#fef08a] p-4 my-4 font-mono text-xs text-black border-2 border-black shadow-brutal-xs"
+                    {...props}
+                  />
+                ),
+                code: ({ className, children, ...props }) => {
+                  const isBlock = className?.includes("language-");
+                  if (isBlock) {
                     return (
-                      <code className="bg-[#12182c] text-amber_glow-light px-1.5 py-0.5 rounded text-sm font-mono border border-white/5">
-                        {children}
-                      </code>
+                      <div className="my-5 border-2 border-black shadow-brutal bg-[#12151e] p-4 overflow-x-auto text-[#f5ede3] text-xs font-mono">
+                        <code className={className} {...props}>
+                          {children}
+                        </code>
+                      </div>
                     );
                   }
                   return (
-                    <code className="block bg-[#080d1a] border border-white/10 text-cream p-4 rounded-xl text-xs sm:text-sm font-mono overflow-x-auto my-6 shadow-inner">
+                    <code
+                      className="px-1.5 py-0.5 bg-[#f6eedb] border border-black text-black font-mono text-xs font-bold"
+                      {...props}
+                    >
                       {children}
                     </code>
                   );
                 },
-                pre: ({ children }) => <pre className="not-prose my-6">{children}</pre>,
-                ul: ({ children }) => (
-                  <ul className="list-disc list-inside space-y-2 mb-6 text-cream/80 text-base sm:text-lg">
-                    {children}
-                  </ul>
-                ),
-                ol: ({ children }) => (
-                  <ol className="list-decimal list-inside space-y-2 mb-6 text-cream/80 text-base sm:text-lg">
-                    {children}
-                  </ol>
-                ),
-                li: ({ children }) => <li className="leading-relaxed">{children}</li>,
-                blockquote: ({ children }) => (
-                  <blockquote className="border-l-4 border-amber_glow pl-4 my-6 italic text-cream/70 bg-[#0e1322]/50 py-2 rounded-r-lg">
-                    {children}
-                  </blockquote>
-                ),
-                table: ({ children }) => (
-                  <div className="overflow-x-auto my-8 border border-white/10 rounded-xl bg-[#0a0f1e]">
-                    <table className="w-full text-left text-sm font-mono">
-                      {children}
-                    </table>
+                pre: ({ children }) => <>{children}</>,
+                table: ({ ...props }) => (
+                  <div className="overflow-x-auto my-6 border-2 border-black shadow-brutal-xs">
+                    <table className="w-full text-left font-mono text-xs border-collapse" {...props} />
                   </div>
                 ),
-                thead: ({ children }) => (
-                  <thead className="bg-[#10172e] border-b border-white/10 text-cream font-bold">
-                    {children}
-                  </thead>
+                th: ({ ...props }) => (
+                  <th className="p-2.5 bg-[#fde047] border border-black font-bold text-black" {...props} />
                 ),
-                tbody: ({ children }) => (
-                  <tbody className="divide-y divide-white/5 text-cream/80">
-                    {children}
-                  </tbody>
+                td: ({ ...props }) => (
+                  <td className="p-2.5 border border-black/30 bg-[#fffdf9]" {...props} />
                 ),
-                tr: ({ children }) => <tr className="hover:bg-white/[0.02]">{children}</tr>,
-                th: ({ children }) => <th className="p-3 sm:p-4">{children}</th>,
-                td: ({ children }) => <td className="p-3 sm:p-4">{children}</td>,
-                hr: () => <hr className="my-12 border-0 h-px bg-white/10" />,
+                a: ({ href, children, ...props }) => (
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-bold underline underline-offset-4 decoration-[#f59e0b] hover:bg-[#fde047] transition-colors"
+                    {...props}
+                  >
+                    {children}
+                  </a>
+                ),
+                hr: () => <hr className="my-8 border-t-2 border-black/20" />,
               }}
             >
               {post.content}
             </Markdown>
           </div>
 
-          {/* Bottom Back Button */}
-          <div className="mt-16 pt-8 border-t border-cream/[0.08] flex justify-between items-center">
+          {/* Article Footer Note */}
+          <div className="mt-12 pt-6 border-t-2 border-black flex items-center justify-between flex-wrap gap-4 font-mono text-xs font-bold">
             <Link
               to="/blog"
-              className="flex items-center gap-2 text-amber_glow hover:underline underline-offset-4 text-sm font-mono"
+              className="px-4 py-2 bg-[#fde047] border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 transition-all"
             >
-              <ArrowLeft size={16} />
-              <span>back to all articles</span>
+              ← BACK TO ALL DISPATCHES
             </Link>
+
+            <a
+              href="mailto:hello@bittu.dev"
+              className="px-4 py-2 bg-[#86efac] border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 transition-all"
+            >
+              SEND COMMENTS VIA EMAIL ✉️
+            </a>
           </div>
         </article>
+      </main>
 
-        {/* Footer */}
-        <footer className="text-center w-full text-cream/30 text-xs font-mono py-16 mt-auto">
-          &copy; 2026 Divyanshu Anand (Bittu5134)
-        </footer>
-      </div>
-
-      <AudioPlayer />
+      <RetroFooter />
+      <RetroCassettePlayer />
     </div>
   );
 }

@@ -8,21 +8,66 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['"Space Grotesk"', 'Inter', 'sans-serif'],
+        mono: ['"Space Mono"', 'monospace'],
+        pixel: ['"VT323"', 'monospace'],
+      },
+      boxShadow: {
+        'brutal-xs': '2px 2px 0px 0px #000000',
+        'brutal-sm': '3px 3px 0px 0px #000000',
+        'brutal': '4px 4px 0px 0px #000000',
+        'brutal-lg': '6px 6px 0px 0px #000000',
+        'brutal-xl': '8px 8px 0px 0px #000000',
+        'brutal-amber': '4px 4px 0px 0px #f49a60',
+        'brutal-cyan': '4px 4px 0px 0px #35a7ff',
+        'brutal-yellow': '4px 4px 0px 0px #fde047',
+        'brutal-mint': '4px 4px 0px 0px #86efac',
+      },
       keyframes: {
-        fadeIn: {
-          '0%': { opacity: '0', transform: 'translateY(10px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' }
+        ticker: {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-50%)' },
         },
-        scroll: {
-          '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(-100%)' }
-        }
+        spin_slow: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
+        wiggle: {
+          '0%, 100%': { transform: 'rotate(-2deg)' },
+          '50%': { transform: 'rotate(2deg)' },
+        },
+        bounce_subtle: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-4px)' },
+        },
       },
       animation: {
-        fadeIn: 'fadeIn 0.5s ease-out',
-        scrollText: 'scroll 10s linear infinite'
+        ticker: 'ticker 22s linear infinite',
+        tickerFast: 'ticker 14s linear infinite',
+        spinSlow: 'spin_slow 10s linear infinite',
+        wiggle: 'wiggle 2s ease-in-out infinite',
+        bounceSubtle: 'bounce_subtle 2s ease-in-out infinite',
       },
       colors: {
+        retro: {
+          bg: "#fcf6e8",
+          darkBg: "#12151e",
+          card: "#fffdf9",
+          cardDark: "#1a1e2b",
+          ink: "#14161f",
+          border: "#14161f",
+          yellow: "#fde047",
+          amber: "#f59e0b",
+          peach: "#fb923c",
+          mint: "#86efac",
+          cyan: "#38bdf8",
+          blue: "#3b82f6",
+          lavender: "#c4b5fd",
+          pink: "#f472b6",
+          red: "#f87171",
+          cream: "#fbf3de",
+        },
         night: {
           DEFAULT: "#080b12",
           100: "#030508",
@@ -45,22 +90,6 @@ export default {
           light: "#ffd4a3",
           dark: "#ce784e",
         },
-        lavender: {
-          DEFAULT: "#9b9fed",
-          light: "#b6b8ea",
-        },
-        white_smoke: {
-          DEFAULT: "#f2f4f3",
-          100: "#2d3430",
-          200: "#596961",
-          300: "#899a91",
-          400: "#bdc7c2",
-          500: "#f2f4f3",
-          600: "#f4f6f5",
-          700: "#f7f8f7",
-          800: "#f9fafa",
-          900: "#fcfdfc",
-        },
         argentinian_blue: {
           DEFAULT: "#35a7ff",
           100: "#00233d",
@@ -68,10 +97,6 @@ export default {
           300: "#0068b8",
           400: "#008bf5",
           500: "#35a7ff",
-          600: "#5cb8ff",
-          700: "#85caff",
-          800: "#addcff",
-          900: "#d6edff",
         },
       },
     },
