@@ -46,7 +46,7 @@ export default function RetroHero() {
               <div className="border-2 border-black overflow-hidden bg-[#12151e]">
                 <img
                   src="/images/avatar.png"
-                  alt="Bittu avatar"
+                  alt="Bittu, pixel art Minecraft-style avatar"
                   className="w-full h-48 sm:h-56 object-cover hover:scale-105 transition-transform duration-300"
                 />
               </div>
@@ -101,6 +101,7 @@ export default function RetroHero() {
             <div className="flex flex-wrap items-center gap-2.5 sm:gap-4">
               <ScrollLink
                 to="projects"
+                href="#projects"
                 smooth={true}
                 offset={-30}
                 duration={400}
@@ -112,6 +113,7 @@ export default function RetroHero() {
 
               <ScrollLink
                 to="zine"
+                href="#zine"
                 smooth={true}
                 offset={-30}
                 duration={400}
@@ -123,6 +125,7 @@ export default function RetroHero() {
 
               <button
                 onClick={copyDiscord}
+                aria-label="Copy Discord handle bittu5134"
                 className="px-3.5 sm:px-4 py-2.5 sm:py-3 bg-[#fffdf9] text-black font-mono font-bold text-xs sm:text-sm border-[3px] border-black shadow-brutal hover:bg-[#c4b5fd] hover:shadow-brutal-lg hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5 sm:gap-2 cursor-pointer"
               >
                 <span>👾 {copied ? "TAG COPIED! ✓" : "DISCORD: bittu5134"}</span>

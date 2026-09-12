@@ -61,6 +61,7 @@ export default function RetroContact() {
                   </a>
                   <button
                     onClick={copyEmail}
+                    aria-label="Copy email address hello@bittu.dev"
                     className="px-2.5 sm:px-3 py-1.5 bg-[#fde047] text-black font-mono text-xs font-bold border-2 border-black hover:bg-[#fb923c] active:translate-x-0.5 active:translate-y-0.5 transition-all cursor-pointer"
                   >
                     {copiedEmail ? "COPIED! ✓" : "COPY"}
@@ -89,6 +90,7 @@ export default function RetroContact() {
                   </a>
                   <button
                     onClick={copyDiscord}
+                    aria-label="Copy Discord handle bittu5134"
                     className="px-2.5 sm:px-3 py-1.5 bg-[#fde047] text-black font-mono text-xs font-bold border-2 border-black hover:bg-[#fb923c] active:translate-x-0.5 active:translate-y-0.5 transition-all cursor-pointer"
                   >
                     {copiedDiscord ? "COPIED! ✓" : "COPY"}

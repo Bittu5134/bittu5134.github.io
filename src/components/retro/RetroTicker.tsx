@@ -18,7 +18,7 @@ export default function RetroTicker() {
     "eBPF NETWORKING",
   ];
 
-  const doubledSkills = [...skills, ...skills, ...skills];
+  const doubledSkills = [...skills, ...skills];
 
   return (
     <div className="w-full my-6 bg-[#fde047] border-y-2 border-black py-2.5 overflow-hidden select-none font-mono text-xs sm:text-sm font-bold shadow-brutal-sm relative z-20">

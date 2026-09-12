@@ -47,6 +47,7 @@ export default function RetroHeader() {
             {isHomePage ? (
               <ScrollLink
                 to="hero"
+                href="#hero"
                 smooth={true}
                 offset={-70}
                 duration={400}
@@ -74,6 +75,7 @@ export default function RetroHeader() {
                 <ScrollLink
                   key={item.to}
                   to={item.to}
+                  href={`#${item.to}`}
                   smooth={true}
                   offset={-70}
                   duration={400}
@@ -151,6 +153,7 @@ export default function RetroHeader() {
             </div>
             <button
               onClick={() => setIsOpen(false)}
+              aria-label="Close menu"
               className="font-mono text-xs font-bold px-1.5 py-0.5 bg-black text-white hover:bg-red-500 active:scale-95"
             >
               ✕
@@ -168,6 +171,7 @@ export default function RetroHeader() {
                 <ScrollLink
                   key={item.to}
                   to={item.to}
+                  href={`#${item.to}`}
                   smooth={true}
                   offset={-70}
                   duration={400}

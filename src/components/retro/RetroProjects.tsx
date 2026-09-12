@@ -8,7 +8,7 @@ interface Project {
   tags: string[];
   liveUrl?: string;
   githubUrl?: string;
-  headerColor: string;
+  headerBgClass: string;
   statsText: string;
 }
 
@@ -25,7 +25,7 @@ export default function RetroProjects() {
       tags: ["Python", "SSG", "Cloudflare WAF", "EPUB", "FastAPI"],
       liveUrl: "https://orv.pages.dev",
       githubUrl: "https://github.com/Bittu5134/ORV-Reader",
-      headerColor: "#fde047",
+      headerBgClass: "bg-[#fde047]",
       statsText: "398GB Bandwidth · 764K Visits",
     },
     {
@@ -37,7 +37,7 @@ export default function RetroProjects() {
       tags: ["Go", "WebRTC", "Redis", "Proxmox", "Gin"],
       liveUrl: "https://peerbasket.bittu.dev",
       githubUrl: "https://github.com/Bittu5134/PeerBasket",
-      headerColor: "#86efac",
+      headerBgClass: "bg-[#86efac]",
       statsText: "500 Concurrent Peers · Bare-metal",
     },
     {
@@ -48,7 +48,7 @@ export default function RetroProjects() {
         "Cross-platform Host Telemetry and Endpoint Detection & Response (EDR) daemon in Go. Captures active TCP/UDP socket activity, maps process lineages via deterministic 24-char SHA-256 GUIDs, performs local cryptographic binary auditing, and runs an embedded live geolocation dashboard.",
       tags: ["Go", "Networking", "Telemetry", "EDR", "Linux"],
       githubUrl: "https://github.com/Bittu5134/NetShip",
-      headerColor: "#38bdf8",
+      headerBgClass: "bg-[#38bdf8]",
       statsText: "SHA-256 GUIDs · Socket Tracing",
     },
     {
@@ -60,7 +60,7 @@ export default function RetroProjects() {
       tags: ["Python", "PyMuPDF", "FastAPI", "LaTeX", "Spatial Geometry"],
       liveUrl: "https://iitk-resume.bittu.dev",
       githubUrl: "https://github.com/Bittu5134/IITK-Resume-Model",
-      headerColor: "#c4b5fd",
+      headerBgClass: "bg-[#c4b5fd]",
       statsText: "99.4% Parsing Precision · CDW IITK",
     },
     {
@@ -72,7 +72,7 @@ export default function RetroProjects() {
       tags: ["PyTorch", "YOLO", "Sobel Math", "FastAPI", "SSE"],
       liveUrl: "https://infrapulse.bittu.dev",
       githubUrl: "https://github.com/Bittu5134/InfraPulse",
-      headerColor: "#fb923c",
+      headerBgClass: "bg-[#fb923c]",
       statsText: "5-Model Vision Ensemble · Real-time SSE",
     },
     {
@@ -83,7 +83,7 @@ export default function RetroProjects() {
         "1st Place Winner at ShareIITK Ideathon. An end-to-end RAG retrieval pipeline and Model Context Protocol (MCP) server indexing 100+ pages of dense IIT Kanpur Undergraduate Manual academic policies for citation-backed query resolution.",
       tags: ["RAG", "MCP Server", "TypeScript", "Policy Search"],
       githubUrl: "https://github.com/Bittu5134/Sharelock",
-      headerColor: "#f472b6",
+      headerBgClass: "bg-[#f472b6]",
       statsText: "1st Place Winner · MCP Server",
     },
   ];
@@ -131,8 +131,7 @@ export default function RetroProjects() {
             >
               {/* Window Header */}
               <div
-                className="px-3 sm:px-4 py-2 border-b-[3px] border-black flex items-center justify-between gap-2 select-none"
-                style={{ backgroundColor: p.headerColor }}
+                className={`px-3 sm:px-4 py-2 border-b-[3px] border-black flex items-center justify-between gap-2 select-none ${p.headerBgClass}`}
               >
                 <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
                   <span className="w-2.5 h-2.5 bg-black rounded-none shrink-0"></span>

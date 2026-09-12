@@ -89,6 +89,7 @@ export default function RetroCassettePlayer() {
       {minimized ? (
         <button
           onClick={() => setMinimized(false)}
+          aria-label="Open cassette player"
           className="px-2.5 sm:px-3 py-1.5 sm:py-2 bg-[#fde047] text-black font-mono text-[11px] sm:text-xs font-bold border-2 border-black shadow-brutal flex items-center gap-1.5 sm:gap-2 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer"
         >
           <span>📼 {isPlaying ? "PLAYING..." : "TAPE DECK"}</span>
@@ -104,6 +105,7 @@ export default function RetroCassettePlayer() {
             </span>
             <button
               onClick={() => setMinimized(true)}
+              aria-label="Minimize cassette player"
               className="font-mono text-xs font-bold px-1.5 py-0.5 bg-black text-white hover:bg-red-500"
             >
               _
@@ -153,6 +155,7 @@ export default function RetroCassettePlayer() {
             <div className="grid grid-cols-4 gap-1.5 mb-2.5">
               <button
                 onClick={prevTrack}
+                aria-label="Previous track"
                 className="py-1.5 bg-[#fffdf9] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs hover:bg-[#c4b5fd] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
                 title="Previous Track"
               >
@@ -161,6 +164,7 @@ export default function RetroCassettePlayer() {
 
               <button
                 onClick={togglePlay}
+                aria-label={isPlaying ? "Pause tape" : "Play tape"}
                 className={`py-1.5 col-span-2 border-2 border-black font-mono text-xs font-bold shadow-brutal-xs active:translate-x-0.5 active:translate-y-0.5 active:shadow-none ${
                   isPlaying
                     ? "bg-[#86efac] hover:bg-[#6ee7b7]"
@@ -173,6 +177,7 @@ export default function RetroCassettePlayer() {
 
               <button
                 onClick={nextTrack}
+                aria-label="Next track"
                 className="py-1.5 bg-[#fffdf9] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs hover:bg-[#c4b5fd] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
                 title="Next Track"
               >
@@ -189,6 +194,7 @@ export default function RetroCassettePlayer() {
                 max="1"
                 step="0.05"
                 value={volume}
+                aria-label="Volume slider"
                 onChange={(e) => setVolume(parseFloat(e.target.value))}
                 className="w-full accent-[#fb923c] h-2 bg-[#fffdf9] border border-black cursor-pointer"
               />

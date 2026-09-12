@@ -1,19 +1,19 @@
 export default function RetroTechLab() {
   const techStack = [
-    { name: "Go / Golang", color: "#38bdf8" },
-    { name: "Rust", color: "#fb923c" },
-    { name: "C / C++", color: "#60a5fa" },
-    { name: "Python", color: "#fde047" },
-    { name: "TypeScript", color: "#38bdf8" },
-    { name: "Minecraft Java", color: "#86efac" },
-    { name: "WebRTC", color: "#f472b6" },
-    { name: "Redis", color: "#f87171" },
-    { name: "Linux / POSIX", color: "#fde047" },
-    { name: "Docker", color: "#60a5fa" },
-    { name: "FastAPI", color: "#a7f3d0" },
-    { name: "Tailwind / React", color: "#38bdf8" },
-    { name: "PyMuPDF", color: "#c4b5fd" },
-    { name: "Cloudflare Workers", color: "#fb923c" },
+    { name: "Go / Golang", bgClass: "bg-[#38bdf8]" },
+    { name: "Rust", bgClass: "bg-[#fb923c]" },
+    { name: "C / C++", bgClass: "bg-[#60a5fa]" },
+    { name: "Python", bgClass: "bg-[#fde047]" },
+    { name: "TypeScript", bgClass: "bg-[#38bdf8]" },
+    { name: "Minecraft Java", bgClass: "bg-[#86efac]" },
+    { name: "WebRTC", bgClass: "bg-[#f472b6]" },
+    { name: "Redis", bgClass: "bg-[#f87171]" },
+    { name: "Linux / POSIX", bgClass: "bg-[#fde047]" },
+    { name: "Docker", bgClass: "bg-[#60a5fa]" },
+    { name: "FastAPI", bgClass: "bg-[#a7f3d0]" },
+    { name: "Tailwind / React", bgClass: "bg-[#38bdf8]" },
+    { name: "PyMuPDF", bgClass: "bg-[#c4b5fd]" },
+    { name: "Cloudflare Workers", bgClass: "bg-[#fb923c]" },
   ];
 
   return (
@@ -129,8 +129,7 @@ export default function RetroTechLab() {
             {techStack.map((tech, i) => (
               <span
                 key={i}
-                className="px-2.5 sm:px-3.5 py-1.5 sm:py-2 border-2 border-black font-mono text-[11px] sm:text-sm font-bold shadow-brutal-xs flex items-center gap-1.5 select-none"
-                style={{ backgroundColor: tech.color }}
+                className={`px-2.5 sm:px-3.5 py-1.5 sm:py-2 border-2 border-black font-mono text-[11px] sm:text-sm font-bold shadow-brutal-xs flex items-center gap-1.5 select-none ${tech.bgClass}`}
               >
                 <span>{tech.name}</span>
               </span>
