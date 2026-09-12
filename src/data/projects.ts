@@ -3,6 +3,7 @@ import projectsData from "./projects.json";
 export interface Project {
   title: string;
   category: string;
+  filterCategory?: string;
   badge: string;
   description: string;
   tags: string[];
@@ -10,8 +11,14 @@ export interface Project {
   githubUrl?: string;
   headerBgClass: string;
   statsText: string;
-  stars?: number;
-  forks?: number;
 }
 
-export const projects: Project[] = projectsData as Project[];
+export interface ProjectsData {
+  categories: string[];
+  projects: Project[];
+}
+
+const data = projectsData as ProjectsData;
+
+export const categories: string[] = data.categories;
+export const projects: Project[] = data.projects;

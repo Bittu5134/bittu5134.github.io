@@ -2,11 +2,15 @@
 > A portfolio and technical blog for a low-level systems builder, cybersecurity undergraduate at IIT Kanpur, and WebRTC developer.
 
 ## Projects
-- [ORV-Reader](https://orv.pages.dev): High-scale distributed web publishing platform serving 10.5M+ monthly HTTP requests with dual static web and compressed EPUB compilation and Cloudflare WAF bot defenses.
-- [PeerBasket](https://peerbasket.bittu.dev): High-throughput lobby-based WebRTC signaling server in Go with Redis. Achieves 41ms average latency and 0.0% packet loss across 500 concurrent peers on bare-metal Proxmox infrastructure.
-- [NetShip](https://github.com/Bittu5134/NetShip): Host Telemetry and Endpoint Detection & Response (EDR) daemon in Go. Captures active TCP/UDP socket activity and maps process lineages via deterministic 24-character SHA-256 GUIDs.
-- [IITK-Resume-Engine](https://github.com/Bittu5134/IITK-Resume-Model): 2D Cartesian spatial coordinate geometry parser in PyMuPDF for academic LaTeX PDFs, recognizing 4,400+ IITK courses with a 6-track step-gradient scoring model.
-- [Sharelock](https://github.com/Bittu5134/Sharelock): 1st Place Winner at ShareIITK Hackathon. Retrieval pipeline and Model Context Protocol (MCP) server indexing 100+ pages of dense IIT Kanpur Undergraduate Manual academic policies.
+- [ORV-Reader](https://orv.pages.dev): High-scale distributed web publishing platform serving 10.5M+ monthly HTTP requests (398+ GB bandwidth, 764k+ unique visits). Automated Python Markdown SSG dual-compilation into static web and compressed EPUBs with Cloudflare WAF bot defenses.
+- [PeerBasket](https://peerbasket.bittu.dev): High-throughput, lobby-based WebRTC signaling server written in Go with Gin and Redis. Achieves 41 ms average latency and 0.0% packet loss across 500 concurrent peers with Redis TTL heartbeat pruning and IP token-bucket rate limiting on bare-metal Proxmox infrastructure.
+- [LOTM-Reader](https://github.com/Bittu5134/LOTM-Reader): Community-driven webnovel reader engineered for ultra-fast reading ergonomics. Built with Svelte, Giscus comment synchronization, Pandoc EPUB compilation pipelines, and offline service worker caching.
+- [NetShip](https://github.com/Bittu5134/NetShip): Cross-platform Host Telemetry and Endpoint Detection & Response (EDR) daemon in Go. Captures active TCP/UDP socket activity, maps process lineages via deterministic 24-char SHA-256 GUIDs, performs local cryptographic binary auditing, and runs an embedded live geolocation dashboard.
+- [IITK-Resume-Engine](https://iitk-resume.bittu.dev): Spatial LaTeX-PDF diagnostic engine built for IIT Kanpur Academics & Career Council (CDW). Features a 2D coordinate geometry table parser in PyMuPDF recognizing 4,400+ IITK courses and CPI metrics, paired with a 6-track step-gradient scoring model and counterfactual gap advice.
+- [InfraPulse](https://infrapulse.bittu.dev): Civic defect detection and priority dispatch platform developed for IIT Kanpur Takneek '26. Combines a 5-model PyTorch vision ensemble with Sobel spatial edge severity math, async FastAPI ticket routing, and live Server-Sent Events (SSE) staff dispatch queues.
+- [Sharelock](https://github.com/Bittu5134/Sharelock): 1st Place Winner at ShareIITK Ideathon. An end-to-end RAG retrieval pipeline and Model Context Protocol (MCP) server indexing 100+ pages of dense IIT Kanpur Undergraduate Manual academic policies for citation-backed query resolution.
+- [SkyBlock-Sniper](https://github.com/Bittu5134/SkyBlock-Sniper): High-frequency Hypixel Skyblock BIN auction sniping automation script in Python. Features real-time Hypixel API polling, memory-efficient profit margin calculation, and millisecond item snipe triggers.
+- [GH-Follow-Tracker](https://github.com/Bittu5134/GH-Follow-Tracker): Automated GitHub follower tracking engine with customizable real-time SVG status badges, Discord/Slack webhook notifications, and a REST API deployed on Cloudflare Workers edge network.
 
 ## Technical Writing
 - [Scaling WebRTC Signaling in Go: Lessons from 500 Concurrent Peers](https://bittu.dev/raw/blogs/scaling-webrtc-signaling-in-go.md): A deep dive into building PeerBasket low-latency signaling server in Go. How we achieved 41ms average latency and 0% packet loss across 500 concurrent peers with Redis TTL heartbeat pruning and IP token buckets. (HTML view at https://bittu.dev/blog/scaling-webrtc-signaling-in-go)
@@ -22,3 +26,4 @@
 - [RSS 2.0 Feed](https://bittu.dev/rss.xml): Standard RSS syndication feed.
 - [GitHub Profile](https://github.com/Bittu5134): Open-source repositories and experimental code.
 - [Planet Minecraft](https://www.planetminecraft.com/member/bittu5134/): Minecraft technical datapacks and spotlighted game modifications.
+- [Patreon](https://www.patreon.com/lazybittu): Support independent open-source tools and systems research.

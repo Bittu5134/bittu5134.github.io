@@ -9,6 +9,7 @@ const SITE_URL = "https://bittu.dev";
 const blogsDir = path.resolve(__dirname, "../src/content/blogs");
 const publicDir = path.resolve(__dirname, "../public");
 const rawBlogsDir = path.resolve(publicDir, "raw/blogs");
+const projectsJsonPath = path.resolve(__dirname, "../src/data/projects.json");
 
 if (!fs.existsSync(publicDir)) {
   fs.mkdirSync(publicDir, { recursive: true });
@@ -96,6 +97,18 @@ for (const post of blogFiles) {
   fs.writeFileSync(path.join(rawBlogsDir, `${post.slug}.md`), post.raw, "utf-8");
 }
 console.log(`[generate-meta] Published raw markdown files to public/raw/blogs/`);
+
+// Read data-driven projects from src/data/projects.json
+let projectsList = [];
+if (fs.existsSync(projectsJsonPath)) {
+  try {
+    const rawData = JSON.parse(fs.readFileSync(projectsJsonPath, "utf-8"));
+    projectsList = Array.isArray(rawData) ? rawData : (rawData.projects || []);
+    console.log(`[generate-meta] Loaded ${projectsList.length} projects from projects.json.`);
+  } catch (e) {
+    console.warn(`[generate-meta] Failed to parse projects.json:`, e.message);
+  }
+}
 
 // 2. Generate public/rss.xml
 function generateRss() {
@@ -198,15 +211,18 @@ function generateLlmsTxt() {
     )
     .join("\n");
 
+  const projectsMarkdown = projectsList
+    .map(
+      (p) =>
+        `- [${p.title}](${p.liveUrl || p.githubUrl}): ${p.description}`
+    )
+    .join("\n");
+
   const llmsContent = `# Bittu's Portfolio & Technical Blog
 > A portfolio and technical blog for a low-level systems builder, cybersecurity undergraduate at IIT Kanpur, and WebRTC developer.
 
 ## Projects
-- [ORV-Reader](https://orv.pages.dev): High-scale distributed web publishing platform serving 10.5M+ monthly HTTP requests with dual static web and compressed EPUB compilation and Cloudflare WAF bot defenses.
-- [PeerBasket](https://peerbasket.bittu.dev): High-throughput lobby-based WebRTC signaling server in Go with Redis. Achieves 41ms average latency and 0.0% packet loss across 500 concurrent peers on bare-metal Proxmox infrastructure.
-- [NetShip](https://github.com/Bittu5134/NetShip): Host Telemetry and Endpoint Detection & Response (EDR) daemon in Go. Captures active TCP/UDP socket activity and maps process lineages via deterministic 24-character SHA-256 GUIDs.
-- [IITK-Resume-Engine](https://github.com/Bittu5134/IITK-Resume-Model): 2D Cartesian spatial coordinate geometry parser in PyMuPDF for academic LaTeX PDFs, recognizing 4,400+ IITK courses with a 6-track step-gradient scoring model.
-- [Sharelock](https://github.com/Bittu5134/Sharelock): 1st Place Winner at ShareIITK Hackathon. Retrieval pipeline and Model Context Protocol (MCP) server indexing 100+ pages of dense IIT Kanpur Undergraduate Manual academic policies.
+${projectsMarkdown}
 
 ## Technical Writing
 ${articlesList}
@@ -220,6 +236,7 @@ ${articlesList}
 - [RSS 2.0 Feed](${SITE_URL}/rss.xml): Standard RSS syndication feed.
 - [GitHub Profile](https://github.com/Bittu5134): Open-source repositories and experimental code.
 - [Planet Minecraft](https://www.planetminecraft.com/member/bittu5134/): Minecraft technical datapacks and spotlighted game modifications.
+- [Patreon](https://www.patreon.com/lazybittu): Support independent open-source tools and systems research.
 `;
 
   fs.writeFileSync(path.join(publicDir, "llms.txt"), llmsContent, "utf-8");
@@ -244,6 +261,14 @@ ${post.content}`;
     })
     .join("\n\n================================================================================\n\n");
 
+  const projectsFullSection = projectsList
+    .map((p, i) => {
+      return `${i + 1}. ${p.title} (${p.liveUrl ? `${p.liveUrl} | ` : ""}${p.githubUrl})
+${p.description}
+Category: ${p.category} | Tags: ${p.tags.join(", ")} | Stats: ${p.statsText}`;
+    })
+    .join("\n\n");
+
   const fullContent = `# Bittu's Portfolio & Technical Blog — Full Context Payload
 > Complete plain-text and Markdown knowledge base for Bittu (Bittu5134): low-level systems builder, cybersecurity undergraduate at IIT Kanpur, and WebRTC developer.
 
@@ -251,6 +276,7 @@ Canonical URL: ${SITE_URL}
 Index File: ${SITE_URL}/llms.txt
 RSS Feed: ${SITE_URL}/rss.xml
 GitHub: https://github.com/Bittu5134
+Patreon: https://www.patreon.com/lazybittu
 
 ================================================================================
 SECTION 1: PROFILE & CORE EXPERTISE
@@ -269,20 +295,7 @@ Core Focus:
 SECTION 2: FEATURED PROJECTS
 ================================================================================
 
-1. ORV-Reader (https://orv.pages.dev | https://github.com/Bittu5134/ORV-Reader)
-High-scale distributed web publishing platform serving 10.5M+ monthly HTTP requests (398+ GB bandwidth, 764k+ unique visits). Automated Python Markdown SSG dual-compilation into static web and compressed EPUBs with Cloudflare WAF bot defenses.
-
-2. PeerBasket (https://peerbasket.bittu.dev | https://github.com/Bittu5134/PeerBasket)
-High-throughput, lobby-based WebRTC signaling server written in Go with Gin and Redis. Achieves 41 ms average latency and 0.0% packet loss across 500 concurrent peers with Redis TTL heartbeat pruning and IP token-bucket rate limiting on bare-metal Proxmox infrastructure.
-
-3. NetShip (https://github.com/Bittu5134/NetShip)
-Cross-platform Host Telemetry and Endpoint Detection & Response (EDR) daemon in Go. Captures active TCP/UDP socket activity, maps process lineages via deterministic 24-char SHA-256 GUIDs, performs local cryptographic binary auditing, and runs an embedded live geolocation dashboard.
-
-4. IITK-Resume-Engine (https://github.com/Bittu5134/IITK-Resume-Model)
-Spatial LaTeX-PDF diagnostic engine built for IIT Kanpur Academics & Career Council (CDW). Features a 2D coordinate geometry table parser in PyMuPDF recognizing 4,400+ IITK courses and CPI metrics, paired with a 6-track step-gradient scoring model and counterfactual gap advice.
-
-5. Sharelock (https://github.com/Bittu5134/Sharelock)
-1st Place Winner at ShareIITK Ideathon. An end-to-end RAG retrieval pipeline and Model Context Protocol (MCP) server indexing 100+ pages of dense IIT Kanpur Undergraduate Manual academic policies for citation-backed query resolution.
+${projectsFullSection}
 
 ================================================================================
 SECTION 3: COMPLETE TECHNICAL ARTICLES & DISPATCHES

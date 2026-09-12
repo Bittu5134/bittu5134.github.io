@@ -1,18 +1,14 @@
 import { useState } from "react";
-import { projects, Project } from "../../data/projects";
+import { projects, categories, Project } from "../../data/projects";
 
 export default function RetroProjects() {
   const [filter, setFilter] = useState("ALL");
-
-  const categories = ["ALL", "SYSTEMS", "AI", "WEB", "MINECRAFT", "TOOLS"];
 
   const filteredProjects: Project[] =
     filter === "ALL"
       ? projects
       : projects.filter((p) => {
-          if (filter === "TOOLS") {
-            return p.category.includes("TOOLS") || p.category.includes("DEVTOOLS");
-          }
+          if (p.filterCategory === filter) return true;
           return p.category.includes(filter);
         });
 
@@ -30,7 +26,7 @@ export default function RetroProjects() {
             </h2>
           </div>
 
-          {/* Filter Pills */}
+          {/* Data-Driven Filter Pills */}
           <div className="flex flex-wrap gap-1.5 sm:gap-2 font-mono text-xs font-bold">
             {categories.map((cat) => (
               <button
