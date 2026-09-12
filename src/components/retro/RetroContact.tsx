@@ -138,6 +138,16 @@ export default function RetroContact() {
                   </a>
 
                   <a
+                    href="https://www.patreon.com/lazybittu"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between p-2.5 bg-[#f6eedb] border border-black font-mono text-xs sm:text-sm font-bold text-black hover:bg-[#f472b6] transition-colors"
+                  >
+                    <span>PATREON: @lazybittu</span>
+                    <span>💖 ↗</span>
+                  </a>
+
+                  <a
                     href="/rss.xml"
                     target="_blank"
                     rel="noopener noreferrer"

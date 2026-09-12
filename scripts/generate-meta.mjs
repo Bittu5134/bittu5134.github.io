@@ -97,7 +97,151 @@ for (const post of blogFiles) {
 }
 console.log(`[generate-meta] Published raw markdown files to public/raw/blogs/`);
 
-// 2. Generate public/rss.xml
+// 2. Fetch Projects from GitHub at build time with hardcoded categories
+const curatedProjects = [
+  {
+    title: "ORV-Reader",
+    repo: "Bittu5134/ORV-Reader",
+    category: "WEB / CLOUD",
+    badge: "10.5M+ REQUESTS / MO",
+    description:
+      "High-scale distributed web publishing platform serving 10.5M+ monthly HTTP requests (398+ GB bandwidth, 764k+ unique visits). Automated Python Markdown SSG dual-compilation into static web and compressed EPUBs with Cloudflare WAF bot defenses.",
+    tags: ["Python", "SSG", "Cloudflare WAF", "EPUB", "FastAPI"],
+    liveUrl: "https://orv.pages.dev",
+    headerBgClass: "bg-[#fde047]",
+    statsText: "398GB Bandwidth · 764K Visits",
+  },
+  {
+    title: "PeerBasket",
+    repo: "Bittu5134/PeerBasket",
+    category: "SYSTEMS / P2P",
+    badge: "41ms LATENCY · 0% LOSS",
+    description:
+      "High-throughput, lobby-based WebRTC signaling server written in Go with Gin and Redis. Achieves 41 ms average latency and 0.0% packet loss across 500 concurrent peers with Redis TTL heartbeat pruning and IP token-bucket rate limiting on bare-metal Proxmox infrastructure.",
+    tags: ["Go", "WebRTC", "Redis", "Proxmox", "Gin"],
+    liveUrl: "https://peerbasket.bittu.dev",
+    headerBgClass: "bg-[#86efac]",
+    statsText: "500 Concurrent Peers · Bare-metal",
+  },
+  {
+    title: "NetShip",
+    repo: "Bittu5134/NetShip",
+    category: "SYSTEMS / EDR",
+    badge: "KERNEL TELEMETRY",
+    description:
+      "Cross-platform Host Telemetry and Endpoint Detection & Response (EDR) daemon in Go. Captures active TCP/UDP socket activity, maps process lineages via deterministic 24-char SHA-256 GUIDs, performs local cryptographic binary auditing, and runs an embedded live geolocation dashboard.",
+    tags: ["Go", "Networking", "Telemetry", "EDR", "Linux"],
+    headerBgClass: "bg-[#38bdf8]",
+    statsText: "SHA-256 GUIDs · Socket Tracing",
+  },
+  {
+    title: "IITK-Resume-Engine",
+    repo: "Bittu5134/IITK-Resume-Model",
+    category: "AI / GEOMETRY",
+    badge: "4,400+ COURSES INDEXED",
+    description:
+      "Spatial LaTeX-PDF diagnostic engine built for IIT Kanpur Academics & Career Council (CDW). Features a 2D coordinate geometry table parser in PyMuPDF recognizing 4,400+ IITK courses and CPI metrics, paired with a 6-track step-gradient scoring model and counterfactual gap advice.",
+    tags: ["Python", "PyMuPDF", "FastAPI", "LaTeX", "Spatial Geometry"],
+    liveUrl: "https://iitk-resume.bittu.dev",
+    headerBgClass: "bg-[#c4b5fd]",
+    statsText: "99.4% Parsing Precision · CDW IITK",
+  },
+  {
+    title: "InfraPulse",
+    repo: "Bittu5134/InfraPulse",
+    category: "AI / VISION",
+    badge: "TAKNEEK '26 RUNNER-UP",
+    description:
+      "Civic defect detection and priority dispatch platform developed for IIT Kanpur Takneek '26. Combines a 5-model PyTorch vision ensemble with Sobel spatial edge severity math, async FastAPI ticket routing, and live Server-Sent Events (SSE) staff dispatch queues.",
+    tags: ["PyTorch", "YOLO", "Sobel Math", "FastAPI", "SSE"],
+    liveUrl: "https://infrapulse.bittu.dev",
+    headerBgClass: "bg-[#fb923c]",
+    statsText: "5-Model Vision Ensemble · Real-time SSE",
+  },
+  {
+    title: "Sharelock",
+    repo: "Bittu5134/Sharelock",
+    category: "AI / RETRIEVAL",
+    badge: "1st PLACE SHAREIITK",
+    description:
+      "1st Place Winner at ShareIITK Ideathon. An end-to-end RAG retrieval pipeline and Model Context Protocol (MCP) server indexing 100+ pages of dense IIT Kanpur Undergraduate Manual academic policies for citation-backed query resolution.",
+    tags: ["RAG", "MCP Server", "TypeScript", "Policy Search"],
+    headerBgClass: "bg-[#f472b6]",
+    statsText: "1st Place Winner · MCP Server",
+  },
+];
+
+async function generateProjects() {
+  const headers = { "User-Agent": "Node.js" };
+  if (process.env.GITHUB_TOKEN) {
+    headers["Authorization"] = `token ${process.env.GITHUB_TOKEN}`;
+  }
+
+  const resolvedProjects = await Promise.all(
+    curatedProjects.map(async (p) => {
+      let liveUrl = p.liveUrl;
+      let githubUrl = `https://github.com/${p.repo}`;
+      let description = p.description;
+      let tags = p.tags;
+      let stars = 0;
+      let forks = 0;
+
+      try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 4000);
+        const res = await fetch(`https://api.github.com/repos/${p.repo}`, {
+          headers,
+          signal: controller.signal,
+        });
+        clearTimeout(timeout);
+
+        if (res.ok) {
+          const data = await res.json();
+          stars = data.stargazers_count || 0;
+          forks = data.forks_count || 0;
+          if (data.html_url) githubUrl = data.html_url;
+          if (data.homepage && !liveUrl) liveUrl = data.homepage;
+          if (Array.isArray(data.topics) && data.topics.length > 0) {
+            const topicTags = data.topics.map(
+              (t) => t.charAt(0).toUpperCase() + t.slice(1)
+            );
+            tags = [...new Set([...p.tags, ...topicTags])].slice(0, 5);
+          }
+        }
+      } catch (err) {
+        console.warn(
+          `[generate-meta] GitHub API fetch skipped for ${p.repo}: ${err.message}`
+        );
+      }
+
+      return {
+        title: p.title,
+        category: p.category,
+        badge: stars > 50 ? `★ ${stars} STARS · ${p.badge}` : p.badge,
+        description,
+        tags,
+        liveUrl,
+        githubUrl,
+        headerBgClass: p.headerBgClass,
+        statsText: p.statsText,
+        stars,
+        forks,
+      };
+    })
+  );
+
+  const projectsJsonPath = path.resolve(__dirname, "../src/data/projects.json");
+  fs.writeFileSync(
+    projectsJsonPath,
+    JSON.stringify(resolvedProjects, null, 2),
+    "utf-8"
+  );
+  console.log(
+    `[generate-meta] Wrote src/data/projects.json with ${resolvedProjects.length} projects.`
+  );
+}
+
+// 3. Generate public/rss.xml
 function generateRss() {
   const lastBuildDate = new Date().toUTCString();
   const itemsXml = blogFiles
@@ -132,7 +276,7 @@ ${itemsXml}
   console.log(`[generate-meta] Wrote public/rss.xml`);
 }
 
-// 3. Generate public/sitemap.xml
+// 4. Generate public/sitemap.xml
 function generateSitemap() {
   const today = new Date().toISOString().split("T")[0];
   const urls = [
@@ -176,7 +320,7 @@ ${urlsXml}
   console.log(`[generate-meta] Wrote public/sitemap.xml`);
 }
 
-// 4. Generate public/robots.txt
+// 5. Generate public/robots.txt
 function generateRobots() {
   const robotsContent = `User-agent: *
 Allow: /
@@ -189,7 +333,7 @@ Sitemap: ${SITE_URL}/sitemap.xml
   console.log(`[generate-meta] Wrote public/robots.txt`);
 }
 
-// 5. Generate public/llms.txt (per llmstxt.org specification)
+// 6. Generate public/llms.txt (per llmstxt.org specification)
 function generateLlmsTxt() {
   const articlesList = blogFiles
     .map(
@@ -226,7 +370,7 @@ ${articlesList}
   console.log(`[generate-meta] Wrote public/llms.txt`);
 }
 
-// 6. Generate public/llms-full.txt companion
+// 7. Generate public/llms-full.txt companion
 function generateLlmsFullTxt() {
   const postsFullSection = blogFiles
     .map((post) => {
@@ -296,9 +440,17 @@ ${postsFullSection}
 }
 
 // Execute all generators
-generateRss();
-generateSitemap();
-generateRobots();
-generateLlmsTxt();
-generateLlmsFullTxt();
-console.log(`[generate-meta] Done! All metadata and AI context standards generated successfully.`);
+async function main() {
+  await generateProjects();
+  generateRss();
+  generateSitemap();
+  generateRobots();
+  generateLlmsTxt();
+  generateLlmsFullTxt();
+  console.log(`[generate-meta] Done! All metadata and AI context standards generated successfully.`);
+}
+
+main().catch((err) => {
+  console.error(`[generate-meta] Build failed:`, err);
+  process.exit(1);
+});
