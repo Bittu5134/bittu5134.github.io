@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link as ScrollLink } from "react-scroll";
 import { Link as RouterLink, useLocation } from "react-router";
+import { Github } from "lucide-react";
 
 export default function RetroHeader() {
   const [isOpen, setIsOpen] = useState(false);
@@ -110,9 +111,10 @@ export default function RetroHeader() {
               href="https://github.com/Bittu5134"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-2.5 py-1 sm:py-1.5 bg-[#fffdf9] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs hover:bg-[#c4b5fd] hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1"
+              aria-label="GitHub Profile"
+              className="px-2 py-1 sm:py-1.5 bg-[#fffdf9] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs hover:bg-[#c4b5fd] hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-1"
             >
-              <span>GH ↗</span>
+              <Github className="w-4 h-4 text-black" />
             </a>
 
             {/* Android / Mobile Hamburger Toggle Button */}
@@ -217,9 +219,11 @@ export default function RetroHeader() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setIsOpen(false)}
+                aria-label="GitHub Profile"
                 className="flex items-center justify-center gap-1.5 px-3 py-2 bg-[#fffdf9] text-black border-2 border-black font-mono text-xs font-bold shadow-brutal-xs hover:bg-[#c4b5fd] active:translate-x-0.5 active:translate-y-0.5"
               >
-                <span>🐙 GITHUB</span>
+                <Github className="w-3.5 h-3.5 text-black" />
+                <span>GITHUB</span>
               </a>
             </div>
 
