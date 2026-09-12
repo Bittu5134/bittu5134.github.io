@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link as ScrollLink } from "react-scroll";
 import { Link as RouterLink, useLocation } from "react-router";
-import { Github } from "lucide-react";
+import { Github, Rss } from "lucide-react";
 
 export default function RetroHeader() {
   const [isOpen, setIsOpen] = useState(false);
@@ -54,24 +54,14 @@ export default function RetroHeader() {
                 duration={400}
                 className="cursor-pointer group flex items-center gap-2 px-2.5 sm:px-3 py-1 bg-[#fde047] border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
               >
-                <img
-                  src="/favicon.svg"
-                  alt=""
-                  className="w-4 h-4 sm:w-5 sm:h-5 border border-black shrink-0"
-                />
-                <span className="font-pixel text-lg sm:text-2xl font-bold tracking-wider">BITTU.DEV</span>
+                <span className="font-pixel text-lg sm:text-2xl font-bold tracking-wider">💾 BITTU.DEV</span>
               </ScrollLink>
             ) : (
               <RouterLink
                 to="/"
                 className="group flex items-center gap-2 px-2.5 sm:px-3 py-1 bg-[#fde047] border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
               >
-                <img
-                  src="/favicon.svg"
-                  alt=""
-                  className="w-4 h-4 sm:w-5 sm:h-5 border border-black shrink-0"
-                />
-                <span className="font-pixel text-lg sm:text-2xl font-bold tracking-wider">BITTU.DEV</span>
+                <span className="font-pixel text-lg sm:text-2xl font-bold tracking-wider">💾 BITTU.DEV</span>
                 <span className="hidden sm:inline-block text-[10px] font-mono bg-black text-white px-1.5 py-0.5 rounded-sm font-bold">
                   ← HOME
                 </span>
@@ -109,9 +99,11 @@ export default function RetroHeader() {
               href="/rss.xml"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-2.5 py-1 bg-[#fb923c] text-black border-2 border-black text-xs font-bold shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1"
+              aria-label="RSS Feed"
+              className="px-2.5 py-1 bg-[#fb923c] text-black border-2 border-black text-xs font-bold shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5"
             >
-              <span>📡 RSS</span>
+              <Rss className="w-3.5 h-3.5 text-black" />
+              <span>RSS</span>
             </a>
           </nav>
 
@@ -219,9 +211,11 @@ export default function RetroHeader() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setIsOpen(false)}
+                aria-label="RSS Feed"
                 className="flex items-center justify-center gap-1.5 px-3 py-2 bg-[#fb923c] text-black border-2 border-black font-mono text-xs font-bold shadow-brutal-xs hover:shadow-brutal active:translate-x-0.5 active:translate-y-0.5"
               >
-                <span>📡 RSS FEED</span>
+                <Rss className="w-3.5 h-3.5 text-black" />
+                <span>RSS FEED</span>
               </a>
 
               <a

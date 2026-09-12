@@ -21,7 +21,7 @@ export default function RetroHero() {
             <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-[#fde047] border-2 border-black shrink-0"></span>
             <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-[#86efac] border-2 border-black shrink-0"></span>
             <span className="font-mono text-xs sm:text-sm font-bold text-black ml-1 sm:ml-2 tracking-wide truncate">
-              bittu@iitk: ~
+              💾 bittu@iitk: ~
             </span>
           </div>
           <span className="font-mono text-[10px] sm:text-xs font-bold text-black tracking-wider shrink-0">
