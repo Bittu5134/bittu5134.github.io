@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link as ScrollLink } from "react-scroll";
+import { Terminal, Pickaxe, Shield, Cpu, ArrowDown, ArrowRight, Check } from "lucide-react";
 
 export default function RetroHero() {
   const [copied, setCopied] = useState(false);
@@ -20,8 +21,9 @@ export default function RetroHero() {
             <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-[#f87171] border-2 border-black shrink-0"></span>
             <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-[#fde047] border-2 border-black shrink-0"></span>
             <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-[#86efac] border-2 border-black shrink-0"></span>
-            <span className="font-mono text-xs sm:text-sm font-bold text-black ml-1 sm:ml-2 tracking-wide truncate">
-              💾 bittu@iitk: ~
+            <Terminal className="w-3.5 h-3.5 text-black shrink-0 ml-1" />
+            <span className="font-mono text-xs sm:text-sm font-bold text-black tracking-wide truncate">
+              bittu@iitk: ~
             </span>
           </div>
           <span className="font-mono text-xs font-bold text-black tracking-wider shrink-0">
@@ -61,14 +63,17 @@ export default function RetroHero() {
 
             {/* Sticker Badges beneath Polaroid */}
             <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-4 sm:mt-6 justify-center max-w-xs">
-              <span className="px-2.5 py-1 bg-[#86efac] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs rotate-[1deg]">
-                ⛏️ MINECRAFT LIVE
+              <span className="px-2.5 py-1 bg-[#86efac] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs rotate-[1deg] flex items-center gap-1">
+                <Pickaxe className="w-3.5 h-3.5 text-black shrink-0" />
+                <span>MINECRAFT LIVE</span>
               </span>
-              <span className="px-2.5 py-1 bg-[#c4b5fd] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs rotate-[-1deg]">
-                🛡️ IIT KANPUR '30
+              <span className="px-2.5 py-1 bg-[#c4b5fd] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs rotate-[-1deg] flex items-center gap-1">
+                <Shield className="w-3.5 h-3.5 text-black shrink-0" />
+                <span>IIT KANPUR '30</span>
               </span>
-              <span className="px-2.5 py-1 bg-[#38bdf8] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs rotate-[2deg]">
-                ⚙️ GO &amp; RUST
+              <span className="px-2.5 py-1 bg-[#38bdf8] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs rotate-[2deg] flex items-center gap-1">
+                <Cpu className="w-3.5 h-3.5 text-black shrink-0" />
+                <span>GO &amp; RUST</span>
               </span>
             </div>
           </div>
@@ -108,7 +113,7 @@ export default function RetroHero() {
                 className="cursor-pointer px-4 sm:px-5 py-2.5 sm:py-3 bg-[#f59e0b] text-black font-mono font-bold text-xs sm:text-sm border-[3px] border-black shadow-brutal hover:shadow-brutal-lg hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5 sm:gap-2"
               >
                 <span>PROJECTS</span>
-                <span>↓</span>
+                <ArrowDown className="w-4 h-4 text-black shrink-0" />
               </ScrollLink>
 
               <ScrollLink
@@ -120,15 +125,27 @@ export default function RetroHero() {
                 className="cursor-pointer px-4 sm:px-5 py-2.5 sm:py-3 bg-[#86efac] text-black font-mono font-bold text-xs sm:text-sm border-[3px] border-black shadow-brutal hover:shadow-brutal-lg hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5 sm:gap-2"
               >
                 <span>BLOG</span>
-                <span>→</span>
+                <ArrowRight className="w-4 h-4 text-black shrink-0" />
               </ScrollLink>
 
               <button
                 onClick={copyDiscord}
                 aria-label="Copy Discord handle bittu5134"
-                className="px-3.5 sm:px-4 py-2.5 sm:py-3 bg-[#fffdf9] text-black font-mono font-bold text-xs sm:text-sm border-[3px] border-black shadow-brutal hover:bg-[#c4b5fd] hover:shadow-brutal-lg hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5 sm:gap-2 cursor-pointer"
+                className="px-3.5 sm:px-4 py-2.5 sm:py-3 bg-[#fffdf9] text-black font-mono font-bold text-xs sm:text-sm border-[3px] border-black shadow-brutal hover:bg-[#c4b5fd] hover:shadow-brutal-lg hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-2 cursor-pointer"
               >
-                <span>👾 {copied ? "TAG COPIED! ✓" : "DISCORD: bittu5134"}</span>
+                {copied ? (
+                  <>
+                    <Check className="w-4 h-4 text-green-700 shrink-0" />
+                    <span>TAG COPIED!</span>
+                  </>
+                ) : (
+                  <>
+                    <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-black shrink-0">
+                      <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+                    </svg>
+                    <span>DISCORD: bittu5134</span>
+                  </>
+                )}
               </button>
             </div>
           </div>

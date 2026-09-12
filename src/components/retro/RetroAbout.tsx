@@ -1,3 +1,5 @@
+import { GraduationCap, Gamepad2, Trophy, Medal, Zap } from "lucide-react";
+
 export default function RetroAbout() {
   const techStack = [
     { name: "Go / Golang", bgClass: "bg-[#38bdf8]" },
@@ -85,23 +87,23 @@ export default function RetroAbout() {
               </h3>
               <ul className="space-y-3 font-mono text-xs sm:text-sm font-bold text-black">
                 <li className="flex items-start gap-2.5">
-                  <span className="text-base">🎓</span>
+                  <GraduationCap className="w-4 h-4 text-black shrink-0 mt-0.5" />
                   <span>B.Tech Cybersecurity @ IIT Kanpur '30</span>
                 </li>
                 <li className="flex items-start gap-2.5">
-                  <span className="text-base">⛏️</span>
+                  <Gamepad2 className="w-4 h-4 text-black shrink-0 mt-0.5" />
                   <span>Featured on official Minecraft Live broadcast</span>
                 </li>
                 <li className="flex items-start gap-2.5">
-                  <span className="text-base">🏆</span>
+                  <Trophy className="w-4 h-4 text-black shrink-0 mt-0.5" />
                   <span>1st Place at ShareIITK Hackathon (Sharelock)</span>
                 </li>
                 <li className="flex items-start gap-2.5">
-                  <span className="text-base">🥈</span>
+                  <Medal className="w-4 h-4 text-black shrink-0 mt-0.5" />
                   <span>Takneek '26 1st Runner-Up (InfraPulse)</span>
                 </li>
                 <li className="flex items-start gap-2.5">
-                  <span className="text-base">⚡</span>
+                  <Zap className="w-4 h-4 text-black shrink-0 mt-0.5" />
                   <span>10.5M+ requests served on ORV-Reader</span>
                 </li>
               </ul>

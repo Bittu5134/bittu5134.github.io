@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { projects, categories, Project } from "../../data/projects";
+import { Coffee, Heart, ArrowUpRight } from "lucide-react";
 
 export default function RetroProjects() {
   const [filter, setFilter] = useState("ALL");
@@ -103,7 +104,7 @@ export default function RetroProjects() {
                         className="px-3 sm:px-3.5 py-1.5 sm:py-2 bg-[#fde047] text-black font-mono text-xs font-bold border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1"
                       >
                         <span>LIVE DEMO</span>
-                        <span>↗</span>
+                        <ArrowUpRight className="w-3.5 h-3.5 text-black shrink-0" />
                       </a>
                     )}
                     {p.githubUrl && (
@@ -114,7 +115,7 @@ export default function RetroProjects() {
                         className="px-3 sm:px-3.5 py-1.5 sm:py-2 bg-[#fffdf9] text-black font-mono text-xs font-bold border-2 border-black shadow-brutal-xs hover:bg-[#86efac] hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1"
                       >
                         <span>SOURCE CODE</span>
-                        <span>↗</span>
+                        <ArrowUpRight className="w-3.5 h-3.5 text-black shrink-0" />
                       </a>
                     )}
                   </div>
@@ -133,9 +134,10 @@ export default function RetroProjects() {
             href="https://github.com/Bittu5134?tab=repositories"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-3 py-1.5 bg-[#c4b5fd] border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 transition-all"
+            className="px-3 py-1.5 bg-[#c4b5fd] border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 transition-all flex items-center gap-1"
           >
-            VIEW 25+ REPOSITORIES ON GITHUB ↗
+            <span>VIEW 25+ REPOSITORIES ON GITHUB</span>
+            <ArrowUpRight className="w-3.5 h-3.5 text-black shrink-0" />
           </a>
         </div>
 
@@ -143,7 +145,7 @@ export default function RetroProjects() {
         <div className="mt-4 p-4 sm:p-6 bg-[#fef08a] border-[3px] border-black shadow-brutal flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <span className="text-xl">☕</span>
+              <Coffee className="w-5 h-5 text-black shrink-0" />
               <h3 className="font-pixel text-lg sm:text-xl font-bold text-black uppercase tracking-wide">
                 SUPPORT ON PATREON: @lazybittu
               </h3>
@@ -156,10 +158,11 @@ export default function RetroProjects() {
             href="https://www.patreon.com/lazybittu"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-4 py-2.5 bg-[#f472b6] text-black font-mono text-xs sm:text-sm font-black border-2 border-black shadow-brutal-xs hover:bg-[#fb7185] hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all shrink-0 flex items-center gap-1.5"
+            className="px-4 py-2.5 bg-[#f472b6] text-black font-mono text-xs sm:text-sm font-black border-2 border-black shadow-brutal-xs hover:bg-[#fb7185] hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all shrink-0 flex items-center gap-2"
           >
-            <span>BECOME A PATRON 💖</span>
-            <span>↗</span>
+            <Heart className="w-4 h-4 text-black fill-current shrink-0" />
+            <span>BECOME A PATRON</span>
+            <ArrowUpRight className="w-4 h-4 text-black shrink-0" />
           </a>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { useParams, Link, Navigate } from "react-router";
+import { ArrowLeft, Check, Share2, Mail } from "lucide-react";
 import { blogPosts } from "../data/blogs";
 import RetroHeader from "../components/retro/RetroHeader";
 import RetroFooter from "../components/retro/RetroFooter";
@@ -33,14 +34,25 @@ export default function BlogPost() {
             to="/blog"
             className="px-3.5 py-1.5 bg-[#fffdf9] border-2 border-black font-mono text-xs sm:text-sm font-bold shadow-brutal-xs hover:bg-[#fde047] hover:shadow-brutal active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5"
           >
-            <span>← ALL ARTICLES</span>
+            <ArrowLeft className="w-4 h-4" />
+            <span>ALL ARTICLES</span>
           </Link>
 
           <button
             onClick={handleShare}
             className="px-3.5 py-1.5 bg-[#fffdf9] border-2 border-black font-mono text-xs sm:text-sm font-bold shadow-brutal-xs hover:bg-[#86efac] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5 cursor-pointer"
           >
-            <span>{copied ? "LINK COPIED! ✓" : "SHARE ARTICLE ↗"}</span>
+            {copied ? (
+              <>
+                <Check className="w-3.5 h-3.5 text-emerald-800 stroke-[3]" />
+                <span>LINK COPIED!</span>
+              </>
+            ) : (
+              <>
+                <Share2 className="w-3.5 h-3.5" />
+                <span>SHARE ARTICLE</span>
+              </>
+            )}
           </button>
         </div>
 
@@ -165,16 +177,18 @@ export default function BlogPost() {
           <div className="mt-12 pt-6 border-t-2 border-black flex items-center justify-between flex-wrap gap-4 font-mono text-xs sm:text-sm font-bold">
             <Link
               to="/blog"
-              className="px-4 py-2 bg-[#fde047] border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 transition-all"
+              className="px-4 py-2 bg-[#fde047] border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 transition-all flex items-center gap-1.5"
             >
-              ← BACK TO ALL DISPATCHES
+              <ArrowLeft className="w-4 h-4" />
+              <span>BACK TO ALL DISPATCHES</span>
             </Link>
 
             <a
               href="mailto:hello@bittu.dev"
-              className="px-4 py-2 bg-[#86efac] border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 transition-all"
+              className="px-4 py-2 bg-[#86efac] border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 transition-all flex items-center gap-1.5"
             >
-              SEND COMMENTS VIA EMAIL ✉️
+              <Mail className="w-4 h-4" />
+              <span>SEND COMMENTS VIA EMAIL</span>
             </a>
           </div>
         </article>

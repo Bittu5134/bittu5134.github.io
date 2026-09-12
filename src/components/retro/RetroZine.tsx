@@ -1,4 +1,5 @@
 import { blogPosts } from "../../data/blogs";
+import { Rss, ArrowUpRight, BookOpen } from "lucide-react";
 
 export default function RetroZine() {
   return (
@@ -15,17 +16,20 @@ export default function RetroZine() {
           <div className="flex flex-wrap items-center gap-2 sm:gap-3">
             <a
               href="/blog"
-              className="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#fde047] text-black font-mono text-xs sm:text-sm font-bold border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
+              className="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#fde047] text-black font-mono text-xs sm:text-sm font-bold border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5"
             >
-              ALL ARTICLES (3) ↗
+              <BookOpen className="w-4 h-4" />
+              <span>ALL ARTICLES (3)</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
             </a>
             <a
               href="/rss.xml"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 sm:px-3.5 py-1.5 sm:py-2 bg-[#fb923c] text-black font-mono text-xs sm:text-sm font-bold border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
+              className="px-3 sm:px-3.5 py-1.5 sm:py-2 bg-[#fb923c] text-black font-mono text-xs sm:text-sm font-bold border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5"
             >
-              RSS 2.0 📡
+              <Rss className="w-4 h-4" />
+              <span>RSS 2.0</span>
             </a>
           </div>
         </div>
@@ -75,7 +79,7 @@ export default function RetroZine() {
                   className="px-4 py-2 bg-[#fde047] text-black font-mono text-xs sm:text-sm font-bold border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5"
                 >
                   <span>READ DISPATCH</span>
-                  <span>↗</span>
+                  <ArrowUpRight className="w-4 h-4" />
                 </a>
               </div>
             </article>

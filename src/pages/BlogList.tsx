@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import { ArrowLeft, ArrowUpRight, Rss } from "lucide-react";
 import { blogPosts } from "../data/blogs";
 import RetroHeader from "../components/retro/RetroHeader";
 import RetroFooter from "../components/retro/RetroFooter";
@@ -15,7 +16,8 @@ export default function BlogList() {
             to="/"
             className="px-3.5 py-1.5 bg-[#fffdf9] border-2 border-black font-mono text-xs sm:text-sm font-bold shadow-brutal-xs hover:bg-[#fde047] hover:shadow-brutal active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5"
           >
-            <span>← RETURN HOME</span>
+            <ArrowLeft className="w-4 h-4" />
+            <span>RETURN HOME</span>
           </Link>
 
           <a
@@ -24,7 +26,8 @@ export default function BlogList() {
             rel="noopener noreferrer"
             className="px-3.5 py-1.5 bg-[#fb923c] text-black border-2 border-black font-mono text-xs sm:text-sm font-bold shadow-brutal-xs hover:shadow-brutal active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5"
           >
-            <span>📡 RSS 2.0 FEED</span>
+            <Rss className="w-4 h-4" />
+            <span>RSS 2.0 FEED</span>
           </a>
         </div>
 
@@ -86,7 +89,7 @@ export default function BlogList() {
                   className="px-4 py-2 bg-[#fde047] text-black font-mono text-xs sm:text-sm font-bold border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5"
                 >
                   <span>READ DISPATCH</span>
-                  <span>↗</span>
+                  <ArrowUpRight className="w-4 h-4" />
                 </Link>
 
                 <span className="font-mono text-xs text-black/40 font-bold">

@@ -1,6 +1,6 @@
 export default function RetroTicker() {
   const skills = [
-    "⚡ GO / GOLANG",
+    "GO / GOLANG",
     "RUST",
     "C / C++",
     "PYTHON",
