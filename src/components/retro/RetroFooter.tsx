@@ -4,19 +4,15 @@ export default function RetroFooter() {
   return (
     <footer className="mt-16 border-t-[3px] border-black bg-[#f6eedb] py-12 px-4 sm:px-6">
       <div className="max-w-5xl mx-auto flex flex-col items-center text-center gap-6">
-        {/* Webring / Community Badge Box */}
+        {/* Navigation / Links Box */}
         <div className="p-4 bg-[#fffdf9] border-2 border-black shadow-brutal-xs flex flex-wrap items-center justify-center gap-3 font-mono text-xs font-bold text-black">
-          <span className="bg-[#fde047] px-2 py-0.5 border border-black">
-            ✦ INDIE WEBRING ✦
-          </span>
-          <span>•</span>
           <a
             href="https://github.com/Bittu5134"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:underline underline-offset-4"
           >
-            [ GITHUB ]
+            GITHUB
           </a>
           <span>•</span>
           <a
@@ -25,7 +21,7 @@ export default function RetroFooter() {
             rel="noopener noreferrer"
             className="hover:underline underline-offset-4"
           >
-            [ PLANET MINECRAFT ]
+            PLANET MINECRAFT
           </a>
           <span>•</span>
           <a
@@ -34,7 +30,7 @@ export default function RetroFooter() {
             rel="noopener noreferrer"
             className="hover:underline underline-offset-4"
           >
-            [ DISCORD ]
+            DISCORD
           </a>
           <span>•</span>
           <a
@@ -43,7 +39,7 @@ export default function RetroFooter() {
             rel="noopener noreferrer"
             className="hover:underline underline-offset-4"
           >
-            [ RSS FEED ]
+            RSS FEED
           </a>
         </div>
 
@@ -54,16 +50,13 @@ export default function RetroFooter() {
           duration={500}
           className="cursor-pointer px-4 py-2 bg-[#86efac] text-black font-mono text-xs font-bold border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5"
         >
-          <span>▲ RETURN TO TOP OF TERMINAL</span>
+          <span>▲ RETURN TO TOP</span>
         </ScrollLink>
 
-        {/* Silly Disclaimer & Copyright */}
+        {/* Copyright */}
         <div className="space-y-1 font-mono text-xs text-black/70">
           <p className="font-bold">
-            &copy; 2026 Divyanshu Anand (Bittu5134) &middot; Cybersec @ IIT Kanpur
-          </p>
-          <p className="text-[11px] text-black/50">
-            Handcrafted with React, Tailwind, and 0% corporate synergy. Best viewed on any browser with curiosity enabled.
+            &copy; 2026 Divyanshu Anand (Bittu5134) &middot; IIT Kanpur
           </p>
         </div>
       </div>

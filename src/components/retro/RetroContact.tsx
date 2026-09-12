@@ -17,27 +17,21 @@ export default function RetroContact() {
   };
 
   return (
-    <section id="contact" className="py-12 px-4 sm:px-6">
+    <section id="contact" className="py-8 px-4 sm:px-6">
       <div className="max-w-5xl mx-auto">
         {/* Section Header */}
         <div className="mb-8">
-          <div className="inline-block px-3 py-1 bg-[#86efac] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs mb-2">
-            SECTION_05 // TRANSMIT PING
-          </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-black">
-            LET'S TALK SYSTEMS & CODE.
+            GET IN TOUCH.
           </h2>
         </div>
 
         {/* Contact Window Container */}
         <div className="bg-[#fffdf9] border-[3px] border-black shadow-brutal-lg overflow-hidden">
           {/* Header Bar */}
-          <div className="bg-[#fb923c] px-4 py-2.5 border-b-[3px] border-black flex items-center justify-between select-none">
+          <div className="bg-[#fb923c] px-4 py-2 border-b-[3px] border-black flex items-center justify-between select-none">
             <span className="font-mono text-xs sm:text-sm font-bold text-black tracking-wide">
-              ~/home/bittu/contact_terminal.sh [OPEN_FOR_COLLABS]
-            </span>
-            <span className="hidden sm:inline-block font-mono text-xs font-bold bg-[#86efac] text-black px-2 py-0.5 border border-black">
-              ● READY FOR PACKETS
+              bittu@iitk: ~/contact
             </span>
           </div>
 
@@ -45,14 +39,14 @@ export default function RetroContact() {
             {/* Left Column: Direct channels */}
             <div className="space-y-4">
               <p className="font-mono text-xs sm:text-sm text-black/85 leading-relaxed mb-6">
-                Have a project idea, high-throughput systems problem, research opportunity, or just want to chat about low-level networking and Minecraft? Ping me!
+                Have a project, distributed systems problem, research idea, or just want to chat about low-level networking and Minecraft? Feel free to reach out.
               </p>
 
               {/* Email Button Box */}
               <div className="p-4 bg-[#fef08a] border-2 border-black shadow-brutal-xs flex items-center justify-between gap-3">
                 <div>
                   <div className="font-mono text-[10px] uppercase font-bold text-black/60">
-                    DIRECT ELECTRONIC MAIL:
+                    EMAIL:
                   </div>
                   <div className="font-mono text-sm sm:text-base font-bold text-black">
                     hello@bittu.dev
@@ -67,7 +61,7 @@ export default function RetroContact() {
                   </a>
                   <button
                     onClick={copyEmail}
-                    className="px-3 py-1.5 bg-[#fde047] text-black font-mono text-xs font-bold border-2 border-black hover:bg-[#fb923c] active:translate-x-0.5 active:translate-y-0.5 transition-all"
+                    className="px-3 py-1.5 bg-[#fde047] text-black font-mono text-xs font-bold border-2 border-black hover:bg-[#fb923c] active:translate-x-0.5 active:translate-y-0.5 transition-all cursor-pointer"
                   >
                     {copiedEmail ? "COPIED! ✓" : "COPY"}
                   </button>
@@ -78,7 +72,7 @@ export default function RetroContact() {
               <div className="p-4 bg-[#c4b5fd] border-2 border-black shadow-brutal-xs flex items-center justify-between gap-3">
                 <div>
                   <div className="font-mono text-[10px] uppercase font-bold text-black/60">
-                    DISCORD HANDLE:
+                    DISCORD:
                   </div>
                   <div className="font-mono text-sm sm:text-base font-bold text-black">
                     bittu5134
@@ -95,7 +89,7 @@ export default function RetroContact() {
                   </a>
                   <button
                     onClick={copyDiscord}
-                    className="px-3 py-1.5 bg-[#fde047] text-black font-mono text-xs font-bold border-2 border-black hover:bg-[#fb923c] active:translate-x-0.5 active:translate-y-0.5 transition-all"
+                    className="px-3 py-1.5 bg-[#fde047] text-black font-mono text-xs font-bold border-2 border-black hover:bg-[#fb923c] active:translate-x-0.5 active:translate-y-0.5 transition-all cursor-pointer"
                   >
                     {copiedDiscord ? "COPIED! ✓" : "COPY"}
                   </button>
@@ -103,11 +97,11 @@ export default function RetroContact() {
               </div>
             </div>
 
-            {/* Right Column: Other Transmitters */}
+            {/* Right Column: Other Platforms */}
             <div className="space-y-4">
               <div className="p-4 bg-[#fffdf9] border-2 border-black shadow-brutal-xs">
                 <div className="font-mono text-xs font-bold text-black uppercase mb-3 pb-1 border-b border-black">
-                  ★ OTHER NETWORK NODES:
+                  PROFILES:
                 </div>
 
                 <div className="space-y-2">
@@ -147,15 +141,10 @@ export default function RetroContact() {
                     rel="noopener noreferrer"
                     className="flex items-center justify-between p-2.5 bg-[#f6eedb] border border-black font-mono text-xs font-bold text-black hover:bg-[#fb923c] transition-colors"
                   >
-                    <span>RSS 2.0 FEED DISPATCH</span>
+                    <span>RSS 2.0 FEED</span>
                     <span>📡</span>
                   </a>
                 </div>
-              </div>
-
-              {/* Silly Old Internet Disclaimer */}
-              <div className="p-3 bg-[#f6eedb] border border-black font-mono text-[11px] text-black/70 italic text-center">
-                "No tracking scripts, no spam telemetry, just direct human communication."
               </div>
             </div>
           </div>

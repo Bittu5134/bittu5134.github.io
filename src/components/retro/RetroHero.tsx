@@ -11,27 +11,27 @@ export default function RetroHero() {
   };
 
   return (
-    <section id="hero" className="pt-8 pb-12 px-4 sm:px-6">
-      {/* Retro OS Window Container */}
+    <section id="hero" className="pt-8 pb-4 px-4 sm:px-6">
+      {/* Retro Window Container */}
       <div className="max-w-5xl mx-auto bg-[#fffdf9] border-[3px] border-black shadow-brutal-lg rounded-none overflow-hidden relative">
         {/* Retro Window Titlebar */}
-        <div className="bg-[#fb923c] px-4 py-2.5 border-b-[3px] border-black flex items-center justify-between select-none">
+        <div className="bg-[#fb923c] px-4 py-2 border-b-[3px] border-black flex items-center justify-between select-none">
           <div className="flex items-center gap-2">
-            <span className="w-3.5 h-3.5 bg-[#f87171] border-2 border-black rounded-none shadow-[1px_1px_0px_#000]"></span>
-            <span className="w-3.5 h-3.5 bg-[#fde047] border-2 border-black rounded-none shadow-[1px_1px_0px_#000]"></span>
-            <span className="w-3.5 h-3.5 bg-[#86efac] border-2 border-black rounded-none shadow-[1px_1px_0px_#000]"></span>
+            <span className="w-3 h-3 bg-[#f87171] border-2 border-black"></span>
+            <span className="w-3 h-3 bg-[#fde047] border-2 border-black"></span>
+            <span className="w-3 h-3 bg-[#86efac] border-2 border-black"></span>
             <span className="font-mono text-xs sm:text-sm font-bold text-black ml-2 tracking-wide">
-              ~/home/bittu/welcome.sh [ACTIVE_SESSION]
+              bittu@iitk: ~
             </span>
           </div>
-          <div className="hidden sm:flex items-center gap-2 font-mono text-xs font-bold bg-black text-[#fde047] px-2 py-0.5">
-            <span>BASED_AT: IIT_KANPUR</span>
-          </div>
+          <span className="font-mono text-xs font-bold text-black">
+            KANPUR, INDIA
+          </span>
         </div>
 
         {/* Hero Content Body */}
         <div className="p-6 sm:p-10 md:p-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          {/* Left Column: Avatar Polaroid & Silly Badges (5 cols) */}
+          {/* Left Column: Avatar Polaroid & Badges (5 cols) */}
           <div className="lg:col-span-5 flex flex-col items-center justify-center">
             {/* Polaroid Container */}
             <div className="relative bg-[#fffdf9] p-4 pb-8 border-[3px] border-black shadow-brutal rotate-[-2deg] hover:rotate-0 transition-transform duration-300 w-full max-w-[280px]">
@@ -65,7 +65,7 @@ export default function RetroHero() {
                 ⛏️ MINECRAFT LIVE
               </span>
               <span className="px-2.5 py-1 bg-[#c4b5fd] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs rotate-[-1deg]">
-                🛡️ IITK CYBERSEC '30
+                🛡️ IIT KANPUR '30
               </span>
               <span className="px-2.5 py-1 bg-[#38bdf8] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs rotate-[2deg]">
                 ⚙️ GO & RUST
@@ -73,19 +73,13 @@ export default function RetroHero() {
             </div>
           </div>
 
-          {/* Right Column: Punchy Bio & CTA (7 cols) */}
+          {/* Right Column: Bio & CTA (7 cols) */}
           <div className="lg:col-span-7 flex flex-col justify-center">
-            {/* Terminal prefix badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#f6eedb] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs w-fit mb-4">
-              <span className="text-[#f59e0b]">$</span>
-              <span>whoami --verbose</span>
-            </div>
-
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.05] text-black mb-4">
               HEY, I'M{" "}
               <span className="bg-[#fde047] px-2 py-0.5 border-2 border-black shadow-brutal-xs inline-block">
-                BITTU!
+                BITTU.
               </span>
             </h1>
 
@@ -96,18 +90,14 @@ export default function RetroHero() {
               dissect network packets, and build high-throughput tools for the web.
             </p>
 
-            {/* Tactile Sticky Note box */}
+            {/* Sticky Note */}
             <div className="p-4 bg-[#fef08a] border-2 border-black shadow-brutal-xs mb-8 rotate-[-0.5deg]">
-              <div className="flex items-start gap-2 font-mono text-xs sm:text-sm text-black">
-                <span className="text-lg">📌</span>
-                <div>
-                  <strong className="block font-bold">CURRENT RIG / ACTIVITY:</strong>
-                  Pursuing Cybersecurity at IIT Kanpur, serving 10.5M+ requests on ORV-Reader, and maintaining P2P mesh tools.
-                </div>
-              </div>
+              <p className="font-mono text-xs sm:text-sm text-black leading-relaxed">
+                Currently studying Cybersecurity at <strong>IIT Kanpur</strong>, serving 10.5M+ requests on <strong>ORV-Reader</strong>, and maintaining WebRTC peer-to-peer mesh tools.
+              </p>
             </div>
 
-            {/* Chunky Action Buttons */}
+            {/* Action Buttons */}
             <div className="flex flex-wrap items-center gap-3 sm:gap-4">
               <ScrollLink
                 to="projects"
@@ -116,7 +106,7 @@ export default function RetroHero() {
                 duration={400}
                 className="cursor-pointer px-5 py-3 bg-[#f59e0b] text-black font-mono font-bold text-sm border-[3px] border-black shadow-brutal hover:shadow-brutal-lg hover:-translate-y-1 active:translate-x-1 active:translate-y-1 active:shadow-none transition-all flex items-center gap-2"
               >
-                <span>🚀 VIEW INVENTIONS</span>
+                <span>PROJECTS</span>
                 <span>↓</span>
               </ScrollLink>
 
@@ -127,13 +117,13 @@ export default function RetroHero() {
                 duration={400}
                 className="cursor-pointer px-5 py-3 bg-[#86efac] text-black font-mono font-bold text-sm border-[3px] border-black shadow-brutal hover:shadow-brutal-lg hover:-translate-y-1 active:translate-x-1 active:translate-y-1 active:shadow-none transition-all flex items-center gap-2"
               >
-                <span>📖 READ TECH ZINE</span>
+                <span>TECH ZINE</span>
                 <span>→</span>
               </ScrollLink>
 
               <button
                 onClick={copyDiscord}
-                className="px-4 py-3 bg-[#fffdf9] text-black font-mono font-bold text-sm border-[3px] border-black shadow-brutal hover:bg-[#c4b5fd] hover:shadow-brutal-lg hover:-translate-y-1 active:translate-x-1 active:translate-y-1 active:shadow-none transition-all flex items-center gap-2"
+                className="px-4 py-3 bg-[#fffdf9] text-black font-mono font-bold text-sm border-[3px] border-black shadow-brutal hover:bg-[#c4b5fd] hover:shadow-brutal-lg hover:-translate-y-1 active:translate-x-1 active:translate-y-1 active:shadow-none transition-all flex items-center gap-2 cursor-pointer"
               >
                 <span>👾 {copied ? "TAG COPIED! ✓" : "DISCORD: bittu5134"}</span>
               </button>

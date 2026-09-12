@@ -8,17 +8,17 @@ export default function RetroHeader() {
   const isHomePage = location.pathname === "/";
 
   const navItems = [
-    { label: "01. PROJECTS", to: "projects" },
-    { label: "02. LAB", to: "lab" },
-    { label: "03. ZINE", to: "zine" },
-    { label: "04. ABOUT", to: "about" },
-    { label: "05. CONTACT", to: "contact" },
+    { label: "PROJECTS", to: "projects" },
+    { label: "LAB", to: "lab" },
+    { label: "ZINE", to: "zine" },
+    { label: "ABOUT", to: "about" },
+    { label: "CONTACT", to: "contact" },
   ];
 
   return (
     <header className="sticky top-0 z-50 px-3 sm:px-6 pt-3 pb-2 bg-[#f6eedb]/95 backdrop-blur-md border-b-2 border-black">
       <div className="max-w-6xl mx-auto flex items-center justify-between gap-2 sm:gap-4">
-        {/* Logo sticker */}
+        {/* Logo */}
         <div className="flex items-center gap-2">
           {isHomePage ? (
             <ScrollLink
@@ -28,9 +28,6 @@ export default function RetroHeader() {
               className="cursor-pointer group flex items-center gap-2 px-3 py-1.5 bg-[#fde047] border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
             >
               <span className="font-pixel text-xl sm:text-2xl font-bold tracking-wider">💾 BITTU.DEV</span>
-              <span className="hidden sm:inline-block text-[10px] font-mono bg-black text-white px-1.5 py-0.5 rounded-sm font-bold">
-                v3.0
-              </span>
             </ScrollLink>
           ) : (
             <RouterLink
@@ -43,12 +40,6 @@ export default function RetroHeader() {
               </span>
             </RouterLink>
           )}
-
-          {/* Status pill */}
-          <div className="hidden md:flex items-center gap-1.5 px-2.5 py-1 bg-[#86efac] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs">
-            <span className="w-2 h-2 rounded-full bg-[#16a34a] animate-pulse"></span>
-            <span>SYSTEMS ONLINE</span>
-          </div>
         </div>
 
         {/* Desktop Nav links */}
@@ -110,9 +101,6 @@ export default function RetroHeader() {
       {/* Mobile dropdown menu */}
       {isOpen && (
         <div className="lg:hidden mt-3 p-4 bg-[#fffdf9] border-2 border-black shadow-brutal flex flex-col gap-2">
-          <div className="font-mono text-xs font-bold text-gray-500 pb-1 border-b border-black">
-            NAVIGATION INDEX:
-          </div>
           {navItems.map((item) =>
             isHomePage ? (
               <ScrollLink

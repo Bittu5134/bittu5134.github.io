@@ -94,16 +94,13 @@ export default function RetroProjects() {
       : projects.filter((p) => p.category.includes(filter));
 
   return (
-    <section id="projects" className="py-12 px-4 sm:px-6">
+    <section id="projects" className="py-8 px-4 sm:px-6">
       <div className="max-w-5xl mx-auto">
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
           <div>
-            <div className="inline-block px-3 py-1 bg-[#fb923c] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs mb-2">
-              SECTION_01 // INVENTIONS & BUILDS
-            </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-black">
-              THINGS I'VE BUILT.
+              FEATURED PROJECTS.
             </h2>
           </div>
 
@@ -113,7 +110,7 @@ export default function RetroProjects() {
               <button
                 key={cat}
                 onClick={() => setFilter(cat)}
-                className={`px-3 py-1.5 border-2 border-black transition-all ${
+                className={`px-3 py-1.5 border-2 border-black transition-all cursor-pointer ${
                   filter === cat
                     ? "bg-[#fde047] shadow-brutal-xs font-black -translate-y-0.5"
                     : "bg-[#fffdf9] hover:bg-[#f6eedb]"
@@ -132,7 +129,7 @@ export default function RetroProjects() {
               key={index}
               className="bg-[#fffdf9] border-[3px] border-black shadow-brutal hover:shadow-brutal-lg hover:-translate-y-1 transition-all flex flex-col justify-between"
             >
-              {/* Retro Window Header */}
+              {/* Window Header */}
               <div
                 className="px-4 py-2 border-b-[3px] border-black flex items-center justify-between select-none"
                 style={{ backgroundColor: p.headerColor }}
@@ -154,7 +151,7 @@ export default function RetroProjects() {
                   <h3 className="text-2xl font-black text-black mb-1">
                     {p.title}
                   </h3>
-                  <div className="font-mono text-[11px] font-bold text-[#f59e0b] mb-3">
+                  <div className="font-mono text-[11px] font-bold text-[#d97706] mb-3">
                     {p.statsText}
                   </div>
                   <p className="font-mono text-xs sm:text-sm text-black/80 leading-relaxed mb-4">
@@ -206,10 +203,10 @@ export default function RetroProjects() {
           ))}
         </div>
 
-        {/* GitHub link footer note */}
+        {/* GitHub link note */}
         <div className="mt-8 p-4 bg-[#fffdf9] border-2 border-black shadow-brutal-xs flex items-center justify-between flex-wrap gap-4 font-mono text-xs font-bold">
           <span className="text-black/70">
-            ★ Looking for older experimental repos, Minecraft tools & script dumps?
+            Looking for more tools, prototypes, and scripts?
           </span>
           <a
             href="https://github.com/Bittu5134?tab=repositories"

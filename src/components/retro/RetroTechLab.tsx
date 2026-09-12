@@ -1,40 +1,28 @@
-import { useState } from "react";
-
 export default function RetroTechLab() {
-  const [clickedTech, setClickedTech] = useState<string | null>(null);
-
   const techStack = [
-    { name: "Go / Golang", color: "#38bdf8", cat: "Systems & Daemons" },
-    { name: "Rust", color: "#fb923c", cat: "Memory Safety & Speed" },
-    { name: "C / C++", color: "#60a5fa", cat: "Embedded & Protocols" },
-    { name: "Python", color: "#fde047", cat: "PyTorch & AI Vision" },
-    { name: "TypeScript", color: "#38bdf8", cat: "Frontend & Tooling" },
-    { name: "Minecraft Java", color: "#86efac", cat: "Fabric & Network Wire" },
-    { name: "WebRTC", color: "#f472b6", cat: "P2P DataChannels" },
-    { name: "Redis", color: "#f87171", cat: "TTL Heartbeats & PubSub" },
-    { name: "Linux / POSIX", color: "#fde047", cat: "Daemons & Sockets" },
-    { name: "Docker", color: "#60a5fa", cat: "Containers" },
-    { name: "FastAPI", color: "#a7f3d0", cat: "Async APIs" },
-    { name: "Tailwind / React", color: "#38bdf8", cat: "Neo-Brutalist UI" },
-    { name: "PyMuPDF", color: "#c4b5fd", cat: "Spatial PDF Geometry" },
-    { name: "Cloudflare Workers", color: "#fb923c", cat: "Edge & WAF" },
+    { name: "Go / Golang", color: "#38bdf8" },
+    { name: "Rust", color: "#fb923c" },
+    { name: "C / C++", color: "#60a5fa" },
+    { name: "Python", color: "#fde047" },
+    { name: "TypeScript", color: "#38bdf8" },
+    { name: "Minecraft Java", color: "#86efac" },
+    { name: "WebRTC", color: "#f472b6" },
+    { name: "Redis", color: "#f87171" },
+    { name: "Linux / POSIX", color: "#fde047" },
+    { name: "Docker", color: "#60a5fa" },
+    { name: "FastAPI", color: "#a7f3d0" },
+    { name: "Tailwind / React", color: "#38bdf8" },
+    { name: "PyMuPDF", color: "#c4b5fd" },
+    { name: "Cloudflare Workers", color: "#fb923c" },
   ];
 
-  const handleTechClick = (name: string) => {
-    setClickedTech(name);
-    setTimeout(() => setClickedTech(null), 1500);
-  };
-
   return (
-    <section id="lab" className="py-12 px-4 sm:px-6">
+    <section id="lab" className="py-8 px-4 sm:px-6">
       <div className="max-w-5xl mx-auto">
         {/* Section Header */}
         <div className="mb-8">
-          <div className="inline-block px-3 py-1 bg-[#86efac] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs mb-2">
-            SECTION_02 // THE WORKBENCH
-          </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-black">
-            TECH STACK & CAPABILITIES.
+            TECHNICAL CAPABILITIES.
           </h2>
         </div>
 
@@ -45,7 +33,7 @@ export default function RetroTechLab() {
             <div>
               <div className="flex items-center justify-between mb-3">
                 <span className="font-pixel text-2xl font-bold bg-[#fde047] px-2 py-0.5 border border-black">
-                  ⚙️ 01. LOW-LEVEL SYSTEMS
+                  ⚙️ LOW-LEVEL SYSTEMS
                 </span>
                 <span className="font-mono text-xs font-bold bg-black text-white px-2 py-0.5">
                   POSIX / GO
@@ -67,7 +55,7 @@ export default function RetroTechLab() {
             <div>
               <div className="flex items-center justify-between mb-3">
                 <span className="font-pixel text-2xl font-bold bg-[#86efac] px-2 py-0.5 border border-black">
-                  📡 02. WEBRTC & P2P MESH
+                  📡 WEBRTC & P2P MESH
                 </span>
                 <span className="font-mono text-xs font-bold bg-black text-white px-2 py-0.5">
                   SIGNALING
@@ -89,7 +77,7 @@ export default function RetroTechLab() {
             <div>
               <div className="flex items-center justify-between mb-3">
                 <span className="font-pixel text-2xl font-bold bg-[#38bdf8] px-2 py-0.5 border border-black">
-                  ⛏️ 03. MINECRAFT PROTOCOL
+                  ⛏️ MINECRAFT PROTOCOL
                 </span>
                 <span className="font-mono text-xs font-bold bg-black text-white px-2 py-0.5">
                   FABRIC / JAVA
@@ -111,7 +99,7 @@ export default function RetroTechLab() {
             <div>
               <div className="flex items-center justify-between mb-3">
                 <span className="font-pixel text-2xl font-bold bg-[#c4b5fd] px-2 py-0.5 border border-black">
-                  🧠 04. SPATIAL AI & VISION
+                  🧠 SPATIAL AI & VISION
                 </span>
                 <span className="font-mono text-xs font-bold bg-black text-white px-2 py-0.5">
                   PYTORCH / PYMUPDF
@@ -129,29 +117,23 @@ export default function RetroTechLab() {
           </div>
         </div>
 
-        {/* Interactive Tactile Tech Stash Box */}
+        {/* Tech Stash Box */}
         <div className="p-6 sm:p-8 bg-[#fffdf9] border-[3px] border-black shadow-brutal">
-          <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
+          <div className="mb-4">
             <span className="font-mono text-xs font-bold text-black uppercase">
-              ⚡ CLICK ANY CHIP TO TEST PHYSICAL CLICK FEEL:
+              CORE TECHNOLOGIES & TOOLING:
             </span>
-            {clickedTech && (
-              <span className="font-mono text-xs font-bold bg-[#fde047] text-black px-2 py-0.5 border border-black animate-bounceSubtle">
-                ★ POKED {clickedTech.toUpperCase()}! ★
-              </span>
-            )}
           </div>
 
           <div className="flex flex-wrap gap-2.5 sm:gap-3">
             {techStack.map((tech, i) => (
-              <button
+              <span
                 key={i}
-                onClick={() => handleTechClick(tech.name)}
-                className="px-3.5 py-2 border-2 border-black font-mono text-xs sm:text-sm font-bold shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-1 active:translate-y-1 active:shadow-none transition-all flex items-center gap-1.5 cursor-pointer"
+                className="px-3.5 py-2 border-2 border-black font-mono text-xs sm:text-sm font-bold shadow-brutal-xs flex items-center gap-1.5 select-none"
                 style={{ backgroundColor: tech.color }}
               >
                 <span>{tech.name}</span>
-              </button>
+              </span>
             ))}
           </div>
         </div>
