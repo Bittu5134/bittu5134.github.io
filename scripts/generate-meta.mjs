@@ -8,9 +8,13 @@ const __dirname = path.dirname(__filename);
 const SITE_URL = "https://bittu.dev";
 const blogsDir = path.resolve(__dirname, "../src/content/blogs");
 const publicDir = path.resolve(__dirname, "../public");
+const rawBlogsDir = path.resolve(publicDir, "raw/blogs");
 
 if (!fs.existsSync(publicDir)) {
   fs.mkdirSync(publicDir, { recursive: true });
+}
+if (!fs.existsSync(rawBlogsDir)) {
+  fs.mkdirSync(rawBlogsDir, { recursive: true });
 }
 
 // 1. Read and parse all markdown blogs
@@ -75,6 +79,7 @@ function parseMarkdownFile(filepath) {
     summary: meta.summary || "",
     tags: Array.isArray(meta.tags) ? meta.tags : [],
     content,
+    raw,
   };
 }
 
@@ -85,6 +90,12 @@ const blogFiles = fs
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
 console.log(`[generate-meta] Loaded ${blogFiles.length} markdown blog posts.`);
+
+// Copy raw markdown posts to public/raw/blogs/
+for (const post of blogFiles) {
+  fs.writeFileSync(path.join(rawBlogsDir, `${post.slug}.md`), post.raw, "utf-8");
+}
+console.log(`[generate-meta] Published raw markdown files to public/raw/blogs/`);
 
 // 2. Generate public/rss.xml
 function generateRss() {
@@ -139,6 +150,9 @@ function generateSitemap() {
         lastmod,
       };
     }),
+    { loc: `${SITE_URL}/llms.txt`, changefreq: "weekly", priority: "0.6", lastmod: today },
+    { loc: `${SITE_URL}/llms-full.txt`, changefreq: "weekly", priority: "0.6", lastmod: today },
+    { loc: `${SITE_URL}/rss.xml`, changefreq: "weekly", priority: "0.5", lastmod: today },
   ];
 
   const urlsXml = urls
@@ -167,6 +181,7 @@ function generateRobots() {
   const robotsContent = `User-agent: *
 Allow: /
 
+# Canonical Sitemaps & LLM Context Feeds
 Sitemap: ${SITE_URL}/sitemap.xml
 `;
 
@@ -179,37 +194,105 @@ function generateLlmsTxt() {
   const articlesList = blogFiles
     .map(
       (post) =>
-        `- [${post.title}](${SITE_URL}/blog/${post.slug}): ${post.summary}`
+        `- [${post.title}](${SITE_URL}/raw/blogs/${post.slug}.md): ${post.summary} (HTML view at ${SITE_URL}/blog/${post.slug})`
     )
     .join("\n");
 
-  const llmsContent = `# Bittu (Divyanshu Anand)
+  const llmsContent = `# Bittu's Portfolio & Tech Zine
+> A portfolio and technical blog for a low-level systems builder, cybersecurity undergraduate at IIT Kanpur, and WebRTC developer.
 
-> Systems hacker, low-level network engineer, and undergraduate studying Cybersecurity & Computing at IIT Kanpur '30.
-
-## Overview
-Bittu specializes in low-level systems programming (Go, Rust, C++), high-throughput WebRTC peer-to-peer networking, Linux daemons and socket telemetry, and reverse engineering binary network protocols (e.g. Minecraft Java wire format).
-
-## Core Projects
+## Projects
 - [ORV-Reader](https://orv.pages.dev): High-scale distributed web publishing platform serving 10.5M+ monthly HTTP requests with dual static web and compressed EPUB compilation and Cloudflare WAF bot defenses.
 - [PeerBasket](https://peerbasket.bittu.dev): High-throughput lobby-based WebRTC signaling server in Go with Redis. Achieves 41ms average latency and 0.0% packet loss across 500 concurrent peers on bare-metal Proxmox infrastructure.
 - [NetShip](https://github.com/Bittu5134/NetShip): Host Telemetry and Endpoint Detection & Response (EDR) daemon in Go. Captures active TCP/UDP socket activity and maps process lineages via deterministic 24-character SHA-256 GUIDs.
 - [IITK-Resume-Engine](https://github.com/Bittu5134/IITK-Resume-Model): 2D Cartesian spatial coordinate geometry parser in PyMuPDF for academic LaTeX PDFs, recognizing 4,400+ IITK courses with a 6-track step-gradient scoring model.
-- [Sharelock](https://github.com/Bittu5134/Sharelock): 1st Place Winner at ShareIITK Hackathon. Retrieval pipeline and Model Context Protocol (MCP) server indexing 100+ pages of IIT Kanpur academic regulations.
+- [Sharelock](https://github.com/Bittu5134/Sharelock): 1st Place Winner at ShareIITK Hackathon. Retrieval pipeline and Model Context Protocol (MCP) server indexing 100+ pages of dense IIT Kanpur Undergraduate Manual academic policies.
 
-## Technical Articles & Dispatches
+## Technical Writing
 ${articlesList}
 
-## Quick Links
-- Website: ${SITE_URL}
-- Technical Zine: ${SITE_URL}/blog
-- RSS Feed: ${SITE_URL}/rss.xml
-- GitHub: https://github.com/Bittu5134
-- Planet Minecraft: https://www.planetminecraft.com/member/bittu5134/
+## Full Content Payload
+- [Complete Site LLM Context](${SITE_URL}/llms-full.txt): Stitched plain-text and raw Markdown payload containing full project descriptions and complete blog post contents for single-shot ingestion.
+
+## Optional & Quick Links
+- [Website Home](${SITE_URL}): Interactive Neo-Brutalist portfolio home.
+- [Technical Blog Zine](${SITE_URL}/blog): Full web-rendered article archive.
+- [RSS 2.0 Feed](${SITE_URL}/rss.xml): Standard RSS syndication feed.
+- [GitHub Profile](https://github.com/Bittu5134): Open-source repositories and experimental code.
+- [Planet Minecraft](https://www.planetminecraft.com/member/bittu5134/): Minecraft technical datapacks and spotlighted game modifications.
 `;
 
   fs.writeFileSync(path.join(publicDir, "llms.txt"), llmsContent, "utf-8");
   console.log(`[generate-meta] Wrote public/llms.txt`);
+}
+
+// 6. Generate public/llms-full.txt companion
+function generateLlmsFullTxt() {
+  const postsFullSection = blogFiles
+    .map((post) => {
+      return `---
+Title: ${post.title}
+Date: ${post.date}
+Read Time: ${post.readTime}
+Tags: ${post.tags.join(", ")}
+URL: ${SITE_URL}/blog/${post.slug}
+Raw Markdown: ${SITE_URL}/raw/blogs/${post.slug}.md
+Summary: ${post.summary}
+---
+
+${post.content}`;
+    })
+    .join("\n\n================================================================================\n\n");
+
+  const fullContent = `# Bittu's Portfolio & Tech Zine — Full Context Payload
+> Complete plain-text and Markdown knowledge base for Divyanshu Anand (Bittu5134): low-level systems builder, cybersecurity undergraduate at IIT Kanpur, and WebRTC developer.
+
+Canonical URL: ${SITE_URL}
+Index File: ${SITE_URL}/llms.txt
+RSS Feed: ${SITE_URL}/rss.xml
+GitHub: https://github.com/Bittu5134
+
+================================================================================
+SECTION 1: PROFILE & CORE EXPERTISE
+================================================================================
+
+Name: Divyanshu Anand (Bittu / Bittu5134)
+Education: Undergraduate in Cybersecurity & Computing at Indian Institute of Technology Kanpur (IIT Kanpur '30)
+Core Focus:
+- Low-Level Systems: Linux POSIX daemons, raw TCP/UDP socket interception, /proc lineage tracing with SHA-256 GUIDs, memory-mapped I/O, zero-allocation Go loops.
+- Networking & P2P: High-throughput WebRTC signaling servers, STUN/TURN, Redis TTL state sync, token-bucket rate limiting.
+- Protocol Reverse Engineering: Minecraft Java Edition wire format (VarInts, packet state machine transitions, zlib decompression).
+- Spatial Geometry: 2D coordinate bounding box parsing in PyMuPDF for complex LaTeX tabular PDFs.
+- Web & Cloud: SSG static compilers, Cloudflare WAF bot mitigation, FastAPI async backends.
+
+================================================================================
+SECTION 2: FEATURED PROJECTS
+================================================================================
+
+1. ORV-Reader (https://orv.pages.dev | https://github.com/Bittu5134/ORV-Reader)
+High-scale distributed web publishing platform serving 10.5M+ monthly HTTP requests (398+ GB bandwidth, 764k+ unique visits). Automated Python Markdown SSG dual-compilation into static web and compressed EPUBs with Cloudflare WAF bot defenses.
+
+2. PeerBasket (https://peerbasket.bittu.dev | https://github.com/Bittu5134/PeerBasket)
+High-throughput, lobby-based WebRTC signaling server written in Go with Gin and Redis. Achieves 41 ms average latency and 0.0% packet loss across 500 concurrent peers with Redis TTL heartbeat pruning and IP token-bucket rate limiting on bare-metal Proxmox infrastructure.
+
+3. NetShip (https://github.com/Bittu5134/NetShip)
+Cross-platform Host Telemetry and Endpoint Detection & Response (EDR) daemon in Go. Captures active TCP/UDP socket activity, maps process lineages via deterministic 24-char SHA-256 GUIDs, performs local cryptographic binary auditing, and runs an embedded live geolocation dashboard.
+
+4. IITK-Resume-Engine (https://github.com/Bittu5134/IITK-Resume-Model)
+Spatial LaTeX-PDF diagnostic engine built for IIT Kanpur Academics & Career Council (CDW). Features a 2D coordinate geometry table parser in PyMuPDF recognizing 4,400+ IITK courses and CPI metrics, paired with a 6-track step-gradient scoring model and counterfactual gap advice.
+
+5. Sharelock (https://github.com/Bittu5134/Sharelock)
+1st Place Winner at ShareIITK Ideathon. An end-to-end RAG retrieval pipeline and Model Context Protocol (MCP) server indexing 100+ pages of dense IIT Kanpur Undergraduate Manual academic policies for citation-backed query resolution.
+
+================================================================================
+SECTION 3: COMPLETE TECHNICAL ARTICLES & DISPATCHES
+================================================================================
+
+${postsFullSection}
+`;
+
+  fs.writeFileSync(path.join(publicDir, "llms-full.txt"), fullContent, "utf-8");
+  console.log(`[generate-meta] Wrote public/llms-full.txt`);
 }
 
 // Execute all generators
@@ -217,4 +300,5 @@ generateRss();
 generateSitemap();
 generateRobots();
 generateLlmsTxt();
-console.log(`[generate-meta] Done! All metadata standards generated successfully.`);
+generateLlmsFullTxt();
+console.log(`[generate-meta] Done! All metadata and AI context standards generated successfully.`);
