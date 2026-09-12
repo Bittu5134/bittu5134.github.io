@@ -1,5 +1,4 @@
-import { motion } from "motion/react";
-import ProjectCard from "./ProjectCard";
+import { useState } from "react";
 
 interface Project {
   name: string;
@@ -10,6 +9,8 @@ interface Project {
 }
 
 export default function ProjectsSection() {
+  const [showAll, setShowAll] = useState(false);
+
   const projects: Project[] = [
     {
       name: "ORV-Reader",
@@ -61,19 +62,82 @@ export default function ProjectsSection() {
     },
   ];
 
+  const visibleProjects = showAll ? projects : projects.slice(0, 3);
+
   return (
-    <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full pointer-events-none">
-      {projects.map((project, index) => (
-        <div key={index} className="pointer-events-auto w-full">
-          <ProjectCard
-            name={project.name}
-            url={project.url}
-            description={project.description}
-            githubUrl={project.githubUrl}
-            imageSrc={project.imageSrc}
-          />
-        </div>
+    <div className="flex flex-col divide-y divide-cream/[0.08] pointer-events-auto w-full max-w-4xl">
+      {visibleProjects.map((project, index) => (
+        <article key={index} className="py-8 first:pt-0 last:pb-0 group">
+          <div className="flex flex-col gap-2">
+            <div className="flex items-baseline justify-between flex-wrap gap-2">
+              <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-cream group-hover:text-amber_glow transition-colors duration-200">
+                {project.url ? (
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:underline underline-offset-4 decoration-amber_glow/40"
+                  >
+                    {project.name}{" "}
+                    <span className="text-base text-cream/40 group-hover:text-amber_glow font-normal">
+                      ↗
+                    </span>
+                  </a>
+                ) : (
+                  <span>{project.name}</span>
+                )}
+              </h3>
+
+              <div className="flex items-center gap-4 text-sm font-mono">
+                {project.url && (
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-cream/50 hover:text-amber_glow transition-colors"
+                  >
+                    live site ↗
+                  </a>
+                )}
+                {project.githubUrl && (
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-cream/50 hover:text-amber_glow transition-colors"
+                  >
+                    github ↗
+                  </a>
+                )}
+              </div>
+            </div>
+
+            <p className="text-cream/70 text-base md:text-lg leading-relaxed mt-1 font-normal">
+              {project.description}
+            </p>
+          </div>
+        </article>
       ))}
-    </motion.div>
+
+      {/* More projects controls */}
+      <div className="pt-8 flex items-center justify-between flex-wrap gap-4 text-sm font-mono">
+        <button
+          onClick={() => setShowAll(!showAll)}
+          className="text-amber_glow hover:underline underline-offset-4 flex items-center gap-1.5 transition-all cursor-pointer"
+        >
+          <span>{showAll ? "(- show fewer projects)" : "(+ more projects)"}</span>
+        </button>
+
+        <a
+          href="https://github.com/Bittu5134?tab=repositories"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-cream/40 hover:text-cream transition-colors flex items-center gap-1 text-xs"
+        >
+          <span>all repos on github</span>
+          <span>↗</span>
+        </a>
+      </div>
+    </div>
   );
 }

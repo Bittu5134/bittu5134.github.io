@@ -1,8 +1,8 @@
-import "react";
 import SideBar from "../components/SideBar";
 import PhysicsTechField from "../components/PhysicsTechField";
 import ProjectsSection from "../components/ProjectSection";
 import AudioPlayer from "../components/AudioPlayer";
+import { blogPosts } from "../data/blogs";
 
 export default function App() {
   const technologies = [
@@ -129,46 +129,36 @@ export default function App() {
   ];
 
   return (
-    <div className="flex bg-black text-white_smoke overflow-x-hidden relative">
+    <div className="flex bg-[#080b12] text-cream overflow-x-hidden relative min-h-screen">
       <SideBar />
-      <div className="flex md:ml-72 ml-0 flex-col w-full mb-4 h-fit relative">
-        {/* Interactive physics-driven floating background tech cards */}
+      <div className="flex md:ml-[260px] ml-0 flex-col w-full min-h-screen relative">
+        {/* Interactive physics-driven floating background tech tags */}
         <PhysicsTechField technologies={technologies} />
 
         {/* Home / Hero Section */}
-        <section id="home" className="h-screen flex p-4 relative z-10 pointer-events-none">
-          <div className="m-auto flex flex-col md:flex-row justify-center items-center text-center md:text-left gap-8 md:gap-12 max-w-4xl p-6 md:p-10 rounded-2xl bg-black/50 backdrop-blur-sm pointer-events-auto">
+        <section
+          id="home"
+          className="min-h-screen flex items-center px-6 md:px-14 lg:px-20 py-20 relative z-10 pointer-events-none"
+        >
+          <div className="flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-8 md:gap-12 max-w-3xl pointer-events-auto">
             <img
               src="/images/avatar.png"
-              alt="avatar"
-              className="w-40 sm:w-48 md:w-56 lg:w-60 aspect-square object-cover rounded-2xl shadow-2xl shrink-0 my-4 md:my-auto"
+              alt="Bittu avatar"
+              className="w-36 h-36 sm:w-44 sm:h-44 md:w-52 md:h-52 object-cover rounded-full shadow-2xl shrink-0 ring-2 ring-cyan-500/20 shadow-cyan-500/10"
             />
-            <div className="flex flex-col my-auto px-2">
-              <p className="text-2xl md:text-3xl font-normal">hey there, im</p>
-              <p className="text-5xl md:text-8xl font-extrabold">Bittu</p>
-              <p className="text-xl md:text-xl font-normal relative mt-1">
-                a full-stack developer/hardware magician who does a bit of
+            <div className="flex flex-col justify-center">
+              <p className="text-xl sm:text-2xl font-light text-cream/70 mb-1">
+                hey there, im
               </p>
-              <div className="w-full flex justify-center md:justify-start h-fit mt-1">
-                <div className="relative text-xl md:text-xl font-normal">
-                  <span className="absolute -left-[2px] top-0 text-[#01204E]">
-                    everything
-                  </span>
-                  <span className="absolute -left-[1px] top-0 text-[#028393]">
-                    everything
-                  </span>
-                  <span className="absolute left-0 top-0 text-[#F6DCAC]">
-                    everything
-                  </span>
-                  <span className="absolute left-[1px] top-0 text-[#FAAA68]">
-                    everything
-                  </span>
-                  <span className="absolute left-[2px] top-0 text-[#F65625]">
-                    everything
-                  </span>
-                  <span className="invisible">everything</span>
-                </div>
-              </div>
+              <h1 className="text-6xl sm:text-7xl md:text-8xl font-black tracking-tight text-cream mb-4">
+                Bittu
+              </h1>
+              <p className="text-lg sm:text-xl font-normal text-cream/80 leading-relaxed max-w-xl">
+                a full-stack developer / systems hacker who does a bit of{" "}
+                <span className="glitch-text text-amber_glow font-semibold whitespace-nowrap">
+                  everything
+                </span>
+              </p>
             </div>
           </div>
         </section>
@@ -176,47 +166,136 @@ export default function App() {
         {/* About Section */}
         <section
           id="about"
-          className="min-h-screen relative px-4 md:px-8 py-8 md:py-16 z-10 pointer-events-none"
+          className="min-h-screen flex flex-col justify-center px-6 md:px-14 lg:px-20 py-24 relative z-10 pointer-events-none"
         >
-          <div className="sticky top-0 z-10 bg-black/50 backdrop-blur-sm p-4 md:p-6 rounded-xl max-w-2xl pointer-events-auto">
-            <h2 className="font-extrabold text-5xl lg:text-8xl mb-4">
+          <div className="max-w-2xl pointer-events-auto">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-cream mb-8">
               about me
             </h2>
-            <p className="font-medium text-base md:text-lg lg:text-xl">
-              student @{" "}
-              <a
-                href="https://iitk.ac.in"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-bold text-argentinian_blue underline"
-              >
-                iit kanpur '30
-              </a>
-              , pursuing a Bachelors in Cybersecurity. i love building low-level systems, high-scale web platforms, and participating in hackathons. outside of coding, i like playing{" "}
-              <span className="font-bold text-[#2ecc71]">minecraft</span> (and even got featured on{" "}
-              <a
-                href="https://www.planetminecraft.com/member/bittu5134/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-bold text-[#f1c40f] underline"
-              >
-                minecraft live
-              </a>
-              !). in my free time i usually listen to music, reverse-engineer random protocols, or tinker with open-source tools.
-            </p>
+            <div className="space-y-4 text-base sm:text-lg text-cream/80 font-normal leading-relaxed">
+              <p>
+                student @{" "}
+                <a
+                  href="https://iitk.ac.in"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-medium text-argentinian_blue hover:underline underline-offset-4"
+                >
+                  iit kanpur '30
+                </a>
+                , pursuing a bachelors in cybersecurity. i love building low-level systems, high-scale web platforms, and participating in hackathons.
+              </p>
+              <p>
+                outside of coding, i like playing{" "}
+                <span className="text-[#2ecc71] font-medium">minecraft</span> (and even got featured on{" "}
+                <a
+                  href="https://www.planetminecraft.com/member/bittu5134/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#f1c40f] hover:underline underline-offset-4 font-medium"
+                >
+                  minecraft live
+                </a>
+                !). in my free time i usually listen to music, reverse-engineer random protocols, or tinker with open-source tools.
+              </p>
+            </div>
           </div>
+        </section>
 
-          <div className="h-[75vh] relative pointer-events-none" />
+        {/* Inline Blog Section */}
+        <section
+          id="blog"
+          className="min-h-screen flex flex-col justify-center px-6 md:px-14 lg:px-20 py-24 relative z-10 pointer-events-none"
+        >
+          <div className="w-full max-w-4xl pointer-events-auto">
+            <div className="flex items-baseline justify-between flex-wrap gap-4 mb-10">
+              <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-cream">
+                blog
+              </h2>
+              <a
+                href="/blog"
+                className="text-sm font-mono text-amber_glow hover:underline underline-offset-4 flex items-center gap-1"
+              >
+                <span>(more blogs ↗)</span>
+              </a>
+            </div>
+
+            <div className="flex flex-col divide-y divide-cream/[0.08]">
+              {blogPosts.slice(0, 2).map((post) => (
+                <article key={post.slug} className="py-8 first:pt-0 last:pb-0 group">
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center gap-3 text-xs font-mono text-cream/50">
+                      <span>{post.date}</span>
+                      <span>•</span>
+                      <span>{post.readTime}</span>
+                    </div>
+
+                    <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-cream group-hover:text-amber_glow transition-colors duration-200">
+                      <a href={`/blog/${post.slug}`} className="hover:underline underline-offset-4 decoration-amber_glow/40">
+                        {post.title}{" "}
+                        <span className="text-base text-cream/40 group-hover:text-amber_glow font-normal">
+                          ↗
+                        </span>
+                      </a>
+                    </h3>
+
+                    <p className="text-cream/70 text-base md:text-lg leading-relaxed font-normal">
+                      {post.summary}
+                    </p>
+
+                    <div className="flex items-center justify-between flex-wrap gap-4 pt-2">
+                      <div className="flex flex-wrap gap-2">
+                        {post.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="px-2.5 py-0.5 rounded-full text-xs font-mono bg-[#0e1322] border border-white/5 text-lavender-light"
+                          >
+                            #{tag}
+                          </span>
+                        ))}
+                      </div>
+
+                      <a
+                        href={`/blog/${post.slug}`}
+                        className="text-sm font-mono text-amber_glow hover:underline underline-offset-4"
+                      >
+                        read post ↗
+                      </a>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <div className="pt-8 flex items-center justify-between flex-wrap gap-4 text-sm font-mono border-t border-cream/[0.08] mt-8">
+              <a
+                href="/blog"
+                className="text-amber_glow hover:underline underline-offset-4 flex items-center gap-1"
+              >
+                <span>view all articles & deep dives ↗</span>
+              </a>
+
+              <a
+                href="/rss.xml"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-cream/40 hover:text-amber_glow transition-colors flex items-center gap-1 text-xs"
+              >
+                <span>rss feed ↗</span>
+              </a>
+            </div>
+          </div>
         </section>
 
         {/* Projects Section */}
-        <section id="projects" className="min-h-screen relative z-10 pointer-events-none">
-          <div className="sticky top-0 pt-8 px-4 md:px-8 z-10 bg-black/30 backdrop-blur-sm mb-10 pointer-events-auto">
-            <h2 className="text-5xl lg:text-8xl font-extrabold mb-4">
+        <section
+          id="projects"
+          className="min-h-screen flex flex-col justify-center px-6 md:px-14 lg:px-20 py-24 relative z-10 pointer-events-none"
+        >
+          <div className="w-full max-w-4xl pointer-events-auto">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-cream mb-10">
               projects
             </h2>
-          </div>
-          <div className="flex flex-col h-full flex-wrap w-full gap-4 md:gap-8 px-4 md:px-8 pointer-events-none">
             <ProjectsSection />
           </div>
         </section>
@@ -224,134 +303,65 @@ export default function App() {
         {/* Contact Section */}
         <section
           id="contact"
-          className="flex min-h-screen relative px-4 md:px-8 pt-8 md:pt-14 w-full z-10 pointer-events-none"
+          className="min-h-screen flex flex-col justify-center px-6 md:px-14 lg:px-20 py-24 relative z-10 pointer-events-none"
         >
-          <p className="absolute text-6xl lg:text-8xl font-extrabold pointer-events-auto">
-            contact
-          </p>
-          <div className="flex flex-col gap-12 m-auto md:mx-0 md:my-auto pt-20 md:pt-0 pointer-events-auto">
-            {/* 1. GitHub */}
-            <a
-              href="https://github.com/Bittu5134"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-4 md:gap-6 text-5xl hover:text-argentinian_blue transition-colors"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="48"
-                height="48"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-              </svg>
-              <p className="my-auto">github</p>
-            </a>
+          <div className="max-w-xl pointer-events-auto">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-cream mb-3">
+              contact
+            </h2>
+            <p className="text-cream/50 text-base sm:text-lg mb-10 font-normal">
+              say hi. i'm always happy to chat about systems, projects, or ideas.
+            </p>
 
-            {/* Temporarily removed LinkedIn */}
-            {/*
-            <a
-              href="https://linkedin.com/in/bittu5134"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-4 md:gap-6 text-5xl hover:text-argentinian_blue transition-colors"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="48"
-                height="48"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+            <div className="flex flex-col gap-6">
+              <a
+                href="https://github.com/Bittu5134"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-3xl sm:text-4xl font-bold text-cream/75 hover:text-argentinian_blue transition-colors duration-200 w-fit flex items-baseline gap-2"
               >
-                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                <rect x="2" y="9" width="4" height="12"></rect>
-                <circle cx="4" cy="4" r="2"></circle>
-              </svg>
-              <p className="my-auto">linkedin</p>
-            </a>
-            */}
+                <span>github</span>
+                <span className="text-xl text-cream/35">↗</span>
+              </a>
 
-            {/* 3. Email */}
-            <a
-              href="mailto:hello@bittu.dev"
-              className="flex items-center gap-4 md:gap-6 text-5xl hover:text-argentinian_blue transition-colors"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="48"
-                height="48"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+              <a
+                href="mailto:hello@bittu.dev"
+                className="text-3xl sm:text-4xl font-bold text-cream/75 hover:text-argentinian_blue transition-colors duration-200 w-fit flex items-baseline gap-2"
               >
-                <rect width="20" height="16" x="2" y="4" rx="2" />
-                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-              </svg>
-              <p className="my-auto">email</p>
-            </a>
+                <span>email</span>
+                <span className="text-xl text-cream/35">↗</span>
+              </a>
 
-            {/* 4. Discord */}
-            <a
-              href="/discord"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-4 md:gap-6 text-5xl hover:text-[#5865F2] transition-colors"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="48"
-                height="48"
-                viewBox="0 0 24 24"
-                fill="currentColor"
+              <a
+                href="/discord"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-3xl sm:text-4xl font-bold text-cream/75 hover:text-[#5865F2] transition-colors duration-200 w-fit flex items-baseline gap-2"
               >
-                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
-              </svg>
-              <p className="my-auto">discord</p>
-            </a>
+                <span>discord</span>
+                <span className="text-xl text-cream/35">↗</span>
+              </a>
 
-            {/* 5. pmc */}
-            <a
-              href="https://www.planetminecraft.com/member/bittu5134/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-4 md:gap-6 text-5xl hover:text-[#2ecc71] transition-colors"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="48"
-                height="48"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+              <a
+                href="https://www.planetminecraft.com/member/bittu5134/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-3xl sm:text-4xl font-bold text-cream/75 hover:text-[#2ecc71] transition-colors duration-200 w-fit flex items-baseline gap-2"
               >
-                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-                <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
-                <line x1="12" y1="22.08" x2="12" y2="12" />
-              </svg>
-              <p className="my-auto">pmc</p>
-            </a>
+                <span>planet minecraft</span>
+                <span className="text-xl text-cream/35">↗</span>
+              </a>
+            </div>
           </div>
         </section>
+
+        {/* Clean, warm, single footer */}
+        <footer className="text-center w-full text-cream/30 text-xs font-mono py-12">
+          &copy; 2026 Divyanshu Anand (Bittu5134)
+        </footer>
       </div>
+
       <AudioPlayer />
-      <footer className="text-center w-full text-neutral-500 text-sm p-4 absolute bottom-0 left-1/2 -translate-x-1/2">
-        &copy; 2026 Divyanshu Anand (Bittu5134)
-      </footer>
     </div>
   );
 }

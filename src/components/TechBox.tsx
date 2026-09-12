@@ -7,21 +7,21 @@ interface TechBoxProps {
 export default function TechBox({ src, name, isDragging = false }: TechBoxProps) {
   return (
     <div
-      className={`rounded-xl scale-75 sm:scale-80 md:scale-85 w-36 md:w-40 h-24 md:h-28 text-white_smoke justify-around py-2 flex flex-col select-none transition-[background-color,border-color,box-shadow] duration-150 backdrop-blur-xs border ${
+      className={`px-3.5 py-2 md:px-4 md:py-2.5 rounded-xl text-xs md:text-sm font-medium tracking-wide flex items-center gap-2.5 select-none transition-all duration-200 shadow-md backdrop-blur-md border ${
         isDragging
-          ? "bg-white_smoke/30 shadow-xl shadow-argentinian_blue-400/40 border-argentinian_blue-400/70 ring-2 ring-argentinian_blue-400/50"
-          : "bg-white_smoke/10 hover:bg-white_smoke/20 border-white/5 hover:border-white/15 shadow-sm"
+          ? "bg-[#151d36] text-amber_glow border-amber_glow shadow-xl shadow-amber_glow/30 scale-110 ring-2 ring-amber_glow/40"
+          : "bg-[#0d1222]/85 text-cream hover:text-amber_glow border-white/10 hover:border-cyan-400/40 hover:bg-[#121a30] shadow-black/40 hover:shadow-cyan-500/20"
       }`}
     >
       <img
         src={src}
         alt={name}
         draggable={false}
-        className="h-10 md:h-12 mx-auto aspect-square select-none pointer-events-none"
+        className="h-4 w-4 md:h-5 md:w-5 aspect-square select-none pointer-events-none drop-shadow-sm"
       />
-      <p className="text-center text-sm md:text-base font-semibold select-none pointer-events-none tracking-wide text-neutral-300">
+      <span className="select-none pointer-events-none lowercase font-mono font-medium">
         {name}
-      </p>
+      </span>
     </div>
   );
 }

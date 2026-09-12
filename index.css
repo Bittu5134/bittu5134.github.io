@@ -2,28 +2,52 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
 html,
 body,
 #root {
   overflow-x: hidden;
   font-family: Inter, sans-serif;
+  background-color: #080b12;
+  color: #f5ede3;
 }
 
-/* Scrollbar styling */
+/* Glitch animation for hero "everything" text (command block amber + circuit cyan) */
+@keyframes glitch-shift {
+  0%, 100% {
+    text-shadow: -1.5px 0 #35a7ff, -0.75px 0 #9b9fed, 0.75px 0 #ffd4a3, 1.5px 0 #f49a60;
+  }
+  33% {
+    text-shadow: 1.5px 0 #35a7ff, 0.75px 0 #9b9fed, -0.75px 0 #ffd4a3, -1.5px 0 #f49a60;
+  }
+  66% {
+    text-shadow: -0.75px 0 #9b9fed, 1.5px 0 #f49a60, 0.75px 0 #ffd4a3, -1.5px 0 #35a7ff;
+  }
+}
+
+.glitch-text {
+  animation: glitch-shift 4s ease-in-out infinite;
+}
+
+/* Obsidian navy scrollbar styling */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 4px;
+  background: rgba(59, 75, 116, 0.4);
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(101, 121, 168, 0.7);
 }
+
 

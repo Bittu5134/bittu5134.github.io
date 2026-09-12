@@ -85,7 +85,7 @@ export default function AudioPlayer() {
   const currentTrack = tracks[currentTrackIndex];
 
   return (
-    <div className="fixed bottom-12 right-8 bg-black/80 backdrop-blur-sm p-4 rounded-xl border-4 border-argentinian_blue/80 z-50 shadow-lg w-[210px] animate-fadeIn">
+    <div className="fixed bottom-8 right-8 bg-[#0e1322]/90 backdrop-blur-md p-4 rounded-xl border border-white/10 hover:border-cyan-500/30 z-50 shadow-xl w-[210px] animate-fadeIn transition-colors">
       <audio
         ref={audioRef}
         src={currentTrack.url}
@@ -93,47 +93,53 @@ export default function AudioPlayer() {
         loop={false}
       />
 
-      <div className="text-sm mb-2 overflow-hidden whitespace-nowrap relative group">
+      <div className="text-xs mb-2 overflow-hidden whitespace-nowrap relative group font-mono">
         <div className="relative inline-block group/text">
           <div
-            className={`inline-block mb-0.5 text-white font-bold ${
+            className={`inline-block mb-0.5 text-cream font-medium ${
               currentTrack.title.length + currentTrack.artist.length > 14
                 ? "animate-scrollText"
                 : ""
             }`}
           >
             {currentTrack.title}{" "}
-            <span className="text-white/80 font-normal"> - {currentTrack.artist}</span>
+            <span className="text-cream/50 font-normal"> - {currentTrack.artist}</span>
           </div>
-          <div className="absolute bottom-0 left-0 w-full h-[3px] bg-argentinian_blue origin-left transform scale-x-0 transition-transform duration-300 group-hover/text:scale-x-100" />
+          <div className="absolute bottom-0 left-0 w-full h-[2px] bg-argentinian_blue origin-left transform scale-x-0 transition-transform duration-300 group-hover/text:scale-x-100" />
         </div>
       </div>
 
       <div className="flex items-center justify-between gap-1">
         <button
           onClick={previousTrack}
-          className="text-white hover:text-[#028393] transition-all duration-300 opacity-60 hover:opacity-100 p-2 rounded-lg hover:bg-white/5 active:bg-white/10"
+          className="text-cream/70 hover:text-argentinian_blue transition-all duration-200 p-1.5 rounded-lg hover:bg-cream/5 active:bg-cream/10"
+          aria-label="Previous track"
         >
-          <SkipBack size={20} />
+          <SkipBack size={18} />
         </button>
 
         <button
           onClick={togglePlay}
-          className="text-white hover:text-[#028393] transition-all duration-300 opacity-60 hover:opacity-100 p-2 rounded-lg hover:bg-white/5 active:bg-white/10"
+          className="text-cream hover:text-argentinian_blue transition-all duration-200 p-1.5 rounded-lg hover:bg-cream/5 active:bg-cream/10"
+          aria-label={isPlaying ? "Pause" : "Play"}
         >
-          {isPlaying ? <Pause size={24} /> : <Play size={24} />}
+          {isPlaying ? <Pause size={20} /> : <Play size={20} />}
         </button>
 
         <button
           onClick={nextTrack}
-          className="text-white hover:text-[#028393] transition-all duration-300 opacity-60 hover:opacity-100 p-2 rounded-lg hover:bg-white/5 active:bg-white/10"
+          className="text-cream/70 hover:text-argentinian_blue transition-all duration-200 p-1.5 rounded-lg hover:bg-cream/5 active:bg-cream/10"
+          aria-label="Next track"
         >
-          <SkipForward size={20} />
+          <SkipForward size={18} />
         </button>
 
         <div className="relative group">
-          <button className="text-white hover:text-[#028393] transition-all duration-300 opacity-60 hover:opacity-100 p-2 rounded-lg hover:bg-white/5 active:bg-white/10">
-            <Volume2 size={20} />
+          <button 
+            className="text-cream/70 hover:text-argentinian_blue transition-all duration-200 p-1.5 rounded-lg hover:bg-cream/5 active:bg-cream/10"
+            aria-label="Volume"
+          >
+            <Volume2 size={18} />
           </button>
           <input
             type="range"
@@ -143,11 +149,10 @@ export default function AudioPlayer() {
             value={volume}
             onChange={handleVolumeChange}
             className="absolute -top-16 left-1/2 -translate-x-1/2 w-24 -rotate-90 opacity-0 group-hover:opacity-100 transition-all duration-300
-            appearance-none h-1 bg-white/20 rounded-full cursor-pointer
-            [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4
-            [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:cursor-grab
-            [&::-webkit-slider-thumb]:hover:bg-[#028393] [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:duration-300
-            [&::-webkit-slider-thumb]:shadow-md [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-[#028393]/20
+            appearance-none h-1 bg-cream/20 rounded-full cursor-pointer
+            [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3.5 [&::-webkit-slider-thumb]:h-3.5
+            [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-cream [&::-webkit-slider-thumb]:cursor-grab
+            [&::-webkit-slider-thumb]:hover:bg-argentinian_blue [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:duration-200
             active:cursor-grabbing [&::-webkit-slider-thumb]:active:cursor-grabbing
             [&::-webkit-slider-thumb]:active:scale-95 [&::-webkit-slider-thumb]:hover:scale-110"
           />

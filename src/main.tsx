@@ -6,12 +6,22 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 
 import "../index.css";
 import SimpleFlightController from "./pages/SimpleFlightController.tsx";
+import BlogList from "./pages/BlogList.tsx";
+import BlogPost from "./pages/BlogPost.tsx";
 import ErrorPage from "./pages/ErrorPage.tsx";
 
 let router = createBrowserRouter([
   {
     path: "/",
     Component: App,
+  },
+  {
+    path: "/blog",
+    Component: BlogList,
+  },
+  {
+    path: "/blog/:slug",
+    Component: BlogPost,
   },
   {
     path: "/discord",

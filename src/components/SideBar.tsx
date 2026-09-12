@@ -1,12 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Link } from "react-scroll";
+import { Link as ScrollLink } from "react-scroll";
+import { Link as RouterLink, useLocation } from "react-router";
 
 export default function SideBar() {
   const [active, setActive] = useState("home");
   const [isMobile, setIsMobile] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
+  const isBlogPage = location.pathname.startsWith("/blog");
 
   useEffect(() => {
     const checkMobile = () => {
@@ -29,13 +33,13 @@ export default function SideBar() {
       {isMobile && (
         <button
           onClick={toggleSidebar}
-          className="fixed top-7 right-4 z-50 p-2 bg-black/80 rounded-md"
+          className="fixed top-7 right-4 z-50 p-2.5 bg-[#0e1322]/90 border border-white/10 rounded-xl text-cream backdrop-blur-md shadow-lg"
           aria-label="Toggle menu"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
+            width="22"
+            height="22"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -54,7 +58,7 @@ export default function SideBar() {
 
       {/* Sidebar */}
       <div
-        className={`fixed h-full bg-black/95 z-40 transition-all duration-300 ${
+        className={`fixed h-full bg-[#080b12]/95 backdrop-blur-xl z-40 transition-all duration-300 ${
           isMobile
             ? isOpen
               ? "w-full right-0"
@@ -63,113 +67,204 @@ export default function SideBar() {
         }`}
       >
         <div className="h-full flex flex-col justify-center">
-          <div className="flex flex-col gap-y-12 text-center">
-            {/* <NavItem to="home" label="home" />
-            <NavItem to="about" label="about" />
-            <NavItem to="projects" label="projects" />
-            <NavItem to="contact" label="contact" /> */}
-            <Link
-              spy={true}
-              smooth={true}
-              duration={500}
-              to="home"
-              offset={-20}
-              isDynamic={true}
-              onSetActive={() => setActive("home")}
-              onClick={() => isMobile && setIsOpen(false)}
-              className={`text-3xl md:text-4xl lg:text-5xl font-semibold group cursor-pointer max-w-fit mx-auto duration-300 transition-all ${
-                active === "home"
-                  ? "text-white_smoke"
-                  : "text-white_smoke/70 hover:text-white_smoke"
-              }`}
-            >
-              home
-              <span
-                className={`block transition-all duration-500 h-1 bg-argentinian_blue ${
-                  active === "home"
-                    ? "max-w-full"
-                    : "max-w-0 group-hover:max-w-full"
+          <div className="flex flex-col gap-y-10 text-center">
+            {/* Home */}
+            {isHomePage ? (
+              <ScrollLink
+                spy={true}
+                smooth={true}
+                duration={500}
+                to="home"
+                offset={-20}
+                isDynamic={true}
+                onSetActive={() => setActive("home")}
+                onClick={() => isMobile && setIsOpen(false)}
+                className={`text-3xl md:text-4xl lg:text-5xl font-semibold group cursor-pointer max-w-fit mx-auto duration-200 transition-all ${
+                  active === "home" && !isBlogPage
+                    ? "text-cream"
+                    : "text-cream/40 hover:text-cream"
                 }`}
-              ></span>
-            </Link>
-            <Link
-              spy={true}
-              smooth={true}
-              duration={500}
-              to="about"
-              offset={-20}
-              isDynamic={true}
-              onSetActive={() => setActive("about")}
-              onClick={() => isMobile && setIsOpen(false)}
-              className={`text-3xl md:text-4xl lg:text-5xl font-semibold group cursor-pointer max-w-fit mx-auto duration-300 transition-all ${
-                active === "about"
-                  ? "text-white_smoke"
-                  : "text-white_smoke/70 hover:text-white_smoke"
-              }`}
-            >
-              about
-              <span
-                className={`block transition-all duration-500 h-1 bg-argentinian_blue ${
-                  active === "about"
-                    ? "max-w-full"
-                    : "max-w-0 group-hover:max-w-full"
+              >
+                home
+                <span
+                  className={`block transition-all duration-300 h-1 bg-amber_glow ${
+                    active === "home" && !isBlogPage
+                      ? "max-w-full"
+                      : "max-w-0 group-hover:max-w-full"
+                  }`}
+                ></span>
+              </ScrollLink>
+            ) : (
+              <RouterLink
+                to="/#home"
+                onClick={() => isMobile && setIsOpen(false)}
+                className="text-3xl md:text-4xl lg:text-5xl font-semibold group cursor-pointer max-w-fit mx-auto duration-200 transition-all text-cream/40 hover:text-cream"
+              >
+                home
+                <span className="block transition-all duration-300 h-1 bg-amber_glow max-w-0 group-hover:max-w-full"></span>
+              </RouterLink>
+            )}
+
+            {/* About */}
+            {isHomePage ? (
+              <ScrollLink
+                spy={true}
+                smooth={true}
+                duration={500}
+                to="about"
+                offset={-20}
+                isDynamic={true}
+                onSetActive={() => setActive("about")}
+                onClick={() => isMobile && setIsOpen(false)}
+                className={`text-3xl md:text-4xl lg:text-5xl font-semibold group cursor-pointer max-w-fit mx-auto duration-200 transition-all ${
+                  active === "about" && !isBlogPage
+                    ? "text-cream"
+                    : "text-cream/40 hover:text-cream"
                 }`}
-              ></span>
-            </Link>
-            <Link
-              spy={true}
-              smooth={true}
-              duration={500}
-              to="projects"
-              offset={-20}
-              isDynamic={true}
-              onSetActive={() => setActive("projects")}
-              onClick={() => isMobile && setIsOpen(false)}
-              className={`text-3xl md:text-4xl lg:text-5xl font-semibold group cursor-pointer max-w-fit mx-auto duration-300 transition-all ${
-                active === "projects"
-                  ? "text-white_smoke"
-                  : "text-white_smoke/70 hover:text-white_smoke"
-              }`}
-            >
-              projects
-              <span
-                className={`block transition-all duration-500 h-1 bg-argentinian_blue ${
-                  active === "projects"
-                    ? "max-w-full"
-                    : "max-w-0 group-hover:max-w-full"
+              >
+                about
+                <span
+                  className={`block transition-all duration-300 h-1 bg-amber_glow ${
+                    active === "about" && !isBlogPage
+                      ? "max-w-full"
+                      : "max-w-0 group-hover:max-w-full"
+                  }`}
+                ></span>
+              </ScrollLink>
+            ) : (
+              <RouterLink
+                to="/#about"
+                onClick={() => isMobile && setIsOpen(false)}
+                className="text-3xl md:text-4xl lg:text-5xl font-semibold group cursor-pointer max-w-fit mx-auto duration-200 transition-all text-cream/40 hover:text-cream"
+              >
+                about
+                <span className="block transition-all duration-300 h-1 bg-amber_glow max-w-0 group-hover:max-w-full"></span>
+              </RouterLink>
+            )}
+
+            {/* Blog */}
+            {isHomePage ? (
+              <ScrollLink
+                spy={true}
+                smooth={true}
+                duration={500}
+                to="blog"
+                offset={-20}
+                isDynamic={true}
+                onSetActive={() => setActive("blog")}
+                onClick={() => isMobile && setIsOpen(false)}
+                className={`text-3xl md:text-4xl lg:text-5xl font-semibold group cursor-pointer max-w-fit mx-auto duration-200 transition-all ${
+                  active === "blog" && !isBlogPage
+                    ? "text-cream"
+                    : "text-cream/40 hover:text-cream"
                 }`}
-              ></span>
-            </Link>
-            <Link
-              spy={true}
-              smooth={true}
-              duration={500}
-              to="contact"
-              offset={-20}
-              isDynamic={true}
-              onSetActive={() => setActive("contact")}
-              onClick={() => isMobile && setIsOpen(false)}
-              className={`text-3xl md:text-4xl lg:text-5xl font-semibold group cursor-pointer max-w-fit mx-auto duration-300 transition-all ${
-                active === "contact"
-                  ? "text-white_smoke"
-                  : "text-white_smoke/70 hover:text-white_smoke"
-              }`}
-            >
-              contact
-              <span
-                className={`block transition-all duration-500 h-1 bg-argentinian_blue ${
-                  active === "contact"
-                    ? "max-w-full"
-                    : "max-w-0 group-hover:max-w-full"
+              >
+                blog
+                <span
+                  className={`block transition-all duration-300 h-1 bg-amber_glow ${
+                    active === "blog" && !isBlogPage
+                      ? "max-w-full"
+                      : "max-w-0 group-hover:max-w-full"
+                  }`}
+                ></span>
+              </ScrollLink>
+            ) : (
+              <RouterLink
+                to="/blog"
+                onClick={() => isMobile && setIsOpen(false)}
+                className={`text-3xl md:text-4xl lg:text-5xl font-semibold group cursor-pointer max-w-fit mx-auto duration-200 transition-all ${
+                  isBlogPage
+                    ? "text-cream"
+                    : "text-cream/40 hover:text-cream"
                 }`}
-              ></span>
-            </Link>
+              >
+                blog
+                <span
+                  className={`block transition-all duration-300 h-1 bg-amber_glow ${
+                    isBlogPage
+                      ? "max-w-full"
+                      : "max-w-0 group-hover:max-w-full"
+                  }`}
+                ></span>
+              </RouterLink>
+            )}
+
+            {/* Projects */}
+            {isHomePage ? (
+              <ScrollLink
+                spy={true}
+                smooth={true}
+                duration={500}
+                to="projects"
+                offset={-20}
+                isDynamic={true}
+                onSetActive={() => setActive("projects")}
+                onClick={() => isMobile && setIsOpen(false)}
+                className={`text-3xl md:text-4xl lg:text-5xl font-semibold group cursor-pointer max-w-fit mx-auto duration-200 transition-all ${
+                  active === "projects" && !isBlogPage
+                    ? "text-cream"
+                    : "text-cream/40 hover:text-cream"
+                }`}
+              >
+                projects
+                <span
+                  className={`block transition-all duration-300 h-1 bg-amber_glow ${
+                    active === "projects" && !isBlogPage
+                      ? "max-w-full"
+                      : "max-w-0 group-hover:max-w-full"
+                  }`}
+                ></span>
+              </ScrollLink>
+            ) : (
+              <RouterLink
+                to="/#projects"
+                onClick={() => isMobile && setIsOpen(false)}
+                className="text-3xl md:text-4xl lg:text-5xl font-semibold group cursor-pointer max-w-fit mx-auto duration-200 transition-all text-cream/40 hover:text-cream"
+              >
+                projects
+                <span className="block transition-all duration-300 h-1 bg-amber_glow max-w-0 group-hover:max-w-full"></span>
+              </RouterLink>
+            )}
+
+            {/* Contact */}
+            {isHomePage ? (
+              <ScrollLink
+                spy={true}
+                smooth={true}
+                duration={500}
+                to="contact"
+                offset={-20}
+                isDynamic={true}
+                onSetActive={() => setActive("contact")}
+                onClick={() => isMobile && setIsOpen(false)}
+                className={`text-3xl md:text-4xl lg:text-5xl font-semibold group cursor-pointer max-w-fit mx-auto duration-200 transition-all ${
+                  active === "contact" && !isBlogPage
+                    ? "text-cream"
+                    : "text-cream/40 hover:text-cream"
+                }`}
+              >
+                contact
+                <span
+                  className={`block transition-all duration-300 h-1 bg-amber_glow ${
+                    active === "contact" && !isBlogPage
+                      ? "max-w-full"
+                      : "max-w-0 group-hover:max-w-full"
+                  }`}
+                ></span>
+              </ScrollLink>
+            ) : (
+              <RouterLink
+                to="/#contact"
+                onClick={() => isMobile && setIsOpen(false)}
+                className="text-3xl md:text-4xl lg:text-5xl font-semibold group cursor-pointer max-w-fit mx-auto duration-200 transition-all text-cream/40 hover:text-cream"
+              >
+                contact
+                <span className="block transition-all duration-300 h-1 bg-amber_glow max-w-0 group-hover:max-w-full"></span>
+              </RouterLink>
+            )}
           </div>
-          <span className="absolute right-0 h-5/6 top-1/2 -translate-y-1/2 w-0.5 bg-white/30" />
+          <span className="absolute right-0 h-5/6 top-1/2 -translate-y-1/2 w-0.5 bg-cream/10" />
         </div>
-        <footer className=" md:hidden flex justify-center text-center w-full  text-neutral-500 text-sm p-4 absolute bottom-0 left-1/2 -translate-x-1/2">
-          &copy; 2026 Divyanshu Anand (Bittu5134)
-        </footer>
       </div>
     </>
   );

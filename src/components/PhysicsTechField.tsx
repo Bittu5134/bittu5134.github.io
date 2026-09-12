@@ -77,8 +77,8 @@ export default function PhysicsTechField({ technologies }: PhysicsTechFieldProps
       setFieldHeight(height);
 
       const isMobile = width < 768;
-      const cardW = isMobile ? 120 : 160;
-      const cardH = isMobile ? 85 : 110;
+      const cardW = isMobile ? 110 : 140;
+      const cardH = isMobile ? 38 : 44;
       const padX = 16;
       const padY = 24;
 
@@ -193,8 +193,8 @@ export default function PhysicsTechField({ technologies }: PhysicsTechFieldProps
       const n = particles.length;
       const { width, height } = boundsRef.current;
       const isMobile = width < 768;
-      const cardW = isMobile ? 120 : 160;
-      const cardH = isMobile ? 85 : 110;
+      const cardW = isMobile ? 110 : 140;
+      const cardH = isMobile ? 38 : 44;
       const padX = 12;
       const padY = 16;
       const minX = padX;
@@ -203,7 +203,7 @@ export default function PhysicsTechField({ technologies }: PhysicsTechFieldProps
       const maxY = Math.max(minY + 100, height - cardH - padY);
 
       // Natural soft separation distance
-      const minDist = isMobile ? 130 : 175;
+      const minDist = isMobile ? 95 : 130;
       const minDistSq = minDist * minDist;
       const kWall = 0.08;
       const timeSec = currentTime * 0.0004;
@@ -448,8 +448,8 @@ export default function PhysicsTechField({ technologies }: PhysicsTechFieldProps
             onPointerCancel={handlePointerUp}
             className={`absolute top-0 left-0 pointer-events-auto cursor-grab active:cursor-grabbing touch-none select-none ${
               isCurrentDragging
-                ? "z-30 scale-105 opacity-100 drop-shadow-2xl"
-                : "z-0 opacity-30 md:opacity-45 hover:opacity-90 hover:scale-102 transition-opacity duration-200"
+                ? "z-30 scale-110 opacity-100 drop-shadow-2xl"
+                : "z-0 opacity-75 md:opacity-85 hover:opacity-100 hover:scale-105 transition-all duration-200"
             }`}
             style={{
               willChange: "transform",
