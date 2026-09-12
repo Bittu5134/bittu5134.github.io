@@ -54,14 +54,24 @@ export default function RetroHeader() {
                 duration={400}
                 className="cursor-pointer group flex items-center gap-2 px-2.5 sm:px-3 py-1 bg-[#fde047] border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
               >
-                <span className="font-pixel text-lg sm:text-2xl font-bold tracking-wider">💾 BITTU.DEV</span>
+                <img
+                  src="/favicon.svg"
+                  alt=""
+                  className="w-4 h-4 sm:w-5 sm:h-5 border border-black shrink-0"
+                />
+                <span className="font-pixel text-lg sm:text-2xl font-bold tracking-wider">BITTU.DEV</span>
               </ScrollLink>
             ) : (
               <RouterLink
                 to="/"
                 className="group flex items-center gap-2 px-2.5 sm:px-3 py-1 bg-[#fde047] border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
               >
-                <span className="font-pixel text-lg sm:text-2xl font-bold tracking-wider">💾 BITTU.DEV</span>
+                <img
+                  src="/favicon.svg"
+                  alt=""
+                  className="w-4 h-4 sm:w-5 sm:h-5 border border-black shrink-0"
+                />
+                <span className="font-pixel text-lg sm:text-2xl font-bold tracking-wider">BITTU.DEV</span>
                 <span className="hidden sm:inline-block text-[10px] font-mono bg-black text-white px-1.5 py-0.5 rounded-sm font-bold">
                   ← HOME
                 </span>
