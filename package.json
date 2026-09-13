@@ -11,17 +11,12 @@
     "build": "rm -rf dist && python3 scripts/generate-fonts.py && node scripts/generate-meta.mjs && tailwindcss -i ./src/index.css -o ./dist/assets/css/index.css --minify && eleventy && terser dist/assets/js/main.js -c -m -o dist/assets/js/main.js",
     "dev:css": "tailwindcss -i ./src/index.css -o ./dist/assets/css/index.css --watch",
     "dev:11ty": "eleventy --serve",
-    "dev": "npm-run-all generate-fonts generate-meta --parallel dev:css dev:11ty",
+    "dev": "npm run generate-fonts && npm run generate-meta && (npm run dev:css & npm run dev:11ty)",
     "start": "npm run dev",
     "preview": "eleventy --serve"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.1.6",
-    "autoprefixer": "^10.4.20",
-    "cssnano": "^9.0.4",
-    "html-minifier-terser": "^7.2.0",
-    "npm-run-all": "^4.1.5",
-    "postcss": "^8.4.49",
     "tailwindcss": "^3.4.15",
     "terser": "^5.51.2"
   }

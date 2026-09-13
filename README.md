@@ -5,7 +5,7 @@ Welcome to my personal website! A neo-brutalist retro cassette deck portfolio an
 ## 🚀 Technologies Used
 
 - **Eleventy (11ty) & Vanilla JS**: Zero-runtime framework overhead with ultra-fast build times and 100% static HTML.
-- **Tailwind CSS**: Neo-brutalist retro styling with custom typography, grain overlays, and brutalist shadows.
+- **Tailwind CSS**: Neo-brutalist retro styling with custom typography and brutalist shadows.
 - **Pure Static Architecture**: Pre-compiled static pages optimized natively for GitHub Pages without SPA redirect hacks.
 - **Modern Asset Pipelines**:
   - WebM Opus audio tracks (80k VBR) for cassette player music.

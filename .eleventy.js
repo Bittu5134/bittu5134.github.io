@@ -1,17 +1,18 @@
-import htmlmin from "html-minifier-terser";
-
 export default function (eleventyConfig) {
-  // HTML Minification for data savings
-  eleventyConfig.addTransform("htmlmin", async function (content) {
+  // Lightweight Vanilla HTML Minifier (zero-dependency, preserves pre/code)
+  eleventyConfig.addTransform("htmlmin", function (content) {
     if ((this.page.outputPath || "").endsWith(".html")) {
-      return await htmlmin.minify(content, {
-        useShortDoctype: true,
-        removeComments: true,
-        collapseWhitespace: true,
-        conservativeCollapse: true,
-        minifyCSS: true,
-        minifyJS: true,
+      const preservedBlocks = [];
+      let minified = content.replace(/<(pre|code|textarea)[\s\S]*?<\/\1>/gi, (match) => {
+        preservedBlocks.push(match);
+        return `___PRESERVED_BLOCK_${preservedBlocks.length - 1}___`;
       });
+      minified = minified
+        .replace(/<!--(?![\s\S]*?\[if)[\s\S]*?-->/g, "")
+        .replace(/>\s+</g, "><")
+        .replace(/\s{2,}/g, " ");
+      minified = minified.replace(/___PRESERVED_BLOCK_(\d+)___/g, (_, index) => preservedBlocks[Number(index)]);
+      return minified.trim();
     }
     return content;
   });
