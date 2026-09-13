@@ -45,7 +45,7 @@ const TRACKS: Track[] = [
 export default function RetroCassettePlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
-  const [volume, setVolume] = useState(0.3);
+  const [volume, setVolume] = useState(0.15);
   const [minimized, setMinimized] = useState(() => {
     return typeof window !== "undefined" && window.innerWidth < 640;
   });
@@ -54,10 +54,12 @@ export default function RetroCassettePlayer() {
 
   const currentTrack = TRACKS[currentTrackIndex] || TRACKS[0];
 
-  // Sync volume on change
+  // Sync volume on change using acoustic/logarithmic curve (volume^2)
   useEffect(() => {
     if (audioRef.current) {
-      audioRef.current.volume = volume;
+      // Human ear perceives loudness logarithmically; squaring the 0-1 input
+      // ensures smooth, gentle low-volume background playback
+      audioRef.current.volume = Math.min(1, Math.max(0, volume * volume));
     }
   }, [volume]);
 
@@ -248,7 +250,7 @@ export default function RetroCassettePlayer() {
                 type="range"
                 min="0"
                 max="1"
-                step="0.05"
+                step="0.01"
                 value={volume}
                 aria-label="Volume slider"
                 onChange={(e) => setVolume(parseFloat(e.target.value))}
