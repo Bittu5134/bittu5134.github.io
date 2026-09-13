@@ -31,7 +31,7 @@ export default function RetroAbout() {
         {/* Row 1: Bio + Glance */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8">
           {/* Main Story Box (7 cols) */}
-          <div className="lg:col-span-7 p-5 sm:p-8 bg-[#fffdf9] border-[3px] border-black shadow-brutal flex flex-col justify-between">
+          <div className="lg:col-span-7 p-5 sm:p-8 bg-[#fffdf9] border-[3px] border-black shadow-brutal flex flex-col justify-between grain">
             <div className="space-y-4 font-mono text-sm sm:text-base text-black/85 leading-relaxed">
               <p>
                 I'm <strong>Bittu</strong>. Currently an undergraduate studying <strong>Cybersecurity &amp; Computing</strong> at{" "}
@@ -80,7 +80,7 @@ export default function RetroAbout() {
           </div>
 
           {/* AT A GLANCE card (5 cols) */}
-          <div className="lg:col-span-5 p-5 sm:p-6 bg-[#fde047] border-[3px] border-black shadow-brutal flex flex-col justify-between">
+          <div className="lg:col-span-5 p-5 sm:p-6 bg-[#fde047] border-[3px] border-black shadow-brutal flex flex-col justify-between grain-warm">
             <div>
               <h3 className="font-mono text-xs sm:text-sm font-bold text-black uppercase tracking-wider mb-4 pb-2 border-b-2 border-black">
                 AT A GLANCE:
@@ -112,7 +112,7 @@ export default function RetroAbout() {
         </div>
 
         {/* Row 2: Core Technologies & Tooling */}
-        <div className="mt-8 p-5 sm:p-8 bg-[#fffdf9] border-[3px] border-black shadow-brutal">
+        <div className="mt-8 p-5 sm:p-8 bg-[#fffdf9] border-[3px] border-black shadow-brutal grain">
           <div className="mb-4">
             <span className="font-mono text-xs sm:text-sm font-bold text-black uppercase tracking-wider">
               CORE TECHNOLOGIES &amp; TOOLING:

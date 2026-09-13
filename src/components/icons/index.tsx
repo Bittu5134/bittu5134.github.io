@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 export interface IconProps extends React.SVGProps<SVGSVGElement> {
   className?: string;
   /** Convenience shorthand — sets both width and height on the <svg> element. */
@@ -138,6 +139,26 @@ export function FloppyDiskIcon({ className = "w-4 h-4", size, ...props }: IconPr
       <polyline points="17 21 17 13 7 13 7 21" />
       {/* Label ridge lines */}
       <polyline points="7 3 7 8 15 8" />
+    </svg>
+  );
+}
+
+export function PixelMonsterIcon({ className = "w-4 h-4", size, ...props }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 512 512"
+      fill="currentColor"
+      className={className}
+      width={size}
+      height={size}
+      aria-hidden="true"
+      {...props}
+    >
+      <path d="M0 0h512v512H0z" fill="none" />
+      <path
+        fill="currentColor"
+        d="M0 0h169.847v172.501H0zm340.775 0h170.094v172.501H340.775zm0 172.502H169.847v85.915H84.785V512h85.062v-86.668h170.928V512h85.866V258.417h-85.866z"
+      />
     </svg>
   );
 }

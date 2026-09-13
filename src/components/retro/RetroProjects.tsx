@@ -50,11 +50,11 @@ export default function RetroProjects() {
           {displayedProjects.map((p, index) => (
             <div
               key={index}
-              className="bg-[#fffdf9] border-[3px] border-black shadow-brutal hover:shadow-brutal-lg hover:-translate-y-0.5 transition-all flex flex-col justify-between"
+              className="bg-[#fffdf9] border-[3px] border-black shadow-brutal hover:shadow-brutal-lg hover:-translate-y-0.5 transition-all flex flex-col justify-between grain"
             >
               {/* Window Header */}
               <div
-                className={`px-3 sm:px-4 py-2 border-b-[3px] border-black flex items-center justify-between gap-2 select-none ${p.headerBgClass}`}
+                className={`px-3 sm:px-4 py-2 border-b-[3px] border-black flex items-center justify-between gap-2 select-none ${p.headerBgClass} grain-warm`}
               >
                 <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
                   <span className="w-2.5 h-2.5 bg-black rounded-none shrink-0"></span>
@@ -126,7 +126,7 @@ export default function RetroProjects() {
         </div>
 
         {/* GitHub link note */}
-        <div className="mt-6 sm:mt-8 p-3.5 sm:p-4 bg-[#fffdf9] border-2 border-black shadow-brutal-xs flex items-center justify-between flex-wrap gap-3 sm:gap-4 font-mono text-xs sm:text-sm font-bold">
+        <div className="mt-6 sm:mt-8 p-3.5 sm:p-4 bg-[#fffdf9] border-2 border-black shadow-brutal-xs flex items-center justify-between flex-wrap gap-3 sm:gap-4 font-mono text-xs sm:text-sm font-bold grain">
           <span className="text-black/70">
             Looking for more tools, prototypes, and scripts?
           </span>
@@ -142,7 +142,7 @@ export default function RetroProjects() {
         </div>
 
         {/* Patreon Support Banner */}
-        <div className="mt-4 p-4 sm:p-6 bg-[#fef08a] border-[3px] border-black shadow-brutal flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="mt-4 p-4 sm:p-6 bg-[#fef08a] border-[3px] border-black shadow-brutal flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 grain-warm">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
               <Coffee className="w-5 h-5 text-black shrink-0" />

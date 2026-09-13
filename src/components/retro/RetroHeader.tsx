@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link as ScrollLink } from "react-scroll";
 import { Link as RouterLink, useLocation } from "react-router";
-import { Rss, Folder, FileText, User, Mail, Menu, X, HardDrive, GithubIcon, DiscordIcon } from "../icons";
+import { Rss, Folder, FileText, User, Mail, Menu, X, PixelMonsterIcon, GithubIcon, DiscordIcon } from "../icons";
 
 export default function RetroHeader() {
   const [isOpen, setIsOpen] = useState(false);
@@ -53,7 +53,7 @@ export default function RetroHeader() {
                 duration={400}
                 className="cursor-pointer group flex items-center gap-2 px-2.5 sm:px-3 py-1 bg-[#fde047] border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
               >
-                <HardDrive className="w-5 h-5 text-black shrink-0" />
+                <PixelMonsterIcon className="w-5 h-5 text-black shrink-0" />
                 <span className="font-pixel text-lg sm:text-2xl font-bold tracking-wider">BITTU.DEV</span>
               </ScrollLink>
             ) : (
@@ -61,7 +61,7 @@ export default function RetroHeader() {
                 to="/"
                 className="group flex items-center gap-2 px-2.5 sm:px-3 py-1 bg-[#fde047] border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
               >
-                <HardDrive className="w-5 h-5 text-black shrink-0" />
+                <PixelMonsterIcon className="w-5 h-5 text-black shrink-0" />
                 <span className="font-pixel text-lg sm:text-2xl font-bold tracking-wider">BITTU.DEV</span>
                 <span className="hidden sm:inline-block text-xs font-mono bg-black text-white px-2 py-0.5 rounded-sm font-bold">
                   ← HOME

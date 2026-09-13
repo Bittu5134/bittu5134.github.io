@@ -39,9 +39,9 @@ export default function RetroContact() {
         </div>
 
         {/* Contact Window Container */}
-        <div className="bg-[#fffdf9] border-[3px] border-black shadow-brutal sm:shadow-brutal-lg overflow-hidden">
+        <div className="bg-[#fffdf9] border-[3px] border-black shadow-brutal sm:shadow-brutal-lg overflow-hidden grain">
           {/* Header Bar */}
-          <div className="bg-[#fb923c] px-3 sm:px-4 py-2 border-b-[3px] border-black flex items-center justify-between select-none">
+          <div className="bg-[#fb923c] px-3 sm:px-4 py-2 border-b-[3px] border-black flex items-center justify-between select-none grain-warm">
             <span className="font-mono text-xs sm:text-sm font-bold text-black tracking-wide flex items-center gap-2">
               <Mail className="w-4 h-4 text-black stroke-[2.5]" />
               bittu@iitk: ~/contact
@@ -56,7 +56,7 @@ export default function RetroContact() {
               </p>
 
               {/* Email Button Box */}
-              <div className="p-3 sm:p-4 bg-[#fef08a] border-2 border-black shadow-brutal-xs flex flex-wrap items-center justify-between gap-2.5">
+              <div className="p-3 sm:p-4 bg-[#fef08a] border-2 border-black shadow-brutal-xs flex flex-wrap items-center justify-between gap-2.5 grain-warm">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-none bg-black text-[#fef08a] flex items-center justify-center border border-black shrink-0">
                     <Mail className="w-4 h-4" />
@@ -99,7 +99,7 @@ export default function RetroContact() {
               </div>
 
               {/* Discord Button Box */}
-              <div className="p-3 sm:p-4 bg-[#c4b5fd] border-2 border-black shadow-brutal-xs flex flex-wrap items-center justify-between gap-2.5">
+              <div className="p-3 sm:p-4 bg-[#c4b5fd] border-2 border-black shadow-brutal-xs flex flex-wrap items-center justify-between gap-2.5 grain-warm">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-none bg-black text-[#c4b5fd] flex items-center justify-center border border-black shrink-0">
                     <DiscordIcon className="w-4 h-4 text-[#c4b5fd]" />
@@ -146,7 +146,7 @@ export default function RetroContact() {
 
             {/* Right Column: Other Platforms */}
             <div className="space-y-4">
-              <div className="p-4 bg-[#fffdf9] border-2 border-black shadow-brutal-xs">
+              <div className="p-4 bg-[#fffdf9] border-2 border-black shadow-brutal-xs grain">
                 <div className="font-mono text-xs sm:text-sm font-bold text-black uppercase mb-3 pb-1 border-b border-black">
                   PROFILES:
                 </div>
@@ -220,16 +220,6 @@ export default function RetroContact() {
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Visitor Counter Image */}
-        <div className="mt-8 flex justify-center">
-          <img
-            src="https://count.getloli.com/@bittu?name=bittu&padding=7&scale=2&darkmode=0"
-            alt="Visitor Counter"
-            className="select-none"
-            loading="lazy"
-          />
         </div>
       </div>
     </section>
