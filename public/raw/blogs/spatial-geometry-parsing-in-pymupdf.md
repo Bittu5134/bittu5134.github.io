@@ -1,7 +1,8 @@
 ---
 slug: spatial-geometry-parsing-in-pymupdf
 title: "Coordinate Geometry in PyMuPDF: Extracting Unruly Academic LaTeX PDFs"
-date: "November 14, 2025"
+date: 2025-11-14
+displayDate: "November 14, 2025"
 readTime: "5 min read"
 summary: "Why standard PDF parsers struggle with academic transcripts and resumes, and how we solved it for CDW IIT Kanpur using 2D spatial coordinate clustering and step-gradient scoring."
 tags:

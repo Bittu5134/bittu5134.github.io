@@ -9,7 +9,9 @@ const SITE_URL = "https://bittu.dev";
 const blogsDir = path.resolve(__dirname, "../src/content/blogs");
 const publicDir = path.resolve(__dirname, "../public");
 const rawBlogsDir = path.resolve(publicDir, "raw/blogs");
-const projectsJsonPath = path.resolve(__dirname, "../src/data/projects.json");
+const projectsJsonPath = fs.existsSync(path.resolve(__dirname, "../src/_data/projects.json"))
+  ? path.resolve(__dirname, "../src/_data/projects.json")
+  : path.resolve(__dirname, "../src/data/projects.json");
 
 if (!fs.existsSync(publicDir)) {
   fs.mkdirSync(publicDir, { recursive: true });
@@ -75,7 +77,7 @@ function parseMarkdownFile(filepath) {
   return {
     slug: meta.slug || fallbackSlug,
     title: meta.title || fallbackSlug,
-    date: meta.date || "",
+    date: meta.displayDate || meta.date || "",
     readTime: meta.readTime || "5 min read",
     summary: meta.summary || "",
     tags: Array.isArray(meta.tags) ? meta.tags : [],
@@ -108,11 +110,11 @@ const blogsMeta = blogFiles.map(({ slug, title, date, readTime, summary, tags })
   tags,
 }));
 fs.writeFileSync(
-  path.resolve(__dirname, "../src/data/blogs-meta.json"),
+  path.resolve(__dirname, "../src/_data/blogs.json"),
   JSON.stringify(blogsMeta, null, 2),
   "utf-8"
 );
-console.log(`[generate-meta] Wrote src/data/blogs-meta.json`);
+console.log(`[generate-meta] Wrote src/_data/blogs.json`);
 
 // Read data-driven projects from src/data/projects.json
 let projectsList = [];
