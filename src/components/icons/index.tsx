@@ -1,7 +1,6 @@
-import React from "react";
-
 export interface IconProps extends React.SVGProps<SVGSVGElement> {
   className?: string;
+  /** Convenience shorthand — sets both width and height on the <svg> element. */
   size?: number | string;
 }
 
@@ -9,12 +8,14 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
 // Custom Vector & Brand SVG Components
 // ---------------------------------------------------------
 
-export function DiscordIcon({ className = "w-4 h-4", ...props }: IconProps) {
+export function DiscordIcon({ className = "w-4 h-4", size, ...props }: IconProps) {
   return (
     <svg
       viewBox="0 0 24 24"
       fill="currentColor"
       className={className}
+      width={size}
+      height={size}
       aria-hidden="true"
       {...props}
     >
@@ -23,12 +24,14 @@ export function DiscordIcon({ className = "w-4 h-4", ...props }: IconProps) {
   );
 }
 
-export function GithubIcon({ className = "w-4 h-4", ...props }: IconProps) {
+export function GithubIcon({ className = "w-4 h-4", size, ...props }: IconProps) {
   return (
     <svg
       viewBox="0 0 24 24"
       fill="currentColor"
       className={className}
+      width={size}
+      height={size}
       aria-hidden="true"
       {...props}
     >
@@ -41,54 +44,80 @@ export function GithubIcon({ className = "w-4 h-4", ...props }: IconProps) {
   );
 }
 
-export function TwitterIcon({ className = "w-4 h-4", ...props }: IconProps) {
+export function TwitterIcon({ className = "w-4 h-4", size, ...props }: IconProps) {
   return (
     <svg
       viewBox="0 0 24 24"
       fill="currentColor"
       className={className}
+      width={size}
+      height={size}
       aria-hidden="true"
       {...props}
     >
+      {/* X (formerly Twitter) logo — official proportions */}
       <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
     </svg>
   );
 }
 
-export function PatreonIcon({ className = "w-4 h-4", ...props }: IconProps) {
+export function PatreonIcon({ className = "w-4 h-4", size, ...props }: IconProps) {
   return (
     <svg
       viewBox="0 0 24 24"
       fill="currentColor"
       className={className}
+      width={size}
+      height={size}
       aria-hidden="true"
       {...props}
     >
+      {/* Patreon: circle + vertical bar — official mark */}
       <path d="M15.386.5C10.828.5 7.121 4.207 7.121 8.765c0 4.516 3.707 8.222 8.265 8.222 4.515 0 8.221-3.706 8.221-8.222C23.607 4.207 19.901.5 15.386.5zM0 23.5h4.869V.5H0v23z" />
     </svg>
   );
 }
 
-export function PlanetMinecraftIcon({ className = "w-4 h-4", ...props }: IconProps) {
+/**
+ * Minecraft creeper face — a pixel-art 4×4 grid face on a block.
+ * Much more recognizable than the previous generic gamepad shape.
+ *
+ *  ┌──────────────────┐
+ *  │  ██        ██    │  ← eyes (two dark squares)
+ *  │      ████        │  ← nose top
+ *  │    ██    ██      │  ← nose bottom + mouth corners
+ *  │      ████        │  ← mouth center
+ *  └──────────────────┘
+ */
+export function PlanetMinecraftIcon({ className = "w-4 h-4", size, ...props }: IconProps) {
   return (
     <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      viewBox="0 0 16 16"
+      fill="currentColor"
       className={className}
+      width={size}
+      height={size}
       aria-hidden="true"
       {...props}
     >
-      <rect x="2" y="6" width="20" height="12" rx="2" />
-      <path d="M6 12h4m-2-2v4m7-2h.01m3 0h.01" />
+      {/* Outer block face */}
+      <rect x="0" y="0" width="16" height="16" rx="1" fill="currentColor" opacity="0.12" />
+      {/* Left eye */}
+      <rect x="2" y="3" width="4" height="3" />
+      {/* Right eye */}
+      <rect x="10" y="3" width="4" height="3" />
+      {/* Nose (center column, 2 rows) */}
+      <rect x="6" y="6" width="4" height="2" />
+      {/* Mouth — outer wings */}
+      <rect x="4" y="8" width="2" height="2" />
+      <rect x="10" y="8" width="2" height="2" />
+      {/* Mouth — center indent (gap created by background showing through) */}
+      <rect x="4" y="10" width="8" height="2" />
     </svg>
   );
 }
 
-export function FloppyDiskIcon({ className = "w-4 h-4", ...props }: IconProps) {
+export function FloppyDiskIcon({ className = "w-4 h-4", size, ...props }: IconProps) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -98,11 +127,16 @@ export function FloppyDiskIcon({ className = "w-4 h-4", ...props }: IconProps) {
       strokeLinecap="round"
       strokeLinejoin="round"
       className={className}
+      width={size}
+      height={size}
       aria-hidden="true"
       {...props}
     >
+      {/* 3.5″ floppy: outer shell, shutter slot, label area, write-protect notch */}
       <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+      {/* Storage coil window (lower center) */}
       <polyline points="17 21 17 13 7 13 7 21" />
+      {/* Label ridge lines */}
       <polyline points="7 3 7 8 15 8" />
     </svg>
   );

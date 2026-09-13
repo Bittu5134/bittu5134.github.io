@@ -221,8 +221,17 @@ export default function RetroContact() {
             </div>
           </div>
         </div>
+
+        {/* Visitor Counter Image */}
+        <div className="mt-8 flex justify-center">
+          <img
+            src="https://count.getloli.com/@bittu?name=bittu&padding=7&scale=2&darkmode=0"
+            alt="Visitor Counter"
+            className="select-none"
+            loading="lazy"
+          />
+        </div>
       </div>
     </section>
   );
 }
-

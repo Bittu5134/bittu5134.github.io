@@ -45,7 +45,7 @@ const TRACKS: Track[] = [
 export default function RetroCassettePlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
-  const [volume, setVolume] = useState(0.40);
+  const [volume, setVolume] = useState(0.30);
   const [minimized, setMinimized] = useState(() => {
     return typeof window !== "undefined" && window.innerWidth < 640;
   });
