@@ -1,95 +1,135 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Disc3, Play, Pause, SkipBack, SkipForward, Volume2, Minus } from "../icons";
+
+const PLAYLIST_URL = "https://soundcloud.com/bittu-162282868/sets/portifolio";
+const SC_WIDGET_API = "https://w.soundcloud.com/player/api.js";
+const IFRAME_ID = "sc-cassette-player";
 
 interface Track {
   title: string;
   artist: string;
-  url: string;
 }
 
-const tracks: Track[] = [
-  {
-    title: "Overworld 8-Bit",
-    artist: "Juhani Junkala",
-    url: "/audio/chiptune_overworld.mp3",
-  },
-  {
-    title: "Chiptune Journey",
-    artist: "Juhani Junkala",
-    url: "/audio/chiptune_adventure.mp3",
-  },
-  {
-    title: "Cyberpunk Sockets",
-    artist: "Juhani Junkala",
-    url: "/audio/chiptune_cyberpunk.mp3",
-  },
-  {
-    title: "Dungeon Crawler",
-    artist: "Juhani Junkala",
-    url: "/audio/chiptune_dungeon.mp3",
-  },
-  {
-    title: "Victory Credits",
-    artist: "Juhani Junkala",
-    url: "/audio/chiptune_victory.mp3",
-  },
-];
+const LOADING_TRACK: Track = { title: "LOADING...", artist: "SoundCloud" };
 
 export default function RetroCassettePlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [widgetReady, setWidgetReady] = useState(false);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+  const [tracks, setTracks] = useState<Track[]>([LOADING_TRACK]);
   const [volume, setVolume] = useState(0.3);
   const [minimized, setMinimized] = useState(() => {
     return typeof window !== "undefined" && window.innerWidth < 640;
   });
-  const audioRef = useRef<HTMLAudioElement>(null);
 
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const widgetRef = useRef<SCWidget | null>(null);
+
+  // Inject the SoundCloud Widget API script once and initialise the widget
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = volume;
-    }
-  }, [volume]);
+    let script: HTMLScriptElement | null = null;
 
-  const togglePlay = () => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-      } else {
-        audioRef.current.play().catch(() => {
-          setIsPlaying(false);
+    const initWidget = () => {
+      if (!iframeRef.current || !window.SC) return;
+
+      const widget = window.SC.Widget(iframeRef.current);
+      widgetRef.current = widget;
+
+      widget.bind(window.SC.Widget.Events.READY, () => {
+        setWidgetReady(true);
+        widget.setVolume(volume * 100);
+
+        widget.getSounds((sounds) => {
+          if (sounds && sounds.length > 0) {
+            setTracks(
+              sounds.map((s) => ({
+                title: s.title,
+                artist: s.user?.username ?? "Unknown",
+              }))
+            );
+          }
         });
+      });
+
+      widget.bind(window.SC.Widget.Events.PLAY, () => {
+        setIsPlaying(true);
+        widget.getCurrentSoundIndex((idx) => setCurrentTrackIndex(idx));
+      });
+
+      widget.bind(window.SC.Widget.Events.PAUSE, () => setIsPlaying(false));
+
+      widget.bind(window.SC.Widget.Events.FINISH, () => {
+        widget.getCurrentSoundIndex((idx) => {
+          const next = (idx + 1) % tracks.length;
+          setCurrentTrackIndex(next);
+        });
+      });
+    };
+
+    if (document.querySelector(`script[src="${SC_WIDGET_API}"]`)) {
+      // Script already loaded (e.g. HMR)
+      initWidget();
+    } else {
+      script = document.createElement("script");
+      script.src = SC_WIDGET_API;
+      script.async = true;
+      script.onload = initWidget;
+      document.body.appendChild(script);
+    }
+
+    return () => {
+      if (script && document.body.contains(script)) {
+        document.body.removeChild(script);
       }
-      setIsPlaying(!isPlaying);
-    }
-  };
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const nextTrack = () => {
-    setCurrentTrackIndex((prev) => (prev + 1) % tracks.length);
+  // Sync volume changes to widget after it's ready
+  useEffect(() => {
+    if (widgetReady && widgetRef.current) {
+      widgetRef.current.setVolume(volume * 100);
+    }
+  }, [volume, widgetReady]);
+
+  const togglePlay = useCallback(() => {
+    if (!widgetReady || !widgetRef.current) return;
     if (isPlaying) {
-      setTimeout(() => {
-        audioRef.current?.play().catch(() => {});
-      }, 50);
+      widgetRef.current.pause();
+    } else {
+      widgetRef.current.play();
     }
+  }, [isPlaying, widgetReady]);
+
+  const nextTrack = useCallback(() => {
+    if (!widgetReady || !widgetRef.current) return;
+    widgetRef.current.next();
+  }, [widgetReady]);
+
+  const prevTrack = useCallback(() => {
+    if (!widgetReady || !widgetRef.current) return;
+    widgetRef.current.prev();
+  }, [widgetReady]);
+
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setVolume(parseFloat(e.target.value));
   };
 
-  const prevTrack = () => {
-    setCurrentTrackIndex((prev) => (prev - 1 + tracks.length) % tracks.length);
-    if (isPlaying) {
-      setTimeout(() => {
-        audioRef.current?.play().catch(() => {});
-      }, 50);
-    }
-  };
-
-  const currentTrack = tracks[currentTrackIndex];
+  const currentTrack = tracks[currentTrackIndex] ?? LOADING_TRACK;
+  const trackTotal = tracks.length;
+  // Pad single-digit numbers: 01, 02 … 09, 10, 11 …
+  const pad = (n: number) => String(n).padStart(2, "0");
 
   return (
     <div className="fixed bottom-3 right-3 sm:bottom-4 sm:right-4 z-50 select-none max-w-[calc(100vw-24px)]">
-      <audio
-        ref={audioRef}
-        src={currentTrack.url}
-        onEnded={nextTrack}
-        loop={false}
+      {/* Hidden SoundCloud Widget iframe — audio engine */}
+      <iframe
+        id={IFRAME_ID}
+        ref={iframeRef}
+        src={`https://w.soundcloud.com/player/?url=${encodeURIComponent(PLAYLIST_URL)}&auto_play=false&buying=false&sharing=false&download=false&show_artwork=false&show_playcount=false&show_user=false&single_active=true`}
+        style={{ display: "none", width: 0, height: 0, border: 0 }}
+        allow="autoplay"
+        title="SoundCloud Player"
       />
 
       {minimized ? (
@@ -150,10 +190,11 @@ export default function RetroCassettePlayer() {
               {/* LCD Track Display */}
               <div className="bg-[#000000] px-2 py-1 border border-[#334155] flex items-center justify-between">
                 <span className="font-pixel text-sm text-[#86efac] truncate tracking-wider">
-                  {isPlaying ? "▶ " : "■ "} {currentTrack.title} - {currentTrack.artist}
+                  {isPlaying ? "▶ " : "■ "}
+                  {currentTrack.title} - {currentTrack.artist}
                 </span>
                 <span className="font-pixel text-xs text-[#fde047] shrink-0 ml-1">
-                  0{currentTrackIndex + 1}/0{tracks.length}
+                  {pad(currentTrackIndex + 1)}/{pad(trackTotal)}
                 </span>
               </div>
             </div>
@@ -162,8 +203,9 @@ export default function RetroCassettePlayer() {
             <div className="grid grid-cols-4 gap-1.5 mb-2.5">
               <button
                 onClick={prevTrack}
+                disabled={!widgetReady}
                 aria-label="Previous track"
-                className="py-1.5 bg-[#fffdf9] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs hover:bg-[#c4b5fd] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center justify-center cursor-pointer"
+                className="py-1.5 bg-[#fffdf9] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs hover:bg-[#c4b5fd] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center justify-center cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
                 title="Previous Track"
               >
                 <SkipBack className="w-3.5 h-3.5 fill-current" />
@@ -171,8 +213,9 @@ export default function RetroCassettePlayer() {
 
               <button
                 onClick={togglePlay}
+                disabled={!widgetReady}
                 aria-label={isPlaying ? "Pause tape" : "Play tape"}
-                className={`py-1.5 col-span-2 border-2 border-black font-mono text-xs font-bold shadow-brutal-xs active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center justify-center gap-1.5 cursor-pointer ${
+                className={`py-1.5 col-span-2 border-2 border-black font-mono text-xs font-bold shadow-brutal-xs active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed ${
                   isPlaying
                     ? "bg-[#86efac] hover:bg-[#6ee7b7]"
                     : "bg-[#fde047] hover:bg-[#fb923c]"
@@ -187,15 +230,16 @@ export default function RetroCassettePlayer() {
                 ) : (
                   <>
                     <Play className="w-3.5 h-3.5 fill-current" />
-                    <span>PLAY</span>
+                    <span>{widgetReady ? "PLAY" : "..."}</span>
                   </>
                 )}
               </button>
 
               <button
                 onClick={nextTrack}
+                disabled={!widgetReady}
                 aria-label="Next track"
-                className="py-1.5 bg-[#fffdf9] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs hover:bg-[#c4b5fd] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center justify-center cursor-pointer"
+                className="py-1.5 bg-[#fffdf9] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs hover:bg-[#c4b5fd] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center justify-center cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
                 title="Next Track"
               >
                 <SkipForward className="w-3.5 h-3.5 fill-current" />
@@ -212,7 +256,7 @@ export default function RetroCassettePlayer() {
                 step="0.05"
                 value={volume}
                 aria-label="Volume slider"
-                onChange={(e) => setVolume(parseFloat(e.target.value))}
+                onChange={handleVolumeChange}
                 className="w-full accent-[#fb923c] h-2 bg-[#fffdf9] border border-black cursor-pointer"
               />
               <span className="shrink-0">{Math.round(volume * 100)}%</span>
