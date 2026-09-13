@@ -14,9 +14,9 @@ export default function RetroHero() {
   return (
     <section id="hero" className="pt-4 sm:pt-8 pb-4 px-3 sm:px-6">
       {/* Retro Window Container */}
-      <div className="max-w-5xl mx-auto bg-[#fffdf9] border-[3px] border-black shadow-brutal sm:shadow-brutal-lg rounded-none overflow-hidden relative">
+      <div className="max-w-5xl mx-auto bg-[#fffdf9] border-[3px] border-black shadow-brutal sm:shadow-brutal-lg rounded-none overflow-hidden relative grain">
         {/* Retro Window Titlebar */}
-        <div className="bg-[#fb923c] px-3 sm:px-4 py-2 border-b-[3px] border-black flex items-center justify-between gap-2 select-none">
+        <div className="bg-[#fb923c] px-3 sm:px-4 py-2 border-b-[3px] border-black flex items-center justify-between gap-2 select-none grain-warm">
           <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
             <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-[#f87171] border-2 border-black shrink-0"></span>
             <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-[#fde047] border-2 border-black shrink-0"></span>
@@ -36,7 +36,7 @@ export default function RetroHero() {
           {/* Left Column: Avatar Polaroid & Badges (5 cols) */}
           <div className="lg:col-span-5 flex flex-col items-center justify-center">
             {/* Polaroid Container */}
-            <div className="relative bg-[#fffdf9] p-3 sm:p-4 pb-6 sm:pb-8 border-[3px] border-black shadow-brutal rotate-[-1deg] sm:rotate-[-2deg] hover:rotate-0 transition-transform duration-300 w-full max-w-[240px] sm:max-w-[280px]">
+            <div className="relative bg-[#fffdf9] p-3 sm:p-4 pb-6 sm:pb-8 border-[3px] border-black shadow-brutal rotate-[-1deg] sm:rotate-[-2deg] hover:rotate-0 transition-transform duration-300 w-full max-w-[240px] sm:max-w-[280px] grain">
               {/* Washi Tape Effect at top */}
               <div className="absolute -top-3 sm:-top-3.5 left-1/2 -translate-x-1/2 w-24 sm:w-28 h-5 sm:h-6 bg-[#fde047]/90 border border-black shadow-sm rotate-[2deg] sm:rotate-[3deg] z-10 flex items-center justify-center">
                 <span className="font-pixel text-xs text-black uppercase font-bold tracking-widest">
@@ -46,11 +46,18 @@ export default function RetroHero() {
 
               {/* Avatar Image */}
               <div className="border-2 border-black overflow-hidden bg-[#12151e]">
-                <img
-                  src="/images/avatar.png"
-                  alt="Bittu, pixel art Minecraft-style avatar"
-                  className="w-full h-48 sm:h-56 object-cover hover:scale-105 transition-transform duration-300"
-                />
+                <picture>
+                  <source srcSet="/images/avatar.avif" type="image/avif" />
+                  <img
+                    src="/images/avatar.webp"
+                    alt="Bittu, pixel art Minecraft-style avatar"
+                    width={224}
+                    height={224}
+                    loading="eager"
+                    {...({ fetchpriority: "high" })}
+                    className="w-full h-48 sm:h-56 object-cover hover:scale-105 transition-transform duration-300"
+                  />
+                </picture>
               </div>
 
               <div className="mt-2.5 sm:mt-3 text-center">
@@ -96,7 +103,7 @@ export default function RetroHero() {
             </p>
 
             {/* Sticky Note */}
-            <div className="p-3.5 sm:p-4 bg-[#fef08a] border-2 border-black shadow-brutal-xs mb-6 sm:mb-8 rotate-0 sm:rotate-[-0.5deg]">
+            <div className="p-3.5 sm:p-4 bg-[#fef08a] border-2 border-black shadow-brutal-xs mb-6 sm:mb-8 rotate-0 sm:rotate-[-0.5deg] grain-warm">
               <p className="font-mono text-xs sm:text-sm text-black leading-relaxed">
                 Currently studying Cybersecurity at <strong>IIT Kanpur</strong>, serving 10.5M+ requests on <strong>ORV-Reader</strong>, and maintaining WebRTC peer-to-peer mesh tools.
               </p>

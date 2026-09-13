@@ -4,7 +4,7 @@ This document provides accurate attribution, licensing, and creator details for 
 
 ---
 
-## 1. Miku (`miku.mp3`)
+## 1. Miku (`miku.webm`)
 
 | Property | Details |
 | :--- | :--- |
@@ -14,6 +14,7 @@ This document provides accurate attribution, licensing, and creator details for 
 | **Producers / Band** | Peter Berkman, Ary Warnaar, James DeVito, Luke Silas (Anamanaguchi) |
 | **Release Year** | 2016 |
 | **Record Label** | Polyvinyl Record Co. |
+| **Audio Encoding** | Opus in WebM container (80 kbps VBR) |
 | **SoundCloud Source** | [SoundCloud: Anamanaguchi - Miku](https://soundcloud.com/anamanaguchi/miku) |
 | **Playlist Reference** | [SoundCloud Playlist: portifolio by Bittu](https://soundcloud.com/bittu-162282868/sets/portifolio) |
 | **Character Rights** | Hatsune Miku is a vocal synthesizer application created by **Crypton Future Media, INC.** Character design is licensed under [CC BY-NC 3.0 (Creative Commons Attribution-NonCommercial 3.0 Unported)](https://creativecommons.org/licenses/by-nc/3.0/). |
@@ -23,21 +24,21 @@ This document provides accurate attribution, licensing, and creator details for 
 
 ## 2. Additional Playlist Tracks
 
-### Pigstep (`pigstep.mp3`)
+### Pigstep (`pigstep.webm`)
 - **Title**: Pigstep (Mono Mix / Nether Update)
 - **Composer / Artist**: Lena Raine
 - **Original Source**: Minecraft: Nether Update (Original Game Soundtrack)
 - **Copyright**: &copy; Mojang AB / Microsoft Corporation
 - **Streaming Link**: [SoundCloud: Lena Raine - Pigstep](https://soundcloud.com/andrew-martins-305738406/lena-raine-pigstep)
 
-### MEGALOVANIA (`megalovania.mp3`)
+### MEGALOVANIA (`megalovania.webm`)
 - **Title**: MEGALOVANIA (Track 100)
 - **Composer / Artist**: Toby Fox
 - **Original Source**: UNDERTALE Soundtrack
 - **Copyright**: &copy; Toby Fox / Materia Music Inc.
 - **Streaming Link**: [SoundCloud: Toby Fox - MEGALOVANIA](https://soundcloud.com/angrysausage/toby-fox-undertale)
 
-### Bad Apple!! (`bad_apple.mp3`)
+### Bad Apple!! (`bad_apple.webm`)
 - **Title**: Bad Apple!! (feat. Nomico)
 - **Composer / Arranger**: Masayoshi Minoshima (Alstroemeria Records)
 - **Vocals**: Nomico
@@ -45,14 +46,14 @@ This document provides accurate attribution, licensing, and creator details for 
 - **Copyright**: &copy; Alstroemeria Records / Team Shanghai Alice
 - **Streaming Link**: [SoundCloud: Bad Apple!! feat. Nomico](https://soundcloud.com/miku-6/02-bad-apple-feat-nomico)
 
-### Running in the 90's (`running_in_the_90s.mp3`)
+### Running in the 90's (`running_in_the_90s.webm`)
 - **Title**: Running in the 90's
 - **Artist**: Maurizio De Jorio (Max Coveri)
 - **Writers**: Laurent Newfield, Clara Moroni
 - **Label**: Delta Music Industry / Avex Trax (Initial D Soundtrack)
 - **Streaming Link**: [SoundCloud: Running in the 90s](https://soundcloud.com/jdoublem/running-in-the-90s)
 
-### Caramelldansen (`caramelldansen.mp3`)
+### Caramelldansen (`caramelldansen.webm`)
 - **Title**: Caramelldansen (English Version)
 - **Artist / Group**: Caramell (Caramella Girls)
 - **Producers**: Jorge Vasconcelo, Juha Myllylä

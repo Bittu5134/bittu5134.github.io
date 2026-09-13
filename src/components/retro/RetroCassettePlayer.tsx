@@ -13,32 +13,32 @@ const TRACKS: Track[] = [
   {
     title: "Pigstep",
     artist: "Lena Raine",
-    url: "/audio/pigstep.mp3",
+    url: "/audio/pigstep.webm",
   },
   {
     title: "MEGALOVANIA",
     artist: "Toby Fox",
-    url: "/audio/megalovania.mp3",
+    url: "/audio/megalovania.webm",
   },
   {
     title: "Bad Apple!!",
     artist: "Masayoshi Minoshima ft. Nomico",
-    url: "/audio/bad_apple.mp3",
+    url: "/audio/bad_apple.webm",
   },
   {
     title: "Running in the 90's",
     artist: "Maurizio De Jorio",
-    url: "/audio/running_in_the_90s.mp3",
+    url: "/audio/running_in_the_90s.webm",
   },
   {
     title: "Caramelldansen",
     artist: "Caramell",
-    url: "/audio/caramelldansen.mp3",
+    url: "/audio/caramelldansen.webm",
   },
   {
     title: "Miku",
     artist: "Anamanaguchi",
-    url: "/audio/miku.mp3",
+    url: "/audio/miku.webm",
   },
 ];
 
@@ -116,7 +116,7 @@ export default function RetroCassettePlayer() {
         onEnded={nextTrack}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
-        preload="metadata"
+        preload="none"
       />
 
       {minimized ? (
@@ -130,9 +130,9 @@ export default function RetroCassettePlayer() {
           <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
         </button>
       ) : (
-        <div className="w-[calc(100vw-24px)] sm:w-[280px] max-w-[280px] bg-[#fffdf9] border-[3px] border-black shadow-brutal-lg overflow-hidden">
+        <div className="w-[calc(100vw-24px)] sm:w-[280px] max-w-[280px] bg-[#fffdf9] border-[3px] border-black shadow-brutal-lg overflow-hidden grain">
           {/* Title Bar */}
-          <div className="bg-[#fb923c] px-3 py-1.5 border-b-[2px] border-black flex items-center justify-between">
+          <div className="bg-[#fb923c] px-3 py-1.5 border-b-[2px] border-black flex items-center justify-between grain-warm">
             <span className="font-mono text-xs font-bold text-black flex items-center gap-1.5">
               <Disc3 className={`w-3.5 h-3.5 text-black ${isPlaying ? "animate-spin" : ""}`} />
               <span>LO-FI CASSETTE DECK</span>
@@ -161,8 +161,8 @@ export default function RetroCassettePlayer() {
 
           <div className="p-3 bg-[#f6eedb]">
             {/* Cassette Graphic with Spinning Wheels */}
-            <div className="bg-[#12151e] p-2.5 border-2 border-black mb-2.5 rounded-sm relative overflow-hidden">
-              <div className="flex items-center justify-between px-4 py-2 bg-[#2a2f42] border border-[#475569] mb-1.5">
+            <div className="bg-[#12151e] p-2.5 border-2 border-black mb-2.5 rounded-sm relative overflow-hidden grain-dark">
+              <div className="flex items-center justify-between px-4 py-2 bg-[#2a2f42] border border-[#475569] mb-1.5 grain-dark">
                 {/* Left Spool */}
                 <div
                   className={`w-6 h-6 rounded-full border-2 border-dashed border-[#fde047] flex items-center justify-center ${
