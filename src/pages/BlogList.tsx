@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link } from "wouter";
 import { ArrowLeft, ArrowUpRight, Rss } from "../components/icons";
 import blogPosts from "../data/blogs-meta.json";
 import RetroHeader from "../components/retro/RetroHeader";
@@ -13,7 +13,7 @@ export default function BlogList() {
         {/* Navigation & Feed header */}
         <div className="flex items-center justify-between gap-4 mb-8">
           <Link
-            to="/"
+            href="/"
             className="px-3.5 py-1.5 bg-[#fffdf9] border-2 border-black font-mono text-xs sm:text-sm font-bold shadow-brutal-xs hover:bg-[#fde047] hover:shadow-brutal active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -74,7 +74,7 @@ export default function BlogList() {
               </div>
 
               <h2 className="text-2xl sm:text-3xl font-black text-black mb-3 group-hover:text-[#d97706] transition-colors">
-                <Link to={`/blog/${post.slug}`}>
+                <Link href={`/blog/${post.slug}`}>
                   {post.title}
                 </Link>
               </h2>
@@ -85,7 +85,7 @@ export default function BlogList() {
 
               <div className="flex items-center justify-between pt-2">
                 <Link
-                  to={`/blog/${post.slug}`}
+                  href={`/blog/${post.slug}`}
                   className="px-4 py-2 bg-[#fde047] text-black font-mono text-xs sm:text-sm font-bold border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5"
                 >
                   <span>READ DISPATCH</span>

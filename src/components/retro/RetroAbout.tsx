@@ -19,8 +19,8 @@ export default function RetroAbout() {
   ];
 
   return (
-    <section id="about" className="py-6 sm:py-8 px-3 sm:px-6">
-      <div className="max-w-5xl mx-auto">
+    <section id="about" className="py-6 sm:py-8 px-3 sm:px-6 scroll-mt-16 sm:scroll-mt-20">
+      <div className="max-w-5xl mx-auto space-y-6">
         {/* Section Header */}
         <div className="mb-6 sm:mb-8">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-mono font-black text-black tracking-tight">

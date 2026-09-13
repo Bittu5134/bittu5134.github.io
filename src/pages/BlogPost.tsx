@@ -1,4 +1,4 @@
-import { useParams, Link, Navigate } from "react-router";
+import { useParams, Link, Redirect } from "wouter";
 import { ArrowLeft, Check, Share2, Mail } from "../components/icons";
 import { blogPosts } from "../data/blogs";
 import RetroHeader from "../components/retro/RetroHeader";
@@ -13,7 +13,7 @@ export default function BlogPost() {
   const [copied, setCopied] = useState(false);
 
   if (!post) {
-    return <Navigate to="/blog" replace />;
+    return <Redirect to="/blog" replace />;
   }
 
   const handleShare = () => {
@@ -31,7 +31,7 @@ export default function BlogPost() {
         {/* Navigation & Share */}
         <div className="flex items-center justify-between gap-4 mb-8">
           <Link
-            to="/blog"
+            href="/blog"
             className="px-3.5 py-1.5 bg-[#fffdf9] border-2 border-black font-mono text-xs sm:text-sm font-bold shadow-brutal-xs hover:bg-[#fde047] hover:shadow-brutal active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -176,7 +176,7 @@ export default function BlogPost() {
           {/* Article Footer Note */}
           <div className="mt-12 pt-6 border-t-2 border-black flex items-center justify-between flex-wrap gap-4 font-mono text-xs sm:text-sm font-bold">
             <Link
-              to="/blog"
+              href="/blog"
               className="px-4 py-2 bg-[#fde047] border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 transition-all flex items-center gap-1.5"
             >
               <ArrowLeft className="w-4 h-4" />

@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
-import { Link as ScrollLink } from "react-scroll";
-import { Link as RouterLink, useLocation } from "react-router";
+import { Link as RouterLink, useLocation } from "wouter";
 import { Rss, Folder, FileText, User, Mail, Menu, X, PixelMonsterIcon, GithubIcon, DiscordIcon } from "../icons";
 
 export default function RetroHeader() {
   const [isOpen, setIsOpen] = useState(false);
-  const location = useLocation();
-  const isHomePage = location.pathname === "/";
+  const [location] = useLocation();
+  const isHomePage = location === "/" || location === "";
 
   const navItems = [
     { label: "~/projects", icon: Folder, to: "projects" },
@@ -45,20 +44,16 @@ export default function RetroHeader() {
           {/* Brand Logo */}
           <div className="flex items-center gap-2">
             {isHomePage ? (
-              <ScrollLink
-                to="hero"
+              <a
                 href="#hero"
-                smooth={true}
-                offset={-70}
-                duration={400}
                 className="cursor-pointer group flex items-center gap-2 px-2.5 sm:px-3 py-1 bg-[#fde047] border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
               >
                 <PixelMonsterIcon className="w-5 h-5 text-black shrink-0" />
                 <span className="font-pixel text-lg sm:text-2xl font-bold tracking-wider">BITTU.DEV</span>
-              </ScrollLink>
+              </a>
             ) : (
               <RouterLink
-                to="/"
+                href="/"
                 className="group flex items-center gap-2 px-2.5 sm:px-3 py-1 bg-[#fde047] border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
               >
                 <PixelMonsterIcon className="w-5 h-5 text-black shrink-0" />
@@ -75,22 +70,18 @@ export default function RetroHeader() {
             {navItems.map((item) => {
               const Icon = item.icon;
               return isHomePage ? (
-                <ScrollLink
+                <a
                   key={item.to}
-                  to={item.to}
                   href={`#${item.to}`}
-                  smooth={true}
-                  offset={-70}
-                  duration={400}
                   className="cursor-pointer px-3 py-1 bg-[#fffdf9] border-2 border-black text-xs sm:text-sm font-black shadow-brutal-xs hover:bg-[#fde047] hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all tracking-tight flex items-center gap-1.5"
                 >
                   <Icon className="w-3.5 h-3.5 text-black shrink-0" />
                   <span>{item.label}</span>
-                </ScrollLink>
+                </a>
               ) : (
                 <RouterLink
                   key={item.to}
-                  to={`/#${item.to}`}
+                  href={`/#${item.to}`}
                   className="px-3 py-1 bg-[#fffdf9] border-2 border-black text-xs sm:text-sm font-black shadow-brutal-xs hover:bg-[#fde047] hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all tracking-tight flex items-center gap-1.5"
                 >
                   <Icon className="w-3.5 h-3.5 text-black shrink-0" />
@@ -178,13 +169,9 @@ export default function RetroHeader() {
             {navItems.map((item) => {
               const Icon = item.icon;
               return isHomePage ? (
-                <ScrollLink
+                <a
                   key={item.to}
-                  to={item.to}
                   href={`#${item.to}`}
-                  smooth={true}
-                  offset={-70}
-                  duration={400}
                   onClick={() => setIsOpen(false)}
                   className="w-full flex items-center justify-between px-3.5 py-2.5 bg-[#f6eedb] border-2 border-black font-mono text-sm font-bold shadow-brutal-xs hover:bg-[#fde047] active:translate-x-1 active:translate-y-0.5 transition-all cursor-pointer"
                 >
@@ -193,11 +180,11 @@ export default function RetroHeader() {
                     <span className="text-black font-black">{item.label}</span>
                   </span>
                   <span className="text-black/60 font-mono text-xs">→</span>
-                </ScrollLink>
+                </a>
               ) : (
                 <RouterLink
                   key={item.to}
-                  to={`/#${item.to}`}
+                  href={`/#${item.to}`}
                   onClick={() => setIsOpen(false)}
                   className="w-full flex items-center justify-between px-3.5 py-2.5 bg-[#f6eedb] border-2 border-black font-mono text-sm font-bold shadow-brutal-xs hover:bg-[#fde047] active:translate-x-1 active:translate-y-0.5 transition-all"
                 >

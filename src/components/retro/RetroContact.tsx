@@ -29,7 +29,7 @@ export default function RetroContact() {
   };
 
   return (
-    <section id="contact" className="py-6 sm:py-8 px-3 sm:px-6">
+    <section id="contact" className="py-6 sm:py-8 px-3 sm:px-6 scroll-mt-16 sm:scroll-mt-20">
       <div className="max-w-5xl mx-auto">
         {/* Section Header */}
         <div className="mb-6 sm:mb-8">

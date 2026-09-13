@@ -3,7 +3,7 @@ import { Rss, ArrowUpRight, BookOpen } from "../icons";
 
 export default function RetroZine() {
   return (
-    <section id="blog" className="py-6 sm:py-8 px-3 sm:px-6">
+    <section id="blog" className="py-6 sm:py-8 px-3 sm:px-6 scroll-mt-16 sm:scroll-mt-20">
       <div className="max-w-5xl mx-auto">
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:gap-4 mb-6 sm:mb-8">

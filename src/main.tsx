@@ -1,43 +1,27 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router";
+import { Switch, Route } from "wouter";
 import App from "./pages/App.tsx";
 import "./index.css";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    Component: App,
-  },
-  {
-    path: "/blog",
-    lazy: async () => {
-      const { default: Component } = await import("./pages/BlogList.tsx");
-      return { Component };
-    },
-  },
-  {
-    path: "/blog/:slug",
-    lazy: async () => {
-      const { default: Component } = await import("./pages/BlogPost.tsx");
-      return { Component };
-    },
-  },
-  {
-    path: "/discord",
-    lazy: async () => {
-      const { default: Component } = await import("./pages/DiscordRedirect.tsx");
-      return { Component };
-    },
-  },
-  {
-    path: "*",
-    lazy: async () => {
-      const { default: Component } = await import("./pages/ErrorPage.tsx");
-      return { Component };
-    },
-  },
-]);
+const BlogList = lazy(() => import("./pages/BlogList.tsx"));
+const BlogPost = lazy(() => import("./pages/BlogPost.tsx"));
+const DiscordRedirect = lazy(() => import("./pages/DiscordRedirect.tsx"));
+const ErrorPage = lazy(() => import("./pages/ErrorPage.tsx"));
+
+export function AppRoutes() {
+  return (
+    <Suspense fallback={null}>
+      <Switch>
+        <Route path="/" component={App} />
+        <Route path="/blog" component={BlogList} />
+        <Route path="/blog/:slug" component={BlogPost} />
+        <Route path="/discord" component={DiscordRedirect} />
+        <Route component={ErrorPage} />
+      </Switch>
+    </Suspense>
+  );
+}
 
 const rootElement = document.getElementById("root")!;
 
@@ -45,13 +29,13 @@ if (rootElement.hasChildNodes()) {
   ReactDOM.hydrateRoot(
     rootElement,
     <React.StrictMode>
-      <RouterProvider router={router} />
+      <AppRoutes />
     </React.StrictMode>
   );
 } else {
   ReactDOM.createRoot(rootElement).render(
     <React.StrictMode>
-      <RouterProvider router={router} />
+      <AppRoutes />
     </React.StrictMode>
   );
 }

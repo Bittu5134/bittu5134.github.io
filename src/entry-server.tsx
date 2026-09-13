@@ -1,23 +1,18 @@
-import { createElement } from "react";
 import { renderToString } from "react-dom/server";
-import { StaticRouter, Routes, Route } from "react-router";
+import { Router, Switch, Route } from "wouter";
 
 import App from "./pages/App.tsx";
 import BlogList from "./pages/BlogList.tsx";
 import BlogPost from "./pages/BlogPost.tsx";
 
 export function renderPage(url: string): string {
-  const tree = createElement(
-    StaticRouter,
-    { location: url },
-    createElement(
-      Routes,
-      null,
-      createElement(Route, { path: "/", element: createElement(App) }),
-      createElement(Route, { path: "/blog", element: createElement(BlogList) }),
-      createElement(Route, { path: "/blog/:slug", element: createElement(BlogPost) })
-    )
+  return renderToString(
+    <Router ssrPath={url}>
+      <Switch>
+        <Route path="/" component={App} />
+        <Route path="/blog" component={BlogList} />
+        <Route path="/blog/:slug" component={BlogPost} />
+      </Switch>
+    </Router>
   );
-
-  return renderToString(tree);
 }

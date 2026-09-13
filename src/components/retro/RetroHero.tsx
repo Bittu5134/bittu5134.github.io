@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link as ScrollLink } from "react-scroll";
 import { Terminal, Pickaxe, Shield, Cpu, ArrowDown, ArrowRight, Check, DiscordIcon } from "../icons";
 
 export default function RetroHero() {
@@ -12,7 +11,7 @@ export default function RetroHero() {
   };
 
   return (
-    <section id="hero" className="pt-4 sm:pt-8 pb-4 px-3 sm:px-6">
+    <section id="hero" className="pt-4 sm:pt-8 pb-4 px-3 sm:px-6 scroll-mt-16 sm:scroll-mt-20">
       {/* Retro Window Container */}
       <div className="max-w-5xl mx-auto bg-[#fffdf9] border-[3px] border-black shadow-brutal sm:shadow-brutal-lg rounded-none overflow-hidden relative grain">
         {/* Retro Window Titlebar */}
@@ -111,29 +110,21 @@ export default function RetroHero() {
 
             {/* Action Buttons */}
             <div className="flex flex-wrap items-center gap-2.5 sm:gap-4">
-              <ScrollLink
-                to="projects"
+              <a
                 href="#projects"
-                smooth={true}
-                offset={-30}
-                duration={400}
                 className="cursor-pointer px-4 sm:px-5 py-2.5 sm:py-3 bg-[#f59e0b] text-black font-mono font-bold text-xs sm:text-sm border-[3px] border-black shadow-brutal hover:shadow-brutal-lg hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5 sm:gap-2"
               >
                 <span>PROJECTS</span>
                 <ArrowDown className="w-4 h-4 text-black shrink-0" />
-              </ScrollLink>
+              </a>
 
-              <ScrollLink
-                to="blog"
+              <a
                 href="#blog"
-                smooth={true}
-                offset={-30}
-                duration={400}
                 className="cursor-pointer px-4 sm:px-5 py-2.5 sm:py-3 bg-[#86efac] text-black font-mono font-bold text-xs sm:text-sm border-[3px] border-black shadow-brutal hover:shadow-brutal-lg hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5 sm:gap-2"
               >
                 <span>BLOG</span>
                 <ArrowRight className="w-4 h-4 text-black shrink-0" />
-              </ScrollLink>
+              </a>
 
               <button
                 onClick={copyDiscord}
