@@ -4,13 +4,13 @@ Welcome to my personal website! A neo-brutalist retro cassette deck portfolio an
 
 ## 🚀 Technologies Used
 
-- **React 18 & Vite**: Blazing-fast development and optimized production bundling.
-- **Tailwind CSS**: Neo-brutalist retro styling with custom typography and brutalist shadows.
-- **Static Site Generation (SSG)**: Build-time pre-rendering for instant page loads on GitHub Pages.
+- **Eleventy (11ty) & Vanilla JS**: Zero-runtime framework overhead with ultra-fast build times and 100% static HTML.
+- **Tailwind CSS**: Neo-brutalist retro styling with custom typography, grain overlays, and brutalist shadows.
+- **Pure Static Architecture**: Pre-compiled static pages optimized natively for GitHub Pages without SPA redirect hacks.
 - **Modern Asset Pipelines**:
   - WebM Opus audio tracks (80k VBR) for cassette player music.
   - AVIF & WebP image formats with responsive source sets.
-  - Self-hosted subset WOFF2 variable fonts (`Space Grotesk`, `Space Mono`, `VT323`).
+  - Automated build-time micro-subsetted WOFF2 fonts with `pyftsubset` (`Space Grotesk`, `Space Mono` Regular, Bold, and Italic).
 - **AI Context Support**: Standard `llms.txt` and `llms-full.txt` auto-generated at build time.
 
 ## 🌟 Features
