@@ -8,7 +8,7 @@
       {% if isHomePage %}
         <a
           href="#hero"
-          class="cursor-pointer group flex items-center gap-2 px-2.5 sm:px-3 py-1 bg-[#fde047] border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
+          class="btn-brutal-yellow px-2.5 sm:px-3 py-1 text-black"
         >
           {{ icons.pixelMonster("w-5 h-5 text-black shrink-0") }}
           <span class="font-mono text-sm sm:text-base font-black tracking-widest">BITTU.DEV</span>
@@ -16,7 +16,7 @@
       {% else %}
         <a
           href="/"
-          class="group flex items-center gap-2 px-2.5 sm:px-3 py-1 bg-[#fde047] border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
+          class="btn-brutal-yellow px-2.5 sm:px-3 py-1 text-black"
         >
           {{ icons.pixelMonster("w-5 h-5 text-black shrink-0") }}
           <span class="font-mono text-sm sm:text-base font-black tracking-widest">BITTU.DEV</span>
@@ -31,7 +31,7 @@
     <nav class="hidden lg:flex items-center gap-2 font-mono">
       <a
         href="{{ '#projects' if isHomePage else '/#projects' }}"
-        class="cursor-pointer px-3 py-1 bg-[#fffdf9] border-2 border-black text-xs sm:text-sm font-black shadow-brutal-xs hover:bg-[#fde047] hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all tracking-tight flex items-center gap-1.5"
+        class="nav-btn-desktop"
       >
         {{ icons.folder("w-3.5 h-3.5 text-black shrink-0") }}
         <span>~/projects</span>
@@ -39,7 +39,7 @@
 
       <a
         href="{{ '#blog' if isHomePage else '/blog' }}"
-        class="cursor-pointer px-3 py-1 bg-[#fffdf9] border-2 border-black text-xs sm:text-sm font-black shadow-brutal-xs hover:bg-[#fde047] hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all tracking-tight flex items-center gap-1.5"
+        class="nav-btn-desktop"
       >
         {{ icons.fileText("w-3.5 h-3.5 text-black shrink-0") }}
         <span>~/blog</span>
@@ -47,7 +47,7 @@
 
       <a
         href="{{ '#about' if isHomePage else '/#about' }}"
-        class="cursor-pointer px-3 py-1 bg-[#fffdf9] border-2 border-black text-xs sm:text-sm font-black shadow-brutal-xs hover:bg-[#fde047] hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all tracking-tight flex items-center gap-1.5"
+        class="nav-btn-desktop"
       >
         {{ icons.user("w-3.5 h-3.5 text-black shrink-0") }}
         <span>~/about</span>
@@ -55,7 +55,7 @@
 
       <a
         href="{{ '#contact' if isHomePage else '/#contact' }}"
-        class="cursor-pointer px-3 py-1 bg-[#fffdf9] border-2 border-black text-xs sm:text-sm font-black shadow-brutal-xs hover:bg-[#fde047] hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all tracking-tight flex items-center gap-1.5"
+        class="nav-btn-desktop"
       >
         {{ icons.mail("w-3.5 h-3.5 text-black shrink-0") }}
         <span>~/contact</span>
@@ -66,7 +66,7 @@
         target="_blank"
         rel="noopener noreferrer"
         aria-label="RSS Feed"
-        class="px-2.5 py-1 bg-[#fb923c] text-black border-2 border-black text-xs sm:text-sm font-bold shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5"
+        class="btn-brutal bg-[#fb923c] px-2.5 py-1 text-xs sm:text-sm"
       >
         {{ icons.rss("w-3.5 h-3.5 text-black shrink-0") }}
         <span>RSS</span>
@@ -80,7 +80,7 @@
         target="_blank"
         rel="noopener noreferrer"
         aria-label="GitHub Profile (@Bittu5134)"
-        class="px-2.5 py-1 sm:py-1.5 bg-[#fffdf9] border-2 border-black font-mono text-xs sm:text-sm font-bold shadow-brutal-xs hover:bg-[#c4b5fd] hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-1.5"
+        class="btn-brutal-purple px-2.5 py-1 sm:py-1.5 text-xs sm:text-sm"
       >
         {{ icons.github("w-4 h-4 sm:w-5 sm:h-5 text-black shrink-0") }}
         <span class="hidden sm:inline-block font-mono text-xs sm:text-sm font-bold">GITHUB</span>
@@ -89,7 +89,7 @@
       <!-- Mobile Hamburger Toggle Button -->
       <button
         id="menu-toggle-btn"
-        class="lg:hidden px-3 py-1 sm:py-1.5 bg-[#fde047] border-2 border-black font-mono text-xs sm:text-sm font-black shadow-brutal-xs hover:bg-[#fb923c] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5 select-none cursor-pointer"
+        class="lg:hidden btn-brutal-yellow px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-black select-none"
         aria-label="Toggle navigation menu"
         aria-expanded="false"
       >
@@ -114,7 +114,7 @@
   class="hidden fixed top-[54px] sm:top-[58px] left-0 right-0 z-50 lg:hidden bg-[#fffdf9] border-b-[4px] border-black shadow-brutal-lg max-h-[calc(100vh-65px)] overflow-y-auto"
 >
   <!-- Drawer Window Titlebar -->
-  <div class="bg-[#fb923c] px-4 py-2 border-b-2 border-black flex items-center justify-between select-none">
+  <div class="card-header-bar bg-[#fb923c]">
     <div class="flex items-center gap-2">
       <span class="w-2.5 h-2.5 bg-[#f87171] border border-black"></span>
       <span class="w-2.5 h-2.5 bg-[#fde047] border border-black"></span>
@@ -140,7 +140,7 @@
 
     <a
       href="{{ '#projects' if isHomePage else '/#projects' }}"
-      class="mobile-nav-link w-full flex items-center justify-between px-3.5 py-2.5 bg-[#f6eedb] border-2 border-black font-mono text-sm font-bold shadow-brutal-xs hover:bg-[#fde047] active:translate-x-1 active:translate-y-0.5 transition-all cursor-pointer"
+      class="mobile-nav-link nav-btn-mobile"
     >
       <span class="flex items-center gap-2">
         {{ icons.folder("w-4 h-4 text-black shrink-0") }}
@@ -151,7 +151,7 @@
 
     <a
       href="{{ '#blog' if isHomePage else '/blog' }}"
-      class="mobile-nav-link w-full flex items-center justify-between px-3.5 py-2.5 bg-[#f6eedb] border-2 border-black font-mono text-sm font-bold shadow-brutal-xs hover:bg-[#fde047] active:translate-x-1 active:translate-y-0.5 transition-all cursor-pointer"
+      class="mobile-nav-link nav-btn-mobile"
     >
       <span class="flex items-center gap-2">
         {{ icons.fileText("w-4 h-4 text-black shrink-0") }}
@@ -162,7 +162,7 @@
 
     <a
       href="{{ '#about' if isHomePage else '/#about' }}"
-      class="mobile-nav-link w-full flex items-center justify-between px-3.5 py-2.5 bg-[#f6eedb] border-2 border-black font-mono text-sm font-bold shadow-brutal-xs hover:bg-[#fde047] active:translate-x-1 active:translate-y-0.5 transition-all cursor-pointer"
+      class="mobile-nav-link nav-btn-mobile"
     >
       <span class="flex items-center gap-2">
         {{ icons.user("w-4 h-4 text-black shrink-0") }}
@@ -173,7 +173,7 @@
 
     <a
       href="{{ '#contact' if isHomePage else '/#contact' }}"
-      class="mobile-nav-link w-full flex items-center justify-between px-3.5 py-2.5 bg-[#f6eedb] border-2 border-black font-mono text-sm font-bold shadow-brutal-xs hover:bg-[#fde047] active:translate-x-1 active:translate-y-0.5 transition-all cursor-pointer"
+      class="mobile-nav-link nav-btn-mobile"
     >
       <span class="flex items-center gap-2">
         {{ icons.mail("w-4 h-4 text-black shrink-0") }}
@@ -189,7 +189,7 @@
         target="_blank"
         rel="noopener noreferrer"
         aria-label="RSS Feed"
-        class="flex items-center justify-center gap-1.5 px-3 py-2 bg-[#fb923c] text-black border-2 border-black font-mono text-xs font-bold shadow-brutal-xs hover:shadow-brutal active:translate-x-0.5 active:translate-y-0.5"
+        class="btn-brutal bg-[#fb923c] px-3 py-2 text-xs"
       >
         {{ icons.rss("w-3.5 h-3.5 text-black shrink-0") }}
         <span>RSS FEED</span>
@@ -200,7 +200,7 @@
         target="_blank"
         rel="noopener noreferrer"
         aria-label="GitHub Profile (@Bittu5134)"
-        class="flex items-center justify-center gap-1.5 px-3 py-2 bg-[#fffdf9] text-black border-2 border-black font-mono text-xs font-bold shadow-brutal-xs hover:bg-[#c4b5fd] active:translate-x-0.5 active:translate-y-0.5"
+        class="btn-brutal-purple px-3 py-2 text-xs"
       >
         {{ icons.github("w-4 h-4 text-black shrink-0") }}
         <span>GITHUB</span>
@@ -212,7 +212,7 @@
         href="/discord"
         target="_blank"
         rel="noopener noreferrer"
-        class="w-full flex items-center justify-center gap-2 px-3 py-2 bg-[#c4b5fd] text-black border-2 border-black font-mono text-xs font-bold shadow-brutal-xs active:translate-x-0.5 active:translate-y-0.5"
+        class="btn-brutal w-full bg-[#c4b5fd] px-3 py-2 text-xs"
       >
         {{ icons.discord("w-4 h-4 text-black shrink-0") }}
         <span>JOIN DISCORD COMMUNITY</span>

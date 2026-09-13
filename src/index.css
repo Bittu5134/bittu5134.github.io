@@ -39,6 +39,50 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .card-brutal {
+    @apply bg-[#fffdf9] border-[3px] border-black shadow-brutal hover:shadow-brutal-lg hover:-translate-y-0.5 transition-all;
+  }
+  .card-header-bar {
+    @apply px-3 sm:px-4 py-2 border-b-[3px] border-black flex items-center justify-between select-none;
+  }
+  .tag-pill {
+    @apply px-2 py-0.5 bg-[#f6eedb] border border-black font-mono text-xs font-bold text-black;
+  }
+  .btn-brutal,
+  .btn-brutal-yellow,
+  .btn-brutal-white,
+  .btn-brutal-purple,
+  .btn-brutal-pink,
+  .btn-brutal-green {
+    @apply font-mono font-bold border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-1.5 cursor-pointer;
+  }
+  .btn-brutal-yellow { @apply bg-[#fde047] hover:bg-[#fb923c] text-black; }
+  .btn-brutal-white  { @apply bg-[#fffdf9] hover:bg-[#fde047] text-black; }
+  .btn-brutal-purple { @apply bg-[#fffdf9] hover:bg-[#c4b5fd] text-black; }
+  .btn-brutal-pink   { @apply bg-[#f472b6] hover:bg-[#fb7185] text-black; }
+  .btn-brutal-green  { @apply bg-[#86efac] hover:bg-[#22c55e] text-black; }
+
+  .nav-btn-desktop {
+    @apply cursor-pointer px-3 py-1 bg-[#fffdf9] border-2 border-black text-xs sm:text-sm font-black shadow-brutal-xs hover:bg-[#fde047] hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all tracking-tight flex items-center gap-1.5;
+  }
+  .nav-btn-mobile {
+    @apply w-full flex items-center justify-between px-3.5 py-2.5 bg-[#f6eedb] border-2 border-black font-mono text-sm font-bold shadow-brutal-xs hover:bg-[#fde047] active:translate-x-1 active:translate-y-0.5 transition-all cursor-pointer;
+  }
+
+  .profile-link {
+    @apply flex items-center justify-between p-2.5 bg-[#f6eedb] border border-black font-mono text-xs sm:text-sm font-bold text-black transition-colors;
+  }
+
+  .btn-hero-brutal {
+    @apply cursor-pointer px-4 sm:px-5 py-2.5 sm:py-3 text-black font-mono font-bold text-xs sm:text-sm border-[3px] border-black shadow-brutal hover:shadow-brutal-lg hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5 sm:gap-2;
+  }
+
+  .tech-badge {
+    @apply px-3 sm:px-4 py-1.5 sm:py-2 border-2 border-black font-mono text-xs sm:text-sm font-bold shadow-brutal-xs flex items-center gap-1.5 select-none;
+  }
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -129,13 +173,28 @@ body,
  * Apply to any `position: relative` card. The ::after overlay is transparent
  * noise blended with multiply at very low opacity, giving natural paper tooth.
  */
-.grain {
+.grain,
+.grain-dark,
+.grain-warm,
+.card-brutal,
+.card-header-bar {
   position: relative;
   isolation: isolate;
+}
+
+.grain,
+.grain-warm,
+.card-brutal,
+.card-header-bar {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
-.grain::after {
+
+.grain::after,
+.grain-dark::after,
+.grain-warm::after,
+.card-brutal::after,
+.card-header-bar::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -143,56 +202,25 @@ body,
   border-radius: inherit;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.68 0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
   background-size: 180px 180px;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.grain::after,
+.card-brutal::after {
   opacity: 0.045;
   mix-blend-mode: multiply;
-  z-index: 2;
-  overflow: hidden;
 }
 
-/*
- * .grain-dark — for dark panels (cassette player bg-[#12151e], etc.)
- * Uses screen blend mode so grain brightens slightly instead of muddying.
- */
-.grain-dark {
-  position: relative;
-  isolation: isolate;
-}
 .grain-dark::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  border-radius: inherit;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.68 0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-  background-size: 180px 180px;
   opacity: 0.06;
   mix-blend-mode: screen;
-  z-index: 2;
-  overflow: hidden;
 }
 
-/*
- * .grain-warm — for amber/yellow highlight surfaces (bg-[#fde047], bg-[#fb923c])
- * Slightly stronger, gives newspaper/zine-ink character.
- */
-.grain-warm {
-  position: relative;
-  isolation: isolate;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-.grain-warm::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  border-radius: inherit;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.68 0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-  background-size: 180px 180px;
+.grain-warm::after,
+.card-header-bar::after {
   opacity: 0.055;
   mix-blend-mode: multiply;
-  z-index: 2;
-  overflow: hidden;
 }
 
 /* ─── Retro Blog Markdown Prose ─────────────────────────── */
