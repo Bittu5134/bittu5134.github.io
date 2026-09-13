@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "node scripts/generate-meta.mjs && vite",
     "generate-meta": "node scripts/generate-meta.mjs",
-    "build": "node scripts/generate-meta.mjs && tsc && vite build",
+    "build": "node scripts/generate-meta.mjs && tsc && vite build && node scripts/prerender.mjs",
+    "prerender": "node scripts/prerender.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },

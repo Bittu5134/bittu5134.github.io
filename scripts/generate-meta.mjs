@@ -98,6 +98,22 @@ for (const post of blogFiles) {
 }
 console.log(`[generate-meta] Published raw markdown files to public/raw/blogs/`);
 
+// Write lightweight metadata JSON for list and preview views
+const blogsMeta = blogFiles.map(({ slug, title, date, readTime, summary, tags }) => ({
+  slug,
+  title,
+  date,
+  readTime,
+  summary,
+  tags,
+}));
+fs.writeFileSync(
+  path.resolve(__dirname, "../src/data/blogs-meta.json"),
+  JSON.stringify(blogsMeta, null, 2),
+  "utf-8"
+);
+console.log(`[generate-meta] Wrote src/data/blogs-meta.json`);
+
 // Read data-driven projects from src/data/projects.json
 let projectsList = [];
 if (fs.existsSync(projectsJsonPath)) {

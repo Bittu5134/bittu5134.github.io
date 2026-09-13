@@ -1,14 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./pages/App.tsx";
-import DiscordRedirect from "./pages/DiscordRedirect.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router";
-
+import App from "./pages/App.tsx";
 import "./index.css";
-import SimpleFlightController from "./pages/SimpleFlightController.tsx";
-import BlogList from "./pages/BlogList.tsx";
-import BlogPost from "./pages/BlogPost.tsx";
-import ErrorPage from "./pages/ErrorPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -17,28 +11,47 @@ const router = createBrowserRouter([
   },
   {
     path: "/blog",
-    Component: BlogList,
+    lazy: async () => {
+      const { default: Component } = await import("./pages/BlogList.tsx");
+      return { Component };
+    },
   },
   {
     path: "/blog/:slug",
-    Component: BlogPost,
+    lazy: async () => {
+      const { default: Component } = await import("./pages/BlogPost.tsx");
+      return { Component };
+    },
   },
   {
     path: "/discord",
-    Component: DiscordRedirect,
-  },
-  {
-    path: "/simpleflightcontroller",
-    Component: SimpleFlightController,
+    lazy: async () => {
+      const { default: Component } = await import("./pages/DiscordRedirect.tsx");
+      return { Component };
+    },
   },
   {
     path: "*",
-    Component: ErrorPage,
+    lazy: async () => {
+      const { default: Component } = await import("./pages/ErrorPage.tsx");
+      return { Component };
+    },
   },
 ]);
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
-);
+const rootElement = document.getElementById("root")!;
+
+if (rootElement.hasChildNodes()) {
+  ReactDOM.hydrateRoot(
+    rootElement,
+    <React.StrictMode>
+      <RouterProvider router={router} />
+    </React.StrictMode>
+  );
+} else {
+  ReactDOM.createRoot(rootElement).render(
+    <React.StrictMode>
+      <RouterProvider router={router} />
+    </React.StrictMode>
+  );
+}

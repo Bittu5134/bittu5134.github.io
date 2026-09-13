@@ -1,4 +1,4 @@
-import { blogPosts } from "../../data/blogs";
+import blogPosts from "../../data/blogs-meta.json";
 import { Rss, ArrowUpRight, BookOpen } from "../icons";
 
 export default function RetroZine() {
@@ -39,7 +39,7 @@ export default function RetroZine() {
           {blogPosts.map((post) => (
             <article
               key={post.slug}
-              className="p-4 sm:p-8 bg-[#fffdf9] border-[3px] border-black shadow-brutal hover:shadow-brutal-lg hover:-translate-y-0.5 transition-all group"
+              className="p-4 sm:p-8 bg-[#fffdf9] border-[3px] border-black shadow-brutal hover:shadow-brutal-lg hover:-translate-y-0.5 transition-all group grain"
             >
               <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-2 mb-3 pb-3 border-b-2 border-black/10">
                 <div className="flex items-center gap-2">
