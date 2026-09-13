@@ -1,0 +1,136 @@
+{% import "macros/icons.njk" as icons %}
+
+<section id="hero" class="pt-4 sm:pt-8 pb-4 px-3 sm:px-6 scroll-mt-16 sm:scroll-mt-20">
+  <!-- Retro Window Container -->
+  <div class="max-w-5xl mx-auto bg-[#fffdf9] border-[3px] border-black shadow-brutal sm:shadow-brutal-lg rounded-none overflow-hidden relative grain">
+    <!-- Retro Window Titlebar -->
+    <div class="bg-[#fb923c] px-3 sm:px-4 py-2 border-b-[3px] border-black flex items-center justify-between gap-2 select-none grain-warm">
+      <div class="flex items-center gap-1.5 sm:gap-2 min-w-0">
+        <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-[#f87171] border-2 border-black shrink-0"></span>
+        <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-[#fde047] border-2 border-black shrink-0"></span>
+        <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-[#86efac] border-2 border-black shrink-0"></span>
+        <span class="ml-1 shrink-0 text-black">{{ icons.terminal("w-3.5 h-3.5") }}</span>
+        <span class="font-mono text-xs sm:text-sm font-bold text-black tracking-wide truncate">
+          bittu@iitk: ~
+        </span>
+      </div>
+      <span class="font-mono text-xs font-bold text-black tracking-wider shrink-0">
+        KANPUR, INDIA
+      </span>
+    </div>
+
+    <!-- Hero Content Body -->
+    <div class="p-4 sm:p-10 md:p-12 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center">
+      <!-- Left Column: Avatar Polaroid & Badges (5 cols) -->
+      <div class="lg:col-span-5 flex flex-col items-center justify-center">
+        <!-- Polaroid Container -->
+        <div class="relative bg-[#fffdf9] p-3 sm:p-4 pb-6 sm:pb-8 border-[3px] border-black shadow-brutal rotate-[-1deg] sm:rotate-[-2deg] hover:rotate-0 transition-transform duration-300 w-full max-w-[240px] sm:max-w-[280px] grain">
+          <!-- Washi Tape Effect at top -->
+          <div class="absolute -top-3 sm:-top-3.5 left-1/2 -translate-x-1/2 w-24 sm:w-28 h-5 sm:h-6 bg-[#fde047]/90 border border-black shadow-sm rotate-[2deg] sm:rotate-[3deg] z-10 flex items-center justify-center">
+            <span class="font-mono text-[10px] sm:text-xs text-black uppercase font-black tracking-widest">
+              ★ IT'S ME ★
+            </span>
+          </div>
+
+          <!-- Avatar Image -->
+          <div class="border-2 border-black overflow-hidden bg-[#12151e]">
+            <picture>
+              <source srcset="/images/avatar.avif" type="image/avif" />
+              <img
+                src="/images/avatar.webp"
+                alt="Bittu, pixel art Minecraft-style avatar"
+                width="224"
+                height="224"
+                loading="eager"
+                fetchpriority="high"
+                class="w-full h-48 sm:h-56 object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </picture>
+          </div>
+
+          <div class="mt-2.5 sm:mt-3 text-center">
+            <p class="font-mono text-base sm:text-lg text-black font-black tracking-wider">BITTU (HE/HIM)</p>
+            <p class="font-mono text-xs text-gray-700 uppercase font-bold mt-0.5">
+              Systems Hacker &amp; Modder
+            </p>
+          </div>
+        </div>
+
+        <!-- Sticker Badges beneath Polaroid -->
+        <div class="flex flex-wrap gap-1.5 sm:gap-2 mt-4 sm:mt-6 justify-center max-w-xs">
+          <span class="px-2.5 py-1 bg-[#86efac] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs rotate-[1deg] flex items-center gap-1">
+            {{ icons.pickaxe("w-3.5 h-3.5 text-black shrink-0") }}
+            <span>MINECRAFT LIVE</span>
+          </span>
+          <span class="px-2.5 py-1 bg-[#c4b5fd] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs rotate-[-1deg] flex items-center gap-1">
+            {{ icons.shield("w-3.5 h-3.5 text-black shrink-0") }}
+            <span>IIT KANPUR '30</span>
+          </span>
+          <span class="px-2.5 py-1 bg-[#38bdf8] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs rotate-[2deg] flex items-center gap-1">
+            {{ icons.cpu("w-3.5 h-3.5 text-black shrink-0") }}
+            <span>GO &amp; RUST</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Right Column: Bio & CTA (7 cols) -->
+      <div class="lg:col-span-7 flex flex-col justify-center">
+        <!-- Main Headline -->
+        <h1 class="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.1] text-black mb-3 sm:mb-4">
+          HEY, I'M
+          <span class="bg-[#fde047] px-2 py-0.5 border-2 border-black shadow-brutal-xs inline-block">
+            BITTU.
+          </span>
+        </h1>
+
+        <!-- Sub-headline -->
+        <p class="font-mono text-sm sm:text-base md:text-lg text-black font-semibold leading-relaxed mb-4 sm:mb-6">
+          Low-level systems builder, WebRTC tinkerer, and Minecraft protocol reverse engineer.
+          I write fast daemons in <span class="bg-[#38bdf8]/30 px-1 border-b-2 border-black font-bold">Go</span>,
+          dissect network packets, and build high-throughput tools for the web.
+        </p>
+
+        <!-- Sticky Note -->
+        <div class="p-3.5 sm:p-4 bg-[#fef08a] border-2 border-black shadow-brutal-xs mb-6 sm:mb-8 rotate-0 sm:rotate-[-0.5deg] grain-warm">
+          <p class="font-mono text-xs sm:text-sm text-black leading-relaxed">
+            Currently studying Cybersecurity at <strong>IIT Kanpur</strong>, serving 10.5M+ requests on <strong>ORV-Reader</strong>, and maintaining WebRTC peer-to-peer mesh tools.
+          </p>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-wrap items-center gap-2.5 sm:gap-4">
+          <a
+            href="#projects"
+            class="cursor-pointer px-4 sm:px-5 py-2.5 sm:py-3 bg-[#f59e0b] text-black font-mono font-bold text-xs sm:text-sm border-[3px] border-black shadow-brutal hover:shadow-brutal-lg hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5 sm:gap-2"
+          >
+            <span>PROJECTS</span>
+            {{ icons.arrowDown("w-4 h-4 text-black shrink-0") }}
+          </a>
+
+          <a
+            href="#blog"
+            class="cursor-pointer px-4 sm:px-5 py-2.5 sm:py-3 bg-[#86efac] text-black font-mono font-bold text-xs sm:text-sm border-[3px] border-black shadow-brutal hover:shadow-brutal-lg hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5 sm:gap-2"
+          >
+            <span>BLOG</span>
+            {{ icons.arrowRight("w-4 h-4 text-black shrink-0") }}
+          </a>
+
+          <button
+            id="copy-discord-hero"
+            aria-label="Copy Discord handle bittu5134"
+            class="px-3.5 sm:px-4 py-2.5 sm:py-3 bg-[#fffdf9] text-black font-mono font-bold text-xs sm:text-sm border-[3px] border-black shadow-brutal hover:bg-[#c4b5fd] hover:shadow-brutal-lg hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-2 cursor-pointer"
+          >
+            <span class="discord-default flex items-center gap-2">
+              {{ icons.discord("w-4 h-4 text-black shrink-0") }}
+              <span>DISCORD: bittu5134</span>
+            </span>
+            <span class="discord-copied hidden flex items-center gap-2 text-green-700">
+              {{ icons.check("w-4 h-4 text-green-700 shrink-0") }}
+              <span>TAG COPIED!</span>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

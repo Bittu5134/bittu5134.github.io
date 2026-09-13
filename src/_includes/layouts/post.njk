@@ -1,0 +1,97 @@
+---
+layout: layouts/base.njk
+---
+{% import "macros/icons.njk" as icons %}
+
+<div class="min-h-screen bg-[#f6eedb] retro-dots-bg text-[#14161f] font-sans selection:bg-[#fde047] selection:text-black">
+  {% include "components/retro-header.njk" %}
+
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+    <!-- Navigation & Share -->
+    <div class="flex items-center justify-between gap-4 mb-8">
+      <a
+        href="/blog"
+        class="px-3.5 py-1.5 bg-[#fffdf9] border-2 border-black font-mono text-xs sm:text-sm font-bold shadow-brutal-xs hover:bg-[#fde047] hover:shadow-brutal active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5"
+      >
+        {{ icons.arrowLeft("w-4 h-4") }}
+        <span>ALL ARTICLES</span>
+      </a>
+
+      <button
+        id="share-article-btn"
+        class="px-3.5 py-1.5 bg-[#fffdf9] border-2 border-black font-mono text-xs sm:text-sm font-bold shadow-brutal-xs hover:bg-[#86efac] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5 cursor-pointer"
+      >
+        <span class="share-default flex items-center gap-1.5">
+          {{ icons.share2("w-3.5 h-3.5") }}
+          <span>SHARE ARTICLE</span>
+        </span>
+        <span class="share-copied hidden flex items-center gap-1.5 text-emerald-800 font-bold">
+          {{ icons.check("w-3.5 h-3.5 text-emerald-800 stroke-[3]") }}
+          <span>LINK COPIED!</span>
+        </span>
+      </button>
+    </div>
+
+    <!-- Article Box -->
+    <article class="p-6 sm:p-10 md:p-12 bg-[#fffdf9] border-[3px] border-black shadow-brutal-lg grain">
+      <!-- Metadata Header -->
+      <div class="mb-8 pb-6 border-b-[3px] border-black">
+        <div class="flex flex-wrap items-center gap-2 mb-4 font-mono text-xs sm:text-sm font-bold">
+          <span class="px-2.5 py-1 bg-[#86efac] border border-black">
+            STAMP: {{ date | upper }}
+          </span>
+          <span class="px-2.5 py-1 bg-[#fde047] border border-black">
+            {{ readTime | upper }}
+          </span>
+        </div>
+
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-black leading-tight mb-4">
+          {{ title }}
+        </h1>
+
+        <p class="font-mono text-sm sm:text-base text-black/80 font-bold leading-relaxed mb-4">
+          {{ summary }}
+        </p>
+
+        <div class="flex flex-wrap gap-1.5">
+          {% for tag in tags %}
+            {% if tag != "posts" %}
+              <span
+                class="px-2 py-0.5 bg-[#f6eedb] border border-black font-mono text-xs font-bold text-black"
+              >
+                #{{ tag }}
+              </span>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Article Markdown Body -->
+      <div class="prose-retro">
+        {{ content | safe }}
+      </div>
+
+      <!-- Article Footer Note -->
+      <div class="mt-12 pt-6 border-t-2 border-black flex items-center justify-between flex-wrap gap-4 font-mono text-xs sm:text-sm font-bold">
+        <a
+          href="/blog"
+          class="px-4 py-2 bg-[#fde047] border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 transition-all flex items-center gap-1.5"
+        >
+          {{ icons.arrowLeft("w-4 h-4") }}
+          <span>BACK TO ALL DISPATCHES</span>
+        </a>
+
+        <a
+          href="mailto:hello@bittu.dev"
+          class="px-4 py-2 bg-[#86efac] border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 transition-all flex items-center gap-1.5"
+        >
+          {{ icons.mail("w-4 h-4") }}
+          <span>SEND COMMENTS VIA EMAIL</span>
+        </a>
+      </div>
+    </article>
+  </main>
+
+  {% include "components/retro-footer.njk" %}
+  {% include "components/retro-cassette-player.njk" %}
+</div>

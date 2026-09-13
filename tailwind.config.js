@@ -1,17 +1,14 @@
-import type { Config } from "tailwindcss";
-
+/** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    "./index.html",
-    "./src/*.{js,ts,jsx,tsx}",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{html,njk,md,js}",
   ],
   theme: {
     extend: {
       fontFamily: {
         sans: ['"Space Grotesk"', 'sans-serif'],
         mono: ['"Space Mono"', 'monospace'],
-        pixel: ['"VT323"', 'monospace'],
+        pixel: ['"Space Mono"', 'monospace'],
       },
       boxShadow: {
         'brutal-xs': '2px 2px 0px 0px #000000',
@@ -102,4 +99,4 @@ export default {
     },
   },
   plugins: [],
-} satisfies Config;
+};

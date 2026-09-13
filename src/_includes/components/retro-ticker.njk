@@ -1,0 +1,31 @@
+{% set skills = [
+  "GO / GOLANG",
+  "RUST",
+  "C / C++",
+  "PYTHON",
+  "PYTORCH",
+  "WEBRTC P2P",
+  "LINUX DAEMONS & SOCKETS",
+  "DOCKER",
+  "REDIS",
+  "TYPESCRIPT",
+  "REACT",
+  "MINECRAFT JAVA PROTOCOL",
+  "SPATIAL PDF GEOMETRY",
+  "CLOUDFLARE WORKERS",
+  "FASTAPI",
+  "eBPF NETWORKING"
+] %}
+
+<div class="w-full my-6 bg-[#fde047] border-y-2 border-black py-2.5 overflow-hidden select-none font-mono text-xs sm:text-sm font-bold shadow-brutal-sm relative z-20">
+  <div class="flex w-max animate-ticker whitespace-nowrap">
+    {% for i in range(0, 2) %}
+      {% for skill in skills %}
+        <div class="flex items-center mx-3 sm:mx-5 text-black tracking-wider">
+          <span>{{ skill }}</span>
+          <span class="ml-3 sm:ml-5 text-black/40">✦</span>
+        </div>
+      {% endfor %}
+    {% endfor %}
+  </div>
+</div>

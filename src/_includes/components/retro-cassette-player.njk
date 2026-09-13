@@ -1,0 +1,137 @@
+{% import "macros/icons.njk" as icons %}
+
+<div id="cassette-widget" class="fixed bottom-3 right-3 sm:bottom-4 sm:right-4 z-50 select-none max-w-[calc(100vw-24px)]">
+  <!-- Hidden Native Audio Element -->
+  <audio id="cassette-audio" preload="none"></audio>
+
+  <!-- Minimized Pill Button (shown initially on mobile or when minimized) -->
+  <button
+    id="cassette-minimized-btn"
+    aria-label="Open cassette player"
+    class="px-2.5 sm:px-3 py-1.5 sm:py-2 bg-[#fde047] text-black font-mono text-[11px] sm:text-xs font-bold border-2 border-black shadow-brutal flex items-center gap-1.5 sm:gap-2 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer"
+  >
+    <span class="cassette-disc-icon">{{ icons.disc3("w-4 h-4 text-black") }}</span>
+    <span id="cassette-minimized-label">TAPE DECK</span>
+    <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+  </button>
+
+  <!-- Expanded Deck Window -->
+  <div
+    id="cassette-expanded-deck"
+    class="hidden w-[calc(100vw-24px)] sm:w-[280px] max-w-[280px] bg-[#fffdf9] border-[3px] border-black shadow-brutal-lg overflow-hidden grain"
+  >
+    <!-- Title Bar -->
+    <div class="bg-[#fb923c] px-3 py-1.5 border-b-[2px] border-black flex items-center justify-between grain-warm">
+      <span class="font-mono text-xs font-bold text-black flex items-center gap-1.5">
+        <span class="cassette-disc-icon">{{ icons.disc3("w-3.5 h-3.5 text-black") }}</span>
+        <span>LO-FI CASSETTE DECK</span>
+      </span>
+      <div class="flex items-center gap-1.5">
+        <a
+          href="https://soundcloud.com/bittu-162282868/sets/portifolio"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="View SoundCloud Playlist"
+          aria-label="SoundCloud Playlist"
+          class="font-mono text-[10px] font-bold px-1.5 py-0.5 bg-black text-white hover:bg-[#fde047] hover:text-black flex items-center gap-1 transition-colors"
+        >
+          <span>SC</span>
+          {{ icons.externalLink("w-2.5 h-2.5") }}
+        </a>
+        <button
+          id="cassette-minimize-btn"
+          aria-label="Minimize cassette player"
+          class="font-mono text-xs font-bold px-1.5 py-0.5 bg-black text-white hover:bg-red-500 flex items-center justify-center cursor-pointer"
+        >
+          {{ icons.minus("w-3 h-3 stroke-[3]") }}
+        </button>
+      </div>
+    </div>
+
+    <div class="p-3 bg-[#f6eedb]">
+      <!-- Cassette Graphic with Spinning Wheels -->
+      <div class="bg-[#12151e] p-2.5 border-2 border-black mb-2.5 rounded-sm relative overflow-hidden grain-dark">
+        <div class="flex items-center justify-between px-4 py-2 bg-[#2a2f42] border border-[#475569] mb-1.5 grain-dark">
+          <!-- Left Spool -->
+          <div
+            id="cassette-left-spool"
+            class="w-6 h-6 rounded-full border-2 border-dashed border-[#fde047] flex items-center justify-center"
+          >
+            <div class="w-2 h-2 rounded-full bg-[#fde047]"></div>
+          </div>
+
+          <!-- Tape Window -->
+          <div class="flex-1 mx-3 h-3 bg-[#0f121d] border border-[#334155] relative flex items-center justify-center">
+            <div class="w-3/4 h-1 bg-[#d97706]/70"></div>
+          </div>
+
+          <!-- Right Spool -->
+          <div
+            id="cassette-right-spool"
+            class="w-6 h-6 rounded-full border-2 border-dashed border-[#fde047] flex items-center justify-center"
+          >
+            <div class="w-2 h-2 rounded-full bg-[#fde047]"></div>
+          </div>
+        </div>
+
+        <!-- LCD Track Display -->
+        <div class="bg-[#000000] px-2 py-1 border border-[#334155] flex items-center justify-between">
+          <span id="cassette-track-display" class="font-mono text-xs font-bold text-[#86efac] truncate tracking-wider">
+            ■ Pigstep - Lena Raine
+          </span>
+          <span id="cassette-track-counter" class="font-mono text-xs font-bold text-[#fde047] shrink-0 ml-1">
+            01/06
+          </span>
+        </div>
+      </div>
+
+      <!-- Physical Push Buttons -->
+      <div class="grid grid-cols-4 gap-1.5 mb-2.5">
+        <button
+          id="cassette-prev-btn"
+          aria-label="Previous track"
+          class="py-1.5 bg-[#fffdf9] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs hover:bg-[#c4b5fd] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center justify-center cursor-pointer"
+          title="Previous Track"
+        >
+          {{ icons.skipBack("w-3.5 h-3.5 fill-current") }}
+        </button>
+
+        <button
+          id="cassette-play-btn"
+          aria-label="Play tape"
+          class="py-1.5 col-span-2 bg-[#fde047] hover:bg-[#fb923c] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center justify-center gap-1.5 cursor-pointer"
+          title="Play Tape"
+        >
+          <span id="cassette-play-icon">{{ icons.play("w-3.5 h-3.5 fill-current") }}</span>
+          <span id="cassette-pause-icon" class="hidden">{{ icons.pause("w-3.5 h-3.5 fill-current") }}</span>
+          <span id="cassette-play-text">PLAY</span>
+        </button>
+
+        <button
+          id="cassette-next-btn"
+          aria-label="Next track"
+          class="py-1.5 bg-[#fffdf9] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs hover:bg-[#c4b5fd] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center justify-center cursor-pointer"
+          title="Next Track"
+        >
+          {{ icons.skipForward("w-3.5 h-3.5 fill-current") }}
+        </button>
+      </div>
+
+      <!-- Volume Slider Bar -->
+      <div class="flex items-center gap-2 font-mono text-xs font-bold text-black">
+        {{ icons.volume2("w-3.5 h-3.5 shrink-0") }}
+        <input
+          id="cassette-volume-slider"
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value="0.30"
+          aria-label="Volume slider"
+          class="w-full accent-[#fb923c] h-2 bg-[#fffdf9] border border-black cursor-pointer"
+        />
+        <span id="cassette-volume-text" class="shrink-0">30%</span>
+      </div>
+    </div>
+  </div>
+</div>

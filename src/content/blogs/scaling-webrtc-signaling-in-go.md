@@ -1,7 +1,8 @@
 ---
 slug: scaling-webrtc-signaling-in-go
 title: "Scaling WebRTC Signaling in Go: Lessons from 500 Concurrent Peers"
-date: "March 8, 2026"
+date: 2026-03-08
+displayDate: "March 8, 2026"
 readTime: "6 min read"
 summary: "A deep dive into building PeerBasket low-latency signaling server in Go. How we achieved 41ms average latency and 0% packet loss across 500 concurrent peers with Redis TTL heartbeat pruning and IP token buckets."
 tags:

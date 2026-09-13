@@ -4,34 +4,25 @@
   "version": "3.0.0",
   "type": "module",
   "scripts": {
-    "dev": "node scripts/generate-meta.mjs && vite",
+    "generate-fonts": "python3 scripts/generate-fonts.py",
     "generate-meta": "node scripts/generate-meta.mjs",
-    "build": "node scripts/generate-meta.mjs && tsc && vite build && node scripts/prerender.mjs",
-    "prerender": "node scripts/prerender.mjs",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "lucide-react": "^0.483.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-markdown": "^10.1.0",
-    "wouter": "^3.11.0"
+    "build:css": "tailwindcss -i ./src/index.css -o ./dist/assets/css/index.css --minify",
+    "build:11ty": "eleventy",
+    "build": "rm -rf dist && python3 scripts/generate-fonts.py && node scripts/generate-meta.mjs && tailwindcss -i ./src/index.css -o ./dist/assets/css/index.css --minify && eleventy && terser dist/assets/js/main.js -c -m -o dist/assets/js/main.js",
+    "dev:css": "tailwindcss -i ./src/index.css -o ./dist/assets/css/index.css --watch",
+    "dev:11ty": "eleventy --serve",
+    "dev": "npm-run-all generate-fonts generate-meta --parallel dev:css dev:11ty",
+    "start": "npm run dev",
+    "preview": "eleventy --serve"
   },
   "devDependencies": {
-    "@eslint/js": "^9.13.0",
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
-    "@vitejs/plugin-react-swc": "^3.5.0",
+    "@11ty/eleventy": "^3.1.6",
     "autoprefixer": "^10.4.20",
-    "eslint": "^9.13.0",
-    "eslint-plugin-react-hooks": "^5.0.0",
-    "eslint-plugin-react-refresh": "^0.4.14",
-    "globals": "^15.11.0",
+    "cssnano": "^9.0.4",
+    "html-minifier-terser": "^7.2.0",
+    "npm-run-all": "^4.1.5",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.15",
-    "typescript": "~5.6.2",
-    "typescript-eslint": "^8.11.0",
-    "vite": "^7.3.1"
+    "terser": "^5.51.2"
   }
 }

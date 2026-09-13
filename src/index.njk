@@ -1,0 +1,37 @@
+---
+layout: layouts/base.njk
+title: "Bittu | Systems Hacker & Modder"
+permalink: "/index.html"
+---
+
+<div class="min-h-screen bg-[#f6eedb] retro-dots-bg text-[#14161f] font-sans selection:bg-[#fde047] selection:text-black overflow-x-hidden">
+  <!-- Top Header with Hamburger Navigation for Mobile -->
+  {% include "components/retro-header.njk" %}
+
+  <!-- Main Content Area -->
+  <main class="space-y-4 pt-2">
+    <!-- Hero Section -->
+    {% include "components/retro-hero.njk" %}
+
+    <!-- Tech Stack & Skills Marquee -->
+    {% include "components/retro-ticker.njk" %}
+
+    <!-- Featured Projects -->
+    {% include "components/retro-projects.njk" %}
+
+    <!-- Technical Zine / Blog -->
+    {% include "components/retro-zine.njk" %}
+
+    <!-- About Me & Milestones -->
+    {% include "components/retro-about.njk" %}
+
+    <!-- Contact -->
+    {% include "components/retro-contact.njk" %}
+  </main>
+
+  <!-- Footer -->
+  {% include "components/retro-footer.njk" %}
+
+  <!-- Lo-Fi Cassette Player -->
+  {% include "components/retro-cassette-player.njk" %}
+</div>

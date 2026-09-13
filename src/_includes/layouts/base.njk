@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ title if title else "Bittu | Systems Hacker & Modder" }}</title>
+    <meta name="description" content="{{ description if description else 'Low-level systems builder, WebRTC tinkerer, and Minecraft protocol reverse engineer. B.Tech in Cybersecurity at IIT Kanpur.' }}" />
+    <meta name="author" content="Bittu (Bittu5134)" />
+    <meta name="theme-color" content="#f6eedb" />
+
+    <!-- OpenGraph / Social -->
+    <meta property="og:title" content="{{ title if title else 'Bittu | Systems Hacker & Modder' }}" />
+    <meta property="og:description" content="{{ description if description else 'Low-level systems builder, WebRTC tinkerer, and Minecraft protocol reverse engineer.' }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://bittu.dev{{ page.url }}" />
+    <meta property="og:image" content="https://bittu.dev/images/avatar.webp" />
+
+    <!-- Preload Critical Local Fonts & Hero Avatar -->
+    <link rel="preload" href="/fonts/SpaceGrotesk-Variable.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/SpaceMono-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/images/avatar.avif" as="image" type="image/avif" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/index.css" />
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/rss+xml" title="Bittu's Blog RSS Feed" href="https://bittu.dev/rss.xml" />
+  </head>
+  <body class="bg-[#f6eedb] text-[#14161f] selection:bg-[#fde047] selection:text-black overflow-x-hidden min-h-screen">
+    {% include "components/svg-symbols.njk" %}
+    {{ content | safe }}
+
+    <!-- Client-side Vanilla Scripts -->
+    <script src="/assets/js/main.js" defer></script>
+  </body>
+</html>
