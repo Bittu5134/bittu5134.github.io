@@ -9,24 +9,29 @@ interface Track {
 
 const tracks: Track[] = [
   {
-    title: "Rainfall",
-    artist: "Cozy Nordic",
-    url: "/audio/rainfall.mp3",
+    title: "Overworld 8-Bit",
+    artist: "Juhani Junkala",
+    url: "/audio/chiptune_overworld.mp3",
   },
   {
-    title: "Coastal Road",
-    artist: "Mellow Fox",
-    url: "/audio/coastal_road.mp3",
+    title: "Chiptune Journey",
+    artist: "Juhani Junkala",
+    url: "/audio/chiptune_adventure.mp3",
   },
   {
-    title: "Easy Days",
-    artist: "Kainbeats",
-    url: "/audio/easy_days.mp3",
+    title: "Cyberpunk Sockets",
+    artist: "Juhani Junkala",
+    url: "/audio/chiptune_cyberpunk.mp3",
   },
   {
-    title: "Peaceful Retreat",
-    artist: "Mellow Fox",
-    url: "/audio/peaceful_retreat.mp3",
+    title: "Dungeon Crawler",
+    artist: "Juhani Junkala",
+    url: "/audio/chiptune_dungeon.mp3",
+  },
+  {
+    title: "Victory Credits",
+    artist: "Juhani Junkala",
+    url: "/audio/chiptune_victory.mp3",
   },
 ];
 
@@ -148,7 +153,7 @@ export default function RetroCassettePlayer() {
                   {isPlaying ? "▶ " : "■ "} {currentTrack.title} - {currentTrack.artist}
                 </span>
                 <span className="font-pixel text-xs text-[#fde047] shrink-0 ml-1">
-                  0{currentTrackIndex + 1}/04
+                  0{currentTrackIndex + 1}/0{tracks.length}
                 </span>
               </div>
             </div>
