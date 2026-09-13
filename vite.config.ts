@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   build: {
     emptyOutDir: true,
-    outDir: "./docs",
+    outDir: "./dist",
   },
   assetsInclude: ["**/*.md"],
 });
