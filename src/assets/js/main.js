@@ -126,7 +126,16 @@ document.addEventListener("DOMContentLoaded", () => {
       projectCards.forEach((card) => {
         const filterCat = card.getAttribute("data-filter-category");
         const fullCat = card.getAttribute("data-category") || "";
-        const matches = selectedFilter === "ALL" || filterCat === selectedFilter || fullCat.includes(selectedFilter);
+        const isPinned = card.getAttribute("data-pinned") === "true";
+
+        let matches = false;
+        if (selectedFilter === "PINNED") {
+          matches = isPinned;
+        } else if (selectedFilter === "ALL") {
+          matches = true;
+        } else {
+          matches = filterCat === selectedFilter || fullCat.includes(selectedFilter);
+        }
 
         if (matches && shownCount < 4) {
           card.classList.remove("hidden");

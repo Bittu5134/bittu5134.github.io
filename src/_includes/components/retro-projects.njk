@@ -27,9 +27,10 @@
     <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8">
       {% for p in projects.projects %}
         <div
-          class="project-card card-brutal flex flex-col justify-between {{ 'hidden' if loop.index > 4 else '' }}"
+          class="project-card card-brutal flex flex-col justify-between {{ 'hidden' if not p.isPinned else '' }}"
           data-filter-category="{{ p.filterCategory }}"
           data-category="{{ p.category }}"
+          data-pinned="{{ 'true' if p.isPinned else 'false' }}"
         >
           <!-- Window Header -->
           <div class="card-header-bar gap-2 {{ p.headerBgClass }}">
@@ -47,12 +48,35 @@
           <!-- Body -->
           <div class="p-4 sm:p-6 flex flex-col flex-1 justify-between">
             <div>
-              <h3 class="text-xl sm:text-2xl font-black text-black mb-1">
-                {{ p.title }}
-              </h3>
-              <div class="font-mono text-xs font-bold text-[#d97706] mb-3">
-                {{ p.statsText }}
+              <div class="flex items-start justify-between gap-2 mb-1">
+                <h3 class="text-xl sm:text-2xl font-black text-black">
+                  {{ p.title }}
+                </h3>
+                {% if p.stars > 0 %}
+                  <span class="inline-flex items-center gap-1 font-mono text-xs font-bold text-black/70 bg-[#fffdf9] border border-black px-1.5 py-0.5 shadow-brutal-xs shrink-0" title="{{ p.stars }} stargazers on GitHub">
+                    <span class="text-[#f59e0b]">★</span> {{ p.stars }}
+                  </span>
+                {% endif %}
               </div>
+
+              <!-- Live Signals: Language Dot + Updated Time + Handcrafted Stats -->
+              <div class="flex flex-wrap items-center gap-x-2.5 gap-y-1 font-mono text-xs font-bold text-black/70 mb-3">
+                {% if p.language %}
+                  <span class="inline-flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full border border-black/40 shrink-0" style="background-color: {{ p.languageColor }}"></span>
+                    <span>{{ p.language }}</span>
+                  </span>
+                {% endif %}
+                {% if p.updatedAgo %}
+                  {% if p.language %}<span class="text-black/30">/</span>{% endif %}
+                  <span class="text-black/60">{{ p.updatedAgo }}</span>
+                {% endif %}
+                {% if p.statsText %}
+                  {% if p.language or p.updatedAgo %}<span class="text-black/30">/</span>{% endif %}
+                  <span class="text-[#d97706]">{{ p.statsText }}</span>
+                {% endif %}
+              </div>
+
               <p class="font-mono text-xs sm:text-sm text-black/80 leading-relaxed mb-4">
                 {{ p.description }}
               </p>
