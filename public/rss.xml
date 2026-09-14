@@ -5,7 +5,7 @@
     <link>https://bittu.dev/blog</link>
     <description>Essays and deep dives into low-level systems, reverse engineering, distributed networking, and software craft by Bittu (Bittu5134).</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 14 Sep 2026 11:50:28 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 14 Sep 2026 22:35:25 GMT</lastBuildDate>
     <atom:link href="https://bittu.dev/rss.xml" rel="self" type="application/rss+xml" />
     <item>
       <title><![CDATA[Scaling WebRTC Signaling in Go: Lessons from 500 Concurrent Peers]]></title>

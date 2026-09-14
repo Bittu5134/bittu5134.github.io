@@ -25,40 +25,36 @@ SECTION 2: FEATURED PROJECTS
 ================================================================================
 
 1. ORV-Reader (https://orv.pages.dev | https://github.com/Bittu5134/ORV-Reader)
-High-scale distributed web publishing platform serving 10.5M+ monthly HTTP requests (398+ GB bandwidth, 764k+ unique visits). Automated Python Markdown SSG dual-compilation into static web and compressed EPUBs with Cloudflare WAF bot defenses.
-Category: WEB / CLOUD | Tags: Python, SSG, Cloudflare WAF, EPUB, FastAPI | Stats: 398GB Bandwidth · 764K Visits
+A web-publishing platform that compiles Markdown into fast static pages and EPUBs. Built it to be clean and lightweight way to read stuff on slow connections.
+Category: WEB / CLOUD | Tags: Python, Custom SSG, Pandoc, Cloudflare WAF, FastAPI | Stats: Markdown → Web + EPUB
 
 2. PeerBasket (https://peerbasket.bittu.dev | https://github.com/Bittu5134/PeerBasket)
-High-throughput, lobby-based WebRTC signaling server written in Go with Gin and Redis. Achieves 41 ms average latency and 0.0% packet loss across 500 concurrent peers with Redis TTL heartbeat pruning and IP token-bucket rate limiting on bare-metal Proxmox infrastructure.
-Category: SYSTEMS / P2P | Tags: Go, WebRTC, Redis, Proxmox, Gin | Stats: 500 Concurrent Peers · Bare-metal
+A WebRTC signaling server in Go that handles peer discovery for real-time multiplayer sessions. Mostly an excuse to see how low-latency and stable I could make P2P connections.
+Category: SYSTEMS / P2P | Tags: Go, Gin, WebRTC, Redis, Proxmox VE | Stats: WebRTC Signaling Server
 
-3. LOTM-Reader (https://github.com/Bittu5134/LOTM-Reader | https://github.com/Bittu5134/LOTM-Reader)
-Community-driven webnovel reader engineered for ultra-fast reading ergonomics. Built with Svelte, Giscus comment synchronization, Pandoc EPUB compilation pipelines, and offline service worker caching.
-Category: WEB / READING | Tags: Svelte, EPUB, Pandoc, Giscus, Web | Stats: 117 GitHub Stars · Open Source
+3. GH-Follow-Tracker (https://follow.lazybittu.workers.dev/ | https://github.com/Bittu5134/GH-Follow-Tracker)
+A little service on Cloudflare Workers that tracks GitHub followers and generates live SVG badges, with Discord/Slack alerts when things change.
+Category: TOOLS / EDGE | Tags: JavaScript, Cloudflare Workers, GitHub Actions, SVG | Stats: GitHub Follower Badges
 
-4. NetShip (https://github.com/Bittu5134/NetShip)
-Cross-platform Host Telemetry and Endpoint Detection & Response (EDR) daemon in Go. Captures active TCP/UDP socket activity, maps process lineages via deterministic 24-char SHA-256 GUIDs, performs local cryptographic binary auditing, and runs an embedded live geolocation dashboard.
-Category: SYSTEMS / EDR | Tags: Go, Networking, Telemetry, EDR, Linux | Stats: SHA-256 GUIDs · Socket Tracing
+4. LOTM-Reader (https://beyonder.pages.dev | https://github.com/Bittu5134/LOTM-Reader)
+A webnovel reader built with Svelte, with offline caching and a per-chapter comment section. Made it because I wanted something faster and cleaner than what was out there.
+Category: WEB / READING | Tags: Svelte, SvelteKit, Pandoc, Giscus, EPUB | Stats: Reader App
 
-5. IITK-Resume-Engine (https://iitk-resume.bittu.dev | https://github.com/Bittu5134/IITK-Resume-Model)
-Spatial LaTeX-PDF diagnostic engine built for IIT Kanpur Academics & Career Council (CDW). Features a 2D coordinate geometry table parser in PyMuPDF recognizing 4,400+ IITK courses and CPI metrics, paired with a 6-track step-gradient scoring model and counterfactual gap advice.
-Category: AI / GEOMETRY | Tags: Python, PyMuPDF, FastAPI, LaTeX, Spatial Geometry | Stats: 99.4% Parsing Precision · CDW IITK
+5. NetShip (https://github.com/Bittu5134/NetShip)
+A host telemetry agent in Go that watches socket activity and maps out process trees. Built it to understand how endpoint detection tools actually work under the hood.
+Category: SYSTEMS / EDR | Tags: Go, gopsutil, SHA-256, Process Lineage, Linux/Windows | Stats: Host Telemetry Agent
 
 6. InfraPulse (https://infrapulse.bittu.dev | https://github.com/Bittu5134/InfraPulse)
-Civic defect detection and priority dispatch platform developed for IIT Kanpur Takneek '26. Combines a 5-model PyTorch vision ensemble with Sobel spatial edge severity math, async FastAPI ticket routing, and live Server-Sent Events (SSE) staff dispatch queues.
-Category: AI / VISION | Tags: PyTorch, YOLO, Sobel Math, FastAPI, SSE | Stats: 5-Model Vision Ensemble · Real-time SSE
+A defect-detection tool that flags and prioritizes infrastructure issues from photos using a small vision-model ensemble. Built for a campus hackathon.
+Category: AI / COMPUTER VISION | Tags: PyTorch, FastAPI, Sobel Edge Detection, Docker, SSE | Stats: Vision-Based Defect Triage
 
-7. Sharelock (https://github.com/Bittu5134/Sharelock)
-1st Place Winner at ShareIITK Ideathon. An end-to-end RAG retrieval pipeline and Model Context Protocol (MCP) server indexing 100+ pages of dense IIT Kanpur Undergraduate Manual academic policies for citation-backed query resolution.
-Category: AI / RETRIEVAL | Tags: RAG, MCP Server, TypeScript, Policy Search | Stats: 1st Place Winner · MCP Server
+7. IITK-Resume-Engine (https://iitk-resume.bittu.dev | https://github.com/Bittu5134/IITK-Resume-Model)
+A tool that parses academic PDFs by their layout geometry (since normal parsers choke on tables) and scores them. Built for IIT Kanpur's career office.
+Category: AI / DOCUMENT PARSING | Tags: Python, PyMuPDF, Scikit-learn, FastAPI | Stats: PDF Layout Parsing
 
-8. SkyBlock-Sniper (https://github.com/Bittu5134/SkyBlock-Sniper)
-High-frequency Hypixel Skyblock BIN auction sniping automation script in Python. Features real-time Hypixel API polling, memory-efficient profit margin calculation, and millisecond item snipe triggers.
-Category: MINECRAFT / TOOLS | Tags: Python, Hypixel API, Minecraft, Automation, Bot | Stats: Sub-second Execution · Hypixel API
-
-9. GH-Follow-Tracker (https://github.com/Bittu5134/GH-Follow-Tracker)
-Automated GitHub follower tracking engine with customizable real-time SVG status badges, Discord/Slack webhook notifications, and a REST API deployed on Cloudflare Workers edge network.
-Category: DEVTOOLS / CLOUD | Tags: JavaScript, Cloudflare Workers, GitHub Actions, SVG, API | Stats: Edge API · Dynamic SVG Cards
+8. Sharelock (https://github.com/Bittu5134/Sharelock)
+A retrieval system that lets you just ask questions about IIT Kanpur's academic policy manual instead of reading the whole thing. Built as a RAG pipeline with an MCP server.
+Category: AI / RETRIEVAL | Tags: RAG, MCP Server, TypeScript, Vector Retrieval | Stats: RAG + MCP Server
 
 ================================================================================
 SECTION 3: COMPLETE TECHNICAL ARTICLES & DISPATCHES
