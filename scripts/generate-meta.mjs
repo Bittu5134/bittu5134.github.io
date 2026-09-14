@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import getProjects from "../src/_data/projects.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -9,9 +10,6 @@ const SITE_URL = "https://bittu.dev";
 const blogsDir = path.resolve(__dirname, "../src/content/blogs");
 const publicDir = path.resolve(__dirname, "../public");
 const rawBlogsDir = path.resolve(publicDir, "raw/blogs");
-const projectsJsonPath = fs.existsSync(path.resolve(__dirname, "../src/_data/projects.json"))
-  ? path.resolve(__dirname, "../src/_data/projects.json")
-  : path.resolve(__dirname, "../src/data/projects.json");
 
 if (!fs.existsSync(publicDir)) {
   fs.mkdirSync(publicDir, { recursive: true });
@@ -116,16 +114,14 @@ fs.writeFileSync(
 );
 console.log(`[generate-meta] Wrote src/_data/blogs.json`);
 
-// Read data-driven projects from src/data/projects.json
+// Load projects from src/_data/projects.js (hybrid GitHub API + projectMeta)
 let projectsList = [];
-if (fs.existsSync(projectsJsonPath)) {
-  try {
-    const rawData = JSON.parse(fs.readFileSync(projectsJsonPath, "utf-8"));
-    projectsList = Array.isArray(rawData) ? rawData : (rawData.projects || []);
-    console.log(`[generate-meta] Loaded ${projectsList.length} projects from projects.json.`);
-  } catch (e) {
-    console.warn(`[generate-meta] Failed to parse projects.json:`, e.message);
-  }
+try {
+  const projectData = typeof getProjects === "function" ? await getProjects() : getProjects;
+  projectsList = Array.isArray(projectData) ? projectData : (projectData?.projects || []);
+  console.log(`[generate-meta] Loaded ${projectsList.length} projects.`);
+} catch (e) {
+  console.warn(`[generate-meta] Failed to load projects:`, e.message);
 }
 
 // 2. Generate public/rss.xml
