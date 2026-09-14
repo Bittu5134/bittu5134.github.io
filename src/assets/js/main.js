@@ -162,12 +162,12 @@ document.addEventListener("DOMContentLoaded", () => {
   /* 4. Lo-Fi Cassette Player                                                   */
   /* -------------------------------------------------------------------------- */
   const TRACKS = [
-    { title: "Miku", artist: "Anamanaguchi", url: "/audio/miku.webm" },
-    { title: "Pigstep", artist: "Lena Raine", url: "/audio/pigstep.webm" },
-    { title: "Bad Apple!!", artist: "Masayoshi Minoshima ft. Nomico", url: "/audio/bad_apple.webm" },
-    { title: "MEGALOVANIA", artist: "Toby Fox", url: "/audio/megalovania.webm" },
-    { title: "Caramelldansen", artist: "Caramell", url: "/audio/caramelldansen.webm" },
-    { title: "Running in the 90's", artist: "Maurizio De Jorio", url: "/audio/running_in_the_90s.webm" },
+    { title: "Miku", artist: "Anamanaguchi", url: "https://files.catbox.moe/4fmz63.webm" },
+    { title: "Pigstep", artist: "Lena Raine", url: "https://files.catbox.moe/7opziz.webm" },
+    { title: "Bad Apple!!", artist: "Masayoshi Minoshima ft. Nomico", url: "https://files.catbox.moe/ehjjw2.webm" },
+    { title: "MEGALOVANIA", artist: "Toby Fox", url: "https://files.catbox.moe/k9ginr.webm" },
+    { title: "Caramelldansen", artist: "Caramell", url: "https://files.catbox.moe/eadyic.webm" },
+    { title: "Running in the 90's", artist: "Maurizio De Jorio", url: "https://files.catbox.moe/j7gf0i.webm" },
   ];
 
   const audio = document.getElementById("cassette-audio");
