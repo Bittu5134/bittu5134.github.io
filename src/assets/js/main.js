@@ -180,13 +180,33 @@ document.addEventListener("DOMContentLoaded", () => {
   const playIcon = document.getElementById("cassette-play-icon");
   const pauseIcon = document.getElementById("cassette-pause-icon");
   const playText = document.getElementById("cassette-play-text");
+  const trackDisplays = document.querySelectorAll(".cassette-track-display");
   const trackDisplay = document.getElementById("cassette-track-display");
+  const trackTicker = document.getElementById("cassette-track-ticker");
   const trackCounter = document.getElementById("cassette-track-counter");
   const volumeSlider = document.getElementById("cassette-volume-slider");
   const volumeText = document.getElementById("cassette-volume-text");
   const leftSpool = document.getElementById("cassette-left-spool");
   const rightSpool = document.getElementById("cassette-right-spool");
   const minimizedLabel = document.getElementById("cassette-minimized-label");
+
+  function setTrackDisplayText(text) {
+    if (trackDisplays.length > 0) {
+      trackDisplays.forEach((el) => {
+        el.textContent = text;
+      });
+    } else if (trackDisplay) {
+      trackDisplay.textContent = text;
+    }
+  }
+
+  function restartTickerAnimation() {
+    if (trackTicker) {
+      trackTicker.style.animation = "none";
+      void trackTicker.offsetWidth;
+      trackTicker.style.animation = "";
+    }
+  }
 
   if (audio && minimizedBtn && expandedDeck) {
     let isPlaying = false;
@@ -202,9 +222,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const track = TRACKS[currentTrackIndex];
       if (!track) return;
       audio.src = track.url;
-      if (trackDisplay) {
-        trackDisplay.textContent = `${isPlaying ? "▶ " : "■ "}${track.title} - ${track.artist}`;
-      }
+      setTrackDisplayText(`${isPlaying ? "▶ " : "■ "}${track.title} - ${track.artist}`);
+      restartTickerAnimation();
       if (trackCounter) {
         trackCounter.textContent = `${pad(currentTrackIndex + 1)}/${pad(TRACKS.length)}`;
       }
@@ -237,8 +256,8 @@ document.addEventListener("DOMContentLoaded", () => {
           svg.classList.add("animate-spin");
         });
         if (minimizedLabel) minimizedLabel.textContent = "PLAYING...";
-        if (trackDisplay && track) {
-          trackDisplay.textContent = `▶ ${track.title} - ${track.artist}`;
+        if (track) {
+          setTrackDisplayText(`▶ ${track.title} - ${track.artist}`);
         }
       } else {
         playIcon?.classList.remove("hidden");
@@ -252,8 +271,8 @@ document.addEventListener("DOMContentLoaded", () => {
           svg.classList.remove("animate-spin");
         });
         if (minimizedLabel) minimizedLabel.textContent = "TAPE DECK";
-        if (trackDisplay && track) {
-          trackDisplay.textContent = `■ ${track.title} - ${track.artist}`;
+        if (track) {
+          setTrackDisplayText(`■ ${track.title} - ${track.artist}`);
         }
       }
     }

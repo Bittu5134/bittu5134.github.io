@@ -75,10 +75,17 @@
         </div>
 
         <!-- LCD Track Display -->
-        <div class="bg-[#000000] px-2 py-1 border border-[#334155] flex items-center justify-between">
-          <span id="cassette-track-display" class="font-mono text-xs font-bold text-[#86efac] truncate tracking-wider">
-            ■ Pigstep - Lena Raine
-          </span>
+        <div class="bg-[#000000] px-2 py-1 border border-[#334155] flex items-center justify-between overflow-hidden">
+          <div class="overflow-hidden whitespace-nowrap flex-1 min-w-0 mr-2 relative">
+            <div id="cassette-track-ticker" class="animate-cassette-ticker">
+              <span id="cassette-track-display" class="cassette-track-display font-mono text-xs font-bold text-[#86efac] tracking-wider pr-8 inline-block">
+                ■ Miku - Anamanaguchi
+              </span>
+              <span class="cassette-track-display font-mono text-xs font-bold text-[#86efac] tracking-wider pr-8 inline-block" aria-hidden="true">
+                ■ Miku - Anamanaguchi
+              </span>
+            </div>
+          </div>
           <span id="cassette-track-counter" class="font-mono text-xs font-bold text-[#fde047] shrink-0 ml-1">
             01/06
           </span>

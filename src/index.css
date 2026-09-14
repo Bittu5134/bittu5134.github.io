@@ -309,4 +309,32 @@ img, svg, video {
   border-top: 2px solid rgba(0, 0, 0, 0.2);
 }
 
+/* ─── Cassette LCD Marquee ─────────────────────────────────── */
+@keyframes cassetteTicker {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-cassette-ticker {
+  display: inline-flex;
+  width: max-content;
+  animation: cassetteTicker 12s linear infinite;
+  will-change: transform;
+}
+
+.animate-cassette-ticker:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-cassette-ticker {
+    animation: none;
+  }
+}
+
+
 
