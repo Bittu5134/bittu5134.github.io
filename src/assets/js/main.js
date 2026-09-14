@@ -139,15 +139,35 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /* -------------------------------------------------------------------------- */
+  /* 3.5 Live IST Clock                                                         */
+  /* -------------------------------------------------------------------------- */
+  const clockEl = document.getElementById("hero-clock");
+  if (clockEl) {
+    function updateClock() {
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString("en-US", {
+        timeZone: "Asia/Kolkata",
+        hour: "2-digit",
+        minute: "2-digit",
+        // second: "2-digit",
+        hour12: false
+      });
+      clockEl.textContent = `${timeStr} IST`;
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+  }
+
+  /* -------------------------------------------------------------------------- */
   /* 4. Lo-Fi Cassette Player                                                   */
   /* -------------------------------------------------------------------------- */
   const TRACKS = [
-    { title: "Pigstep", artist: "Lena Raine", url: "/audio/pigstep.webm" },
-    { title: "MEGALOVANIA", artist: "Toby Fox", url: "/audio/megalovania.webm" },
-    { title: "Bad Apple!!", artist: "Masayoshi Minoshima ft. Nomico", url: "/audio/bad_apple.webm" },
-    { title: "Running in the 90's", artist: "Maurizio De Jorio", url: "/audio/running_in_the_90s.webm" },
-    { title: "Caramelldansen", artist: "Caramell", url: "/audio/caramelldansen.webm" },
     { title: "Miku", artist: "Anamanaguchi", url: "/audio/miku.webm" },
+    { title: "Pigstep", artist: "Lena Raine", url: "/audio/pigstep.webm" },
+    { title: "Bad Apple!!", artist: "Masayoshi Minoshima ft. Nomico", url: "/audio/bad_apple.webm" },
+    { title: "MEGALOVANIA", artist: "Toby Fox", url: "/audio/megalovania.webm" },
+    { title: "Caramelldansen", artist: "Caramell", url: "/audio/caramelldansen.webm" },
+    { title: "Running in the 90's", artist: "Maurizio De Jorio", url: "/audio/running_in_the_90s.webm" },
   ];
 
   const audio = document.getElementById("cassette-audio");
@@ -172,7 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let isPlaying = false;
     let currentTrackIndex = 0;
     let volume = 0.30;
-    let isMinimized = window.innerWidth < 640;
+    let isMinimized = window.innerWidth < 768;
 
     function pad(n) {
       return String(n).padStart(2, "0");
