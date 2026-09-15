@@ -2,14 +2,14 @@
 > A portfolio and technical blog for a low-level systems builder, cybersecurity undergraduate at IIT Kanpur, and WebRTC developer.
 
 ## Projects
-- [ORV-Reader](https://orv.pages.dev): A web-publishing platform that compiles Markdown into fast static pages and EPUBs. Built it to be clean and lightweight way to read stuff on slow connections.
-- [PeerBasket](https://peerbasket.bittu.dev): A WebRTC signaling server in Go that handles peer discovery for real-time multiplayer sessions. Mostly an excuse to see how low-latency and stable I could make P2P connections.
+- [ORV-Reader](https://orv.pages.dev): A web-publishing platform that compiles Markdown into fast static pages and EPUBs. Built to be clean and lightweight way to read stuff on slow connections.
+- [PeerBasket](https://peerbasket.bittu.dev): A hassle-free, lobby-based PeerJS discovery server written in Go  that handles peer discovery for real-time p2p interactions and multiplayer sessions.
 - [GH-Follow-Tracker](https://follow.lazybittu.workers.dev/): A little service on Cloudflare Workers that tracks GitHub followers and generates live SVG badges, with Discord/Slack alerts when things change.
-- [LOTM-Reader](https://beyonder.pages.dev): A webnovel reader built with Svelte, with offline caching and a per-chapter comment section. Made it because I wanted something faster and cleaner than what was out there.
+- [LOTM-Reader](https://beyonder.pages.dev): A community driven webnovel reader built with Svelte, with offline caching and a tons of optimizations.  Built to be faster and cleaner than what was out there.
 - [NetShip](https://github.com/Bittu5134/NetShip): A host telemetry agent in Go that watches socket activity and maps out process trees. Built it to understand how endpoint detection tools actually work under the hood.
+- [Sharelock](https://github.com/Bittu5134/Sharelock): A retrieval system that lets you just ask questions about IIT Kanpur's academic policy manual instead of reading the whole thing. Built as a RAG pipeline with an MCP server.
 - [InfraPulse](https://infrapulse.bittu.dev): A defect-detection tool that flags and prioritizes infrastructure issues from photos using a small vision-model ensemble. Built for a campus hackathon.
 - [IITK-Resume-Engine](https://iitk-resume.bittu.dev): A tool that parses academic PDFs by their layout geometry (since normal parsers choke on tables) and scores them. Built for IIT Kanpur's career office.
-- [Sharelock](https://github.com/Bittu5134/Sharelock): A retrieval system that lets you just ask questions about IIT Kanpur's academic policy manual instead of reading the whole thing. Built as a RAG pipeline with an MCP server.
 
 ## Technical Writing
 - [Scaling WebRTC Signaling in Go: Lessons from 500 Concurrent Peers](https://bittu.dev/raw/blogs/scaling-webrtc-signaling-in-go.md): A deep dive into building PeerBasket low-latency signaling server in Go. How we achieved 41ms average latency and 0% packet loss across 500 concurrent peers with Redis TTL heartbeat pruning and IP token buckets. (HTML view at https://bittu.dev/blog/scaling-webrtc-signaling-in-go)

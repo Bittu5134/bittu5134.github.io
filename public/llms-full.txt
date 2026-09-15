@@ -25,36 +25,36 @@ SECTION 2: FEATURED PROJECTS
 ================================================================================
 
 1. ORV-Reader (https://orv.pages.dev | https://github.com/Bittu5134/ORV-Reader)
-A web-publishing platform that compiles Markdown into fast static pages and EPUBs. Built it to be clean and lightweight way to read stuff on slow connections.
-Category: WEB / CLOUD | Tags: Python, Custom SSG, Pandoc, Cloudflare WAF, FastAPI | Stats: Markdown → Web + EPUB
+A web-publishing platform that compiles Markdown into fast static pages and EPUBs. Built to be clean and lightweight way to read stuff on slow connections.
+Category: WEB / CLOUD | Tags: cloudflare-pages, custom-ssg, epub, orv, pandoc | Stats: Markdown → Web + EPUB
 
 2. PeerBasket (https://peerbasket.bittu.dev | https://github.com/Bittu5134/PeerBasket)
-A WebRTC signaling server in Go that handles peer discovery for real-time multiplayer sessions. Mostly an excuse to see how low-latency and stable I could make P2P connections.
-Category: SYSTEMS / P2P | Tags: Go, Gin, WebRTC, Redis, Proxmox VE | Stats: WebRTC Signaling Server
+A hassle-free, lobby-based PeerJS discovery server written in Go  that handles peer discovery for real-time p2p interactions and multiplayer sessions.
+Category: SYSTEMS / P2P | Tags: gin, go, p2p, peerjs, redis | Stats: WebRTC Signaling Server
 
 3. GH-Follow-Tracker (https://follow.lazybittu.workers.dev/ | https://github.com/Bittu5134/GH-Follow-Tracker)
 A little service on Cloudflare Workers that tracks GitHub followers and generates live SVG badges, with Discord/Slack alerts when things change.
-Category: TOOLS / EDGE | Tags: JavaScript, Cloudflare Workers, GitHub Actions, SVG | Stats: GitHub Follower Badges
+Category: TOOLS / EDGE | Tags: automation, cloudflare-workers, github-actions, javascript, webhooks | Stats: GitHub Follower Badges
 
 4. LOTM-Reader (https://beyonder.pages.dev | https://github.com/Bittu5134/LOTM-Reader)
-A webnovel reader built with Svelte, with offline caching and a per-chapter comment section. Made it because I wanted something faster and cleaner than what was out there.
-Category: WEB / READING | Tags: Svelte, SvelteKit, Pandoc, Giscus, EPUB | Stats: Reader App
+A community driven webnovel reader built with Svelte, with offline caching and a tons of optimizations.  Built to be faster and cleaner than what was out there.
+Category: WEB / READING | Tags: epub, giscus, lotm, pandoc, svelte | Stats: Reader App
 
 5. NetShip (https://github.com/Bittu5134/NetShip)
 A host telemetry agent in Go that watches socket activity and maps out process trees. Built it to understand how endpoint detection tools actually work under the hood.
-Category: SYSTEMS / EDR | Tags: Go, gopsutil, SHA-256, Process Lineage, Linux/Windows | Stats: Host Telemetry Agent
+Category: SYSTEMS / EDR | Tags: edr, go, gopsutil, telemetry, webui | Stats: Host Telemetry Agent
 
-6. InfraPulse (https://infrapulse.bittu.dev | https://github.com/Bittu5134/InfraPulse)
-A defect-detection tool that flags and prioritizes infrastructure issues from photos using a small vision-model ensemble. Built for a campus hackathon.
-Category: AI / COMPUTER VISION | Tags: PyTorch, FastAPI, Sobel Edge Detection, Docker, SSE | Stats: Vision-Based Defect Triage
-
-7. IITK-Resume-Engine (https://iitk-resume.bittu.dev | https://github.com/Bittu5134/IITK-Resume-Model)
-A tool that parses academic PDFs by their layout geometry (since normal parsers choke on tables) and scores them. Built for IIT Kanpur's career office.
-Category: AI / DOCUMENT PARSING | Tags: Python, PyMuPDF, Scikit-learn, FastAPI | Stats: PDF Layout Parsing
-
-8. Sharelock (https://github.com/Bittu5134/Sharelock)
+6. Sharelock (https://github.com/Bittu5134/Sharelock)
 A retrieval system that lets you just ask questions about IIT Kanpur's academic policy manual instead of reading the whole thing. Built as a RAG pipeline with an MCP server.
-Category: AI / RETRIEVAL | Tags: RAG, MCP Server, TypeScript, Vector Retrieval | Stats: RAG + MCP Server
+Category: AI / RETRIEVAL | Tags: hackathon, mcp-server, rag, rag-chatbot, typescript | Stats: RAG + MCP Server
+
+7. InfraPulse (https://infrapulse.bittu.dev | https://github.com/Bittu5134/InfraPulse)
+A defect-detection tool that flags and prioritizes infrastructure issues from photos using a small vision-model ensemble. Built for a campus hackathon.
+Category: AI / COMPUTER VISION | Tags: convulational-neural-network, ensemble-model, machine-learning, pytorch, sobel-edge-detector | Stats: Vision-Based Defect Triage
+
+8. IITK-Resume-Engine (https://iitk-resume.bittu.dev | https://github.com/Bittu5134/IITK-Resume-Model)
+A tool that parses academic PDFs by their layout geometry (since normal parsers choke on tables) and scores them. Built for IIT Kanpur's career office.
+Category: AI / DOCUMENT PARSING | Tags: fastapi, nlp, pymupdf, python, scikit-learn | Stats: PDF Layout Parsing
 
 ================================================================================
 SECTION 3: COMPLETE TECHNICAL ARTICLES & DISPATCHES
