@@ -121,8 +121,8 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       btn.className = "project-filter-btn px-2.5 sm:px-3 py-1 sm:py-1.5 border-2 border-black transition-all cursor-pointer bg-[#fde047] shadow-brutal-xs font-black -translate-y-0.5";
 
-      // Filter project cards (show up to 4 matching)
-      let shownCount = 0;
+      // Filter project cards (if more than 4, show top 4 most popular: stars + forks)
+      const matchingCards = [];
       projectCards.forEach((card) => {
         const filterCat = card.getAttribute("data-filter-category");
         const fullCat = card.getAttribute("data-category") || "";
@@ -137,9 +137,26 @@ document.addEventListener("DOMContentLoaded", () => {
           matches = filterCat === selectedFilter || fullCat.includes(selectedFilter);
         }
 
-        if (matches && shownCount < 4) {
+        if (matches) {
+          matchingCards.push(card);
+        } else {
+          card.classList.add("hidden");
+        }
+      });
+
+      // If category isn't PINNED, sort matching cards by popularity (stars + forks) descending
+      if (selectedFilter !== "PINNED") {
+        matchingCards.sort((a, b) => {
+          const popA = parseInt(a.getAttribute("data-popularity") || "0", 10);
+          const popB = parseInt(b.getAttribute("data-popularity") || "0", 10);
+          return popB - popA;
+        });
+      }
+
+      // Show top 4, hide the rest
+      matchingCards.forEach((card, index) => {
+        if (index < 4) {
           card.classList.remove("hidden");
-          shownCount++;
         } else {
           card.classList.add("hidden");
         }
@@ -342,5 +359,185 @@ document.addEventListener("DOMContentLoaded", () => {
     applyVolume(volume);
     updateTrackUI();
     setMinimizedState(isMinimized);
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /* 5. WebGL Metaballs Raymarching Shader                                      */
+  /* -------------------------------------------------------------------------- */
+  const canvas = document.getElementById("metaballs-canvas");
+  if (canvas) {
+    const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+    if (gl) {
+      const vsSource = `
+        attribute vec2 position;
+        void main() {
+          gl_Position = vec4(position, 0.0, 1.0);
+        }
+      `;
+
+      const fsSource = `
+        precision highp float;
+        uniform vec2 iResolution;
+        uniform float iTime;
+
+        float opSmoothUnion(float d1, float d2, float k) {
+          float h = clamp(0.5 + 0.5 * (d2 - d1) / k, 0.0, 1.0);
+          return mix(d2, d1, h) - k * h * (1.0 - h);
+        }
+
+        float sdSphere(vec3 p, float s) {
+          return length(p) - s;
+        }
+
+        float map(vec3 p) {
+          float d = 2.0;
+          for (int i = 0; i < 16; i++) {
+            float fi = float(i);
+            float time = iTime * (fract(fi * 412.531 + 0.513) - 0.5) * 2.0;
+            d = opSmoothUnion(
+              sdSphere(p + sin(time + fi * vec3(52.5126, 64.62744, 632.25)) * vec3(2.0, 2.0, 0.8), mix(0.5, 1.0, fract(fi * 412.531 + 0.5124))),
+              d,
+              0.4
+            );
+          }
+          return d;
+        }
+
+        vec3 calcNormal(in vec3 p) {
+          const float h = 1e-5;
+          const vec2 k = vec2(1.0, -1.0);
+          return normalize(k.xyy * map(p + k.xyy * h) +
+                           k.yyx * map(p + k.yyx * h) +
+                           k.yxy * map(p + k.yxy * h) +
+                           k.xxx * map(p + k.xxx * h));
+        }
+
+        void main() {
+          vec2 uv = gl_FragCoord.xy / iResolution.xy;
+          vec3 rayOri = vec3((uv - 0.5) * vec2(iResolution.x / iResolution.y, 1.0) * 6.0, 3.0);
+          vec3 rayDir = vec3(0.0, 0.0, -1.0);
+
+          float depth = 0.0;
+          vec3 p = rayOri;
+
+          for (int i = 0; i < 64; i++) {
+            p = rayOri + rayDir * depth;
+            float dist = map(p);
+            depth += dist;
+            if (dist < 1e-6) break;
+          }
+
+          vec3 col = vec3(0.0);
+
+          if (depth < 6.0) {
+            vec3 normal = calcNormal(p);
+            float diffuse = clamp(dot(normal, vec3(0.5, 0.5, 1.0)), 0.0, 1.0);
+            col = diffuse * (cos(vec3(1.0, 2.0, 3.0) + p.z * 0.5) * 0.5 + 0.5);
+            col = mix(col, vec3(0.0), 1.0 - exp(-0.001 * depth * depth * depth));
+          }
+
+          gl_FragColor = vec4(col, 1.0);
+        }
+      `;
+
+      function createShader(glCtx, type, source) {
+        const shader = glCtx.createShader(type);
+        glCtx.shaderSource(shader, source);
+        glCtx.compileShader(shader);
+        if (!glCtx.getShaderParameter(shader, glCtx.COMPILE_STATUS)) {
+          console.warn("Shader compile error:", glCtx.getShaderInfoLog(shader));
+          glCtx.deleteShader(shader);
+          return null;
+        }
+        return shader;
+      }
+
+      const vertexShader = createShader(gl, gl.VERTEX_SHADER, vsSource);
+      const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
+
+      if (vertexShader && fragmentShader) {
+        const program = gl.createProgram();
+        gl.attachShader(program, vertexShader);
+        gl.attachShader(program, fragmentShader);
+        gl.linkProgram(program);
+
+        if (gl.getProgramParameter(program, gl.LINK_STATUS)) {
+          gl.useProgram(program);
+
+          const positionLocation = gl.getAttribLocation(program, "position");
+          const resolutionLocation = gl.getUniformLocation(program, "iResolution");
+          const timeLocation = gl.getUniformLocation(program, "iTime");
+
+          const positionBuffer = gl.createBuffer();
+          gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+          gl.bufferData(
+            gl.ARRAY_BUFFER,
+            new Float32Array([
+              -1.0, -1.0,
+               1.0, -1.0,
+              -1.0,  1.0,
+              -1.0,  1.0,
+               1.0, -1.0,
+               1.0,  1.0,
+            ]),
+            gl.STATIC_DRAW
+          );
+
+          gl.enableVertexAttribArray(positionLocation);
+          gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+
+          let isVisible = false;
+          let startTime = performance.now();
+          let animationFrameId = null;
+
+          function resizeCanvas() {
+            const rect = canvas.getBoundingClientRect();
+            const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+            const displayWidth = Math.max(1, Math.floor(rect.width * dpr));
+            const displayHeight = Math.max(1, Math.floor(rect.height * dpr));
+
+            if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
+              canvas.width = displayWidth;
+              canvas.height = displayHeight;
+              gl.viewport(0, 0, displayWidth, displayHeight);
+            }
+          }
+
+          function render(now) {
+            if (!isVisible) return;
+
+            resizeCanvas();
+
+            gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+            gl.uniform1f(timeLocation, (now - startTime) * 0.001);
+
+            gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+            animationFrameId = requestAnimationFrame(render);
+          }
+
+          if ("IntersectionObserver" in window) {
+            const observer = new IntersectionObserver((entries) => {
+              entries.forEach((entry) => {
+                isVisible = entry.isIntersecting;
+                if (isVisible) {
+                  if (!animationFrameId) {
+                    animationFrameId = requestAnimationFrame(render);
+                  }
+                } else if (animationFrameId) {
+                  cancelAnimationFrame(animationFrameId);
+                  animationFrameId = null;
+                }
+              });
+            }, { threshold: 0.05 });
+
+            observer.observe(canvas);
+          } else {
+            isVisible = true;
+            requestAnimationFrame(render);
+          }
+        }
+      }
+    }
   }
 });

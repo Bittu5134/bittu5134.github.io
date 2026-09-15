@@ -1,5 +1,4 @@
 {% import "macros/icons.njk" as icons %}
-
 {% set techStack = [
   { name: "Go / Golang", bgClass: "bg-[#38bdf8]" },
   { name: "Rust", bgClass: "bg-[#fb923c]" },
@@ -28,91 +27,84 @@
 
     <!-- Row 1: Bio + Glance -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8">
+
       <!-- Main Story Box (7 cols) -->
       <div class="lg:col-span-7 p-5 sm:p-8 card-brutal flex flex-col justify-between">
         <div class="space-y-4 font-mono text-sm sm:text-base text-black/85 leading-relaxed">
           <p>
-            I'm <strong>Bittu</strong>. Currently an undergraduate studying <strong>Cybersecurity &amp; Computing</strong> at
-            <a
-              href="https://iitk.ac.in"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="bg-[#38bdf8]/30 px-1 border-b-2 border-black font-bold hover:bg-[#38bdf8]/60 transition-colors"
-            >
+            I'm <strong>Bittu</strong> — a 19-year-old software engineer and cybersecurity student at
+            <a href="https://iitk.ac.in" target="_blank" rel="noopener noreferrer"
+              class="bg-[#38bdf8]/30 px-1 border-b-2 border-black font-bold hover:bg-[#38bdf8]/60 transition-colors">
               IIT Kanpur '30
-            </a>.
+            </a>, with a deep interest in open-source, low-level systems, and digital security. I build things for fun,
+            and every so often they turn out to be genuinely useful. I also really enjoy optimization — making things small and fast.
           </p>
-
-          <p>
-            I love building software from first principles: raw sockets, WebRTC mesh topologies, zero-allocation Go loops, and reverse-engineering binary network packets. If something feels like a black box, I usually open Wireshark or a decompiler until it makes sense.
-          </p>
-
           <p>
             Outside of systems code, I've spent years deep in the
-            <a
-              href="https://www.planetminecraft.com/member/bittu5134/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="bg-[#86efac]/40 px-1 border-b-2 border-black font-bold hover:bg-[#86efac]/80 transition-colors"
-            >
+            <a href="https://www.planetminecraft.com/member/bittu5134/" target="_blank" rel="noopener noreferrer"
+              class="bg-[#86efac]/40 px-1 border-b-2 border-black font-bold hover:bg-[#86efac]/80 transition-colors">
               Minecraft Technical &amp; Modding
             </a>
             community. One of my datapack creations was spotlighted on
-            <a
-              href="https://youtu.be/w6zLprHHZOk?t=495"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="font-bold underline hover:text-[#fb923c] transition-colors text-black"
-            >
-              Minecraft Live
-            </a>, which cemented my love for game loops and network protocols.
+            <a href="https://youtu.be/w6zLprHHZOk?t=495" target="_blank" rel="noopener noreferrer"
+              class="font-bold underline hover:text-[#fb923c] transition-colors text-black">Minecraft Live</a>,
+            which cemented my love for game loops and network protocols. I'm also active in the webnovel and MTL community,
+            where I build reader platforms and translation tooling to make stories more accessible across languages.
           </p>
-
           <p>
-            When I'm not writing code, I'm usually exploring ambient music, playing sandbox games, or tinkering with open-source tools.
+            When I'm not writing code, I'm usually watching anime, playing games or participating in game jams, hackathons, and CTFs.
           </p>
         </div>
 
         <!-- Signature Strip -->
         <div class="mt-6 pt-4 border-t-2 border-black/10 flex items-center justify-between flex-wrap gap-2">
-          <span class="font-mono text-sm sm:text-base font-bold text-black tracking-wide">
-            — BITTU (@BITTU5134)
-          </span>
-          <span class="font-mono text-xs font-bold text-black/60">
-            IIT KANPUR
-          </span>
+          <span class="font-mono text-sm sm:text-base font-bold text-black tracking-wide">— BITTU (@BITTU5134)</span>
         </div>
       </div>
 
-      <!-- AT A GLANCE card (5 cols) -->
-      <div class="lg:col-span-5 p-5 sm:p-6 bg-[#fde047] border-[3px] border-black shadow-brutal flex flex-col justify-between">
-        <div>
+      <!-- Right Column: AT A GLANCE + shader (5 cols) -->
+      <div class="lg:col-span-5 flex flex-col gap-4 sm:gap-6">
+
+        <!-- AT A GLANCE card -->
+        <div class="p-5 sm:p-6 bg-[#fde047] border-[3px] border-black shadow-brutal">
           <h3 class="font-mono text-xs sm:text-sm font-bold text-black uppercase tracking-wider mb-4 pb-2 border-b-2 border-black">
             AT A GLANCE:
           </h3>
           <ul class="space-y-3 font-mono text-xs sm:text-sm font-bold text-black">
             <li class="flex items-start gap-2.5">
               {{ icons.graduationCap("w-4 h-4 text-black shrink-0 mt-0.5") }}
-              <span>B.Tech Cybersecurity @ IIT Kanpur '30</span>
-            </li>
-            <li class="flex items-start gap-2.5">
-              {{ icons.gamepad2("w-4 h-4 text-black shrink-0 mt-0.5") }}
-              <span>Featured on official Minecraft Live broadcast</span>
+              <span>Cybersecurity @ IIT Kanpur, class of '30</span>
             </li>
             <li class="flex items-start gap-2.5">
               {{ icons.trophy("w-4 h-4 text-black shrink-0 mt-0.5") }}
-              <span>1st Place at ShareIITK Hackathon (Sharelock)</span>
+              <span>Active in game jams, hackathons &amp; CTFs</span>
             </li>
             <li class="flex items-start gap-2.5">
-              {{ icons.medal("w-4 h-4 text-black shrink-0 mt-0.5") }}
-              <span>Takneek '26 1st Runner-Up (InfraPulse)</span>
+              {{ icons.gamepad2("w-4 h-4 text-black shrink-0 mt-0.5") }}
+              <span>Datapack spotlighted on Minecraft Live</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              {{ icons.bookOpen("w-4 h-4 text-black shrink-0 mt-0.5") }}
+              <span>Webnovel &amp; MTL tooling creator</span>
             </li>
             <li class="flex items-start gap-2.5">
               {{ icons.zap("w-4 h-4 text-black shrink-0 mt-0.5") }}
-              <span>10.5M+ requests served on ORV-Reader</span>
+              <span>Enjoys optimising small &amp; fast builds</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              {{ icons.code("w-4 h-4 text-black shrink-0 mt-0.5") }}
+              <span>Open-source tinkerer by default</span>
             </li>
           </ul>
         </div>
+
+        <!-- Shader Card (desktop only) -->
+        <div class="hidden lg:flex flex-col flex-1 card-brutal overflow-hidden min-h-[150px] bg-black">
+          <div class="relative flex-1 w-full bg-black min-h-[120px]">
+            <canvas id="metaballs-canvas" class="w-full h-full block absolute inset-0"></canvas>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -125,9 +117,7 @@
       </div>
       <div class="flex flex-wrap gap-2.5 sm:gap-3">
         {% for tech in techStack %}
-          <span class="tech-badge {{ tech.bgClass }}">
-            {{ tech.name }}
-          </span>
+          <span class="tech-badge {{ tech.bgClass }}">{{ tech.name }}</span>
         {% endfor %}
       </div>
     </div>
