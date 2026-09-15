@@ -133,13 +133,30 @@ export default async function () {
     ...(process.env.GITHUB_TOKEN ? { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` } : {}),
   };
 
-  // 1. Fetch repos from GitHub API
+  // 1. Fetch repos and user info from GitHub API
+  let totalReposCount = 25; // Safe fallback
+  try {
+    const userProfile = await EleventyFetch("https://api.github.com/users/Bittu5134", {
+      duration: "1h",
+      type: "json",
+      fetchOptions: { headers: fetchHeaders },
+    });
+    if (userProfile && typeof userProfile.public_repos === "number") {
+      totalReposCount = userProfile.public_repos;
+    }
+  } catch (err) {
+    console.warn(`[@11ty/eleventy-fetch] Failed to fetch GitHub user profile (${err.message}).`);
+  }
+
   try {
     repos = await EleventyFetch("https://api.github.com/users/Bittu5134/repos?per_page=100", {
       duration: "1h",
       type: "json",
       fetchOptions: { headers: fetchHeaders },
     });
+    if (Array.isArray(repos) && repos.length > 0 && totalReposCount <= 25) {
+      totalReposCount = Math.max(totalReposCount, repos.length);
+    }
   } catch (err) {
     console.warn(`[@11ty/eleventy-fetch] Failed to fetch GitHub repos (${err.message}). Using local fallback metadata.`);
     repos = Object.keys(meta).map((name) => ({
@@ -148,6 +165,7 @@ export default async function () {
       homepage: null,
       topics: meta[name].tags || [],
       stargazers_count: 0,
+      forks_count: 0,
       language: null,
       pushed_at: null,
       description: null,
@@ -198,12 +216,15 @@ export default async function () {
   const featured = Object.entries(meta)
     .map(([repoName, itemMeta]) => {
       const r = repoMap.get(repoName) || {};
-      const topics = Array.isArray(r.topics) && r.topics.length > 0 ? r.topics.slice(0, 5) : (itemMeta.tags || []);
+      const topics = Array.isArray(r.topics) && r.topics.length > 0
+        ? r.topics.slice(0, 5)
+        : (itemMeta.tags || []);
       const language = itemMeta.language || r.language || null;
       const languageColor = LANGUAGE_COLORS[language] || "#6e7681";
       const isPinned = pinnedRepoNames.includes(repoName);
       const pinnedIndex = pinnedRepoNames.indexOf(repoName);
       const headerColor = itemMeta.color || itemMeta.headerBgClass || projectColors[repoName] || "bg-[#86efac]";
+      const description = (r.description && r.description.trim()) || itemMeta.blurb || "";
 
       return {
         title: itemMeta.title || r.name || repoName,
@@ -212,11 +233,11 @@ export default async function () {
         githubUrl: itemMeta.githubUrl || r.html_url || `https://github.com/Bittu5134/${repoName}`,
         tags: topics,
         stars: typeof r.stargazers_count === "number" ? r.stargazers_count : 0,
+        forks: typeof r.forks_count === "number" ? r.forks_count : 0,
         language,
         languageColor,
         updated: r.pushed_at || null,
-        updatedAgo: formatRelativeTime(r.pushed_at),
-        description: itemMeta.blurb || r.description || "",
+        description,
         isPinned,
         pinnedIndex: isPinned ? pinnedIndex : 99,
         ...itemMeta,
@@ -224,17 +245,27 @@ export default async function () {
       };
     })
     .sort((a, b) => {
-      // Pinned items sorted by their GitHub pinned order first
+      // 1. Pinned items are sorted by their GitHub profile pinned order
       if (a.isPinned && b.isPinned) {
         return a.pinnedIndex - b.pinnedIndex;
       }
       if (a.isPinned) return -1;
       if (b.isPinned) return 1;
+
+      // 2. Sort by popularity (stars + forks desc)
+      const aPopularity = (a.stars || 0) + (a.forks || 0);
+      const bPopularity = (b.stars || 0) + (b.forks || 0);
+      if (bPopularity !== aPopularity) {
+        return bPopularity - aPopularity;
+      }
+
+      // 3. Tie-breaker fallback to manual order
       return (a.order || 99) - (b.order || 99);
     });
 
   return {
     categories: ["PINNED", "SYSTEMS", "AI", "WEB", "TOOLS"],
     projects: featured,
+    totalReposCount,
   };
 }

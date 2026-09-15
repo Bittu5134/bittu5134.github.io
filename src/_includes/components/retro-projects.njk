@@ -31,6 +31,7 @@
           data-filter-category="{{ p.filterCategory }}"
           data-category="{{ p.category }}"
           data-pinned="{{ 'true' if p.isPinned else 'false' }}"
+          data-popularity="{{ (p.stars or 0) + (p.forks or 0) }}"
         >
           <!-- Window Header -->
           <div class="card-header-bar gap-2 {{ p.headerBgClass }}">
@@ -52,14 +53,23 @@
                 <h3 class="text-xl sm:text-2xl font-black text-black">
                   {{ p.title }}
                 </h3>
-                {% if p.stars > 0 %}
-                  <span class="inline-flex items-center gap-1 font-mono text-xs font-bold text-black/70 bg-[#fffdf9] border border-black px-1.5 py-0.5 shadow-brutal-xs shrink-0" title="{{ p.stars }} stargazers on GitHub">
-                    <span class="text-[#f59e0b]">★</span> {{ p.stars }}
-                  </span>
-                {% endif %}
+                <div class="flex items-center gap-1.5 shrink-0">
+                  {% if p.stars > 0 %}
+                    <span class="inline-flex items-center gap-1 font-mono text-xs font-bold text-black/80 bg-[#fffdf9] border border-black px-1.5 py-0.5" title="{{ p.stars }} stargazers on GitHub">
+                      {{ icons.star("w-3.5 h-3.5 text-[#f59e0b] fill-[#f59e0b] shrink-0") }}
+                      <span>{{ p.stars }}</span>
+                    </span>
+                  {% endif %}
+                  {% if p.forks > 0 %}
+                    <span class="inline-flex items-center gap-1 font-mono text-xs font-bold text-black/80 bg-[#fffdf9] border border-black px-1.5 py-0.5" title="{{ p.forks }} forks on GitHub">
+                      {{ icons.gitFork("w-3.5 h-3.5 text-black/70 shrink-0") }}
+                      <span>{{ p.forks }}</span>
+                    </span>
+                  {% endif %}
+                </div>
               </div>
 
-              <!-- Live Signals: Language Dot + Updated Time + Handcrafted Stats -->
+              <!-- Live Signals: Language Dot + Handcrafted Stats -->
               <div class="flex flex-wrap items-center gap-x-2.5 gap-y-1 font-mono text-xs font-bold text-black/70 mb-3">
                 {% if p.language %}
                   <span class="inline-flex items-center gap-1.5">
@@ -67,12 +77,8 @@
                     <span>{{ p.language }}</span>
                   </span>
                 {% endif %}
-                {% if p.updatedAgo %}
-                  {% if p.language %}<span class="text-black/30">/</span>{% endif %}
-                  <span class="text-black/60">{{ p.updatedAgo }}</span>
-                {% endif %}
                 {% if p.statsText %}
-                  {% if p.language or p.updatedAgo %}<span class="text-black/30">/</span>{% endif %}
+                  {% if p.language %}<span class="text-black/30">/</span>{% endif %}
                   <span class="text-[#d97706]">{{ p.statsText }}</span>
                 {% endif %}
               </div>
@@ -87,7 +93,7 @@
               <div class="flex flex-wrap gap-1.5 mb-4 sm:mb-5">
                 {% for tag in p.tags %}
                   <span class="tag-pill">
-                    #{{ tag }}
+                    #{{ tag | upper }}
                   </span>
                 {% endfor %}
               </div>
@@ -112,8 +118,8 @@
                     rel="noopener noreferrer"
                     class="btn-brutal-white px-3 sm:px-3.5 py-1.5 sm:py-2 text-xs hover:bg-[#86efac]"
                   >
-                    <span>SOURCE CODE</span>
-                    {{ icons.arrowUpRight("w-3.5 h-3.5 text-black shrink-0") }}
+                    {{ icons.github("w-3.5 h-3.5 text-black shrink-0") }}
+                    <span>GITHUB</span>
                   </a>
                 {% endif %}
               </div>
@@ -125,7 +131,7 @@
 
     <!-- GitHub link note -->
     <div class="mt-6 sm:mt-8 p-3.5 sm:p-4 bg-[#fffdf9] border-2 border-black shadow-brutal-xs flex items-center justify-between flex-wrap gap-3 sm:gap-4 font-mono text-xs sm:text-sm font-bold">
-      <span class="text-black/70">
+      <span class="text-black/80">
         Looking for more tools, prototypes, and scripts?
       </span>
       <a
@@ -134,7 +140,9 @@
         rel="noopener noreferrer"
         class="btn-brutal bg-[#c4b5fd] px-3 py-1.5 text-xs sm:text-sm"
       >
-        <span>VIEW 25+ REPOSITORIES ON GITHUB</span>
+        {# <span>VIEW {{ projects.totalReposCount if projects.totalReposCount else "ALL" }} REPOSITORIES ON GITHUB</span> #}
+        <span>VIEW {{ projects.totalReposCount if projects.totalReposCount else "ALL" }}+ PROJECTS ON GITHUB</span>
+        {# <span>VIEW ALL PROJECTS ON GITHUB</span> #}
         {{ icons.arrowUpRight("w-3.5 h-3.5 text-black shrink-0") }}
       </a>
     </div>
