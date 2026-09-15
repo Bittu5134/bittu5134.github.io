@@ -61,7 +61,7 @@ permalink: "/blog/index.html"
             <div class="flex flex-wrap gap-1.5">
               {% for tag in post.tags %}
                 <span class="tag-pill">
-                  #{{ tag }}
+                  #{{ tag | upper }}
                 </span>
               {% endfor %}
             </div>

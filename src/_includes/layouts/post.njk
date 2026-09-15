@@ -57,7 +57,7 @@ layout: layouts/base.njk
           {% for tag in tags %}
             {% if tag != "posts" %}
               <span class="tag-pill">
-                #{{ tag }}
+                #{{ tag | upper }}
               </span>
             {% endif %}
           {% endfor %}

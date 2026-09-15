@@ -26,7 +26,7 @@
           class="btn-brutal bg-[#fb923c] px-3 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm"
         >
           {{ icons.rss("w-4 h-4") }}
-          <span>RSS 2.0</span>
+          <span>RSS</span>
         </a>
       </div>
     </div>
@@ -48,7 +48,7 @@
             <div class="flex flex-wrap gap-1.5">
               {% for tag in post.tags %}
                 <span class="tag-pill">
-                  #{{ tag }}
+                  #{{ tag | upper }}
                 </span>
               {% endfor %}
             </div>
