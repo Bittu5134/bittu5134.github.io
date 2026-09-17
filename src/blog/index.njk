@@ -103,28 +103,12 @@ permalink: "/blog/index.html"
     <div class="space-y-6 sm:space-y-8" id="blog-posts-list">
       {% for post in collections.blogs %}
         <article
-          class="blog-post-card card-brutal overflow-hidden group bg-[#fffdf9] transition-all"
+          class="blog-post-card card-brutal p-5 sm:p-7 md:p-8 group bg-[#fffdf9] transition-all"
           data-title="{{ (post.data.title or '') | lower }}"
           data-summary="{{ (post.data.summary or '') | lower }}"
           data-tags="{{ (post.data.tags or []) | join(' ') | lower }}"
         >
-          <!-- Optional Cover Image Banner -->
-          {% if post.data.coverImage %}
-            <a
-              href="{{ post.url }}"
-              class="block overflow-hidden border-b-[3px] border-black bg-[#12151e]"
-              aria-label="Read {{ post.data.title }}"
-            >
-              <img
-                src="{{ post.data.coverImage }}"
-                alt="{{ post.data.coverAlt if post.data.coverAlt else post.data.title }}"
-                class="w-full h-44 sm:h-56 md:h-64 object-cover group-hover:scale-[1.01] transition-transform duration-300"
-                loading="lazy"
-              />
-            </a>
-          {% endif %}
-
-          <div class="p-5 sm:p-7 md:p-8">
+          <div>
             <!-- Metadata Stamp Bar -->
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3 pb-3 border-b-2 border-black/10">
               <div class="flex flex-wrap items-center gap-2">
