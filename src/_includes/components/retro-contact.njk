@@ -19,177 +19,135 @@
         </span>
       </div>
 
-      <div class="p-4 sm:p-10 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-        <!-- Left Column: Direct channels -->
-        <div class="space-y-4">
-          <p class="font-mono text-xs sm:text-sm text-black/85 leading-relaxed mb-4 sm:mb-6">
-            I'm always open to new roles, collaborations, and interesting problems — you can browse my work on
-            <a
-              href="https://github.com/Bittu5134"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="bg-[#c4b5fd]/40 px-1 border-b-2 border-black font-bold hover:bg-[#c4b5fd]/80 transition-colors text-black"
-            >
-              GitHub
-            </a>
-            or reach me at
-            <a
-              href="mailto:hello@bittu.dev"
-              class="bg-[#fde047]/60 px-1 border-b-2 border-black font-bold hover:bg-[#fde047] transition-colors text-black"
-            >
-              hello@bittu.dev
-            </a>.
-          </p>
+      <div class="p-4 sm:p-8 md:p-10 space-y-6">
+        <!-- Intro Paragraph (Spanning Full Width) -->
+        <p class="font-mono text-xs sm:text-sm text-black/85 leading-relaxed max-w-3xl">
+          I'm always open to new roles, collaborations, and interesting problems — the fastest way to reach me is
+          <a
+            href="mailto:hello@bittu.dev"
+            class="bg-[#fde047]/60 px-1 border-b-2 border-black font-bold hover:bg-[#fde047] transition-colors text-black"
+          >
+            email
+          </a>, or find me on
+          <a
+            href="https://github.com/Bittu5134"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="bg-[#c4b5fd]/40 px-1 border-b-2 border-black font-bold hover:bg-[#c4b5fd]/80 transition-colors text-black"
+          >
+            GitHub
+          </a>
+          and
+          <a
+            href="https://www.linkedin.com/in/bittu5134"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="bg-[#38bdf8]/40 px-1 border-b-2 border-black font-bold hover:bg-[#38bdf8]/80 transition-colors text-black"
+          >
+            LinkedIn
+          </a>.
+        </p>
 
-          <!-- Email Button Box -->
-          <div class="p-3 sm:p-4 bg-[#fef08a] border-2 border-black shadow-brutal-xs flex flex-wrap items-center justify-between gap-2.5">
-            <div class="flex items-center gap-3">
-              <div class="w-8 h-8 bg-black text-[#fef08a] flex items-center justify-center border border-black shrink-0">
-                {{ icons.mail("w-4 h-4") }}
-              </div>
-              <div>
-                <div class="font-mono text-xs uppercase font-bold text-black/60">
-                  EMAIL:
-                </div>
-                <div class="font-mono text-sm sm:text-base font-bold text-black break-all">
-                  hello@bittu.dev
-                </div>
-              </div>
+        <!-- Primary Action: Full-Width Email Box -->
+        <div class="p-3 sm:p-4 bg-[#fef08a] border-2 border-black shadow-brutal-xs flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 bg-black text-[#fef08a] flex items-center justify-center border border-black shrink-0">
+              {{ icons.mail("w-4 h-4") }}
             </div>
-            <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
-              <a
-                href="mailto:hello@bittu.dev"
-                class="btn-brutal-white px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm hover:bg-[#86efac]"
-              >
-                <span>MAIL</span>
-                {{ icons.arrowUpRight("w-3.5 h-3.5") }}
-              </a>
-              <button
-                id="copy-email-contact"
-                aria-label="Copy email address hello@bittu.dev"
-                class="btn-brutal-yellow px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm"
-              >
-                <span class="email-default flex items-center gap-1">
-                  {{ icons.copy("w-3.5 h-3.5") }}
-                  <span>COPY</span>
-                </span>
-                <span class="email-copied hidden flex items-center gap-1 text-emerald-800 font-black">
-                  {{ icons.check("w-3.5 h-3.5 text-emerald-800 stroke-[3]") }}
-                  <span>COPIED!</span>
-                </span>
-              </button>
+            <div>
+              <div class="font-mono text-xs uppercase font-bold text-black/60">EMAIL:</div>
+              <div class="font-mono text-sm sm:text-base font-bold text-black break-all">hello@bittu.dev</div>
             </div>
           </div>
-
-          <!-- Discord Button Box -->
-          <div class="p-3 sm:p-4 bg-[#c4b5fd] border-2 border-black shadow-brutal-xs flex flex-wrap items-center justify-between gap-2.5">
-            <div class="flex items-center gap-3">
-              <div class="w-8 h-8 bg-black text-[#c4b5fd] flex items-center justify-center border border-black shrink-0">
-                {{ icons.discord("w-4 h-4 text-[#c4b5fd]") }}
-              </div>
-              <div>
-                <div class="font-mono text-xs uppercase font-bold text-black/60">
-                  DISCORD:
-                </div>
-                <div class="font-mono text-sm sm:text-base font-bold text-black">
-                  bittu5134
-                </div>
-              </div>
-            </div>
-            <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
-              <a
-                href="/discord"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="btn-brutal-white px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm hover:bg-[#86efac]"
-              >
-                <span>JOIN</span>
-                {{ icons.arrowUpRight("w-3.5 h-3.5") }}
-              </a>
-              <button
-                id="copy-discord-contact"
-                aria-label="Copy Discord handle bittu5134"
-                class="btn-brutal-yellow px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm"
-              >
-                <span class="discord-default flex items-center gap-1">
-                  {{ icons.copy("w-3.5 h-3.5") }}
-                  <span>COPY</span>
-                </span>
-                <span class="discord-copied hidden flex items-center gap-1 text-emerald-800 font-black">
-                  {{ icons.check("w-3.5 h-3.5 text-emerald-800 stroke-[3]") }}
-                  <span>COPIED!</span>
-                </span>
-              </button>
-            </div>
+          <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            <a href="mailto:hello@bittu.dev" class="btn-brutal-white px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm hover:bg-[#86efac]">
+              <span>MAIL</span>
+              {{ icons.arrowUpRight("w-3.5 h-3.5") }}
+            </a>
+            <button id="copy-email-contact" aria-label="Copy email address hello@bittu.dev" class="btn-brutal-yellow px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm">
+              <span class="email-default flex items-center gap-1">
+                {{ icons.copy("w-3.5 h-3.5") }}
+                <span>COPY</span>
+              </span>
+              <span class="email-copied hidden flex items-center gap-1 text-emerald-800 font-black">
+                {{ icons.check("w-3.5 h-3.5 text-emerald-800 stroke-[3]") }}
+                <span>COPIED!</span>
+              </span>
+            </button>
           </div>
         </div>
 
-        <!-- Right Column: Other Platforms -->
-        <div class="space-y-4">
-          <div class="p-4 bg-[#fffdf9] border-2 border-black shadow-brutal-xs">
-            <div class="font-mono text-xs sm:text-sm font-bold text-black uppercase mb-3 pb-1 border-b border-black">
-              PROFILES:
+        <!-- Balanced 2-Column Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-stretch">
+          <!-- Left Column: GitHub & LinkedIn -->
+          <div class="flex flex-col justify-between gap-4">
+            <!-- GitHub Box -->
+            <div class="p-3 sm:p-4 bg-[#c4b5fd] border-2 border-black shadow-brutal-xs flex flex-wrap items-center justify-between gap-2.5 flex-1">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-black text-[#c4b5fd] flex items-center justify-center border border-black shrink-0">
+                  {{ icons.github("w-4 h-4 text-[#c4b5fd]") }}
+                </div>
+                <div>
+                  <div class="font-mono text-xs uppercase font-bold text-black/60">GITHUB:</div>
+                  <div class="font-mono text-sm sm:text-base font-bold text-black">@Bittu5134</div>
+                </div>
+              </div>
+              <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                <a href="https://github.com/Bittu5134" target="_blank" rel="noopener noreferrer" class="btn-brutal-white px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm hover:bg-[#86efac]">
+                  <span>VISIT</span>
+                  {{ icons.arrowUpRight("w-3.5 h-3.5") }}
+                </a>
+              </div>
             </div>
 
+            <!-- LinkedIn Box -->
+            <div class="p-3 sm:p-4 bg-[#38bdf8] border-2 border-black shadow-brutal-xs flex flex-wrap items-center justify-between gap-2.5 flex-1">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-black text-[#38bdf8] flex items-center justify-center border border-black shrink-0">
+                  {{ icons.linkedin("w-4 h-4 text-[#38bdf8]") }}
+                </div>
+                <div>
+                  <div class="font-mono text-xs uppercase font-bold text-black/60">LINKEDIN:</div>
+                  <div class="font-mono text-sm sm:text-base font-bold text-black">in/bittu5134</div>
+                </div>
+              </div>
+              <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                <a href="https://www.linkedin.com/in/bittu5134" target="_blank" rel="noopener noreferrer" class="btn-brutal-white px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm hover:bg-[#86efac]">
+                  <span>VISIT</span>
+                  {{ icons.arrowUpRight("w-3.5 h-3.5") }}
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: More Places Box -->
+          <div class="p-4 bg-[#fffdf9] border-2 border-black shadow-brutal-xs flex flex-col justify-between">
+            <div class="font-mono text-xs sm:text-sm font-bold text-black uppercase mb-3 pb-1 border-b border-black">
+              MORE PLACES:
+            </div>
             <div class="space-y-2">
-              <a
-                href="https://github.com/Bittu5134"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="profile-link hover:bg-[#fde047]"
-              >
+              <a href="/discord" target="_blank" rel="noopener noreferrer" class="profile-link hover:bg-[#c4b5fd]">
                 <span class="flex items-center gap-2">
-                  {{ icons.github("w-4 h-4 text-black") }}
-                  GITHUB: @Bittu5134
+                  {{ icons.discord("w-4 h-4 text-black") }}
+                  DISCORD SERVER: bittu5134
                 </span>
                 {{ icons.arrowUpRight("w-4 h-4") }}
               </a>
-
-              <a
-                href="https://www.planetminecraft.com/member/bittu5134/"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="profile-link hover:bg-[#86efac]"
-              >
-                <span class="flex items-center gap-2">
-                  {{ icons.planetMinecraft("w-4 h-4 text-emerald-700") }}
-                  PLANET MINECRAFT: @bittu5134
-                </span>
-                {{ icons.arrowUpRight("w-4 h-4") }}
-              </a>
-
-              <a
-                href="https://x.com/bittu5134"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="profile-link hover:bg-[#38bdf8]"
-              >
+              <a href="https://x.com/bittu5134" target="_blank" rel="noopener noreferrer" class="profile-link hover:bg-[#38bdf8]">
                 <span class="flex items-center gap-2">
                   {{ icons.twitter("w-4 h-4 text-sky-600") }}
                   X / TWITTER: @bittu5134
                 </span>
                 {{ icons.arrowUpRight("w-4 h-4") }}
               </a>
-
-              <a
-                href="https://www.patreon.com/lazybittu"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="profile-link hover:bg-[#f472b6]"
-              >
+              <a href="https://www.planetminecraft.com/member/bittu5134/" target="_blank" rel="noopener noreferrer" class="profile-link hover:bg-[#86efac]">
                 <span class="flex items-center gap-2">
-                  {{ icons.patreon("w-4 h-4 text-[#f43f5e]") }}
-                  PATREON: @lazybittu
+                  {{ icons.planetMinecraft("w-4 h-4 text-emerald-700") }}
+                  PLANET MINECRAFT: @bittu5134
                 </span>
                 {{ icons.arrowUpRight("w-4 h-4") }}
               </a>
-
-              <a
-                href="/rss.xml"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="profile-link hover:bg-[#fb923c]"
-              >
+              <a href="/rss.xml" target="_blank" rel="noopener noreferrer" class="profile-link hover:bg-[#fb923c]">
                 <span class="flex items-center gap-2">
                   {{ icons.rss("w-4 h-4 text-amber-700") }}
                   RSS 2.0 FEED
