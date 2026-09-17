@@ -87,7 +87,7 @@ ogType: article
     <!-- Main Grid: Content + Desktop Sticky TOC -->
     <div class="grid grid-cols-1 {{ 'xl:grid-cols-[1fr_260px] xl:gap-12' if tocList.length > 1 else '' }}">
       <!-- Left Column: Article Body Area -->
-      <article id="article-top" class="min-w-0">
+      <article id="article-top" class="min-w-0" data-pagefind-body>
         <!-- Content Paper: subtle warm off-white surface without heavy outer card box -->
         <div class="bg-[#fffdf9] rounded-xl border border-black/10 shadow-sm p-6 sm:p-8 md:p-12">
           <!-- Cover Image Hero (if present) -->
@@ -98,6 +98,7 @@ ogType: article
                 alt="{{ coverAlt if coverAlt else title }}"
                 class="w-full h-auto max-h-[480px] object-cover"
                 loading="eager"
+                data-pagefind-meta="image[src]"
               />
             </div>
           {% endif %}
@@ -106,7 +107,7 @@ ogType: article
           <header class="mb-10 pb-8 border-b border-black/10">
             <!-- Metadata Badges (mono UI chrome) -->
             <div class="flex flex-wrap items-center gap-2 mb-4 font-mono text-xs font-bold">
-              <span class="px-2.5 py-1 bg-[#86efac] border border-black/20 rounded text-black">
+              <span class="px-2.5 py-1 bg-[#86efac] border border-black/20 rounded text-black" data-pagefind-meta="date">
                 STAMP: {{ (displayDate or date) | upper }}
               </span>
               <span class="px-2.5 py-1 bg-[#fde047] border border-black/20 rounded text-black">
@@ -120,13 +121,13 @@ ogType: article
             </div>
 
             <!-- Title: Bold, readable, sans-serif -->
-            <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-[#14161f] leading-tight tracking-tight mb-5">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-[#14161f] leading-tight tracking-tight mb-5" data-pagefind-meta="title">
               {{ title }}
             </h1>
 
             <!-- Summary / Subtitle -->
             {% if summary %}
-              <p class="text-base sm:text-lg text-black/80 font-normal leading-relaxed mb-6 border-l-4 border-[#f59e0b] pl-4 py-1 bg-[#f6eedb]/40 rounded-r">
+              <p class="text-base sm:text-lg text-black/80 font-normal leading-relaxed mb-6 border-l-4 border-[#f59e0b] pl-4 py-1 bg-[#f6eedb]/40 rounded-r" data-pagefind-meta="summary">
                 {{ summary }}
               </p>
             {% endif %}
@@ -138,6 +139,7 @@ ogType: article
                   <a
                     href="/blog?tag={{ tag | urlencode }}"
                     class="px-2.5 py-0.5 bg-[#f6eedb] hover:bg-[#fde047] text-black border border-black/20 rounded font-mono text-xs font-semibold tracking-wide uppercase transition-colors"
+                    data-pagefind-filter="tag"
                   >
                     #{{ tag | upper }}
                   </a>

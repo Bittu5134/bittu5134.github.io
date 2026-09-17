@@ -23,7 +23,6 @@ export default async function (eleventyConfig) {
     eleventyConfig.watchIgnores.add("public/llms*.txt");
     eleventyConfig.watchIgnores.add("public/raw/**");
     eleventyConfig.watchIgnores.add("public/images/blogs/**");
-    eleventyConfig.watchIgnores.add("public/search-index.json");
     eleventyConfig.watchIgnores.add("src/_data/blogs.json");
   }
 

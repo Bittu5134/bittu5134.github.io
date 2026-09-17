@@ -9,7 +9,7 @@ permalink: "/blog/index.html"
 <div class="min-h-screen bg-[#f6eedb] retro-dots-bg text-[#14161f] font-sans selection:bg-[#fde047] selection:text-black">
   {% include "components/retro-header.njk" %}
 
-  <main class="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12" data-pagefind-ignore>
     <!-- Header Hero Banner -->
     <div class="p-6 sm:p-8 card-brutal shadow-brutal-lg mb-8 bg-[#fffdf9]">
       <div class="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b-2 border-black/15">
@@ -100,7 +100,9 @@ permalink: "/blog/index.html"
       <!-- Search Feedback Bar -->
       <div id="blog-search-status" class="hidden flex items-center justify-between font-mono text-xs px-1 text-black/70">
         <span id="blog-search-count" class="font-bold"></span>
-        <span class="text-black/50 text-[11px] uppercase tracking-wider">Indexed Static Search</span>
+        <span class="text-black/50 dark:text-white/50 text-[11px] uppercase tracking-wider flex items-center gap-1">
+          <span>Indexed by Pagefind (Wasm)</span>
+        </span>
       </div>
 
       <!-- Tag Filter Pills -->
@@ -212,6 +214,7 @@ permalink: "/blog/index.html"
   </main>
 </div>
 
-<!-- Littlefinger: Fast Static Index Search Engine -->
-<script src="/assets/js/littlefinger.js" defer></script>
+<!-- Industry Standard Static File Search: Pagefind Wasm -->
+<script src="/assets/js/pagefind-search.js" defer></script>
+
 

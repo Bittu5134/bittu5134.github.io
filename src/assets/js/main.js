@@ -646,8 +646,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const resetFiltersBtn = document.getElementById("blog-reset-filters-btn");
 
   if (articleCards.length > 0) {
-    // If Littlefinger static search engine is present, defer to it
-    if (window.littlefinger || document.querySelector('script[src*="littlefinger"]')) return;
+    // If Pagefind static search engine is present, defer to it
+    if (window.pagefindBlogSearch || document.querySelector('script[src*="pagefind"]')) return;
 
     let currentTag = "ALL";
     let currentQuery = "";

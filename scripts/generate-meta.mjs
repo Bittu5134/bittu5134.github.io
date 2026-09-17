@@ -139,45 +139,6 @@ export async function generateMeta() {
     "utf-8"
   );
 
-  // 1.5 Generate static search index for client-side search: public/search-index.json
-  const searchIndex = blogFiles.map((post) => {
-    const headings = [];
-    const headingMatches = post.content.matchAll(/^(#{1,4})\s+(.+)$/gm);
-    for (const match of headingMatches) {
-      const headingText = match[2].replace(/<[^>]*>/g, "").trim();
-      if (headingText) headings.push(headingText);
-    }
-
-    const cleanContent = post.content
-      .replace(/```[\s\S]*?```/g, " ")
-      .replace(/`[^`]*`/g, " ")
-      .replace(/!\[.*?\]\(.*?\)/g, " ")
-      .replace(/\[(.*?)\]\(.*?\)/g, "$1")
-      .replace(/<[^>]*>/g, " ")
-      .replace(/[#*~_>|]/g, " ")
-      .replace(/\s+/g, " ")
-      .trim();
-
-    return {
-      slug: post.slug,
-      title: post.title,
-      date: post.date,
-      readTime: post.readTime,
-      summary: post.summary,
-      tags: post.tags,
-      url: `/blog/${post.slug}/`,
-      headings,
-      contentSnippet: cleanContent.slice(0, 240),
-      body: cleanContent.slice(0, 5000),
-    };
-  });
-
-  fs.writeFileSync(
-    path.join(publicDir, "search-index.json"),
-    JSON.stringify(searchIndex, null, 2),
-    "utf-8"
-  );
-  console.log(`[generate-meta] Generated static search index for ${searchIndex.length} posts.`);
 
 
   // Load projects from src/_data/projects.js
