@@ -38,6 +38,7 @@ export default {
     filterCategory: "SYSTEMS",
     badge: "KERNEL TELEMETRY",
     statsText: "Host Telemetry Agent",
+    language: "Go",
   },
   "InfraPulse": {
     order: 4,

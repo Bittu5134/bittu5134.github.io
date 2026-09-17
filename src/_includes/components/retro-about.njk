@@ -1,24 +1,4 @@
 {% import "macros/icons.njk" as icons %}
-{% set techStack = [
-  { name: "Go",                 bgClass: "bg-[#38bdf8]" },
-  { name: "Python",             bgClass: "bg-[#fde047]" },
-  { name: "WebRTC",             bgClass: "bg-[#f472b6]" },
-  { name: "Linux & Sockets",    bgClass: "bg-[#86efac]" },
-  { name: "Wireshark / Nmap",   bgClass: "bg-[#c4b5fd]" },
-  { name: "TypeScript",         bgClass: "bg-[#fb923c]" },
-  { name: "PyTorch",            bgClass: "bg-[#f87171]" },
-  { name: "FastAPI / Gin",      bgClass: "bg-[#a7f3d0]" },
-  { name: "Redis",              bgClass: "bg-[#fde047]" },
-  { name: "PostgreSQL / SQL",   bgClass: "bg-[#60a5fa]" },
-  { name: "C / C++",            bgClass: "bg-[#fb923c]" },
-  { name: "Svelte / SvelteKit", bgClass: "bg-[#f87171]" },
-  { name: "Cloudflare Workers", bgClass: "bg-[#fde047]" },
-  { name: "Docker",             bgClass: "bg-[#38bdf8]" },
-  { name: "Proxmox VE",         bgClass: "bg-[#c4b5fd]" },
-  { name: "Java Modding",       bgClass: "bg-[#86efac]" },
-  { name: "OpenGL / GLSL",      bgClass: "bg-[#f472b6]" },
-  { name: "Blender",            bgClass: "bg-[#fb923c]" }
-] %}
 
 <section id="about" class="py-6 sm:py-8 px-3 sm:px-6 scroll-mt-16 sm:scroll-mt-20">
   <div class="max-w-5xl mx-auto space-y-6">
@@ -84,12 +64,12 @@
               <span>Webnovel &amp; MTL tooling creator</span>
             </li>
             <li class="flex items-start gap-2.5">
-              {{ icons.zap("w-4 h-4 text-black shrink-0 mt-0.5") }}
-              <span>Enjoys optimising small &amp; fast builds</span>
+              {{ icons.code("w-4 h-4 text-black shrink-0 mt-0.5") }}
+              <span>3 years freelance engineering (2022–2025)</span>
             </li>
             <li class="flex items-start gap-2.5">
-              {{ icons.code("w-4 h-4 text-black shrink-0 mt-0.5") }}
-              <span>Open-source tinkerer by default</span>
+              {{ icons.user("w-4 h-4 text-black shrink-0 mt-0.5") }}
+              <span>120K+ community members moderated</span>
             </li>
           </ul>
         </div>
@@ -101,20 +81,6 @@
           </div>
         </div>
 
-      </div>
-    </div>
-
-    <!-- Row 2: Core Technologies & Tooling -->
-    <div class="p-3 sm:p-6 card-brutal">
-      <div class="mb-4">
-        <span class="font-mono text-xs sm:text-sm font-bold text-black uppercase tracking-wider">
-          CORE TECHNOLOGIES &amp; TOOLING:
-        </span>
-      </div>
-      <div class="flex flex-wrap gap-2.5 sm:gap-3">
-        {% for tech in techStack %}
-          <span class="tech-badge {{ tech.bgClass }}">{{ tech.name }}</span>
-        {% endfor %}
       </div>
     </div>
   </div>
