@@ -110,7 +110,7 @@ html {
 html,
 body,
 #root {
-  overflow-x: hidden;
+  overflow-x: clip;
   font-family: 'Space Grotesk', sans-serif;
   background-color: #f7f1e3;
   color: #14161f;
