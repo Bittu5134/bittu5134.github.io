@@ -66,7 +66,7 @@ Date: March 18, 2026
 Read Time: 9 min read
 Tags: Engineering, Architecture, WebRTC, Go, Mermaid, Showcase
 URL: https://bittu.dev/blog/engineering-handbook-and-syntax-showcase
-Cover: https://bittu.dev/images/blogs/feature-showcase.svg
+Cover: https://bittu.devhttps://picsum.photos/600/300
 Raw Markdown: https://bittu.dev/raw/blogs/engineering-handbook-and-syntax-showcase.md
 Summary: The definitive reference and stress test for the unified remark+rehype pipeline: Shiki highlighting, Mermaid graphs, KaTeX math, GitHub callouts, GFM tables, task lists, footnotes, figure captions, code titles, and external links.
 ---
@@ -77,23 +77,23 @@ Welcome to the engineering test dispatch for **bittu.dev**. This post acts as a 
 
 ```mermaid
 flowchart TD
-    A[Markdown Source .md] --> B[remark-parse]
-    B --> C[remark-gfm\nTables · Tasks · Footnotes]
-    B --> D[remark-math\n$ inline $ and $$ block $$]
-    B --> E[remark-github-alerts\n> not TYPE callouts]
-    B --> F[remark-flexible-code-titles\nlang:filename annotations]
-    C & D & E & F --> G[remark-rehype\nMDAST → HAST]
-    G --> H[rehype-raw\nHTML passthrough]
-    H --> I[rehypeMermaidBlocks\nIntercept mermaid fences]
-    I --> J[rehype-slug\nHeading IDs]
-    J --> K["@shikijs/rehype\ngithub-dark SSG highlighting"]
-    K --> L[rehypeCodeBlockWrapper\nCustom UI shell]
-    L --> M[rehypeGithubAlerts\nStyled callout divs]
-    M --> N[rehype-katex\nMath → HTML]
-    N --> O[rehype-external-links\ntarget=_blank rel=noopener]
-    O --> P["@microflash/rehype-figure\nfigure + figcaption"]
-    P --> Q[rehype-autolink-headings\nPermalink anchors]
-    Q --> R[rehype-stringify → HTML]
+    A["Markdown Source .md"] --> B["remark-parse"]
+    B --> C["remark-gfm<br/>Tables · Tasks · Footnotes"]
+    B --> D["remark-math<br/>$ inline $ and $$ block $$"]
+    B --> E["remark-github-alerts<br/>GitHub Alert Callouts"]
+    B --> F["remark-flexible-code-titles<br/>lang:filename annotations"]
+    C & D & E & F --> G["remark-rehype<br/>MDAST → HAST"]
+    G --> H["rehype-raw<br/>HTML passthrough"]
+    H --> I["rehypeMermaidBlocks<br/>Intercept mermaid fences"]
+    I --> J["rehype-slug<br/>Heading IDs"]
+    J --> K["@shikijs/rehype<br/>github-dark SSG highlighting"]
+    K --> L["rehypeCodeBlockWrapper<br/>Custom UI shell"]
+    L --> M["rehypeGithubAlerts<br/>Styled callout divs"]
+    M --> N["rehype-katex<br/>Math → HTML"]
+    N --> O["rehype-external-links<br/>target=_blank rel=noopener"]
+    O --> P["@microflash/rehype-figure<br/>figure + figcaption"]
+    P --> Q["rehype-autolink-headings<br/>Permalink anchors"]
+    Q --> R["rehype-stringify → HTML"]
 ```
 
 > [!NOTE]
@@ -290,9 +290,9 @@ sequenceDiagram
     participant Redis as Redis Pub/Sub
     actor Bob as Bob (Peer 2)
 
-    Alice->>Server: WS Connect / Join Room "lobby"
+    Alice->>Server: WS Connect / Join Room 'lobby'
     Server->>Redis: SADD room:lobby:peers alice
-    Bob->>Server: WS Connect / Join Room "lobby"
+    Bob->>Server: WS Connect / Join Room 'lobby'
     Server->>Redis: SADD room:lobby:peers bob
     Alice->>Server: Send SDP Offer
     Server->>Bob: Forward SDP Offer
@@ -310,7 +310,7 @@ stateDiagram-v2
     Handshaking --> StatusQuery: Next State = 1
     Handshaking --> Authentication: Next State = 2
     StatusQuery --> Disconnected: Ping / Pong Received
-    Authentication --> ActiveSession: RSA & AES Verified
+    Authentication --> ActiveSession: RSA and AES Verified
     ActiveSession --> Disconnected: Graceful Teardown
 ```
 
@@ -398,12 +398,12 @@ sequenceDiagram
     autonumber
     actor PeerA as Peer A (Initiator)
     participant Hub as Go Signaling Hub
-    participant Redis as Redis TTL & PubSub
+    participant Redis as Redis TTL and PubSub
     actor PeerB as Peer B (Receiver)
 
-    PeerA->>Hub: WS Connect & Join Room
+    PeerA->>Hub: WS Connect and Join Room
     Hub->>Redis: SET room:lobby:peer:A EX 12
-    PeerB->>Hub: WS Connect & Join Room
+    PeerB->>Hub: WS Connect and Join Room
     Hub->>Redis: SET room:lobby:peer:B EX 12
     PeerA->>Hub: Send SDP Offer (via WritePump)
     Hub->>PeerB: Dispatch SDP Offer
@@ -514,7 +514,7 @@ stateDiagram-v2
     Handshaking --> Status: Next State = 1 (Server List Ping)
     Handshaking --> Login: Next State = 2 (Join Game)
     Status --> [*]: Disconnect after Pong
-    Login --> Play: Encryption & Auth Verified
+    Login --> Play: Encryption and Auth Verified
     Play --> [*]: Player Disconnect
 ```
 
@@ -614,14 +614,14 @@ When building the **IITK-Resume-Engine** for the Academics & Career Council, sta
 
 ```mermaid
 flowchart TD
-    A[Raw Academic PDF] --> B[PyMuPDF Text Spans & Bounding Boxes]
-    B --> C{Spatial Y-Overlap Grouping}
-    C -->|Within Tolerance 3.0pt| D[Sort Horizontal Spans by X-Coord]
-    C -->|Delta > 3.0pt| E[Create New Logical Text Row]
-    D --> F[Topological Column Slicing]
+    A["Raw Academic PDF"] --> B["PyMuPDF Text Spans and Bounding Boxes"]
+    B --> C{"Spatial Y-Overlap Grouping"}
+    C -->|"Within Tolerance 3.0pt"| D["Sort Horizontal Spans by X-Coord"]
+    C -->|"Delta > 3.0pt"| E["Create New Logical Text Row"]
+    D --> F["Topological Column Slicing"]
     E --> F
-    F --> G[IIT Kanpur 4,400+ Course Code Registry Match]
-    G --> H[Structured JSON: CPI, Grades & Credits]
+    F --> G["IIT Kanpur 4,400+ Course Code Registry Match"]
+    G --> H["Structured JSON: CPI, Grades and Credits"]
 ```
 
 > [!WARNING]

@@ -3,6 +3,7 @@ export default {
   content: [
     "./src/**/*.{html,njk,md,js}",
   ],
+  darkMode: ["selector", '[data-theme="dark"]'],
   theme: {
     extend: {
       fontFamily: {

@@ -12,7 +12,7 @@ tags:
   - Go
   - Mermaid
   - Showcase
-coverImage: /images/blogs/feature-showcase.svg
+coverImage: https://picsum.photos/600/300
 coverAlt: "Comprehensive engineering syntax and markdown feature showcase"
 ---
 
@@ -22,23 +22,23 @@ Welcome to the engineering test dispatch for **bittu.dev**. This post acts as a 
 
 ```mermaid
 flowchart TD
-    A[Markdown Source .md] --> B[remark-parse]
-    B --> C[remark-gfm\nTables · Tasks · Footnotes]
-    B --> D[remark-math\n$ inline $ and $$ block $$]
-    B --> E[remark-github-alerts\n> not TYPE callouts]
-    B --> F[remark-flexible-code-titles\nlang:filename annotations]
-    C & D & E & F --> G[remark-rehype\nMDAST → HAST]
-    G --> H[rehype-raw\nHTML passthrough]
-    H --> I[rehypeMermaidBlocks\nIntercept mermaid fences]
-    I --> J[rehype-slug\nHeading IDs]
-    J --> K["@shikijs/rehype\ngithub-dark SSG highlighting"]
-    K --> L[rehypeCodeBlockWrapper\nCustom UI shell]
-    L --> M[rehypeGithubAlerts\nStyled callout divs]
-    M --> N[rehype-katex\nMath → HTML]
-    N --> O[rehype-external-links\ntarget=_blank rel=noopener]
-    O --> P["@microflash/rehype-figure\nfigure + figcaption"]
-    P --> Q[rehype-autolink-headings\nPermalink anchors]
-    Q --> R[rehype-stringify → HTML]
+    A["Markdown Source .md"] --> B["remark-parse"]
+    B --> C["remark-gfm<br/>Tables · Tasks · Footnotes"]
+    B --> D["remark-math<br/>$ inline $ and $$ block $$"]
+    B --> E["remark-github-alerts<br/>GitHub Alert Callouts"]
+    B --> F["remark-flexible-code-titles<br/>lang:filename annotations"]
+    C & D & E & F --> G["remark-rehype<br/>MDAST → HAST"]
+    G --> H["rehype-raw<br/>HTML passthrough"]
+    H --> I["rehypeMermaidBlocks<br/>Intercept mermaid fences"]
+    I --> J["rehype-slug<br/>Heading IDs"]
+    J --> K["@shikijs/rehype<br/>github-dark SSG highlighting"]
+    K --> L["rehypeCodeBlockWrapper<br/>Custom UI shell"]
+    L --> M["rehypeGithubAlerts<br/>Styled callout divs"]
+    M --> N["rehype-katex<br/>Math → HTML"]
+    N --> O["rehype-external-links<br/>target=_blank rel=noopener"]
+    O --> P["@microflash/rehype-figure<br/>figure + figcaption"]
+    P --> Q["rehype-autolink-headings<br/>Permalink anchors"]
+    Q --> R["rehype-stringify → HTML"]
 ```
 
 > [!NOTE]
@@ -235,9 +235,9 @@ sequenceDiagram
     participant Redis as Redis Pub/Sub
     actor Bob as Bob (Peer 2)
 
-    Alice->>Server: WS Connect / Join Room "lobby"
+    Alice->>Server: WS Connect / Join Room 'lobby'
     Server->>Redis: SADD room:lobby:peers alice
-    Bob->>Server: WS Connect / Join Room "lobby"
+    Bob->>Server: WS Connect / Join Room 'lobby'
     Server->>Redis: SADD room:lobby:peers bob
     Alice->>Server: Send SDP Offer
     Server->>Bob: Forward SDP Offer
@@ -255,7 +255,7 @@ stateDiagram-v2
     Handshaking --> StatusQuery: Next State = 1
     Handshaking --> Authentication: Next State = 2
     StatusQuery --> Disconnected: Ping / Pong Received
-    Authentication --> ActiveSession: RSA & AES Verified
+    Authentication --> ActiveSession: RSA and AES Verified
     ActiveSession --> Disconnected: Graceful Teardown
 ```
 

@@ -746,3 +746,408 @@ img, svg, video {
 @media (prefers-reduced-motion: reduce) {
   .animate-cassette-ticker { animation: none; }
 }
+
+/* ─── Littlefoot Footnote Popovers & Badges ─────────────────── */
+.littlefoot__button {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  height: 1.25rem;
+  padding: 0 0.375rem !important;
+  margin: 0 0.2rem !important;
+  font-family: 'Space Mono', monospace !important;
+  font-size: 0.6875rem !important;
+  font-weight: 700 !important;
+  color: #14161f !important;
+  background-color: #fde047 !important;
+  border: 1.5px solid #000000 !important;
+  border-radius: 4px !important;
+  box-shadow: 1.5px 1.5px 0px #000000 !important;
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+
+.littlefoot__button:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 2.5px 2.5px 0px #000000 !important;
+}
+
+.littlefoot__popover {
+  border: 2px solid #000000 !important;
+  border-radius: 8px !important;
+  background-color: #fffdf9 !important;
+  box-shadow: 4px 4px 0px 0px #000000 !important;
+  color: #14161f !important;
+  max-width: 28rem !important;
+  z-index: 90 !important;
+}
+
+.littlefoot__content {
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-size: 0.875rem !important;
+  line-height: 1.65 !important;
+  padding: 0.75rem 1rem !important;
+}
+
+.littlefoot__content a {
+  color: #d97706 !important;
+  text-decoration: underline !important;
+}
+
+/* ─── Dark Theme System ([data-theme="dark"] / .dark) ───────── */
+[data-theme="dark"],
+.dark {
+  color-scheme: dark;
+}
+
+[data-theme="dark"] body,
+.dark body {
+  background-color: #0d1117 !important;
+  color: #e6edf3 !important;
+}
+
+[data-theme="dark"] .retro-dots-bg,
+.dark .retro-dots-bg {
+  background-color: #0d1117 !important;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px) !important;
+}
+
+/* Dark mode article content card paper */
+[data-theme="dark"] .prose-retro,
+.dark .prose-retro {
+  color: #c9d1d9;
+}
+
+[data-theme="dark"] .bg-\[\#fffdf9\],
+.dark .bg-\[\#fffdf9\] {
+  background-color: #161b22 !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+[data-theme="dark"] .bg-\[\#f6eedb\],
+.dark .bg-\[\#f6eedb\] {
+  background-color: #0d1117 !important;
+}
+
+[data-theme="dark"] .text-\[\#14161f\],
+.dark .text-\[\#14161f\] {
+  color: #f0f6fc !important;
+}
+
+[data-theme="dark"] .text-black,
+.dark .text-black {
+  color: #f0f6fc !important;
+}
+
+[data-theme="dark"] .text-black\/80,
+[data-theme="dark"] .text-black\/75,
+[data-theme="dark"] .text-black\/70,
+.dark .text-black\/80,
+.dark .text-black\/75,
+.dark .text-black\/70 {
+  color: #c9d1d9 !important;
+}
+
+[data-theme="dark"] .text-black\/60,
+[data-theme="dark"] .text-black\/50,
+.dark .text-black\/60,
+.dark .text-black\/50 {
+  color: #8b949e !important;
+}
+
+[data-theme="dark"] .border-black\/10,
+[data-theme="dark"] .border-black\/15,
+[data-theme="dark"] .border-black\/20,
+.dark .border-black\/10,
+.dark .border-black\/15,
+.dark .border-black\/20 {
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Breadcrumb nav links */
+[data-theme="dark"] nav[aria-label="Breadcrumb"] a,
+.dark nav[aria-label="Breadcrumb"] a {
+  color: #f0f6fc !important;
+}
+[data-theme="dark"] nav[aria-label="Breadcrumb"] span,
+.dark nav[aria-label="Breadcrumb"] span {
+  color: #8b949e !important;
+}
+
+/* Buttons in dark mode */
+[data-theme="dark"] .btn-brutal-white,
+.dark .btn-brutal-white {
+  background-color: #21262d !important;
+  color: #f0f6fc !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+  box-shadow: 2px 2px 0px 0px rgba(255, 255, 255, 0.3) !important;
+}
+
+[data-theme="dark"] .btn-brutal-white:hover,
+.dark .btn-brutal-white:hover {
+  background-color: #30363d !important;
+}
+
+/* Summary quote banner */
+[data-theme="dark"] .bg-\[\#f6eedb\]\/40,
+.dark .bg-\[\#f6eedb\]\/40 {
+  background-color: rgba(245, 158, 11, 0.1) !important;
+  color: #c9d1d9 !important;
+}
+
+/* Tag filter / category pills */
+[data-theme="dark"] a.px-2\.5.py-0\.5.bg-\[\#f6eedb\],
+.dark a.px-2\.5.py-0\.5.bg-\[\#f6eedb\] {
+  background-color: #21262d !important;
+  color: #f0f6fc !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+[data-theme="dark"] a.px-2\.5.py-0\.5.bg-\[\#f6eedb\]:hover,
+.dark a.px-2\.5.py-0\.5.bg-\[\#f6eedb\]:hover {
+  background-color: #fde047 !important;
+  color: #000000 !important;
+}
+
+/* Headings in .prose-retro */
+[data-theme="dark"] .prose-retro h1,
+[data-theme="dark"] .prose-retro h2,
+[data-theme="dark"] .prose-retro h3,
+[data-theme="dark"] .prose-retro h4,
+.dark .prose-retro h1,
+.dark .prose-retro h2,
+.dark .prose-retro h3,
+.dark .prose-retro h4 {
+  color: #f0f6fc !important;
+}
+
+[data-theme="dark"] .prose-retro strong,
+.dark .prose-retro strong {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .prose-retro hr,
+.dark .prose-retro hr {
+  border-top-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+[data-theme="dark"] .prose-retro a:not(.header-anchor):not(.toc-nav-link),
+.dark .prose-retro a:not(.header-anchor):not(.toc-nav-link) {
+  color: #58a6ff !important;
+  text-decoration-color: rgba(88, 166, 255, 0.4) !important;
+}
+
+[data-theme="dark"] .prose-retro a:not(.header-anchor):not(.toc-nav-link):hover,
+.dark .prose-retro a:not(.header-anchor):not(.toc-nav-link):hover {
+  color: #79c0ff !important;
+  text-decoration-color: #79c0ff !important;
+}
+
+/* Inline code in dark mode */
+[data-theme="dark"] .prose-retro code:not(pre code),
+.dark .prose-retro code:not(pre code) {
+  background-color: #21262d !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color: #fde047 !important;
+}
+
+/* Code block wrapper header & title */
+[data-theme="dark"] .code-header-bar,
+.dark .code-header-bar {
+  background-color: #161b22 !important;
+  border-bottom-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+[data-theme="dark"] .code-filename-title,
+.dark .code-filename-title {
+  color: #c9d1d9 !important;
+}
+
+[data-theme="dark"] .code-block-wrapper,
+.dark .code-block-wrapper {
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+[data-theme="dark"] .copy-code-btn,
+.dark .copy-code-btn {
+  background-color: #21262d !important;
+  color: #c9d1d9 !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* GitHub Alerts in dark mode */
+[data-theme="dark"] .github-alert-note,
+.dark .github-alert-note {
+  border-left-color: #388bfd !important;
+  background-color: rgba(56, 139, 253, 0.12) !important;
+}
+[data-theme="dark"] .github-alert-note .github-alert-title,
+.dark .github-alert-note .github-alert-title {
+  color: #58a6ff !important;
+}
+
+[data-theme="dark"] .github-alert-tip,
+.dark .github-alert-tip {
+  border-left-color: #3fb950 !important;
+  background-color: rgba(63, 185, 80, 0.12) !important;
+}
+[data-theme="dark"] .github-alert-tip .github-alert-title,
+.dark .github-alert-tip .github-alert-title {
+  color: #3fb950 !important;
+}
+
+[data-theme="dark"] .github-alert-important,
+.dark .github-alert-important {
+  border-left-color: #a371f7 !important;
+  background-color: rgba(163, 113, 247, 0.12) !important;
+}
+[data-theme="dark"] .github-alert-important .github-alert-title,
+.dark .github-alert-important .github-alert-title {
+  color: #bc8cff !important;
+}
+
+[data-theme="dark"] .github-alert-warning,
+.dark .github-alert-warning {
+  border-left-color: #d29922 !important;
+  background-color: rgba(210, 153, 34, 0.12) !important;
+}
+[data-theme="dark"] .github-alert-warning .github-alert-title,
+.dark .github-alert-warning .github-alert-title {
+  color: #d29922 !important;
+}
+
+[data-theme="dark"] .github-alert-caution,
+.dark .github-alert-caution {
+  border-left-color: #f85149 !important;
+  background-color: rgba(248, 81, 73, 0.12) !important;
+}
+[data-theme="dark"] .github-alert-caution .github-alert-title,
+.dark .github-alert-caution .github-alert-title {
+  color: #f85149 !important;
+}
+
+[data-theme="dark"] .github-alert-body,
+.dark .github-alert-body {
+  color: #c9d1d9 !important;
+}
+
+/* Tables in dark mode */
+[data-theme="dark"] .table-responsive-wrapper,
+.dark .table-responsive-wrapper {
+  background-color: #161b22 !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+[data-theme="dark"] .prose-retro th,
+.dark .prose-retro th {
+  background-color: #21262d !important;
+  color: #f0f6fc !important;
+  border-bottom-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+[data-theme="dark"] .prose-retro td,
+.dark .prose-retro td {
+  color: #c9d1d9 !important;
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .prose-retro tr:nth-child(even) td,
+.dark .prose-retro tr:nth-child(even) td {
+  background-color: rgba(255, 255, 255, 0.02) !important;
+}
+
+/* Mermaid in dark mode */
+[data-theme="dark"] .prose-retro .mermaid-container,
+.dark .prose-retro .mermaid-container {
+  background-color: #161b22 !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Footnotes section in dark mode */
+[data-theme="dark"] .prose-retro .footnotes,
+.dark .prose-retro .footnotes {
+  border-top-color: rgba(255, 255, 255, 0.12) !important;
+  color: #8b949e !important;
+}
+
+/* Littlefoot in dark mode */
+[data-theme="dark"] .littlefoot__button,
+.dark .littlefoot__button {
+  background-color: #21262d !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+  color: #fde047 !important;
+  box-shadow: 1.5px 1.5px 0px rgba(255, 255, 255, 0.2) !important;
+}
+
+[data-theme="dark"] .littlefoot__popover,
+.dark .littlefoot__popover {
+  background-color: #161b22 !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: #c9d1d9 !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* TOC Desktop Sidebar in dark mode */
+[data-theme="dark"] .toc-nav-link,
+.dark .toc-nav-link {
+  color: #8b949e !important;
+}
+
+[data-theme="dark"] .toc-nav-link:hover,
+.dark .toc-nav-link:hover {
+  color: #f0f6fc !important;
+  background-color: rgba(255, 255, 255, 0.04) !important;
+}
+
+[data-theme="dark"] .toc-nav-link.active,
+.dark .toc-nav-link.active {
+  color: #fde047 !important;
+  border-left-color: #fde047 !important;
+  background-color: rgba(253, 224, 71, 0.1) !important;
+}
+
+/* Mobile TOC details in dark mode */
+[data-theme="dark"] details.group,
+.dark details.group {
+  background-color: #161b22 !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Blog Listing Search & Cards in dark mode */
+[data-theme="dark"] #blog-search-input,
+.dark #blog-search-input {
+  color: #f0f6fc !important;
+}
+
+[data-theme="dark"] #blog-search-input::placeholder,
+.dark #blog-search-input::placeholder {
+  color: rgba(255, 255, 255, 0.4) !important;
+}
+
+[data-theme="dark"] .blog-tag-filter-btn:not(.active),
+.dark .blog-tag-filter-btn:not(.active) {
+  background-color: #161b22 !important;
+  color: #f0f6fc !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+[data-theme="dark"] .blog-match-snippet,
+.dark .blog-match-snippet {
+  background-color: rgba(245, 158, 11, 0.12) !important;
+  border-left-color: #f59e0b !important;
+  color: #e6edf3 !important;
+}
+
+[data-theme="dark"] .blog-match-snippet mark,
+.dark .blog-match-snippet mark {
+  background-color: #fde047 !important;
+  color: #000000 !important;
+}
+
+[data-theme="dark"] .tag-pill,
+.dark .tag-pill {
+  background-color: #21262d !important;
+  color: #f0f6fc !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}

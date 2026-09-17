@@ -36,6 +36,23 @@ ogType: article
           <span>ALL ARTICLES</span>
         </a>
 
+        <!-- Dark / Light Mode Toggle -->
+        <button
+          id="theme-toggle-btn"
+          class="btn-brutal-white px-2.5 py-1 text-xs flex items-center gap-1.5 cursor-pointer select-none"
+          title="Toggle Light / Dark Theme"
+          aria-label="Toggle light and dark theme"
+        >
+          <span class="theme-icon-light hidden items-center gap-1 text-amber-500 font-bold">
+            {{ icons.sun("w-3.5 h-3.5") }}
+            <span class="hidden sm:inline">LIGHT</span>
+          </span>
+          <span class="theme-icon-dark flex items-center gap-1 text-indigo-400 font-bold">
+            {{ icons.moon("w-3.5 h-3.5") }}
+            <span class="hidden sm:inline">DARK</span>
+          </span>
+        </button>
+
         <button
           id="share-article-btn"
           class="btn-brutal-white px-2.5 py-1 text-xs hover:bg-[#86efac]"
@@ -278,28 +295,125 @@ ogType: article
   </main>
 </div>
 
+<!-- Footnotes Enhancement: Littlefoot (Interactive footnote popovers) -->
+{% if 'data-footnotes' in content or 'class="footnotes"' in content %}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/littlefoot/dist/littlefoot.css" />
+  <script type="module">
+    import { littlefoot } from "https://cdn.jsdelivr.net/npm/littlefoot/dist/littlefoot.js";
+    try {
+      littlefoot({
+        activateOnHover: false,
+        dismissOnUnhover: false,
+        allowMultiple: false,
+        buttonTemplate: '<button aria-label="Footnote %number%" class="littlefoot__button" id="%reference%" title="See footnote %number%"><span class="littlefoot__button__ellipsis">[%number%]</span></button>'
+      });
+    } catch (e) {
+      console.warn("Littlefoot init warning:", e);
+    }
+  </script>
+{% endif %}
+
 <!-- Conditionally Load Mermaid.js Only If The Page Uses Diagrams -->
 {% if 'class="mermaid' in content %}
   <script type="module">
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
-    mermaid.initialize({
-      startOnLoad: true,
-      theme: "base",
-      themeVariables: {
-        primaryColor: "#fde047",
-        primaryBorderColor: "#000000",
-        primaryTextColor: "#000000",
-        lineColor: "#000000",
-        secondaryColor: "#86efac",
-        tertiaryColor: "#f6eedb",
-        background: "#fffdf9",
-        mainBkg: "#fffdf9",
-        nodeBorder: "#000000",
-        clusterBkg: "#fafaf9",
-        clusterBorder: "#d4d4d8",
-        fontFamily: '"Space Grotesk", sans-serif',
-        fontSize: "13px"
+
+    function getMermaidConfig(isDark) {
+      return {
+        startOnLoad: false,
+        securityLevel: "loose",
+        theme: isDark ? "dark" : "base",
+        themeVariables: isDark ? {
+          primaryColor: "#21262d",
+          primaryBorderColor: "#fde047",
+          primaryTextColor: "#f0f6fc",
+          lineColor: "#8b949e",
+          secondaryColor: "#161b22",
+          tertiaryColor: "#0d1117",
+          background: "#161b22",
+          mainBkg: "#161b22",
+          nodeBorder: "#fde047",
+          clusterBkg: "#0d1117",
+          clusterBorder: "#30363d",
+          fontFamily: '"Space Grotesk", sans-serif',
+          fontSize: "13px"
+        } : {
+          primaryColor: "#fde047",
+          primaryBorderColor: "#000000",
+          primaryTextColor: "#000000",
+          lineColor: "#000000",
+          secondaryColor: "#86efac",
+          tertiaryColor: "#f6eedb",
+          background: "#fffdf9",
+          mainBkg: "#fffdf9",
+          nodeBorder: "#000000",
+          clusterBkg: "#fafaf9",
+          clusterBorder: "#d4d4d8",
+          fontFamily: '"Space Grotesk", sans-serif',
+          fontSize: "13px"
+        }
+      };
+    }
+
+    async function renderDiagrams() {
+      const isDark = document.documentElement.getAttribute("data-theme") === "dark" ||
+                     document.documentElement.classList.contains("dark");
+      mermaid.initialize(getMermaidConfig(isDark));
+
+      const containers = document.querySelectorAll(".mermaid-container");
+      containers.forEach((container, idx) => {
+        let pre = container.querySelector("pre.mermaid");
+        if (!pre) {
+          // Re-render from saved source
+          const savedCode = container.getAttribute("data-mermaid-code");
+          if (savedCode) {
+            container.innerHTML = "";
+            pre = document.createElement("pre");
+            pre.className = "mermaid";
+            pre.textContent = savedCode;
+            container.appendChild(pre);
+          }
+        }
+        if (pre) {
+          if (!container.getAttribute("data-mermaid-code")) {
+            // Unescape HTML entities from server-side rendering
+            const textarea = document.createElement("textarea");
+            textarea.innerHTML = pre.innerHTML;
+            const cleanCode = textarea.value.trim();
+            container.setAttribute("data-mermaid-code", cleanCode);
+            pre.textContent = cleanCode;
+          }
+        }
+      });
+
+      try {
+        await mermaid.run({
+          nodes: document.querySelectorAll("pre.mermaid")
+        });
+      } catch (err) {
+        console.warn("Mermaid render warning:", err);
       }
+    }
+
+    // Initial render
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", renderDiagrams);
+    } else {
+      renderDiagrams();
+    }
+
+    // Re-render on theme toggle
+    window.addEventListener("theme-change", () => {
+      // Re-initialize and re-run mermaid with new theme variables
+      const containers = document.querySelectorAll(".mermaid-container");
+      containers.forEach((container) => {
+        const saved = container.getAttribute("data-mermaid-code");
+        if (saved) {
+          container.innerHTML = `<pre class="mermaid">${saved.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</pre>`;
+        }
+      });
+      renderDiagrams();
     });
   </script>
 {% endif %}
+

@@ -25,7 +25,7 @@ function rehypeMermaidBlocks() {
         node.children?.[0]?.tagName === "code" &&
         node.children[0].properties?.className?.includes("language-mermaid")
       ) {
-        const rawCode = node.children[0].children?.[0]?.value || "";
+        const rawCode = hastText(node.children[0]) || "";
         parent.children[index] = {
           type: "element",
           tagName: "div",

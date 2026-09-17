@@ -26,14 +26,14 @@ When building the **IITK-Resume-Engine** for the Academics & Career Council, sta
 
 ```mermaid
 flowchart TD
-    A[Raw Academic PDF] --> B[PyMuPDF Text Spans & Bounding Boxes]
-    B --> C{Spatial Y-Overlap Grouping}
-    C -->|Within Tolerance 3.0pt| D[Sort Horizontal Spans by X-Coord]
-    C -->|Delta > 3.0pt| E[Create New Logical Text Row]
-    D --> F[Topological Column Slicing]
+    A["Raw Academic PDF"] --> B["PyMuPDF Text Spans and Bounding Boxes"]
+    B --> C{"Spatial Y-Overlap Grouping"}
+    C -->|"Within Tolerance 3.0pt"| D["Sort Horizontal Spans by X-Coord"]
+    C -->|"Delta > 3.0pt"| E["Create New Logical Text Row"]
+    D --> F["Topological Column Slicing"]
     E --> F
-    F --> G[IIT Kanpur 4,400+ Course Code Registry Match]
-    G --> H[Structured JSON: CPI, Grades & Credits]
+    F --> G["IIT Kanpur 4,400+ Course Code Registry Match"]
+    G --> H["Structured JSON: CPI, Grades and Credits"]
 ```
 
 > [!WARNING]

@@ -25,12 +25,12 @@ sequenceDiagram
     autonumber
     actor PeerA as Peer A (Initiator)
     participant Hub as Go Signaling Hub
-    participant Redis as Redis TTL & PubSub
+    participant Redis as Redis TTL and PubSub
     actor PeerB as Peer B (Receiver)
 
-    PeerA->>Hub: WS Connect & Join Room
+    PeerA->>Hub: WS Connect and Join Room
     Hub->>Redis: SET room:lobby:peer:A EX 12
-    PeerB->>Hub: WS Connect & Join Room
+    PeerB->>Hub: WS Connect and Join Room
     Hub->>Redis: SET room:lobby:peer:B EX 12
     PeerA->>Hub: Send SDP Offer (via WritePump)
     Hub->>PeerB: Dispatch SDP Offer

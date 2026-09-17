@@ -26,7 +26,7 @@ stateDiagram-v2
     Handshaking --> Status: Next State = 1 (Server List Ping)
     Handshaking --> Login: Next State = 2 (Join Game)
     Status --> [*]: Disconnect after Pong
-    Login --> Play: Encryption & Auth Verified
+    Login --> Play: Encryption and Auth Verified
     Play --> [*]: Player Disconnect
 ```
 

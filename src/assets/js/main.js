@@ -646,6 +646,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const resetFiltersBtn = document.getElementById("blog-reset-filters-btn");
 
   if (articleCards.length > 0) {
+    // If Littlefinger static search engine is present, defer to it
+    if (window.littlefinger || document.querySelector('script[src*="littlefinger"]')) return;
+
     let currentTag = "ALL";
     let currentQuery = "";
 
@@ -751,4 +754,73 @@ document.addEventListener("DOMContentLoaded", () => {
       applyFilters();
     }
   }
+
+  /* -------------------------------------------------------------------------- */
+  /* 12. Dark / Light Theme Controller                                         */
+  /* -------------------------------------------------------------------------- */
+  function initThemeController() {
+    const themeToggleBtns = document.querySelectorAll("#theme-toggle-btn");
+    if (themeToggleBtns.length === 0) return;
+
+    function getActiveTheme() {
+      return document.documentElement.getAttribute("data-theme") || "light";
+    }
+
+    function updateToggleIcons(theme) {
+      themeToggleBtns.forEach((btn) => {
+        const lightIcon = btn.querySelector(".theme-icon-light");
+        const darkIcon = btn.querySelector(".theme-icon-dark");
+        if (theme === "dark") {
+          lightIcon?.classList.remove("hidden");
+          lightIcon?.classList.add("flex");
+          darkIcon?.classList.add("hidden");
+          darkIcon?.classList.remove("flex");
+        } else {
+          lightIcon?.classList.add("hidden");
+          lightIcon?.classList.remove("flex");
+          darkIcon?.classList.remove("hidden");
+          darkIcon?.classList.add("flex");
+        }
+      });
+    }
+
+    function setTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      if (theme === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+      try {
+        localStorage.setItem("theme", theme);
+      } catch (e) {}
+
+      updateToggleIcons(theme);
+
+      // Dispatch event for components that need re-rendering (Mermaid diagrams)
+      window.dispatchEvent(new CustomEvent("theme-change", { detail: { theme } }));
+    }
+
+    // Initialize UI icons on load
+    updateToggleIcons(getActiveTheme());
+
+    themeToggleBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const current = getActiveTheme();
+        const next = current === "dark" ? "light" : "dark";
+        setTheme(next);
+      });
+    });
+
+    // Listen to system preference changes if user has not set a preference
+    if (window.matchMedia) {
+      window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+        if (!localStorage.getItem("theme")) {
+          setTheme(e.matches ? "dark" : "light");
+        }
+      });
+    }
+  }
+
+  initThemeController();
 });
