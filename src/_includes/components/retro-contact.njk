@@ -32,9 +32,11 @@
               {{ icons.copy("w-3.5 h-3.5") }}
               <span>COPY</span>
             </span>
-            <span class="email-copied hidden flex items-center gap-1 text-emerald-800 font-black">
-              {{ icons.check("w-3.5 h-3.5 text-emerald-800 stroke-[3]") }}
-              <span>COPIED!</span>
+            <span class="email-copied hidden">
+              <span class="flex items-center gap-1 text-emerald-800 font-black">
+                {{ icons.check("w-3.5 h-3.5 text-emerald-800 stroke-[3]") }}
+                <span>COPIED!</span>
+              </span>
             </span>
           </button>
         </div>
@@ -91,17 +93,17 @@
           </a>
         </div>
 
-        <div class="p-3 sm:p-4 bg-[#ff424d] border-2 border-black shadow-brutal-xs flex items-center justify-between gap-2.5">
+        <div class="p-3 sm:p-4 bg-[#fb923c] border-2 border-black shadow-brutal-xs flex items-center justify-between gap-2.5">
           <div class="flex items-center gap-3">
-            <div class="w-8 h-8 bg-black text-[#ff424d] flex items-center justify-center border border-black shrink-0">
-              {{ icons.patreon("w-4 h-4 text-[#ff424d]") }}
+            <div class="w-8 h-8 bg-black text-[#fb923c] flex items-center justify-center border border-black shrink-0">
+              {{ icons.patreon("w-4 h-4 text-[#fb923c]") }}
             </div>
             <div>
               <div class="font-mono text-xs uppercase font-bold text-black/60">PATREON</div>
               <div class="font-mono text-sm sm:text-base font-bold text-black">@lazybittu</div>
             </div>
           </div>
-          <a href="https://www.patreon.com/lazybittu" target="_blank" rel="noopener noreferrer" class="btn-brutal-white px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm hover:bg-[#ff424d]">
+          <a href="https://www.patreon.com/lazybittu" target="_blank" rel="noopener noreferrer" class="btn-brutal-white px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm hover:bg-[#fb923c]">
             <span>SUPPORT</span>
             {{ icons.arrowUpRight("w-3.5 h-3.5") }}
           </a>
@@ -111,13 +113,6 @@
 
       <!-- Low-priority links -->
       <div class="flex flex-wrap gap-2 pt-2 border-t-2 border-black/10">
-        <a href="https://www.reddit.com/user/RealNPC_" target="_blank" rel="noopener noreferrer" class="profile-link hover:bg-[#fed7aa]">
-          <span class="flex items-center gap-2">
-            {{ icons.reddit("w-4 h-4 text-[#ff4500]") }}
-            REDDIT: u/RealNPC_
-          </span>
-          {{ icons.arrowUpRight("w-4 h-4") }}
-        </a>
         <a href="https://x.com/bittu5134" target="_blank" rel="noopener noreferrer" class="profile-link hover:bg-[#38bdf8]">
           <span class="flex items-center gap-2">
             {{ icons.twitter("w-4 h-4 text-black") }}
@@ -129,13 +124,6 @@
           <span class="flex items-center gap-2">
             {{ icons.planetMinecraft("w-4 h-4 text-black") }}
             PLANET MINECRAFT: @bittu5134
-          </span>
-          {{ icons.arrowUpRight("w-4 h-4") }}
-        </a>
-        <a href="/rss.xml" target="_blank" rel="noopener noreferrer" class="profile-link hover:bg-[#fb923c]">
-          <span class="flex items-center gap-2">
-            {{ icons.rss("w-4 h-4 text-black") }}
-            RSS FEED
           </span>
           {{ icons.arrowUpRight("w-4 h-4") }}
         </a>

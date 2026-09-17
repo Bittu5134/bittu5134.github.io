@@ -1,4 +1,16 @@
 {% import "macros/icons.njk" as icons %}
+{% set techStack = [
+  { name: "Go",                 bgClass: "bg-[#38bdf8]" },
+  { name: "Python",             bgClass: "bg-[#fde047]" },
+  { name: "C / C++",            bgClass: "bg-[#fb923c]" },
+  { name: "TypeScript",         bgClass: "bg-[#86efac]" },
+  { name: "Linux & Sockets",    bgClass: "bg-[#c4b5fd]" },
+  { name: "WebRTC",             bgClass: "bg-[#f472b6]" },
+  { name: "Docker",             bgClass: "bg-[#38bdf8]" },
+  { name: "Redis",              bgClass: "bg-[#fde047]" },
+  { name: "FastAPI / Gin",      bgClass: "bg-[#a7f3d0]" },
+  { name: "Cloudflare Workers", bgClass: "bg-[#fb923c]" }
+] %}
 
 <section id="about" class="py-6 sm:py-8 px-3 sm:px-6 scroll-mt-16 sm:scroll-mt-20">
   <div class="max-w-5xl mx-auto space-y-6">
@@ -20,8 +32,7 @@
             <a href="https://iitk.ac.in" target="_blank" rel="noopener noreferrer"
               class="bg-[#38bdf8]/30 px-1 border-b-2 border-black font-bold hover:bg-[#38bdf8]/60 transition-colors">
               IIT Kanpur '30
-            </a>, with a deep interest in open-source, low-level systems, and digital security. I build things for fun,
-            and every so often they turn out to be genuinely useful. I also really enjoy optimization — making things small and fast.
+            </a>, with a deep interest in open-source, low-level systems, and digital security. Alongside freelance software engineering, I build things for fun, and every so often they turn out to be genuinely useful.
           </p>
           <p>
             Outside of systems code, I've spent years deep in the
@@ -65,11 +76,11 @@
             </li>
             <li class="flex items-start gap-2.5">
               {{ icons.code("w-4 h-4 text-black shrink-0 mt-0.5") }}
-              <span>3 years freelance engineering (2022–2025)</span>
+              <span>Freelance software engineer</span>
             </li>
             <li class="flex items-start gap-2.5">
-              {{ icons.user("w-4 h-4 text-black shrink-0 mt-0.5") }}
-              <span>120K+ community members moderated</span>
+              {{ icons.zap("w-4 h-4 text-black shrink-0 mt-0.5") }}
+              <span>Enjoys optimising small &amp; fast builds</span>
             </li>
           </ul>
         </div>
@@ -81,6 +92,20 @@
           </div>
         </div>
 
+      </div>
+    </div>
+
+    <!-- Row 2: Core Technologies & Tooling -->
+    <div class="p-4 sm:p-6 card-brutal">
+      <div class="mb-3 sm:mb-4">
+        <span class="font-mono text-xs sm:text-sm font-bold text-black uppercase tracking-wider">
+          CORE TECHNOLOGIES &amp; TOOLING:
+        </span>
+      </div>
+      <div class="flex flex-wrap gap-2.5 sm:gap-3">
+        {% for tech in techStack %}
+          <span class="tech-badge {{ tech.bgClass }}">{{ tech.name }}</span>
+        {% endfor %}
       </div>
     </div>
   </div>
