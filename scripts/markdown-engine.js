@@ -206,7 +206,26 @@ function rehypeGithubAlertsTransformer() {
   };
 }
 
-// ─── 5. Build and cache the processor ────────────────────────────────────────
+// ─── 5. Custom rehype plugin: wrap <table> in .table-responsive-wrapper ─────
+function rehypeTableWrapper() {
+  return (tree) => {
+    visit(tree, "element", (node, index, parent) => {
+      if (
+        node.tagName === "table" &&
+        !(parent && parent.properties?.className?.includes?.("table-responsive-wrapper"))
+      ) {
+        parent.children[index] = {
+          type: "element",
+          tagName: "div",
+          properties: { className: ["table-responsive-wrapper"] },
+          children: [node],
+        };
+      }
+    });
+  };
+}
+
+// ─── 6. Build and cache the processor ────────────────────────────────────────
 let processorCache = null;
 
 async function buildProcessor() {
@@ -244,6 +263,7 @@ async function buildProcessor() {
     })
     .use(rehypeCodeBlockWrapper)             // wrap shiki <pre> in .code-block-wrapper
     .use(rehypeGithubAlertsTransformer)      // convert alert blockquotes → styled divs
+    .use(rehypeTableWrapper)                 // wrap <table> in .table-responsive-wrapper
     .use(rehypeKatex)                        // render math nodes → KaTeX HTML
     .use(rehypeExternalLinks, {
       target: "_blank",

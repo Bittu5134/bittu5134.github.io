@@ -173,221 +173,338 @@ img, svg, video {
   background: #d97706;
 }
 
-/* ─── Retro Blog Markdown Prose ─────────────────────────── */
+/* ─── Blog Markdown Prose (Readability-First Architecture) ───── */
 .prose-retro {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.95rem;
-  line-height: 1.75rem;
-  color: rgba(20, 22, 31, 0.9);
-}
-@media (min-width: 640px) {
-  .prose-retro { font-size: 1rem; }
-}
-
-.prose-retro h2 {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 1.25rem;
-  font-weight: 900;
-  color: #000;
-  margin-top: 2.5rem;
-  margin-bottom: 1rem;
-  padding-top: 1rem;
-  border-top: 2px solid rgba(0, 0, 0, 0.2);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-@media (min-width: 640px) {
-  .prose-retro h2 { font-size: 1.5rem; }
-}
-
-.prose-retro h3 {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 1.125rem;
-  font-weight: 700;
-  color: #000;
-  margin-top: 2rem;
-  margin-bottom: 0.625rem;
-}
-@media (min-width: 640px) {
-  .prose-retro h3 { font-size: 1.25rem; }
-}
-
-.prose-retro h4 {
-  font-family: 'Space Grotesk', sans-serif;
   font-size: 1rem;
-  font-weight: 700;
-  color: #000;
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
+  line-height: 1.8;
+  color: #1a1a1a;
+  max-width: 100%;
+}
+
+@media (min-width: 640px) {
+  .prose-retro {
+    font-size: 1.0625rem; /* ~17px on tablet/desktop */
+    line-height: 1.85;
+  }
+}
+
+@media (min-width: 1024px) {
+  .prose-retro {
+    font-size: 1.125rem; /* ~18px base reading size on large desktop */
+    line-height: 1.85;
+  }
+}
+
+/* Paragraphs capped for optical line length (~65-75 chars) */
+.prose-retro > p,
+.prose-retro > ul,
+.prose-retro > ol,
+.prose-retro > blockquote {
+  max-width: 46rem; /* ~736px comfortable reading measure */
 }
 
 .prose-retro p {
   font-family: 'Space Grotesk', sans-serif;
-  line-height: 1.75rem;
-  margin-bottom: 1.125rem;
+  margin-bottom: 1.5rem;
+  color: #1a1a1a;
 }
 
-.prose-retro strong { font-weight: 700; }
-.prose-retro em { font-style: italic; }
-.prose-retro del { text-decoration: line-through; opacity: 0.6; }
+/* Headings */
+.prose-retro h1,
+.prose-retro h2,
+.prose-retro h3,
+.prose-retro h4,
+.prose-retro h5,
+.prose-retro h6 {
+  font-family: 'Space Grotesk', sans-serif;
+  color: #0d1117;
+  scroll-margin-top: 5.5rem;
+}
 
+.prose-retro h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  margin-top: 3.5rem;
+  margin-bottom: 1.25rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .prose-retro h2 {
+    font-size: 1.875rem;
+  }
+}
+
+.prose-retro h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  margin-top: 2.5rem;
+  margin-bottom: 0.875rem;
+}
+
+@media (min-width: 640px) {
+  .prose-retro h3 {
+    font-size: 1.4rem;
+  }
+}
+
+.prose-retro h4 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.45;
+  margin-top: 2rem;
+  margin-bottom: 0.625rem;
+}
+
+/* Inline text styles */
+.prose-retro strong {
+  font-weight: 700;
+  color: #000;
+}
+
+.prose-retro em {
+  font-style: italic;
+}
+
+.prose-retro del {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+/* Lists */
 .prose-retro ul {
   list-style-type: disc;
-  list-style-position: inside;
-  margin-bottom: 1rem;
-  padding-left: 0.5rem;
+  list-style-position: outside;
+  margin-left: 1.5rem;
+  margin-bottom: 1.5rem;
 }
-.prose-retro ul > li {
-  font-family: 'Space Grotesk', sans-serif;
-  line-height: 1.75rem;
-  margin-bottom: 0.375rem;
-}
+
 .prose-retro ol {
   list-style-type: decimal;
-  list-style-position: inside;
-  margin-bottom: 1rem;
-  padding-left: 0.5rem;
+  list-style-position: outside;
+  margin-left: 1.5rem;
+  margin-bottom: 1.5rem;
 }
+
+.prose-retro ul > li,
 .prose-retro ol > li {
   font-family: 'Space Grotesk', sans-serif;
-  line-height: 1.75rem;
-  margin-bottom: 0.375rem;
+  margin-bottom: 0.5rem;
+  padding-left: 0.25rem;
+  line-height: 1.75;
 }
-.prose-retro li { line-height: 1.75rem; }
 
-/* GFM Task List checkboxes */
+/* GFM Task Lists */
+.prose-retro ul.contains-task-list {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.prose-retro li.task-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  padding-left: 0;
+  margin-bottom: 0.625rem;
+  line-height: 1.7;
+}
+
 .prose-retro input[type="checkbox"] {
-  appearance: auto;
-  margin-right: 0.4rem;
+  appearance: none;
+  -webkit-appearance: none;
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-top: 0.25rem;
+  flex-shrink: 0;
+  border: 1.5px solid #000;
+  border-radius: 3px;
+  background-color: #fff;
   cursor: default;
-  vertical-align: middle;
-  accent-color: #000;
+  display: inline-grid;
+  place-content: center;
+  transition: all 0.15s ease;
 }
 
-/* Plain blockquotes (not alerts — alerts use .github-alert class) */
+.prose-retro input[type="checkbox"]:checked {
+  background-color: #d97706;
+  border-color: #b45309;
+}
+
+.prose-retro input[type="checkbox"]:checked::before {
+  content: "";
+  width: 0.625rem;
+  height: 0.35rem;
+  border-left: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(-45deg) translate(1px, -1px);
+}
+
+/* Standard Editorial Blockquotes (NOT alert callouts) */
 .prose-retro blockquote:not(.github-alert) {
-  border-left: 4px solid #f59e0b;
-  background-color: #fef9eb;
-  padding: 0.75rem 1rem;
-  margin: 1.25rem 0;
-  font-family: 'Space Mono', monospace;
-  font-size: 0.875rem;
-  color: #000;
+  border-left: 3px solid #d97706;
+  padding: 0.75rem 1.25rem;
+  margin: 1.75rem 0;
+  background-color: #faf8f5;
+  border-radius: 0 6px 6px 0;
+  color: #374151;
+  font-family: 'Space Grotesk', sans-serif;
+  font-style: italic;
 }
 
-.prose-retro pre {
-  margin: 1.25rem 0;
-  border: 2px solid #000;
-  box-shadow: 4px 4px 0px 0px #000;
-  background-color: #12151e;
-  padding: 1rem;
-  overflow-x: auto;
-  color: #f5ede3;
-  font-size: 0.875rem;
+.prose-retro blockquote:not(.github-alert) p {
+  margin-bottom: 0;
+  color: inherit;
+  font-family: inherit;
+}
+
+/* Inline Code */
+.prose-retro code:not(pre code) {
+  padding: 0.15rem 0.4rem;
+  background-color: #f3f0e8;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  color: #0f172a;
   font-family: 'Space Mono', monospace;
+  font-size: 0.85em;
+  font-weight: 600;
 }
-.prose-retro pre code {
-  background: transparent !important;
-  border: none !important;
-  padding: 0 !important;
-  color: inherit !important;
-  font-weight: normal !important;
-}
-.prose-retro code {
-  padding: 0.125rem 0.375rem;
-  background-color: #f6eedb;
-  border: 1px solid #000;
-  color: #000;
-  font-family: 'Space Mono', monospace;
-  font-size: 0.8125rem;
-  font-weight: 700;
-}
-.prose-retro table {
-  width: 100%;
-  text-align: left;
-  font-family: 'Space Mono', monospace;
-  font-size: 0.875rem;
-  border-collapse: collapse;
-  margin: 1.5rem 0;
-  border: 2px solid #000;
-  box-shadow: 3px 3px 0px 0px #000;
-}
-.prose-retro th {
-  padding: 0.625rem;
-  background-color: #fde047;
-  border: 1px solid #000;
-  font-weight: 700;
-  color: #000;
-}
-.prose-retro td {
-  padding: 0.625rem;
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  background-color: #fffdf9;
-}
+
+/* Links */
 .prose-retro a {
-  font-weight: 700;
+  color: #1a1a1a;
   text-decoration: underline;
-  text-underline-offset: 4px;
-  text-decoration-color: #f59e0b;
-  transition: background-color 0.2s;
-}
-.prose-retro a:hover { background-color: #fde047; }
-.prose-retro hr {
-  margin: 2.5rem 0;
-  border: 0;
-  border-top: 2px solid rgba(0, 0, 0, 0.2);
+  text-decoration-color: #d97706;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+  transition: all 0.15s ease;
 }
 
-/* ─── Code Block Wrapper (Shiki output) ─────────────────────── */
+.prose-retro a:hover {
+  color: #b45309;
+  text-decoration-color: #b45309;
+  background-color: rgba(253, 224, 71, 0.35);
+}
+
+/* Subtle external link indicator */
+.prose-retro a[target="_blank"]::after {
+  content: " ↗";
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.8em;
+  font-weight: 600;
+  color: #9ca3af;
+  text-decoration: none;
+  display: inline-block;
+  vertical-align: super;
+  line-height: 0;
+}
+
+.prose-retro a[target="_blank"]:hover::after {
+  color: #d97706;
+}
+
+/* Heading Permalinks (# on hover) */
+.prose-retro .header-anchor {
+  color: inherit;
+  text-decoration: none !important;
+  position: relative;
+  border: none !important;
+  background: transparent !important;
+}
+
+.prose-retro .header-anchor::after {
+  content: " #";
+  opacity: 0;
+  color: #d97706;
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 0.85em;
+  transition: opacity 0.15s ease;
+}
+
+.prose-retro h2:hover .header-anchor::after,
+.prose-retro h3:hover .header-anchor::after,
+.prose-retro h4:hover .header-anchor::after {
+  opacity: 1;
+}
+
+/* Horizontal Rules */
+.prose-retro hr {
+  margin: 3.5rem 0;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* ─── Code Block Wrapper (Clean, Dark, Single-Line Slim Header) ─ */
 .code-block-wrapper {
-  margin: 1.5rem 0;
-  border: 3px solid #000;
-  box-shadow: 4px 4px 0 #000;
-  background: #0d1117;
+  margin: 2rem 0;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  background-color: #24292e; /* github-dark background */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   overflow: hidden;
 }
+
 .code-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.25rem 1rem;
-  background: #161b22;
-  border-bottom: 2px solid #000;
+  padding: 0.35rem 0.875rem;
+  background-color: #1f2428;
+  border-bottom: 1px solid #30363d;
   font-family: 'Space Mono', monospace;
   font-size: 0.6875rem;
-  color: #8b949e;
 }
+
 .lang-badge {
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  font-weight: 600;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: #8b949e;
+  user-select: none;
 }
+
 .code-copy-btn {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 0.375rem;
-  padding: 0.1875rem 0.5rem;
-  background: #21262d;
+  padding: 0.2rem 0.5rem;
+  background-color: #24292e;
   border: 1px solid #30363d;
   border-radius: 4px;
   color: #c9d1d9;
   font-family: 'Space Mono', monospace;
   font-size: 0.6875rem;
-  font-weight: 700;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: all 0.15s ease;
 }
-.code-copy-btn:hover { background: #30363d; color: #fff; }
-.code-copy-btn:active { transform: scale(0.95); }
+
+.code-copy-btn:hover {
+  background-color: #30363d;
+  color: #ffffff;
+  border-color: #484f58;
+}
+
+.code-copy-btn:active {
+  transform: scale(0.96);
+}
+
 .code-content {
   overflow-x: auto;
-  padding: 1rem;
-  font-size: 0.8125rem;
-  line-height: 1.65;
+  padding: 1.125rem 1.25rem;
 }
-/* Shiki pre/code reset inside .code-block-wrapper */
+
+/* Shiki pre/code reset */
 .code-block-wrapper .shiki,
 .code-block-wrapper pre.shiki {
   margin: 0 !important;
@@ -396,9 +513,10 @@ img, svg, video {
   background: transparent !important;
   padding: 0 !important;
   font-family: 'Space Mono', monospace;
-  font-size: 0.8125rem;
-  line-height: 1.65;
+  font-size: 0.875rem;
+  line-height: 1.7;
 }
+
 .code-block-wrapper .shiki code,
 .code-block-wrapper pre.shiki code {
   background: transparent !important;
@@ -408,61 +526,46 @@ img, svg, video {
   font-weight: normal !important;
 }
 
-/* ─── Heading Permalinks ────────────────────────────────────── */
-.prose-retro .header-anchor {
-  color: inherit;
-  text-decoration: none !important;
-  position: relative;
-}
-.prose-retro .header-anchor:hover { background-color: transparent !important; }
-.prose-retro .header-anchor::after {
-  content: " #";
-  opacity: 0;
-  color: #f59e0b;
-  font-family: 'Space Mono', monospace;
-  font-weight: 700;
-  transition: opacity 0.15s ease;
-}
-.prose-retro h2:hover .header-anchor::after,
-.prose-retro h3:hover .header-anchor::after { opacity: 1; }
-
-/* ─── GitHub Alert Callouts ─────────────────────────────────── */
-/* border-left + bg tint set via inline style from rehypeGithubAlertsTransformer */
+/* ─── GitHub-Style Callout Alerts ───────────────────────────── */
 .prose-retro .github-alert {
-  margin: 1.5rem 0;
-  padding: 0.75rem 1rem;
+  margin: 1.75rem 0;
+  padding: 0.875rem 1.125rem;
+  border-radius: 0 6px 6px 0;
+  max-width: 46rem;
 }
-.prose-retro .github-alert p {
-  margin-bottom: 0.5rem;
-}
-.prose-retro .github-alert p:last-child { margin-bottom: 0; }
 
 .github-alert-title {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-family: 'Space Mono', monospace;
-  font-weight: 900;
-  font-size: 0.6875rem;
-  letter-spacing: 0.08em;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
   margin-bottom: 0.5rem;
 }
+
 .github-alert-body {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.9rem;
-  line-height: 1.7;
-  color: #14161f;
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: #1a1a1a;
 }
-.github-alert-body p:last-child { margin-bottom: 0; }
 
-/* ─── Mermaid Container ─────────────────────────────────────── */
-.prose-retro .mermaid-container {
-  margin: 1.5rem 0;
-  border: 1px solid rgba(0, 0, 0, 0.18);
-  padding: 1.5rem 1rem;
-  overflow-x: auto;
-  background: #fffdf9;
+.github-alert-body p:last-child {
+  margin-bottom: 0;
 }
+
+/* ─── Mermaid Diagram Container (Clean, Minimal) ─────────────── */
+.prose-retro .mermaid-container {
+  margin: 2rem 0;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  background-color: #ffffff;
+  padding: 1.75rem 1rem;
+  overflow-x: auto;
+}
+
 .prose-retro .mermaid-container pre.mermaid {
   margin: 0 !important;
   border: none !important;
@@ -470,6 +573,7 @@ img, svg, video {
   background: transparent !important;
   padding: 0 !important;
 }
+
 .prose-retro .mermaid-container svg {
   max-width: 100%;
   height: auto;
@@ -478,65 +582,151 @@ img, svg, video {
 }
 
 /* ─── KaTeX Math ────────────────────────────────────────────── */
-.prose-retro .math-inline { display: inline; font-size: 0.95em; }
-.prose-retro .math-display {
-  overflow-x: auto;
-  padding: 1.25rem 0;
-  text-align: center;
-  display: block;
-  margin: 1.5rem 0;
+.prose-retro .math-inline {
+  display: inline;
+  font-size: 1em;
 }
 
-/* ─── Figure / Image Captions ──────────────────────────────── */
-.prose-retro .prose-figure {
+.prose-retro .math-display {
+  overflow-x: auto;
+  padding: 1.5rem 0;
+  text-align: center;
+  display: block;
   margin: 2rem 0;
+  font-size: 1.0625rem;
+}
+
+/* ─── Tables (Responsive with generous padding) ─────────────── */
+.table-responsive-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin: 2rem 0;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: #ffffff;
+}
+
+.prose-retro table {
+  width: 100%;
+  text-align: left;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.9375rem;
+  border-collapse: collapse;
+  margin: 0;
+}
+
+.prose-retro th {
+  padding: 0.75rem 1rem;
+  background-color: #f8f6f0;
+  border-bottom: 1.5px solid rgba(0, 0, 0, 0.15);
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.prose-retro td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  color: #334155;
+  background-color: transparent;
+}
+
+.prose-retro tr:last-child td {
+  border-bottom: none;
+}
+
+.prose-retro tr:nth-child(even) td {
+  background-color: rgba(0, 0, 0, 0.015);
+}
+
+/* ─── Figures and Image Captions ────────────────────────────── */
+.prose-retro .prose-figure {
+  margin: 2.5rem 0;
   text-align: center;
 }
+
 .prose-retro .prose-figure img {
   margin: 0 auto;
-  border: 2px solid rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
   max-width: 100%;
   height: auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
+
 .prose-retro .prose-figure figcaption {
-  margin-top: 0.5rem;
-  font-family: 'Space Mono', monospace;
-  font-size: 0.75rem;
-  color: rgba(0, 0, 0, 0.55);
+  margin-top: 0.625rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.8125rem;
+  color: #6b7280;
   font-style: italic;
 }
 
-/* ─── GFM Footnotes ────────────────────────────────────────── */
+/* ─── Footnotes ─────────────────────────────────────────────── */
 .prose-retro .footnotes {
-  margin-top: 3rem;
-  padding-top: 1.5rem;
-  border-top: 2px solid rgba(0, 0, 0, 0.15);
-  font-size: 0.8rem;
-  font-family: 'Space Mono', monospace;
-  color: rgba(0, 0, 0, 0.65);
-}
-.prose-retro .footnotes ol {
-  list-style: decimal;
-  list-style-position: inside;
-  padding-left: 0.5rem;
-}
-.prose-retro .footnotes li {
-  margin-bottom: 0.25rem;
-  font-size: 0.8rem;
-  line-height: 1.6;
-}
-.prose-retro .data-footnote-backref {
-  text-decoration: none;
-  font-weight: 700;
-  color: #f59e0b;
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  font-size: 0.875rem;
+  color: #4b5563;
 }
 
-/* ─── Table of Contents ─────────────────────────────────────── */
+.prose-retro .footnotes::before {
+  content: "Footnotes";
+  display: block;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #9ca3af;
+  margin-bottom: 1rem;
+}
+
+.prose-retro .footnotes ol {
+  list-style: decimal;
+  margin-left: 1.25rem;
+}
+
+.prose-retro .footnotes li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.prose-retro .data-footnote-backref {
+  display: inline-block;
+  padding: 0.2rem 0.4rem;
+  margin-left: 0.25rem;
+  text-decoration: none;
+  font-weight: 700;
+  color: #d97706;
+  border-radius: 3px;
+  background-color: rgba(217, 119, 6, 0.1);
+  font-size: 0.75rem;
+  vertical-align: middle;
+}
+
+.prose-retro .data-footnote-backref:hover {
+  background-color: #d97706;
+  color: #ffffff;
+}
+
+/* ─── Table of Contents (Desktop Sidebar Active State) ──────── */
+.toc-nav-link {
+  color: rgba(20, 22, 31, 0.7);
+  border-left: 2px solid transparent;
+}
+
+.toc-nav-link:hover {
+  color: #000000;
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
 .toc-nav-link.active {
-  background-color: #fde047 !important;
-  border-left-color: #000000 !important;
+  color: #d97706 !important;
+  border-left-color: #d97706 !important;
+  background-color: rgba(217, 119, 6, 0.08) !important;
   font-weight: 700 !important;
-  transform: translateX(2px);
+  padding-left: 0.625rem;
 }
 
 /* ─── Cassette LCD Marquee ─────────────────────────────────── */

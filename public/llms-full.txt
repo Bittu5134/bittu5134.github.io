@@ -357,7 +357,15 @@ The Shannon entropy formula[^1] quantifies the average information content of a 
 
 ---
 
-## 9. External Links
+## 9. Figures & Image Captions
+
+Images written as standalone paragraphs are automatically parsed into semantic `<figure>` elements, deriving a centered `<figcaption>` from the image's alt text:
+
+![Architecture overview diagram of our zero-overhead build pipeline](/images/blogs/feature-showcase.svg)
+
+---
+
+## 10. External Links
 
 All external links automatically receive `target="_blank" rel="noopener noreferrer"`:
 
