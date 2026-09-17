@@ -61,38 +61,39 @@ SECTION 3: COMPLETE TECHNICAL ARTICLES & DISPATCHES
 ================================================================================
 
 ---
-Title: Engineering Handbook: Syntax, Mermaid Graphs, & Spec Showcase
+Title: Engineering Handbook: Full Pipeline Showcase
 Date: March 18, 2026
-Read Time: 7 min read
+Read Time: 9 min read
 Tags: Engineering, Architecture, WebRTC, Go, Mermaid, Showcase
 URL: https://bittu.dev/blog/engineering-handbook-and-syntax-showcase
 Cover: https://bittu.dev/images/blogs/feature-showcase.svg
 Raw Markdown: https://bittu.dev/raw/blogs/engineering-handbook-and-syntax-showcase.md
-Summary: The definitive reference and stress test for our modern markdown pipeline: Shiki build-time syntax highlighting, interactive Mermaid graphs, GitHub callout alerts, coordinate geometry, and responsive tables.
+Summary: The definitive reference and stress test for the unified remark+rehype pipeline: Shiki highlighting, Mermaid graphs, KaTeX math, GitHub callouts, GFM tables, task lists, footnotes, figure captions, code titles, and external links.
 ---
 
 ## 1. The Architecture of Our Blog Pipeline
 
-Welcome to the engineering test dispatch for **bittu.dev**. This post acts as a live specification test harness for every frontend formatting feature supported across our static site generation pipeline.
+Welcome to the engineering test dispatch for **bittu.dev**. This post acts as a live specification test harness for every frontend formatting feature supported across the unified remark + rehype pipeline.
 
 ```mermaid
 flowchart TD
-    A[Markdown Source .md] --> B[YAML Frontmatter Extractor]
-    A --> C[Shiki Syntax Engine SSG]
-    A --> D[GitHub Callout Transformer]
-    A --> E[Mermaid Block Tagging]
-    
-    B --> F[Eleventy Reactive Collection]
-    C --> G[Static HTML Artifacts]
-    D --> G
-    E --> G
-    
-    F --> H[Dynamic Blog Directory]
-    F --> I[Homepage Zine Section]
-    F --> J[RSS 2.0 / Sitemap / LLMs.txt]
-
-    G --> K[Client Browser Output]
-    K -.->|Only If Diagram Present| L[Lazy Loaded Mermaid.js ESM]
+    A[Markdown Source .md] --> B[remark-parse]
+    B --> C[remark-gfm\nTables · Tasks · Footnotes]
+    B --> D[remark-math\n$ inline $ and $$ block $$]
+    B --> E[remark-github-alerts\n> not TYPE callouts]
+    B --> F[remark-flexible-code-titles\nlang:filename annotations]
+    C & D & E & F --> G[remark-rehype\nMDAST → HAST]
+    G --> H[rehype-raw\nHTML passthrough]
+    H --> I[rehypeMermaidBlocks\nIntercept mermaid fences]
+    I --> J[rehype-slug\nHeading IDs]
+    J --> K["@shikijs/rehype\ngithub-dark SSG highlighting"]
+    K --> L[rehypeCodeBlockWrapper\nCustom UI shell]
+    L --> M[rehypeGithubAlerts\nStyled callout divs]
+    M --> N[rehype-katex\nMath → HTML]
+    N --> O[rehype-external-links\ntarget=_blank rel=noopener]
+    O --> P["@microflash/rehype-figure\nfigure + figcaption"]
+    P --> Q[rehype-autolink-headings\nPermalink anchors]
+    Q --> R[rehype-stringify → HTML]
 ```
 
 > [!NOTE]
@@ -102,43 +103,60 @@ flowchart TD
 
 ## 2. GitHub Markdown Callouts
 
-Our markdown parser automatically transforms GitHub Flavored Markdown alerts into styled neo-brutalist callouts with custom SVG icons and colored left borders.
+Our pipeline transforms GitHub Flavored Markdown alerts into styled callouts with colored left borders and custom SVG icons.
 
-### Standard Note Callout
 > [!NOTE]
 > Useful background information that users should know when skimming architecture documents or API specifications.
 
-### Pro-Tip Callout
 > [!TIP]
 > Use Redis pipelines and connection pooling when dispatching heartbeat notifications across high-concurrency Goroutines to avoid TCP port exhaustion.
 
-### Important Announcement
 > [!IMPORTANT]
 > The Handshake packet in Minecraft Java Edition dictates protocol state. Ensure variable-length integers are sanitized before memory allocation.
 
-### Urgent Warning
 > [!WARNING]
 > PDF coordinate systems place origin `(0, 0)` at the bottom-left on Quartz engines and top-left on MuPDF engines. Normalize bounding boxes before clustering.
 
-### Critical Caution
 > [!CAUTION]
 > Never expose raw Redis cluster administrative sockets to the public internet without strict mutual TLS authentication and IP whitelisting.
 
 ---
 
-## 3. High-Throughput Code Highlighting (Shiki)
+## 3. KaTeX Math Rendering
 
-Every code block rendered below includes a terminal title bar, an active language badge, and a **one-click copy button** with instant clipboard feedback.
+Inline math uses single dollar signs: $E = mc^2$ and $\sigma = \sqrt{\frac{1}{N}\sum_{i=1}^{N}(x_i - \mu)^2}$.
+
+Display-level math uses double dollar signs and renders centered:
+
+$$
+\int_0^\infty e^{-x^2}\,dx = \frac{\sqrt{\pi}}{2}
+$$
+
+$$
+\nabla \times \mathbf{B} = \mu_0 \mathbf{J} + \mu_0 \varepsilon_0 \frac{\partial \mathbf{E}}{\partial t}
+$$
+
+The Shannon entropy formula[^1] for a discrete probability distribution $P$:
+
+$$
+H(P) = -\sum_{x \in \mathcal{X}} P(x) \log_2 P(x)
+$$
+
+---
+
+## 4. High-Throughput Code Highlighting (Shiki)
+
+Every code block includes a language badge and a one-click copy button.
 
 ### Go Concurrency Worker
-```go
+
+```go:worker_pool.go
 package main
 
 import (
 	"context"
 	"fmt"
 	"sync"
-	"time"
 )
 
 type WorkerPool struct {
@@ -168,8 +186,9 @@ func (p *WorkerPool) worker(id int) {
 }
 ```
 
-### Rust Zero-Copy Binary Buffer Reader
-```rust
+### Rust Zero-Copy Binary Buffer
+
+```rust:packet.rs
 use std::io::{self, Cursor, Read};
 
 #[derive(Debug)]
@@ -182,36 +201,27 @@ pub fn parse_packet(buf: &[u8]) -> io::Result<PacketHeader> {
     let mut cursor = Cursor::new(buf);
     let mut len_bytes = [0u8; 4];
     cursor.read_exact(&mut len_bytes)?;
-    
     let length = u32::from_be_bytes(len_bytes);
     let mut id_byte = [0u8; 1];
     cursor.read_exact(&mut id_byte)?;
-
-    Ok(PacketHeader {
-        length,
-        packet_id: id_byte[0],
-    })
+    Ok(PacketHeader { length, packet_id: id_byte[0] })
 }
 ```
 
 ### Python Spatial Coordinate Filter
-```python
+
+```python:cluster.py
 from dataclasses import dataclass
 from typing import List
 
 @dataclass
 class BoundingBox:
-    x0: float
-    y0: float
-    x1: float
-    y1: float
-    text: str
+    x0: float; y0: float; x1: float; y1: float; text: str
 
 def cluster_spans(spans: List[BoundingBox], y_threshold: float = 3.0) -> List[List[BoundingBox]]:
     """Cluster 2D text bounding boxes into cohesive horizontal lines."""
     sorted_spans = sorted(spans, key=lambda s: s.y0)
     lines: List[List[BoundingBox]] = []
-
     for span in sorted_spans:
         y_mid = (span.y0 + span.y1) / 2
         assigned = False
@@ -224,32 +234,54 @@ def cluster_spans(spans: List[BoundingBox], y_threshold: float = 3.0) -> List[Li
                 break
         if not assigned:
             lines.append([span])
-
     return lines
 ```
 
-### Shell Daemon Automation
-```bash
-#!/usr/bin/env bash
-set -euo pipefail
+### Dockerfile Multi-stage Build
 
-NODE_ENV="production"
-PORT=8080
+```dockerfile:Dockerfile
+FROM golang:1.23-alpine AS builder
+WORKDIR /app
+COPY go.mod go.sum ./
+RUN go mod download
+COPY . .
+RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o signaling-hub ./cmd/server
 
-echo "==> Starting WebRTC Signaling cluster on :${PORT}..."
-exec ./bin/signaling-hub \
-  --port="${PORT}" \
-  --redis-addr="127.0.0.1:6379" \
-  --max-peers=1000
+FROM gcr.io/distroless/static:nonroot
+COPY --from=builder /app/signaling-hub /signaling-hub
+EXPOSE 8080
+ENTRYPOINT ["/signaling-hub"]
+```
+
+### SQL Query with Window Functions
+
+```sql:analytics.sql
+WITH ranked_sessions AS (
+  SELECT
+    peer_id,
+    room_id,
+    connected_at,
+    disconnected_at,
+    EXTRACT(EPOCH FROM (disconnected_at - connected_at)) AS duration_s,
+    ROW_NUMBER() OVER (PARTITION BY peer_id ORDER BY connected_at DESC) AS rn
+  FROM peer_sessions
+  WHERE connected_at > NOW() - INTERVAL '7 days'
+)
+SELECT peer_id, room_id, duration_s
+FROM ranked_sessions
+WHERE rn = 1
+ORDER BY duration_s DESC
+LIMIT 50;
 ```
 
 ---
 
-## 4. Interactive Mermaid Diagrams
+## 5. Interactive Mermaid Diagrams
 
-When a post contains diagrams, `mermaid.js` is **dynamically loaded** over ESM. If a page does not contain any diagram, **zero bytes** of the library are requested.
+Mermaid.js is lazy-loaded via ESM **only on pages that contain diagrams**.
 
 ### Peer-to-Peer Signaling Sequence
+
 ```mermaid
 sequenceDiagram
     autonumber
@@ -266,10 +298,11 @@ sequenceDiagram
     Server->>Bob: Forward SDP Offer
     Bob->>Server: Send SDP Answer
     Server->>Alice: Forward SDP Answer
-    Note over Alice,Bob: Direct WebRTC P2P DataChannel Active (0% Loss)
+    Note over Alice,Bob: Direct WebRTC P2P DataChannel Active
 ```
 
-### Protocol State Transition Diagram
+### Protocol State Machine
+
 ```mermaid
 stateDiagram-v2
     [*] --> Disconnected
@@ -283,29 +316,55 @@ stateDiagram-v2
 
 ---
 
-## 5. Structured Data & Spec Matrix
+## 6. GFM Tables
 
-Markdown tables are formatted with high-contrast borders and brutalist header banners.
+Markdown tables render with brutalist header banners and high-contrast borders.
 
 | Component | Technology | Build Stage | Client Overhead |
 |---|---|---|---|
-| **Syntax Highlighter** | Shiki (`github-dark`) | SSG Pre-Compiled | **0 KB** (Pure HTML/CSS) |
-| **Diagram Engine** | Mermaid v11 | Dynamic On-Demand | ~0 KB on text posts |
-| **Callout Transformer** | Custom Token AST | SSG Pre-Compiled | 0 KB |
-| **TOC Scroll-Spy** | `IntersectionObserver` | Client DOM Script | < 0.5 KB |
-| **Progress Tracker** | Passive Scroll Window | Client DOM Script | < 0.2 KB |
-| **Search & Filter** | Client Index Filter | Instant Vanilla JS | < 1.5 KB |
+| **Syntax Highlighter** | Shiki (`github-dark`) | SSG Pre-Compiled | **0 KB** |
+| **Diagram Engine** | Mermaid v11 | CSR On-Demand | ~0 KB on text posts |
+| **Math Renderer** | KaTeX | SSG + CDN CSS | ~0 KB JS |
+| **Callout Transformer** | rehype plugin | SSG Pre-Compiled | 0 KB |
+| **TOC Scroll-Spy** | `IntersectionObserver` | Client Script | < 0.5 KB |
+| **Search & Filter** | Vanilla JS | Client Script | < 1.5 KB |
 
 ---
 
-## 6. Checklist & Task Verification
+## 7. Task Lists & Strikethrough (GFM)
 
-- [x] Zero-dependency build pipeline configured in `.eleventy.js`
-- [x] Shiki syntax highlighting verified across Go, Rust, Python, and Bash
+- [x] Zero-dependency build pipeline in `.eleventy.js`
+- [x] Shiki syntax highlighting across Go, Rust, Python, Bash
 - [x] Dynamic TOC sidebar with scroll-spy active indicator
-- [x] On-demand conditional loading for Mermaid diagrams
-- [x] Interactive real-time search and tag filtering on `/blog`
-- [x] Automated RSS 2.0, Sitemap, and LLM text synchronization
+- [x] On-demand conditional Mermaid.js loading
+- [x] KaTeX math rendering (inline + display)
+- [x] GFM footnotes with backref links
+- [x] Figure + figcaption from alt text
+- [x] Code block filename titles via `lang:filename` syntax
+- [x] External links with `rel="noopener noreferrer"`
+- [ ] rehype-mermaid SSR (skipped — requires Playwright)
+
+Strikethrough via `~~text~~`: ~~deprecated API endpoint~~ → use `/v2/rooms` instead.
+
+---
+
+## 8. Footnotes (GFM)
+
+The Shannon entropy formula[^1] quantifies the average information content of a message. In distributed systems, Lamport timestamps[^2] provide a partial causal ordering without synchronized clocks.
+
+[^1]: Claude Shannon, "A Mathematical Theory of Communication," *Bell System Technical Journal*, 1948.
+[^2]: Leslie Lamport, "Time, Clocks, and the Ordering of Events in a Distributed System," *CACM*, 1978.
+
+---
+
+## 9. External Links
+
+All external links automatically receive `target="_blank" rel="noopener noreferrer"`:
+
+- [Unified.js ecosystem](https://unifiedjs.com) — the remark/rehype framework
+- [Shiki syntax highlighter](https://shiki.style) — SSG-compatible highlighting
+- [KaTeX math renderer](https://katex.org) — fast LaTeX in the browser
+- [Mermaid.js diagrams](https://mermaid.js.org) — flowcharts, sequences, state machines
 
 ================================================================================
 
