@@ -176,6 +176,7 @@ function rehypeGithubAlertsTransformer() {
       if (!typeClass) return;
 
       const meta = alertMeta[typeClass];
+      const alertType = typeClass.replace("markdown-alert-", "");
 
       // Strip the auto-generated .markdown-alert-title paragraph (octicon icon)
       const bodyChildren = node.children.filter(
@@ -186,13 +187,12 @@ function rehypeGithubAlertsTransformer() {
         type: "element",
         tagName: "div",
         properties: {
-          className: ["github-alert"],
-          style: `background-color:${meta.bg};border-left:4px solid ${meta.border};`,
+          className: ["github-alert", `github-alert-${alertType}`],
         },
         children: [
           {
             type: "raw",
-            value: `<div class="github-alert-title" style="color:${meta.border};">${icons[typeClass]}<span>${meta.title}</span></div>`,
+            value: `<div class="github-alert-title">${icons[typeClass]}<span>${meta.title}</span></div>`,
           },
           {
             type: "element",

@@ -531,7 +531,49 @@ img, svg, video {
   margin: 1.75rem 0;
   padding: 0.875rem 1.125rem;
   border-radius: 0 6px 6px 0;
+  border-left: 4px solid #3b82f6;
+  background-color: #eff6ff;
   max-width: 46rem;
+}
+
+.prose-retro .github-alert-note {
+  border-left-color: #0969da;
+  background-color: #f0f7ff;
+}
+.prose-retro .github-alert-note .github-alert-title {
+  color: #0969da;
+}
+
+.prose-retro .github-alert-tip {
+  border-left-color: #1a7f37;
+  background-color: #f0fff4;
+}
+.prose-retro .github-alert-tip .github-alert-title {
+  color: #1a7f37;
+}
+
+.prose-retro .github-alert-important {
+  border-left-color: #8250df;
+  background-color: #fbf5ff;
+}
+.prose-retro .github-alert-important .github-alert-title {
+  color: #8250df;
+}
+
+.prose-retro .github-alert-warning {
+  border-left-color: #9a6700;
+  background-color: #fff8c5;
+}
+.prose-retro .github-alert-warning .github-alert-title {
+  color: #9a6700;
+}
+
+.prose-retro .github-alert-caution {
+  border-left-color: #cf222e;
+  background-color: #ffebe9;
+}
+.prose-retro .github-alert-caution .github-alert-title {
+  color: #cf222e;
 }
 
 .github-alert-title {
@@ -549,7 +591,7 @@ img, svg, video {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 0.9375rem;
   line-height: 1.75;
-  color: #1a1a1a;
+  color: #1f2328;
 }
 
 .github-alert-body p:last-child {
@@ -977,59 +1019,138 @@ img, svg, video {
 }
 
 /* GitHub Alerts in dark mode */
-[data-theme="dark"] .github-alert-note,
-.dark .github-alert-note {
+[data-theme="dark"] .prose-retro .github-alert-note,
+.dark .prose-retro .github-alert-note {
   border-left-color: #388bfd !important;
-  background-color: rgba(56, 139, 253, 0.12) !important;
+  background-color: rgba(56, 139, 253, 0.14) !important;
 }
-[data-theme="dark"] .github-alert-note .github-alert-title,
-.dark .github-alert-note .github-alert-title {
+[data-theme="dark"] .prose-retro .github-alert-note .github-alert-title,
+.dark .prose-retro .github-alert-note .github-alert-title {
   color: #58a6ff !important;
 }
 
-[data-theme="dark"] .github-alert-tip,
-.dark .github-alert-tip {
+[data-theme="dark"] .prose-retro .github-alert-tip,
+.dark .prose-retro .github-alert-tip {
   border-left-color: #3fb950 !important;
-  background-color: rgba(63, 185, 80, 0.12) !important;
+  background-color: rgba(63, 185, 80, 0.14) !important;
 }
-[data-theme="dark"] .github-alert-tip .github-alert-title,
-.dark .github-alert-tip .github-alert-title {
+[data-theme="dark"] .prose-retro .github-alert-tip .github-alert-title,
+.dark .prose-retro .github-alert-tip .github-alert-title {
   color: #3fb950 !important;
 }
 
-[data-theme="dark"] .github-alert-important,
-.dark .github-alert-important {
+[data-theme="dark"] .prose-retro .github-alert-important,
+.dark .prose-retro .github-alert-important {
   border-left-color: #a371f7 !important;
-  background-color: rgba(163, 113, 247, 0.12) !important;
+  background-color: rgba(163, 113, 247, 0.14) !important;
 }
-[data-theme="dark"] .github-alert-important .github-alert-title,
-.dark .github-alert-important .github-alert-title {
+[data-theme="dark"] .prose-retro .github-alert-important .github-alert-title,
+.dark .prose-retro .github-alert-important .github-alert-title {
   color: #bc8cff !important;
 }
 
-[data-theme="dark"] .github-alert-warning,
-.dark .github-alert-warning {
+[data-theme="dark"] .prose-retro .github-alert-warning,
+.dark .prose-retro .github-alert-warning {
   border-left-color: #d29922 !important;
-  background-color: rgba(210, 153, 34, 0.12) !important;
+  background-color: rgba(210, 153, 34, 0.14) !important;
 }
-[data-theme="dark"] .github-alert-warning .github-alert-title,
-.dark .github-alert-warning .github-alert-title {
-  color: #d29922 !important;
+[data-theme="dark"] .prose-retro .github-alert-warning .github-alert-title,
+.dark .prose-retro .github-alert-warning .github-alert-title {
+  color: #e3b341 !important;
 }
 
-[data-theme="dark"] .github-alert-caution,
-.dark .github-alert-caution {
+[data-theme="dark"] .prose-retro .github-alert-caution,
+.dark .prose-retro .github-alert-caution {
   border-left-color: #f85149 !important;
-  background-color: rgba(248, 81, 73, 0.12) !important;
+  background-color: rgba(248, 81, 73, 0.14) !important;
 }
-[data-theme="dark"] .github-alert-caution .github-alert-title,
-.dark .github-alert-caution .github-alert-title {
-  color: #f85149 !important;
+[data-theme="dark"] .prose-retro .github-alert-caution .github-alert-title,
+.dark .prose-retro .github-alert-caution .github-alert-title {
+  color: #ff7b72 !important;
 }
 
-[data-theme="dark"] .github-alert-body,
-.dark .github-alert-body {
-  color: #c9d1d9 !important;
+[data-theme="dark"] .prose-retro .github-alert-body,
+.dark .prose-retro .github-alert-body {
+  color: #e6edf3 !important;
+}
+
+[data-theme="dark"] .prose-retro .github-alert-body code,
+.dark .prose-retro .github-alert-body code {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color: #fde047 !important;
+}
+
+/* Header Dark Theme (Strictly Scoped to Blog Pages) */
+[data-theme="dark"] header.sticky,
+.dark header.sticky {
+  background-color: rgba(13, 17, 23, 0.95) !important;
+  border-bottom-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+[data-theme="dark"] .nav-btn-desktop:not(.bg-\[\#fde047\]),
+.dark .nav-btn-desktop:not(.bg-\[\#fde047\]) {
+  background-color: #161b22 !important;
+  color: #f0f6fc !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 2px 2px 0px 0px rgba(255, 255, 255, 0.25) !important;
+}
+
+[data-theme="dark"] .nav-btn-desktop:not(.bg-\[\#fde047\]) svg,
+.dark .nav-btn-desktop:not(.bg-\[\#fde047\]) svg {
+  color: #f0f6fc !important;
+}
+
+[data-theme="dark"] .nav-btn-desktop:not(.bg-\[\#fde047\]):hover,
+.dark .nav-btn-desktop:not(.bg-\[\#fde047\]):hover {
+  background-color: #21262d !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .nav-btn-desktop.bg-\[\#fde047\],
+.dark .nav-btn-desktop.bg-\[\#fde047\] {
+  background-color: #fde047 !important;
+  color: #000000 !important;
+  border-color: #000000 !important;
+  box-shadow: 2px 2px 0px 0px #000000 !important;
+}
+
+/* Mobile Slide-down Drawer in dark mode */
+[data-theme="dark"] #mobile-drawer,
+.dark #mobile-drawer {
+  background-color: #161b22 !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: #f0f6fc !important;
+}
+
+[data-theme="dark"] #mobile-drawer .card-header-bar,
+.dark #mobile-drawer .card-header-bar {
+  background-color: #21262d !important;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+[data-theme="dark"] #mobile-drawer .card-header-bar span,
+.dark #mobile-drawer .card-header-bar span {
+  color: #f0f6fc !important;
+}
+
+[data-theme="dark"] #mobile-drawer .nav-btn-mobile:not(.bg-\[\#fde047\]),
+.dark #mobile-drawer .nav-btn-mobile:not(.bg-\[\#fde047\]) {
+  background-color: #21262d !important;
+  color: #f0f6fc !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+[data-theme="dark"] #mobile-drawer .nav-btn-mobile:not(.bg-\[\#fde047\]) span,
+[data-theme="dark"] #mobile-drawer .nav-btn-mobile:not(.bg-\[\#fde047\]) svg,
+.dark #mobile-drawer .nav-btn-mobile:not(.bg-\[\#fde047\]) span,
+.dark #mobile-drawer .nav-btn-mobile:not(.bg-\[\#fde047\]) svg {
+  color: #f0f6fc !important;
+}
+
+[data-theme="dark"] #mobile-drawer .text-black\/60,
+.dark #mobile-drawer .text-black\/60 {
+  color: #8b949e !important;
 }
 
 /* Tables in dark mode */

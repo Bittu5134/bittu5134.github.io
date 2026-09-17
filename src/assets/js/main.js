@@ -756,14 +756,32 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* -------------------------------------------------------------------------- */
-  /* 12. Dark / Light Theme Controller                                         */
+  /* 12. Dark / Light Theme Controller (Strictly Scoped to /blog)              */
   /* -------------------------------------------------------------------------- */
   function initThemeController() {
+    const path = window.location.pathname;
+    const isBlog = path === "/blog" || path.indexOf("/blog/") === 0;
+
+    // Strict scope isolation: Never activate or toggle theme on non-blog pages
+    if (!isBlog) {
+      document.documentElement.setAttribute("data-theme", "light");
+      document.documentElement.classList.remove("dark");
+      const metaTheme = document.querySelector('meta[name="theme-color"]');
+      if (metaTheme) metaTheme.setAttribute("content", "#f6eedb");
+      return;
+    }
+
     const themeToggleBtns = document.querySelectorAll("#theme-toggle-btn");
-    if (themeToggleBtns.length === 0) return;
 
     function getActiveTheme() {
       return document.documentElement.getAttribute("data-theme") || "light";
+    }
+
+    function updateThemeColorMeta(theme) {
+      const meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) {
+        meta.setAttribute("content", theme === "dark" ? "#0d1117" : "#f6eedb");
+      }
     }
 
     function updateToggleIcons(theme) {
@@ -784,40 +802,49 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    function setTheme(theme) {
+    function setTheme(theme, isManual = true) {
       document.documentElement.setAttribute("data-theme", theme);
       if (theme === "dark") {
         document.documentElement.classList.add("dark");
       } else {
         document.documentElement.classList.remove("dark");
       }
-      try {
-        localStorage.setItem("theme", theme);
-      } catch (e) {}
+
+      if (isManual) {
+        try {
+          localStorage.setItem("theme", theme);
+        } catch (e) {}
+      }
 
       updateToggleIcons(theme);
+      updateThemeColorMeta(theme);
 
       // Dispatch event for components that need re-rendering (Mermaid diagrams)
       window.dispatchEvent(new CustomEvent("theme-change", { detail: { theme } }));
     }
 
-    // Initialize UI icons on load
-    updateToggleIcons(getActiveTheme());
+    // Initialize UI icons on load based on active theme
+    const currentTheme = getActiveTheme();
+    updateToggleIcons(currentTheme);
+    updateThemeColorMeta(currentTheme);
 
     themeToggleBtns.forEach((btn) => {
       btn.addEventListener("click", () => {
         const current = getActiveTheme();
         const next = current === "dark" ? "light" : "dark";
-        setTheme(next);
+        setTheme(next, true);
       });
     });
 
-    // Listen to system preference changes if user has not set a preference
+    // Auto-switch based on system theme if user has not set a manual preference
     if (window.matchMedia) {
-      window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
-        if (!localStorage.getItem("theme")) {
-          setTheme(e.matches ? "dark" : "light");
-        }
+      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+      mediaQuery.addEventListener("change", (e) => {
+        try {
+          if (!localStorage.getItem("theme")) {
+            setTheme(e.matches ? "dark" : "light", false);
+          }
+        } catch (err) {}
       });
     }
   }
