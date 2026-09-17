@@ -47,6 +47,11 @@
     <!-- CSS -->
     <link rel="stylesheet" href="/assets/css/index.css" />
 
+    <!-- KaTeX (loaded only if page contains math output) -->
+    {% if content and '.katex' in content %}
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css" crossorigin="anonymous" />
+    {% endif %}
+
     <!-- RSS -->
     <link rel="alternate" type="application/rss+xml" title="Bittu's Blog RSS Feed" href="https://bittu.dev/rss.xml" />
   </head>
