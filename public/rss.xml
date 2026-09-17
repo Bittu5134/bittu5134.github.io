@@ -5,7 +5,7 @@
     <link>https://bittu.dev/blog</link>
     <description>Essays and deep dives into low-level systems, reverse engineering, distributed networking, and software craft by Bittu (Bittu5134).</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 17 Sep 2026 22:02:50 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 17 Sep 2026 22:14:38 GMT</lastBuildDate>
     <atom:link href="https://bittu.dev/rss.xml" rel="self" type="application/rss+xml" />
     <item>
       <title><![CDATA[Engineering Handbook: Full Pipeline Showcase]]></title>
@@ -13,7 +13,7 @@
       <guid isPermaLink="true">https://bittu.dev/blog/engineering-handbook-and-syntax-showcase</guid>
       <pubDate>Tue, 17 Mar 2026 18:30:00 GMT</pubDate>
       <description><![CDATA[The definitive reference and stress test for the unified remark+rehype pipeline: Shiki highlighting, Mermaid graphs, KaTeX math, GitHub callouts, GFM tables, task lists, footnotes, figure captions, code titles, and external links.]]></description>
-      <enclosure url="https://bittu.dev/images/blogs/feature-showcase.svg" type="image/svg+xml" length="0" />
+      <enclosure url="https://bittu.dev/images/blogs/feature-showcase.svg" type="image/svg+xml" length="6239" />
     </item>
     <item>
       <title><![CDATA[Scaling WebRTC Signaling in Go: Lessons from 500 Concurrent Peers]]></title>
@@ -21,7 +21,7 @@
       <guid isPermaLink="true">https://bittu.dev/blog/scaling-webrtc-signaling-in-go</guid>
       <pubDate>Sat, 07 Mar 2026 18:30:00 GMT</pubDate>
       <description><![CDATA[A deep dive into building PeerBasket low-latency signaling server in Go. How we achieved 41ms average latency and 0% packet loss across 500 concurrent peers with Redis TTL heartbeat pruning and IP token buckets.]]></description>
-      <enclosure url="https://bittu.dev/images/blogs/webrtc-signaling.svg" type="image/svg+xml" length="0" />
+      <enclosure url="https://bittu.dev/images/blogs/webrtc-signaling.svg" type="image/svg+xml" length="5935" />
     </item>
     <item>
       <title><![CDATA[Reverse Engineering the Modern Minecraft Network Protocol]]></title>
@@ -29,7 +29,7 @@
       <guid isPermaLink="true">https://bittu.dev/blog/reverse-engineering-minecraft-protocol</guid>
       <pubDate>Wed, 21 Jan 2026 18:30:00 GMT</pubDate>
       <description><![CDATA[Unpacking the binary wire format of Minecraft Java Edition. From variable-length integers (VarInt) and zlib packet compression to handshake state machines and live packet sniffing.]]></description>
-      <enclosure url="https://bittu.dev/images/blogs/minecraft-protocol.svg" type="image/svg+xml" length="0" />
+      <enclosure url="https://bittu.dev/images/blogs/minecraft-protocol.svg" type="image/svg+xml" length="5347" />
     </item>
     <item>
       <title><![CDATA[Coordinate Geometry in PyMuPDF: Extracting Unruly Academic LaTeX PDFs]]></title>
@@ -37,7 +37,7 @@
       <guid isPermaLink="true">https://bittu.dev/blog/spatial-geometry-parsing-in-pymupdf</guid>
       <pubDate>Thu, 13 Nov 2025 18:30:00 GMT</pubDate>
       <description><![CDATA[Why standard PDF parsers struggle with academic transcripts and resumes, and how we solved it for CDW IIT Kanpur using 2D spatial coordinate clustering and step-gradient scoring.]]></description>
-      <enclosure url="https://bittu.dev/images/blogs/spatial-geometry.svg" type="image/svg+xml" length="0" />
+      <enclosure url="https://bittu.dev/images/blogs/spatial-geometry.svg" type="image/svg+xml" length="5762" />
     </item>
   </channel>
 </rss>

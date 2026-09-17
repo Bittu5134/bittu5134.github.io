@@ -154,9 +154,19 @@ export async function generateMeta() {
     .map((post) => {
       const pubDate = new Date(post.date).toUTCString();
       const postUrl = `${SITE_URL}/blog/${post.slug}`;
-      const enclosure = post.coverImage
-        ? `\n      <enclosure url="${SITE_URL}${post.coverImage}" type="image/svg+xml" length="0" />`
-        : "";
+      let enclosure = "";
+      if (post.coverImage) {
+        let fileLength = 0;
+        try {
+          const localImgPath = path.join(publicDir, post.coverImage.replace(/^\//, ""));
+          if (fs.existsSync(localImgPath)) {
+            fileLength = fs.statSync(localImgPath).size;
+          }
+        } catch {
+          // ignore stat errors
+        }
+        enclosure = `\n      <enclosure url="${SITE_URL}${post.coverImage}" type="image/svg+xml" length="${fileLength}" />`;
+      }
       return `    <item>
       <title><![CDATA[${post.title}]]></title>
       <link>${postUrl}</link>
