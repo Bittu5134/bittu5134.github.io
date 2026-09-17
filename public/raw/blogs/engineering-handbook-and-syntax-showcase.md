@@ -266,7 +266,7 @@ stateDiagram-v2
 
 ## 6. GFM Tables
 
-Markdown tables render with brutalist header banners and high-contrast borders.
+Markdown tables render with clean header rows and readable borders.
 
 | Component | Technology | Build Stage | Client Overhead |
 |---|---|---|---|
