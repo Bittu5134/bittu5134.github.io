@@ -1,16 +1,4 @@
 {% import "macros/icons.njk" as icons %}
-{% set techStack = [
-  { name: "Go",                 bgClass: "bg-[#38bdf8]" },
-  { name: "Python",             bgClass: "bg-[#fde047]" },
-  { name: "C / C++",            bgClass: "bg-[#fb923c]" },
-  { name: "TypeScript",         bgClass: "bg-[#86efac]" },
-  { name: "Linux & Sockets",    bgClass: "bg-[#c4b5fd]" },
-  { name: "WebRTC",             bgClass: "bg-[#f472b6]" },
-  { name: "Docker",             bgClass: "bg-[#38bdf8]" },
-  { name: "Redis",              bgClass: "bg-[#fde047]" },
-  { name: "FastAPI / Gin",      bgClass: "bg-[#a7f3d0]" },
-  { name: "Cloudflare Workers", bgClass: "bg-[#fb923c]" }
-] %}
 
 <section id="about" class="py-6 sm:py-8 px-3 sm:px-6 scroll-mt-16 sm:scroll-mt-20">
   <div class="max-w-5xl mx-auto space-y-6">
@@ -104,7 +92,14 @@
       </div>
       <div class="flex flex-wrap gap-2.5 sm:gap-3">
         {% for tech in techStack %}
-          <span class="tech-badge {{ tech.bgClass }}">{{ tech.name }}</span>
+          <span class="tech-badge {{ tech.bgClass }}">
+            {% if tech.svgPath %}
+              <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-black shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="{{ tech.svgPath }}"/>
+              </svg>
+            {% endif %}
+            <span>{{ tech.name }}</span>
+          </span>
         {% endfor %}
       </div>
     </div>
