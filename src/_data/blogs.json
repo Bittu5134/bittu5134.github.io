@@ -1,5 +1,22 @@
 [
   {
+    "slug": "engineering-handbook-and-syntax-showcase",
+    "title": "Engineering Handbook: Syntax, Mermaid Graphs, & Spec Showcase",
+    "date": "March 18, 2026",
+    "readTime": "7 min read",
+    "summary": "The definitive reference and stress test for our modern markdown pipeline: Shiki build-time syntax highlighting, interactive Mermaid graphs, GitHub callout alerts, coordinate geometry, and responsive tables.",
+    "tags": [
+      "Engineering",
+      "Architecture",
+      "WebRTC",
+      "Go",
+      "Mermaid",
+      "Showcase"
+    ],
+    "coverImage": "/images/blogs/feature-showcase.svg",
+    "coverAlt": "Comprehensive engineering syntax and markdown feature showcase"
+  },
+  {
     "slug": "scaling-webrtc-signaling-in-go",
     "title": "Scaling WebRTC Signaling in Go: Lessons from 500 Concurrent Peers",
     "date": "March 8, 2026",
@@ -10,7 +27,9 @@
       "WebRTC",
       "Redis",
       "Networking"
-    ]
+    ],
+    "coverImage": "/images/blogs/webrtc-signaling.svg",
+    "coverAlt": "Go WebRTC low latency signaling architecture diagram"
   },
   {
     "slug": "reverse-engineering-minecraft-protocol",
@@ -23,7 +42,9 @@
       "Reverse Engineering",
       "Protocols",
       "C++"
-    ]
+    ],
+    "coverImage": "/images/blogs/minecraft-protocol.svg",
+    "coverAlt": "Minecraft Java wire protocol reverse engineering diagrams"
   },
   {
     "slug": "spatial-geometry-parsing-in-pymupdf",
@@ -36,6 +57,8 @@
       "PyMuPDF",
       "Algorithms",
       "AI"
-    ]
+    ],
+    "coverImage": "/images/blogs/spatial-geometry.svg",
+    "coverAlt": "PyMuPDF coordinate geometry extraction pipeline flowchart"
   }
 ]

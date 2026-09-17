@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <pattern id="dot-grid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.5" fill="#d3c6ab" />
+    </pattern>
+    <filter id="shadow" x="0" y="0" width="200%" height="200%">
+      <feOffset result="offOut" in="SourceAlpha" dx="8" dy="8" />
+      <feColorMatrix result="matrixOut" in="offOut" type="matrix" values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 1 0" />
+      <feBlend in="SourceGraphic" in2="matrixOut" mode="normal" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#f6eedb"/>
+  <rect width="1200" height="630" fill="url(#dot-grid)"/>
+
+  <!-- Outer Border -->
+  <rect x="24" y="24" width="1152" height="582" fill="none" stroke="#000000" stroke-width="6"/>
+
+  <!-- Top Header Bar -->
+  <rect x="24" y="24" width="1152" height="64" fill="#fb923c" stroke="#000000" stroke-width="6"/>
+  <circle cx="64" cy="56" r="10" fill="#f87171" stroke="#000000" stroke-width="3"/>
+  <circle cx="94" cy="56" r="10" fill="#fde047" stroke="#000000" stroke-width="3"/>
+  <circle cx="124" cy="56" r="10" fill="#86efac" stroke="#000000" stroke-width="3"/>
+  <text x="160" y="62" font-family="'Space Mono', monospace" font-size="20" font-weight="bold" fill="#000000">SYS_DISPATCH // WEBRTC_SIGNALING_GO.DISP</text>
+  <rect x="990" y="40" width="160" height="32" fill="#fde047" stroke="#000000" stroke-width="3"/>
+  <text x="1008" y="62" font-family="'Space Mono', monospace" font-size="16" font-weight="bold" fill="#000000">NETWORKING</text>
+
+  <!-- Main Content Card -->
+  <g transform="translate(64, 120)">
+    <!-- Shadow -->
+    <rect x="8" y="8" width="620" height="440" fill="#000000"/>
+    <!-- Card -->
+    <rect x="0" y="0" width="620" height="440" fill="#fffdf9" stroke="#000000" stroke-width="5"/>
+    
+    <!-- Badges -->
+    <rect x="36" y="36" width="140" height="32" fill="#86efac" stroke="#000000" stroke-width="3"/>
+    <text x="50" y="58" font-family="'Space Mono', monospace" font-size="14" font-weight="bold" fill="#000000">500 PEERS</text>
+
+    <rect x="190" y="36" width="130" height="32" fill="#fde047" stroke="#000000" stroke-width="3"/>
+    <text x="206" y="58" font-family="'Space Mono', monospace" font-size="14" font-weight="bold" fill="#000000">41ms RTT</text>
+
+    <rect x="334" y="36" width="140" height="32" fill="#38bdf8" stroke="#000000" stroke-width="3"/>
+    <text x="350" y="58" font-family="'Space Mono', monospace" font-size="14" font-weight="bold" fill="#000000">0% LOSS</text>
+
+    <!-- Title -->
+    <text x="36" y="126" font-family="'Space Grotesk', sans-serif" font-size="44" font-weight="900" fill="#000000">
+      <tspan x="36" dy="0">Scaling WebRTC</tspan>
+      <tspan x="36" dy="54">Signaling in Go</tspan>
+    </text>
+
+    <text x="36" y="270" font-family="'Space Mono', monospace" font-size="18" fill="#444444">
+      <tspan x="36" dy="0">Lessons from high-throughput distributed</tspan>
+      <tspan x="36" dy="28">signaling with Redis TTL sliding heartbeats</tspan>
+      <tspan x="36" dy="28">and zero-alloc Goroutine pumps.</tspan>
+    </text>
+
+    <!-- Author Pill -->
+    <g transform="translate(36, 368)">
+      <rect x="0" y="0" width="260" height="40" fill="#f6eedb" stroke="#000000" stroke-width="3"/>
+      <circle cx="20" cy="20" r="10" fill="#fb923c" stroke="#000000" stroke-width="2"/>
+      <text x="40" y="25" font-family="'Space Mono', monospace" font-size="14" font-weight="bold" fill="#000000">BY BITTU // BITTU.DEV</text>
+    </g>
+  </g>
+
+  <!-- Right Visual: Network Mesh & Terminal -->
+  <g transform="translate(730, 120)">
+    <rect x="8" y="8" width="400" height="440" fill="#000000"/>
+    <rect x="0" y="0" width="400" height="440" fill="#12151e" stroke="#000000" stroke-width="5"/>
+    
+    <!-- Terminal header -->
+    <rect x="0" y="0" width="400" height="40" fill="#1e2433" stroke="#000000" stroke-width="3"/>
+    <text x="20" y="26" font-family="'Space Mono', monospace" font-size="14" font-weight="bold" fill="#86efac">ws://signaling.peerbasket.local</text>
+
+    <!-- Peer Mesh Graphic -->
+    <!-- Nodes -->
+    <line x1="200" y1="120" x2="100" y2="240" stroke="#fde047" stroke-width="3" stroke-dasharray="6,4"/>
+    <line x1="200" y1="120" x2="300" y2="240" stroke="#fde047" stroke-width="3" stroke-dasharray="6,4"/>
+    <line x1="100" y1="240" x2="300" y2="240" stroke="#86efac" stroke-width="4"/>
+    <line x1="100" y1="240" x2="200" y2="350" stroke="#38bdf8" stroke-width="3" stroke-dasharray="4,4"/>
+    <line x1="300" y1="240" x2="200" y2="350" stroke="#38bdf8" stroke-width="3" stroke-dasharray="4,4"/>
+
+    <!-- Central Hub -->
+    <rect x="160" y="90" width="80" height="60" fill="#fb923c" stroke="#000000" stroke-width="4"/>
+    <text x="174" y="125" font-family="'Space Mono', monospace" font-size="12" font-weight="bold" fill="#000000">GO HUB</text>
+
+    <!-- Peer A -->
+    <rect x="60" y="210" width="80" height="60" fill="#86efac" stroke="#000000" stroke-width="4"/>
+    <text x="74" y="245" font-family="'Space Mono', monospace" font-size="12" font-weight="bold" fill="#000000">PEER A</text>
+
+    <!-- Peer B -->
+    <rect x="260" y="210" width="80" height="60" fill="#86efac" stroke="#000000" stroke-width="4"/>
+    <text x="274" y="245" font-family="'Space Mono', monospace" font-size="12" font-weight="bold" fill="#000000">PEER B</text>
+
+    <!-- Redis Cache -->
+    <rect x="160" y="320" width="80" height="60" fill="#f87171" stroke="#000000" stroke-width="4"/>
+    <text x="178" y="355" font-family="'Space Mono', monospace" font-size="12" font-weight="bold" fill="#ffffff">REDIS</text>
+
+    <!-- Telemetry snippet -->
+    <rect x="30" y="398" width="340" height="28" fill="#000000" stroke="#86efac" stroke-width="1"/>
+    <text x="45" y="417" font-family="'Space Mono', monospace" font-size="12" fill="#86efac">&gt; ACTIVE_CHANNELS: 500 [OK]</text>
+  </g>
+</svg>

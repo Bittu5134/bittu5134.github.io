@@ -10,6 +10,8 @@ tags:
   - WebRTC
   - Redis
   - Networking
+coverImage: /images/blogs/webrtc-signaling.svg
+coverAlt: "Go WebRTC low latency signaling architecture diagram"
 ---
 
 ## The Problem: WebRTC Signaling at Scale
@@ -18,11 +20,27 @@ WebRTC handles peer-to-peer audio, video, and arbitrary data channels seamlessly
 
 When building [PeerBasket](https://peerbasket.bittu.dev), our goal was ambitious: support instant room-based signaling across 500+ concurrent peers with minimal memory overhead on bare-metal infrastructure.
 
+```mermaid
+sequenceDiagram
+    autonumber
+    actor PeerA as Peer A (Initiator)
+    participant Hub as Go Signaling Hub
+    participant Redis as Redis TTL & PubSub
+    actor PeerB as Peer B (Receiver)
+
+    PeerA->>Hub: WS Connect & Join Room
+    Hub->>Redis: SET room:lobby:peer:A EX 12
+    PeerB->>Hub: WS Connect & Join Room
+    Hub->>Redis: SET room:lobby:peer:B EX 12
+    PeerA->>Hub: Send SDP Offer (via WritePump)
+    Hub->>PeerB: Dispatch SDP Offer
+    PeerB->>Hub: Send SDP Answer
+    Hub->>PeerA: Dispatch SDP Answer
+    Note over PeerA,PeerB: Direct P2P DataChannel Established (41ms RTT)
 ```
-Client A  <---- (SDP Offer / ICE) ---->  Signaling Server (Go + Redis)  <---- (SDP Answer / ICE) ---->  Client B
-               \____________________________________________________________________________/
-                                         Direct P2P DataChannel
-```
+
+> [!TIP]
+> Always enforce TCP write deadlines on outbound WebSocket connections in Go. Lingering slow clients can silently block buffer writes and starve the central Goroutine pool.
 
 ---
 
@@ -80,17 +98,20 @@ We implemented an atomic Redis TTL sliding-window key scheme:
 - Redis updates the key `room:{roomID}:peer:{peerID}` with `EXPIRE 12`.
 - Redis KeySpace Notifications trigger automatic room eviction events if a client drops off for more than two consecutive intervals.
 
+> [!NOTE]
+> Setting Redis TTL to `2.4x` the ping interval prevents spurious disconnects caused by transient packet jitter over cellular connections.
+
 ---
 
 ## 3. Results & Benchmarks
 
 Benchmarked with `k6` and distributed simulated WebSocket clients on bare-metal Proxmox nodes:
 
-| Metric | Target | Result |
-|---|---|---|
-| **Concurrent Peers** | 500 | 500 |
-| **Median Signaling Latency** | < 80ms | **41ms** |
-| **Packet Drop Rate** | < 0.5% | **0.0%** |
-| **Server Memory (RSS)** | < 120MB | **38MB** |
+| Metric | Target | Result | Status |
+|---|---|---|---|
+| **Concurrent Peers** | 500 | 500 | Verified |
+| **Median Signaling Latency** | < 80ms | **41ms** | Optimal |
+| **Packet Drop Rate** | < 0.5% | **0.0%** | Optimal |
+| **Server Memory (RSS)** | < 120MB | **38MB** | Optimal |
 
 The low footprint of Go goroutines paired with Redis connection pooling enabled high throughput without degrading signaling responsiveness.

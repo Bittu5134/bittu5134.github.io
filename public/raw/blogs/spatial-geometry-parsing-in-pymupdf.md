@@ -10,6 +10,8 @@ tags:
   - PyMuPDF
   - Algorithms
   - AI
+coverImage: /images/blogs/spatial-geometry.svg
+coverAlt: "PyMuPDF coordinate geometry extraction pipeline flowchart"
 ---
 
 ## Why Standard PDF Parsers Fail on LaTeX Documents
@@ -21,6 +23,21 @@ However, they do **not** embed semantic structure:
 - Section dividers and horizontal rules are raw vector drawing operations (`re`, `l`, `m` PDF commands) with no association to the text above or below them.
 
 When building the **IITK-Resume-Engine** for the Academics & Career Council, standard text extractors scrambled multi-column course lists into gibberish.
+
+```mermaid
+flowchart TD
+    A[Raw Academic PDF] --> B[PyMuPDF Text Spans & Bounding Boxes]
+    B --> C{Spatial Y-Overlap Grouping}
+    C -->|Within Tolerance 3.0pt| D[Sort Horizontal Spans by X-Coord]
+    C -->|Delta > 3.0pt| E[Create New Logical Text Row]
+    D --> F[Topological Column Slicing]
+    E --> F
+    F --> G[IIT Kanpur 4,400+ Course Code Registry Match]
+    G --> H[Structured JSON: CPI, Grades & Credits]
+```
+
+> [!WARNING]
+> PDF coordinate systems place origin `(0, 0)` at the top-left on some PDF engines and bottom-left on others. Failing to normalize coordinate inversions causes vertical cluster algorithms to invert multi-line sentences upside-down.
 
 ---
 
@@ -75,6 +92,9 @@ def group_into_rows(spans, tolerance=3.0):
             
     return rows
 ```
+
+> [!TIP]
+> A tolerance delta between `2.5pt` and `3.5pt` reliably accounts for subscript/superscript baseline shifts without improperly merging adjacent table rows.
 
 ---
 

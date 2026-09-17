@@ -10,6 +10,8 @@ tags:
   - Reverse Engineering
   - Protocols
   - C++
+coverImage: /images/blogs/minecraft-protocol.svg
+coverAlt: "Minecraft Java wire protocol reverse engineering diagrams"
 ---
 
 ## Introduction: The Architecture of Minecraft Packets
@@ -17,6 +19,19 @@ tags:
 Minecraft Java Edition communicates over TCP using a custom binary wire protocol. Unlike modern REST or GraphQL APIs, game state updates happen through tightly packed binary streams with minimal serialization overhead.
 
 Let us dissect how data flows over the wire from handshake to play state.
+
+```mermaid
+stateDiagram-v2
+    [*] --> Handshaking
+    Handshaking --> Status: Next State = 1 (Server List Ping)
+    Handshaking --> Login: Next State = 2 (Join Game)
+    Status --> [*]: Disconnect after Pong
+    Login --> Play: Encryption & Auth Verified
+    Play --> [*]: Player Disconnect
+```
+
+> [!IMPORTANT]
+> The initial Handshake packet `(Packet ID: 0x00)` is the only unencrypted packet allowed to dictate state transitions. Sending invalid protocol versions here results in immediate TCP socket termination.
 
 ---
 
@@ -27,7 +42,7 @@ At the core of the protocol is the **VarInt** (variable-length integer), encoded
 - Values between `0` and `127` take only **1 byte**.
 
 ```cpp
-// Reading a VarInt from a raw byte buffer
+// Reading a VarInt from a raw byte buffer in C++
 int32_t readVarInt(ByteBuffer& buf) {
     int32_t value = 0;
     int32_t position = 0;
@@ -41,7 +56,7 @@ int32_t readVarInt(ByteBuffer& buf) {
         position += 7;
 
         if (position >= 32) {
-            throw std::runtime_error("VarInt is too big");
+            throw std::runtime_error("VarInt is too big (> 5 bytes)");
         }
     }
     return value;
@@ -53,6 +68,7 @@ int32_t readVarInt(ByteBuffer& buf) {
 ## 2. Packet Framing & Compression
 
 Every packet starts with a framing header:
+
 ```
 +---------------------+-------------------+---------------------+
 | Packet Length       | Packet ID         | Data Payload        |
@@ -60,21 +76,25 @@ Every packet starts with a framing header:
 +---------------------+-------------------+---------------------+
 ```
 
-When compression is enabled (typically for packets > 256 bytes):
+When compression is enabled (typically for packets > 256 bytes threshold):
+
 ```
 +---------------------+-------------------+-----------------------------------+
 | Total Packet Length | Data Length       | Zlib Compressed (ID + Payload)    |
-| (VarInt)            | (VarInt, 0 if uncompressed) |                         |
+| (VarInt)            | (VarInt, 0 if raw)| (Raw Deflate Stream)              |
 +---------------------+-------------------+-----------------------------------+
 ```
 
+> [!NOTE]
+> If `Data Length` is `0`, the payload remains uncompressed even with compression enabled. This avoids expanding already-tiny packets with zlib header overhead.
+
 ---
 
-## 3. Protocol State Machine
+## 3. Protocol State Machine Transitions
 
 A client connection transitions through 4 distinct protocol states:
 
-1. **Handshaking**: Initial packet specifying target protocol version, server address, and next desired state.
+1. **Handshaking**: Initial packet specifying target protocol version (`765`), server address, and next desired state (`Status` or `Login`).
 2. **Status**: Server list ping query (returns MOTD, online player count, and favicon PNG base64).
 3. **Login**: Encryption handshake (RSA + AES-128 CFB8), Mojang authentication session verification.
 4. **Play**: Active gameplay synchronization (chunks, entity metadata, velocity vectors, block updates).
