@@ -756,14 +756,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* -------------------------------------------------------------------------- */
-  /* 12. Dark / Light Theme Controller (Strictly Scoped to /blog)              */
+  /* 12. Dark / Light Theme Controller (Strictly Scoped to Post Pages)         */
   /* -------------------------------------------------------------------------- */
   function initThemeController() {
     const path = window.location.pathname;
-    const isBlog = path === "/blog" || path.indexOf("/blog/") === 0;
+    const isPostPage = path.indexOf("/blog/") === 0 && path !== "/blog/" && path !== "/blog/index.html";
 
-    // Strict scope isolation: Never activate or toggle theme on non-blog pages
-    if (!isBlog) {
+    // Strict scope isolation: Never activate or toggle theme on non-post pages (home, blog listing, etc.)
+    if (!isPostPage) {
       document.documentElement.setAttribute("data-theme", "light");
       document.documentElement.classList.remove("dark");
       const metaTheme = document.querySelector('meta[name="theme-color"]');

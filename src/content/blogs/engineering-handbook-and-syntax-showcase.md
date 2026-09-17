@@ -24,10 +24,13 @@ Welcome to the engineering test dispatch for **bittu.dev**. This post acts as a 
 flowchart TD
     A["Markdown Source .md"] --> B["remark-parse"]
     B --> C["remark-gfm<br/>Tables · Tasks · Footnotes"]
-    B --> D["remark-math<br/>$ inline $ and $$ block $$"]
+    B --> D["remark-math<br/>Math: inline and block formulas"]
     B --> E["remark-github-alerts<br/>GitHub Alert Callouts"]
     B --> F["remark-flexible-code-titles<br/>lang:filename annotations"]
-    C & D & E & F --> G["remark-rehype<br/>MDAST → HAST"]
+    C --> G["remark-rehype<br/>MDAST → HAST"]
+    D --> G
+    E --> G
+    F --> G
     G --> H["rehype-raw<br/>HTML passthrough"]
     H --> I["rehypeMermaidBlocks<br/>Intercept mermaid fences"]
     I --> J["rehype-slug<br/>Heading IDs"]

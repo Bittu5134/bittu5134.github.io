@@ -180,7 +180,7 @@ ogType: article
           <div class="mt-14 pt-6 border-t border-black/10 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs">
             <a
               href="/blog"
-              class="inline-flex items-center gap-2 px-3.5 py-2 bg-white hover:bg-black/5 text-black border border-black/15 rounded-lg shadow-sm font-bold transition-all"
+              class="post-back-btn inline-flex items-center gap-2 px-3.5 py-2 bg-white hover:bg-black/5 text-black border border-black/15 rounded-lg shadow-sm font-bold transition-all"
             >
               {{ icons.arrowLeft("w-4 h-4") }}
               <span>BACK TO ARTICLES</span>
@@ -300,18 +300,24 @@ ogType: article
 <!-- Footnotes Enhancement: Littlefoot (Interactive footnote popovers) -->
 {% if 'data-footnotes' in content or 'class="footnotes"' in content %}
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/littlefoot/dist/littlefoot.css" />
-  <script type="module">
-    import { littlefoot } from "https://cdn.jsdelivr.net/npm/littlefoot/dist/littlefoot.js";
-    try {
-      littlefoot({
-        activateOnHover: false,
-        dismissOnUnhover: false,
-        allowMultiple: false,
-        buttonTemplate: '<button aria-label="Footnote %number%" class="littlefoot__button" id="%reference%" title="See footnote %number%"><span class="littlefoot__button__ellipsis">[%number%]</span></button>'
-      });
-    } catch (e) {
-      console.warn("Littlefoot init warning:", e);
-    }
+  <script src="https://cdn.jsdelivr.net/npm/littlefoot/dist/littlefoot.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      try {
+        var lf = (window.littlefoot && (window.littlefoot.default || window.littlefoot.littlefoot || window.littlefoot));
+        if (typeof lf === "function") {
+          lf({
+            activateOnHover: false,
+            dismissOnUnhover: false,
+            allowMultiple: false,
+            anchorPattern: /#(?:user-content-)?(fn|footnote|note)[:\-_0-9]/gi,
+            buttonTemplate: '<button aria-label="Footnote <% number %>" class="littlefoot__button" id="<% reference %>" title="See footnote <% number %>"><span class="littlefoot__button__ellipsis">[<% number %>]</span></button>'
+          });
+        }
+      } catch (e) {
+        console.warn("Littlefoot init warning:", e);
+      }
+    });
   </script>
 {% endif %}
 
@@ -363,57 +369,43 @@ ogType: article
       mermaid.initialize(getMermaidConfig(isDark));
 
       const containers = document.querySelectorAll(".mermaid-container");
-      containers.forEach((container, idx) => {
-        let pre = container.querySelector("pre.mermaid");
-        if (!pre) {
-          // Re-render from saved source
-          const savedCode = container.getAttribute("data-mermaid-code");
-          if (savedCode) {
-            container.innerHTML = "";
-            pre = document.createElement("pre");
-            pre.className = "mermaid";
-            pre.textContent = savedCode;
-            container.appendChild(pre);
+      for (let idx = 0; idx < containers.length; idx++) {
+        const container = containers[idx];
+        let code = "";
+        const encoded = container.getAttribute("data-mermaid-code");
+        if (encoded) {
+          try {
+            code = decodeURIComponent(encoded);
+          } catch (e) {
+            code = encoded;
           }
         }
-        if (pre) {
-          if (!container.getAttribute("data-mermaid-code")) {
-            // Unescape HTML entities from server-side rendering
-            const textarea = document.createElement("textarea");
-            textarea.innerHTML = pre.innerHTML;
-            const cleanCode = textarea.value.trim();
-            container.setAttribute("data-mermaid-code", cleanCode);
-            pre.textContent = cleanCode;
-          }
+        if (!code) {
+          const pre = container.querySelector("pre.mermaid");
+          code = pre ? pre.textContent.trim() : "";
         }
-      });
+        if (!code) continue;
 
-      try {
-        await mermaid.run({
-          nodes: document.querySelectorAll("pre.mermaid")
-        });
-      } catch (err) {
-        console.warn("Mermaid render warning:", err);
+        try {
+          const uniqueId = "mermaid-svg-" + idx + "-" + Math.random().toString(36).substring(2, 8);
+          const { svg } = await mermaid.render(uniqueId, code);
+          container.innerHTML = svg;
+        } catch (err) {
+          console.warn("Mermaid render error for diagram " + idx + ":", err);
+          if (!container.querySelector("pre")) {
+            container.innerHTML = `<pre class="mermaid font-mono text-xs text-red-500 overflow-x-auto">${code.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</pre>`;
+          }
+        }
       }
     }
 
-    // Initial render
     if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", renderDiagrams);
     } else {
       renderDiagrams();
     }
 
-    // Re-render on theme toggle
     window.addEventListener("theme-change", () => {
-      // Re-initialize and re-run mermaid with new theme variables
-      const containers = document.querySelectorAll(".mermaid-container");
-      containers.forEach((container) => {
-        const saved = container.getAttribute("data-mermaid-code");
-        if (saved) {
-          container.innerHTML = `<pre class="mermaid">${saved.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</pre>`;
-        }
-      });
       renderDiagrams();
     });
   </script>

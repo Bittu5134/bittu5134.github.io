@@ -29,7 +29,10 @@ function rehypeMermaidBlocks() {
         parent.children[index] = {
           type: "element",
           tagName: "div",
-          properties: { className: ["mermaid-container"] },
+          properties: {
+            className: ["mermaid-container"],
+            dataMermaidCode: encodeURIComponent(rawCode),
+          },
           children: [
             {
               type: "element",
