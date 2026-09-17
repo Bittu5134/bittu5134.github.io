@@ -1,19 +1,23 @@
 {% import "macros/icons.njk" as icons %}
 {% set techStack = [
-  { name: "Go / Golang", bgClass: "bg-[#38bdf8]" },
-  { name: "Rust", bgClass: "bg-[#fb923c]" },
-  { name: "C / C++", bgClass: "bg-[#60a5fa]" },
-  { name: "Python", bgClass: "bg-[#fde047]" },
-  { name: "TypeScript", bgClass: "bg-[#38bdf8]" },
-  { name: "Minecraft Java", bgClass: "bg-[#86efac]" },
-  { name: "WebRTC", bgClass: "bg-[#f472b6]" },
-  { name: "Redis", bgClass: "bg-[#f87171]" },
-  { name: "Linux / POSIX", bgClass: "bg-[#fde047]" },
-  { name: "Docker", bgClass: "bg-[#60a5fa]" },
-  { name: "FastAPI", bgClass: "bg-[#a7f3d0]" },
-  { name: "Tailwind / React", bgClass: "bg-[#38bdf8]" },
-  { name: "PyMuPDF", bgClass: "bg-[#c4b5fd]" },
-  { name: "Cloudflare Workers", bgClass: "bg-[#fb923c]" }
+  { name: "Go",                 bgClass: "bg-[#38bdf8]" },
+  { name: "Python",             bgClass: "bg-[#fde047]" },
+  { name: "WebRTC",             bgClass: "bg-[#f472b6]" },
+  { name: "Linux & Sockets",    bgClass: "bg-[#86efac]" },
+  { name: "Wireshark / Nmap",   bgClass: "bg-[#c4b5fd]" },
+  { name: "TypeScript",         bgClass: "bg-[#fb923c]" },
+  { name: "PyTorch",            bgClass: "bg-[#f87171]" },
+  { name: "FastAPI / Gin",      bgClass: "bg-[#a7f3d0]" },
+  { name: "Redis",              bgClass: "bg-[#fde047]" },
+  { name: "PostgreSQL / SQL",   bgClass: "bg-[#60a5fa]" },
+  { name: "C / C++",            bgClass: "bg-[#fb923c]" },
+  { name: "Svelte / SvelteKit", bgClass: "bg-[#f87171]" },
+  { name: "Cloudflare Workers", bgClass: "bg-[#fde047]" },
+  { name: "Docker",             bgClass: "bg-[#38bdf8]" },
+  { name: "Proxmox VE",         bgClass: "bg-[#c4b5fd]" },
+  { name: "Java Modding",       bgClass: "bg-[#86efac]" },
+  { name: "OpenGL / GLSL",      bgClass: "bg-[#f472b6]" },
+  { name: "Blender",            bgClass: "bg-[#fb923c]" }
 ] %}
 
 <section id="about" class="py-6 sm:py-8 px-3 sm:px-6 scroll-mt-16 sm:scroll-mt-20">
@@ -73,7 +77,7 @@
           <ul class="space-y-3 font-mono text-xs sm:text-sm font-bold text-black">
             <li class="flex items-start gap-2.5">
               {{ icons.graduationCap("w-4 h-4 text-black shrink-0 mt-0.5") }}
-              <span>Cybersecurity @ IIT Kanpur, class of '30</span>
+              <span>Cybersecurity @ IIT Kanpur'30</span>
             </li>
             <li class="flex items-start gap-2.5">
               {{ icons.trophy("w-4 h-4 text-black shrink-0 mt-0.5") }}
@@ -109,7 +113,7 @@
     </div>
 
     <!-- Row 2: Core Technologies & Tooling -->
-    <div class="mt-8 p-5 sm:p-8 card-brutal">
+    <div class="p-3 sm:p-6 card-brutal">
       <div class="mb-4">
         <span class="font-mono text-xs sm:text-sm font-bold text-black uppercase tracking-wider">
           CORE TECHNOLOGIES &amp; TOOLING:
