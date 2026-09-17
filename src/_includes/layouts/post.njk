@@ -88,7 +88,7 @@ ogType: article
             <div class="flex flex-wrap items-center gap-2.5 text-sm sm:text-base text-neutral-600 dark:text-neutral-400 font-mono mb-4">
               <time datetime="{{ date | dateIso }}">{{ (displayDate or date) }}</time>
               <span>·</span>
-              <span>{{ readTime }}</span>
+              <span>{{ readTime or (content | readingTime) }}</span>
             </div>
 
             <!-- Title: Bold, readable, sans-serif -->

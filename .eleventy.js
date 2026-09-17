@@ -1,5 +1,6 @@
 import { setupMarkdown } from "./scripts/markdown-engine.js";
 import { generateMeta } from "./scripts/generate-meta.mjs";
+import getReadingTime from "reading-time";
 
 export default async function (eleventyConfig) {
   // 1. Setup Markdown engine (Shiki SSG syntax highlighting, Mermaid diagrams, GitHub alerts, anchors)
@@ -92,13 +93,12 @@ export default async function (eleventyConfig) {
     return items;
   });
 
-  // Word count & reading time estimate
+  // Reading time estimate using standard reading-time package
   eleventyConfig.addFilter("readingTime", function (content) {
     if (!content) return "1 min read";
     const text = String(content).replace(/<[^>]*>/g, "").trim();
-    const words = text.split(/\s+/).filter(Boolean).length;
-    const minutes = Math.max(1, Math.round(words / 200));
-    return `${minutes} min read`;
+    const stats = getReadingTime(text);
+    return stats.text; // e.g. "4 min read"
   });
 
   // Date formatting helpers

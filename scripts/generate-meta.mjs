@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import getProjects from "../src/_data/projects.js";
+import getReadingTime from "reading-time";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -75,10 +76,9 @@ function parseMarkdownFile(filepath) {
     }
   }
 
-  // Calculate readTime dynamically if not provided
-  const words = content.replace(/<[^>]*>/g, "").trim().split(/\s+/).filter(Boolean).length;
-  const computedMinutes = Math.max(1, Math.round(words / 200));
-  const readTime = meta.readTime || `${computedMinutes} min read`;
+  // Calculate readTime dynamically using industry standard reading-time
+  const stats = getReadingTime(content);
+  const readTime = meta.readTime || stats.text;
 
   return {
     slug: meta.slug || fallbackSlug,
