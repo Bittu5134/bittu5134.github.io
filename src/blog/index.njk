@@ -1,7 +1,7 @@
 ---
 layout: layouts/base.njk
-title: "Blog & Technical Zine | Bittu"
-description: "Essays on low-level networking in Go, reverse-engineering the Minecraft Java wire format, 2D Cartesian spatial parsing in Python, and architecture blueprints."
+title: "Technical Writing & Architecture Dispatches | Bittu"
+description: "Essays and technical deep dives into low-level systems, protocol reverse engineering, high-throughput WebRTC signaling, and 2D spatial parsing by Bittu."
 permalink: "/blog/index.html"
 ---
 {% import "macros/icons.njk" as icons %}
@@ -10,88 +10,193 @@ permalink: "/blog/index.html"
   {% include "components/retro-header.njk" %}
 
   <main class="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-    <!-- Navigation & Feed header -->
-    <div class="flex items-center justify-between gap-4 mb-8">
-      <a
-        href="/"
-        class="btn-brutal-white px-3.5 py-1.5 text-xs sm:text-sm"
-      >
-        {{ icons.arrowLeft("w-4 h-4") }}
-        <span>RETURN HOME</span>
-      </a>
+    <!-- Header Hero Banner -->
+    <div class="p-6 sm:p-8 card-brutal shadow-brutal-lg mb-8 bg-[#fffdf9]">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b-2 border-black/15">
+        <div class="inline-block px-3 py-1 bg-[#fde047] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs">
+          TECHNICAL ARCHIVE &amp; DISPATCHES
+        </div>
 
-      <a
-        href="/rss.xml"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="btn-brutal bg-[#fb923c] px-3.5 py-1.5 text-xs sm:text-sm"
-      >
-        {{ icons.rss("w-4 h-4") }}
-        <span>RSS 2.0 FEED</span>
-      </a>
-    </div>
-
-    <!-- Page Title Box -->
-    <div class="p-6 sm:p-8 card-brutal shadow-brutal-lg mb-10">
-      <div class="inline-block px-3 py-1 bg-[#fde047] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs mb-3">
-        TECHNICAL BLOG ARCHIVE
+        <div class="flex items-center gap-2">
+          <a
+            href="/rss.xml"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-brutal bg-[#fb923c] px-3 py-1 text-xs"
+            title="Subscribe via RSS 2.0 feed"
+          >
+            {{ icons.rss("w-3.5 h-3.5 text-black") }}
+            <span>RSS FEED</span>
+          </a>
+          <a
+            href="/llms.txt"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-brutal bg-[#86efac] px-3 py-1 text-xs"
+            title="LLM Context Index per llmstxt.org"
+          >
+            {{ icons.terminal("w-3.5 h-3.5 text-black") }}
+            <span>LLMS.TXT</span>
+          </a>
+        </div>
       </div>
-      <h1 class="text-4xl sm:text-5xl md:text-6xl font-mono font-black text-black mb-3 tracking-tight">
-        ~/blog
+
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-black mb-3 tracking-tight">
+        Technical Writing
       </h1>
-      <p class="font-mono text-sm sm:text-base text-black/80 max-w-2xl leading-relaxed">
-        Essays on low-level networking in Go, reverse-engineering the Minecraft Java wire format, 2D Cartesian spatial parsing in Python, and architecture blueprints.
+      <p class="font-mono text-sm sm:text-base text-black/80 max-w-3xl leading-relaxed">
+        Deep dives into low-level systems, binary network protocols, high-throughput WebRTC signaling servers in Go, and geometric algorithms in Python.
       </p>
+
+      <div class="mt-4 pt-3 border-t border-black/15 flex flex-wrap items-center gap-3 font-mono text-xs font-bold text-black/70">
+        <span>TOTAL: {{ collections.blogs.length }} DISPATCHES</span>
+        <span>•</span>
+        <span>SSG PRE-COMPILED</span>
+        <span>•</span>
+        <span>ZERO RUNTIME JS HIGHLIGHTING</span>
+      </div>
     </div>
 
-    <!-- Post List -->
-    <div class="space-y-6">
-      {% for post in blogs %}
-        <article class="p-6 sm:p-8 card-brutal group">
-          <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 mb-3 pb-3 border-b-2 border-black/10">
-            <div class="flex items-center gap-2">
-              <span class="px-2.5 py-1 bg-[#86efac] border border-black font-mono text-xs font-bold text-black">
-                STAMP: {{ post.date | upper }}
-              </span>
-              <span class="font-mono text-xs sm:text-sm text-black/60 font-bold">
-                // {{ post.readTime | upper }}
-              </span>
-            </div>
+    <!-- Search & Tag Filter Controls -->
+    <div class="mb-8 space-y-4">
+      <!-- Search Input -->
+      <div class="card-brutal p-2 sm:p-3 bg-[#fffdf9] flex items-center gap-2 shadow-brutal-xs">
+        <div class="pl-2 text-black/50">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        </div>
+        <input
+          type="text"
+          id="blog-search-input"
+          placeholder="Filter articles by keyword, title, topic, or tag (e.g., Go, Redis, Minecraft, PyMuPDF)..."
+          class="w-full font-mono text-xs sm:text-sm text-black placeholder:text-black/40 focus:outline-none bg-transparent"
+          aria-label="Search articles"
+        />
+        <button
+          id="blog-search-clear"
+          class="hidden px-2 py-0.5 font-mono text-xs font-bold bg-[#f87171] text-black border border-black hover:bg-red-400"
+          aria-label="Clear search"
+        >
+          CLEAR
+        </button>
+      </div>
 
-            <div class="flex flex-wrap gap-1.5">
-              {% for tag in post.tags %}
-                <span class="tag-pill">
-                  #{{ tag | upper }}
-                </span>
-              {% endfor %}
-            </div>
-          </div>
+      <!-- Tag Filter Pills -->
+      <div class="flex flex-wrap items-center gap-1.5" id="blog-tags-container">
+        <button
+          class="blog-tag-filter-btn active px-3 py-1 bg-[#fde047] border-2 border-black font-mono text-xs font-bold shadow-brutal-xs -translate-y-0.5 cursor-pointer select-none"
+          data-tag="ALL"
+        >
+          ALL ({{ collections.blogs.length }})
+        </button>
+        {% for tag in collections.blogTags %}
+          <button
+            class="blog-tag-filter-btn px-3 py-1 bg-[#fffdf9] hover:bg-[#fde047] border-2 border-black font-mono text-xs font-bold transition-all cursor-pointer select-none"
+            data-tag="{{ tag }}"
+          >
+            #{{ tag | upper }}
+          </button>
+        {% endfor %}
+      </div>
+    </div>
 
-          <h2 class="text-2xl sm:text-3xl font-black text-black mb-3 group-hover:text-[#d97706] transition-colors">
-            <a href="/blog/{{ post.slug }}">
-              {{ post.title }}
-            </a>
-          </h2>
-
-          <p class="font-mono text-xs sm:text-sm text-black/80 leading-relaxed mb-5">
-            {{ post.summary }}
-          </p>
-
-          <div class="flex items-center justify-between pt-2">
+    <!-- Articles List Container -->
+    <div class="space-y-6 sm:space-y-8" id="blog-posts-list">
+      {% for post in collections.blogs %}
+        <article
+          class="blog-post-card card-brutal overflow-hidden group bg-[#fffdf9] transition-all"
+          data-title="{{ (post.data.title or '') | lower }}"
+          data-summary="{{ (post.data.summary or '') | lower }}"
+          data-tags="{{ (post.data.tags or []) | join(' ') | lower }}"
+        >
+          <!-- Optional Cover Image Banner -->
+          {% if post.data.coverImage %}
             <a
-              href="/blog/{{ post.slug }}"
-              class="btn-brutal-yellow px-4 py-2 text-xs sm:text-sm"
+              href="{{ post.url }}"
+              class="block overflow-hidden border-b-[3px] border-black bg-[#12151e]"
+              aria-label="Read {{ post.data.title }}"
             >
-              <span>READ DISPATCH</span>
-              {{ icons.arrowUpRight("w-4 h-4") }}
+              <img
+                src="{{ post.data.coverImage }}"
+                alt="{{ post.data.coverAlt if post.data.coverAlt else post.data.title }}"
+                class="w-full h-44 sm:h-56 md:h-64 object-cover group-hover:scale-[1.01] transition-transform duration-300"
+                loading="lazy"
+              />
             </a>
+          {% endif %}
 
-            <span class="font-mono text-xs text-black/40 font-bold">
-              /blog/{{ post.slug }}
-            </span>
+          <div class="p-5 sm:p-7 md:p-8">
+            <!-- Metadata Stamp Bar -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3 pb-3 border-b-2 border-black/10">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="px-2.5 py-1 bg-[#86efac] border border-black font-mono text-xs font-bold text-black shadow-brutal-xs">
+                  STAMP: {{ (post.data.displayDate or post.data.date) | upper }}
+                </span>
+                <span class="font-mono text-xs sm:text-sm text-black/60 font-bold">
+                  // {{ (post.data.readTime or '5 min read') | upper }}
+                </span>
+              </div>
+
+              <!-- Tags -->
+              <div class="flex flex-wrap gap-1.5">
+                {% for tag in post.data.tags %}
+                  {% if tag != "posts" %}
+                    <span class="tag-pill">
+                      #{{ tag | upper }}
+                    </span>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+
+            <!-- Title -->
+            <h2 class="text-2xl sm:text-3xl font-black text-black mb-3 group-hover:text-[#d97706] transition-colors">
+              <a href="{{ post.url }}" class="hover:underline underline-offset-4">
+                {{ post.data.title }}
+              </a>
+            </h2>
+
+            <!-- Summary -->
+            <p class="font-mono text-xs sm:text-sm text-black/80 leading-relaxed mb-6">
+              {{ post.data.summary }}
+            </p>
+
+            <!-- Bottom CTA Button -->
+            <div class="flex items-center justify-between pt-1">
+              <a
+                href="{{ post.url }}"
+                class="btn-brutal-yellow px-4 py-2 text-xs sm:text-sm"
+              >
+                <span>READ DISPATCH</span>
+                {{ icons.arrowRight("w-4 h-4") }}
+              </a>
+
+              <span class="font-mono text-xs text-black/60 font-bold">
+                {{ (post.data.readTime or '5 min read') | upper }}
+              </span>
+            </div>
           </div>
         </article>
       {% endfor %}
+    </div>
+
+    <!-- No Search Results Found State -->
+    <div
+      id="blog-no-results"
+      class="hidden p-8 sm:p-12 card-brutal bg-[#fffdf9] text-center space-y-4 my-8"
+    >
+      <div class="w-12 h-12 mx-auto bg-[#f87171] border-2 border-black flex items-center justify-center shadow-brutal-xs font-mono font-black text-xl">
+        !
+      </div>
+      <h3 class="font-sans font-black text-xl text-black">No Dispatches Found</h3>
+      <p class="font-mono text-xs sm:text-sm text-black/70 max-w-md mx-auto">
+        No articles match your current search query or active tag filter.
+      </p>
+      <button
+        id="blog-reset-filters-btn"
+        class="btn-brutal-yellow px-4 py-2 text-xs sm:text-sm inline-flex"
+      >
+        <span>RESET ALL FILTERS</span>
+      </button>
     </div>
   </main>
 </div>

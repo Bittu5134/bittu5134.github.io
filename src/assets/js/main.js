@@ -38,22 +38,46 @@ document.addEventListener("DOMContentLoaded", () => {
   // Contact Email copy
   setupCopyButton("copy-email-contact", "hello@bittu.dev", ".email-default", ".email-copied");
 
-  // Blog Article Share link copy
+  // Blog Article Share link copy & Web Share API
   const shareBtn = document.getElementById("share-article-btn");
   if (shareBtn) {
     shareBtn.addEventListener("click", () => {
-      navigator.clipboard.writeText(window.location.href).then(() => {
-        const defaultEl = shareBtn.querySelector(".share-default");
-        const copiedEl = shareBtn.querySelector(".share-copied");
-        if (defaultEl && copiedEl) {
-          defaultEl.classList.add("hidden");
-          copiedEl.classList.remove("hidden");
-          setTimeout(() => {
-            defaultEl.classList.remove("hidden");
-            copiedEl.classList.add("hidden");
-          }, 2000);
-        }
-      }).catch((err) => console.warn("Failed to copy share link:", err));
+      const title = shareBtn.getAttribute("data-title") || document.title;
+      const url = shareBtn.getAttribute("data-url") || window.location.href;
+
+      if (navigator.share && navigator.canShare && navigator.canShare({ title, url })) {
+        navigator.share({ title, url }).catch(() => {});
+      } else {
+        navigator.clipboard.writeText(url).then(() => {
+          const defaultEl = shareBtn.querySelector(".share-default");
+          const copiedEl = shareBtn.querySelector(".share-copied");
+          if (defaultEl && copiedEl) {
+            defaultEl.classList.add("hidden");
+            copiedEl.classList.remove("hidden");
+            setTimeout(() => {
+              defaultEl.classList.remove("hidden");
+              copiedEl.classList.add("hidden");
+            }, 2000);
+          }
+        }).catch((err) => console.warn("Failed to copy share link:", err));
+      }
+    });
+  }
+
+  // Post Article Copy Link Button
+  const postCopyLinkBtn = document.querySelector(".post-copy-link-btn");
+  if (postCopyLinkBtn) {
+    postCopyLinkBtn.addEventListener("click", () => {
+      const url = postCopyLinkBtn.getAttribute("data-url") || window.location.href;
+      navigator.clipboard.writeText(url).then(() => {
+        const originalHtml = postCopyLinkBtn.innerHTML;
+        postCopyLinkBtn.innerHTML = '<span>LINK COPIED!</span>';
+        postCopyLinkBtn.classList.add("bg-[#86efac]");
+        setTimeout(() => {
+          postCopyLinkBtn.innerHTML = originalHtml;
+          postCopyLinkBtn.classList.remove("bg-[#86efac]");
+        }, 2000);
+      }).catch((err) => console.warn("Failed to copy article link:", err));
     });
   }
 
@@ -538,6 +562,193 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }
       }
+    }
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /* 8. Code Block Copy Buttons (Shiki Code Fences)                             */
+  /* -------------------------------------------------------------------------- */
+  document.querySelectorAll(".code-copy-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const rawCode = decodeURIComponent(btn.getAttribute("data-code") || "");
+      navigator.clipboard
+        .writeText(rawCode)
+        .then(() => {
+          const copyText = btn.querySelector(".copy-text");
+          if (copyText) {
+            const original = copyText.textContent;
+            copyText.textContent = "COPIED!";
+            btn.classList.add("text-[#86efac]", "border-[#86efac]", "bg-[#1f2937]");
+            setTimeout(() => {
+              copyText.textContent = original;
+              btn.classList.remove("text-[#86efac]", "border-[#86efac]", "bg-[#1f2937]");
+            }, 2000);
+          }
+        })
+        .catch((err) => console.warn("Failed to copy code block:", err));
+    });
+  });
+
+  /* -------------------------------------------------------------------------- */
+  /* 9. Article Reading Progress Bar                                            */
+  /* -------------------------------------------------------------------------- */
+  const progressBar = document.getElementById("reading-progress");
+  if (progressBar) {
+    const updateProgress = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? Math.min(100, Math.max(0, (scrollTop / docHeight) * 100)) : 0;
+      progressBar.style.width = `${progress}%`;
+    };
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    updateProgress();
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /* 10. Table of Contents Scroll-Spy                                           */
+  /* -------------------------------------------------------------------------- */
+  const tocLinks = document.querySelectorAll(".toc-nav-link");
+  if (tocLinks.length > 0) {
+    const headingIds = Array.from(tocLinks).map((link) => link.getAttribute("data-target"));
+    const headings = headingIds.map((id) => document.getElementById(id)).filter(Boolean);
+
+    if ("IntersectionObserver" in window && headings.length > 0) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const id = entry.target.getAttribute("id");
+              tocLinks.forEach((link) => {
+                if (link.getAttribute("data-target") === id) {
+                  link.classList.add("active");
+                } else {
+                  link.classList.remove("active");
+                }
+              });
+            }
+          });
+        },
+        { rootMargin: "0px 0px -70% 0px", threshold: 0 }
+      );
+
+      headings.forEach((heading) => observer.observe(heading));
+    }
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /* 11. Blog Search & Tag Real-Time Filtering                                  */
+  /* -------------------------------------------------------------------------- */
+  const searchInput = document.getElementById("blog-search-input");
+  const searchClearBtn = document.getElementById("blog-search-clear");
+  const tagButtons = document.querySelectorAll(".blog-tag-filter-btn");
+  const articleCards = document.querySelectorAll(".blog-post-card");
+  const noResultsBox = document.getElementById("blog-no-results");
+  const resetFiltersBtn = document.getElementById("blog-reset-filters-btn");
+
+  if (articleCards.length > 0) {
+    let currentTag = "ALL";
+    let currentQuery = "";
+
+    // Parse URL parameter ?tag=... on page load
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialTag = urlParams.get("tag");
+    if (initialTag) {
+      currentTag = initialTag.toUpperCase();
+      tagButtons.forEach((b) => {
+        if ((b.getAttribute("data-tag") || "").toUpperCase() === currentTag) {
+          b.classList.add("active", "bg-[#fde047]", "shadow-brutal-xs", "-translate-y-0.5");
+          b.classList.remove("bg-[#fffdf9]");
+        } else {
+          b.classList.remove("active", "bg-[#fde047]", "shadow-brutal-xs", "-translate-y-0.5");
+          b.classList.add("bg-[#fffdf9]");
+        }
+      });
+    }
+
+    function applyFilters() {
+      let visibleCount = 0;
+      const q = currentQuery.toLowerCase().trim();
+
+      articleCards.forEach((card) => {
+        const title = card.getAttribute("data-title") || "";
+        const summary = card.getAttribute("data-summary") || "";
+        const tags = card.getAttribute("data-tags") || "";
+
+        const matchesTag =
+          currentTag === "ALL" || tags.toUpperCase().includes(currentTag);
+
+        const matchesQuery =
+          !q ||
+          title.includes(q) ||
+          summary.includes(q) ||
+          tags.includes(q);
+
+        if (matchesTag && matchesQuery) {
+          card.classList.remove("hidden");
+          visibleCount++;
+        } else {
+          card.classList.add("hidden");
+        }
+      });
+
+      if (visibleCount === 0) {
+        noResultsBox?.classList.remove("hidden");
+      } else {
+        noResultsBox?.classList.add("hidden");
+      }
+
+      if (searchClearBtn) {
+        if (q) {
+          searchClearBtn.classList.remove("hidden");
+        } else {
+          searchClearBtn.classList.add("hidden");
+        }
+      }
+    }
+
+    searchInput?.addEventListener("input", (e) => {
+      currentQuery = e.target.value;
+      applyFilters();
+    });
+
+    searchClearBtn?.addEventListener("click", () => {
+      if (searchInput) searchInput.value = "";
+      currentQuery = "";
+      applyFilters();
+    });
+
+    tagButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        tagButtons.forEach((b) => {
+          b.classList.remove("active", "bg-[#fde047]", "shadow-brutal-xs", "-translate-y-0.5");
+          b.classList.add("bg-[#fffdf9]");
+        });
+        btn.classList.add("active", "bg-[#fde047]", "shadow-brutal-xs", "-translate-y-0.5");
+        btn.classList.remove("bg-[#fffdf9]");
+
+        currentTag = (btn.getAttribute("data-tag") || "ALL").toUpperCase();
+        applyFilters();
+      });
+    });
+
+    resetFiltersBtn?.addEventListener("click", () => {
+      if (searchInput) searchInput.value = "";
+      currentQuery = "";
+      currentTag = "ALL";
+      tagButtons.forEach((b) => {
+        if (b.getAttribute("data-tag") === "ALL") {
+          b.classList.add("active", "bg-[#fde047]", "shadow-brutal-xs", "-translate-y-0.5");
+          b.classList.remove("bg-[#fffdf9]");
+        } else {
+          b.classList.remove("active", "bg-[#fde047]", "shadow-brutal-xs", "-translate-y-0.5");
+          b.classList.add("bg-[#fffdf9]");
+        }
+      });
+      applyFilters();
+    });
+
+    if (initialTag) {
+      applyFilters();
     }
   }
 });

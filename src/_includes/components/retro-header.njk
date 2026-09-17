@@ -5,26 +5,14 @@
   <div class="max-w-6xl mx-auto flex items-center justify-between gap-2 sm:gap-4">
     <!-- Brand Logo -->
     <div class="flex items-center gap-2">
-      {% if isHomePage %}
-        <a
-          href="#hero"
-          class="btn-brutal-yellow px-2.5 sm:px-3 py-1 text-black"
-        >
-          {{ icons.pixelMonster("w-5 h-5 text-black shrink-0") }}
-          <span class="font-mono text-sm sm:text-base font-black tracking-widest">BITTU.DEV</span>
-        </a>
-      {% else %}
-        <a
-          href="/"
-          class="btn-brutal-yellow px-2.5 sm:px-3 py-1 text-black"
-        >
-          {{ icons.pixelMonster("w-5 h-5 text-black shrink-0") }}
-          <span class="font-mono text-sm sm:text-base font-black tracking-widest">BITTU.DEV</span>
-          <span class="hidden sm:inline-block text-xs font-mono bg-black text-white px-2 py-0.5 rounded-sm font-bold">
-            ← HOME
-          </span>
-        </a>
-      {% endif %}
+      <a
+        href="/"
+        class="btn-brutal-yellow px-2.5 sm:px-3 py-1 text-black"
+        aria-label="Bittu Home"
+      >
+        {{ icons.pixelMonster("w-5 h-5 text-black shrink-0") }}
+        <span class="font-mono text-sm sm:text-base font-black tracking-widest">BITTU.DEV</span>
+      </a>
     </div>
 
     <!-- Desktop Navigation Links -->
@@ -34,15 +22,15 @@
         class="nav-btn-desktop"
       >
         {{ icons.folder("w-3.5 h-3.5 text-black shrink-0") }}
-        <span>~/projects</span>
+        <span>Projects</span>
       </a>
 
       <a
         href="{{ '#blog' if isHomePage else '/blog' }}"
-        class="nav-btn-desktop"
+        class="nav-btn-desktop {{ 'bg-[#fde047]' if page.url and page.url.startsWith('/blog') else '' }}"
       >
         {{ icons.fileText("w-3.5 h-3.5 text-black shrink-0") }}
-        <span>~/blog</span>
+        <span>Blog</span>
       </a>
 
       <a
@@ -50,7 +38,7 @@
         class="nav-btn-desktop"
       >
         {{ icons.user("w-3.5 h-3.5 text-black shrink-0") }}
-        <span>~/about</span>
+        <span>About</span>
       </a>
 
       <a
@@ -58,7 +46,7 @@
         class="nav-btn-desktop"
       >
         {{ icons.mail("w-3.5 h-3.5 text-black shrink-0") }}
-        <span>~/contact</span>
+        <span>Contact</span>
       </a>
 
       <a
@@ -144,18 +132,18 @@
     >
       <span class="flex items-center gap-2">
         {{ icons.folder("w-4 h-4 text-black shrink-0") }}
-        <span class="text-black font-black">~/projects</span>
+        <span class="text-black font-black">Projects</span>
       </span>
       <span class="text-black/60 font-mono text-xs">→</span>
     </a>
 
     <a
       href="{{ '#blog' if isHomePage else '/blog' }}"
-      class="mobile-nav-link nav-btn-mobile"
+      class="mobile-nav-link nav-btn-mobile {{ 'bg-[#fde047]' if page.url and page.url.startsWith('/blog') else '' }}"
     >
       <span class="flex items-center gap-2">
         {{ icons.fileText("w-4 h-4 text-black shrink-0") }}
-        <span class="text-black font-black">~/blog</span>
+        <span class="text-black font-black">Blog</span>
       </span>
       <span class="text-black/60 font-mono text-xs">→</span>
     </a>
@@ -166,7 +154,7 @@
     >
       <span class="flex items-center gap-2">
         {{ icons.user("w-4 h-4 text-black shrink-0") }}
-        <span class="text-black font-black">~/about</span>
+        <span class="text-black font-black">About</span>
       </span>
       <span class="text-black/60 font-mono text-xs">→</span>
     </a>
@@ -177,7 +165,7 @@
     >
       <span class="flex items-center gap-2">
         {{ icons.mail("w-4 h-4 text-black shrink-0") }}
-        <span class="text-black font-black">~/contact</span>
+        <span class="text-black font-black">Contact</span>
       </span>
       <span class="text-black/60 font-mono text-xs">→</span>
     </a>

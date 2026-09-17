@@ -1,94 +1,306 @@
 ---
 layout: layouts/base.njk
+ogType: article
 ---
 {% import "macros/icons.njk" as icons %}
+{% set tocList = content | toc %}
+
+<!-- Reading Progress Bar -->
+<div
+  id="reading-progress"
+  class="fixed top-0 left-0 h-1 bg-[#fde047] border-b border-black z-[100] transition-all duration-75"
+  style="width: 0%"
+  aria-hidden="true"
+></div>
 
 <div class="min-h-screen bg-[#f6eedb] retro-dots-bg text-[#14161f] font-sans selection:bg-[#fde047] selection:text-black">
   {% include "components/retro-header.njk" %}
 
-  <main class="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-    <!-- Navigation & Share -->
-    <div class="flex items-center justify-between gap-4 mb-8">
-      <a
-        href="/blog"
-        class="btn-brutal-white px-3.5 py-1.5 text-xs sm:text-sm"
-      >
-        {{ icons.arrowLeft("w-4 h-4") }}
-        <span>ALL ARTICLES</span>
-      </a>
+  <main class="max-w-6xl mx-auto px-3 sm:px-6 py-6 sm:py-10">
+    <!-- Breadcrumb & Top Bar -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-3 border-b-2 border-black/15 font-mono text-xs sm:text-sm">
+      <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-black/60 truncate">
+        <a href="/" class="hover:text-black hover:underline font-bold text-black">Home</a>
+        <span>/</span>
+        <a href="/blog" class="hover:text-black hover:underline font-bold text-black">Blog</a>
+        <span>/</span>
+        <span class="text-black/80 font-bold truncate">{{ title }}</span>
+      </nav>
 
-      <button
-        id="share-article-btn"
-        class="btn-brutal-white px-3.5 py-1.5 text-xs sm:text-sm hover:bg-[#86efac]"
-      >
-        <span class="share-default flex items-center gap-1.5">
-          {{ icons.share2("w-3.5 h-3.5") }}
-          <span>SHARE ARTICLE</span>
-        </span>
-        <span class="share-copied hidden flex items-center gap-1.5 text-emerald-800 font-bold">
-          {{ icons.check("w-3.5 h-3.5 text-emerald-800 stroke-[3]") }}
-          <span>LINK COPIED!</span>
-        </span>
-      </button>
-    </div>
-
-    <!-- Article Box -->
-    <article class="p-6 sm:p-10 md:p-12 card-brutal shadow-brutal-lg">
-      <!-- Metadata Header -->
-      <div class="mb-8 pb-6 border-b-[3px] border-black">
-        <div class="flex flex-wrap items-center gap-2 mb-4 font-mono text-xs sm:text-sm font-bold">
-          <span class="px-2.5 py-1 bg-[#86efac] border border-black">
-            STAMP: {{ date | upper }}
-          </span>
-          <span class="px-2.5 py-1 bg-[#fde047] border border-black">
-            {{ readTime | upper }}
-          </span>
-        </div>
-
-        <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-black leading-tight mb-4">
-          {{ title }}
-        </h1>
-
-        <p class="font-mono text-sm sm:text-base text-black/80 font-bold leading-relaxed mb-4">
-          {{ summary }}
-        </p>
-
-        <div class="flex flex-wrap gap-1.5">
-          {% for tag in tags %}
-            {% if tag != "posts" %}
-              <span class="tag-pill">
-                #{{ tag | upper }}
-              </span>
-            {% endif %}
-          {% endfor %}
-        </div>
-      </div>
-
-      <!-- Markdown Prose Content -->
-      <div class="prose-retro">
-        {{ content | safe }}
-      </div>
-
-      <!-- Post Footer -->
-      <div class="mt-12 pt-6 border-t-[3px] border-black flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs sm:text-sm font-bold">
+      <div class="flex items-center gap-2 shrink-0">
         <a
           href="/blog"
-          class="btn-brutal-white px-3.5 py-1.5 text-xs sm:text-sm"
+          class="btn-brutal-white px-2.5 py-1 text-xs"
         >
-          {{ icons.arrowLeft("w-4 h-4") }}
-          <span>BACK TO BLOG DIRECTORY</span>
+          {{ icons.arrowLeft("w-3.5 h-3.5") }}
+          <span>ALL ARTICLES</span>
         </a>
 
-        <a
-          href="https://github.com/Bittu5134"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-black/70 hover:text-black hover:underline flex items-center gap-1"
+        <button
+          id="share-article-btn"
+          class="btn-brutal-white px-2.5 py-1 text-xs hover:bg-[#86efac]"
+          data-title="{{ title }}"
+          data-url="https://bittu.dev{{ page.url }}"
         >
-          {{ icons.github("w-4 h-4 text-black") }}
-          <span>GITHUB: @Bittu5134</span>
-        </a>
+          <span class="share-default flex items-center gap-1.5">
+            {{ icons.share2("w-3.5 h-3.5") }}
+            <span>SHARE</span>
+          </span>
+          <span class="share-copied hidden flex items-center gap-1.5 text-emerald-800 font-bold">
+            {{ icons.check("w-3.5 h-3.5 text-emerald-800 stroke-[3]") }}
+            <span>COPIED!</span>
+          </span>
+        </button>
+
+        {% if slug %}
+          <a
+            href="/raw/blogs/{{ slug }}.md"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-brutal bg-[#fde047] px-2.5 py-1 text-xs"
+            title="View plain Markdown source file"
+          >
+            {{ icons.code("w-3.5 h-3.5") }}
+            <span>RAW MD</span>
+          </a>
+        {% endif %}
       </div>
-    </article>
+    </div>
+
+    <!-- Main Grid: Content + Desktop Sticky TOC -->
+    <div class="grid grid-cols-1 {{ 'xl:grid-cols-[1fr_260px] xl:gap-8' if tocList.length > 1 else '' }}">
+      <!-- Left Column: Article Body -->
+      <article class="min-w-0">
+        <div class="card-brutal shadow-brutal-lg p-5 sm:p-8 md:p-10 bg-[#fffdf9]">
+          <!-- Cover Image (if present) -->
+          {% if coverImage %}
+            <div class="mb-8 border-[3px] border-black shadow-brutal overflow-hidden bg-[#12151e]">
+              <img
+                src="{{ coverImage }}"
+                alt="{{ coverAlt if coverAlt else title }}"
+                class="w-full h-auto max-h-[460px] object-cover"
+                loading="eager"
+              />
+            </div>
+          {% endif %}
+
+          <!-- Article Header -->
+          <header class="mb-8 pb-6 border-b-[3px] border-black">
+            <!-- Badges -->
+            <div class="flex flex-wrap items-center gap-2 mb-4 font-mono text-xs font-bold">
+              <span class="px-2.5 py-1 bg-[#86efac] border border-black shadow-brutal-xs">
+                STAMP: {{ (displayDate or date) | upper }}
+              </span>
+              <span class="px-2.5 py-1 bg-[#fde047] border border-black shadow-brutal-xs">
+                {{ readTime | upper }}
+              </span>
+              {% if slug %}
+                <span class="px-2.5 py-1 bg-[#fffdf9] border border-black text-black/60 hidden sm:inline-block">
+                  SLUG: {{ slug }}
+                </span>
+              {% endif %}
+            </div>
+
+            <!-- Title -->
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-black leading-tight tracking-tight mb-4">
+              {{ title }}
+            </h1>
+
+            <!-- Summary / Subtitle -->
+            {% if summary %}
+              <p class="font-mono text-sm sm:text-base text-black/85 font-medium leading-relaxed mb-4 border-l-4 border-[#fb923c] pl-3 py-0.5 bg-[#f6eedb]/60">
+                {{ summary }}
+              </p>
+            {% endif %}
+
+            <!-- Tag Pills -->
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              {% for tag in tags %}
+                {% if tag != "posts" %}
+                  <a
+                    href="/blog?tag={{ tag | urlencode }}"
+                    class="tag-pill hover:bg-[#fde047] transition-colors"
+                  >
+                    #{{ tag | upper }}
+                  </a>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </header>
+
+          <!-- Mobile Collapsible Table of Contents -->
+          {% if tocList.length > 1 %}
+            <details class="xl:hidden mb-8 card-brutal p-3 sm:p-4 group bg-[#f6eedb]">
+              <summary class="cursor-pointer font-mono font-bold text-xs sm:text-sm flex items-center justify-between select-none">
+                <span class="flex items-center gap-2">
+                  {{ icons.fileText("w-4 h-4 text-black") }}
+                  <span>TABLE OF CONTENTS ({{ tocList.length }} SECTIONS)</span>
+                </span>
+                <span class="font-mono text-xs group-open:rotate-180 transition-transform">▼</span>
+              </summary>
+              <nav class="mt-3 pt-3 border-t-2 border-black/15 space-y-1.5 font-mono text-xs">
+                {% for item in tocList %}
+                  <a
+                    href="#{{ item.id }}"
+                    class="block py-1 text-black/80 hover:text-black hover:underline {{ 'pl-4 text-black/60' if item.level == 3 else 'font-bold text-black' }}"
+                  >
+                    {{ item.title }}
+                  </a>
+                {% endfor %}
+              </nav>
+            </details>
+          {% endif %}
+
+          <!-- Markdown Content Body -->
+          <div class="prose-retro">
+            {{ content | safe }}
+          </div>
+
+          <!-- Post Article Actions Footer -->
+          <div class="mt-12 pt-6 border-t-[3px] border-black flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs sm:text-sm">
+            <a
+              href="/blog"
+              class="btn-brutal-white px-3.5 py-2 font-bold text-xs sm:text-sm"
+            >
+              {{ icons.arrowLeft("w-4 h-4") }}
+              <span>BACK TO ARTICLES</span>
+            </a>
+
+            <div class="flex items-center gap-2">
+              <button
+                class="post-copy-link-btn btn-brutal-yellow px-3.5 py-2 font-bold text-xs"
+                data-url="https://bittu.dev{{ page.url }}"
+              >
+                {{ icons.copy("w-3.5 h-3.5") }}
+                <span>COPY ARTICLE LINK</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Next / Previous Article Navigation -->
+        {% set prevPost = collections.blogs | getPreviousCollectionItem(page) %}
+        {% set nextPost = collections.blogs | getNextCollectionItem(page) %}
+        {% if prevPost or nextPost %}
+          <nav class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono text-xs">
+            {% if prevPost %}
+              <a
+                href="{{ prevPost.url }}"
+                class="card-brutal p-4 hover:bg-[#fffdf9] flex flex-col justify-between group"
+              >
+                <span class="text-black/60 font-bold mb-1 flex items-center gap-1">
+                  ← PREVIOUS DISPATCH
+                </span>
+                <span class="font-sans font-black text-sm sm:text-base text-black group-hover:text-[#d97706] transition-colors line-clamp-2">
+                  {{ prevPost.data.title }}
+                </span>
+              </a>
+            {% else %}
+              <div class="hidden sm:block"></div>
+            {% endif %}
+
+            {% if nextPost %}
+              <a
+                href="{{ nextPost.url }}"
+                class="card-brutal p-4 hover:bg-[#fffdf9] flex flex-col justify-between text-right group"
+              >
+                <span class="text-black/60 font-bold mb-1 flex items-center justify-end gap-1">
+                  NEXT DISPATCH →
+                </span>
+                <span class="font-sans font-black text-sm sm:text-base text-black group-hover:text-[#d97706] transition-colors line-clamp-2">
+                  {{ nextPost.data.title }}
+                </span>
+              </a>
+            {% endif %}
+          </nav>
+        {% endif %}
+
+        <!-- Author Bio Card -->
+        <div class="mt-8 card-brutal p-6 bg-[#fffdf9] shadow-brutal flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <img
+            src="/images/avatar.webp"
+            alt="Bittu avatar"
+            class="w-16 h-16 rounded border-2 border-black object-cover shrink-0"
+          />
+          <div class="space-y-1">
+            <div class="flex items-center gap-2">
+              <span class="font-sans font-black text-base text-black">Bittu (Bittu5134)</span>
+              <span class="px-2 py-0.5 bg-[#86efac] border border-black font-mono text-[10px] font-bold">AUTHOR</span>
+            </div>
+            <p class="font-mono text-xs text-black/80 leading-relaxed">
+              Cybersecurity & Computing undergraduate at IIT Kanpur. Building high-throughput WebRTC systems, reverse-engineering protocols, and writing open-source software.
+            </p>
+            <div class="flex items-center gap-3 pt-1 font-mono text-xs font-bold">
+              <a href="https://github.com/Bittu5134" target="_blank" rel="noopener noreferrer" class="hover:underline flex items-center gap-1">
+                {{ icons.github("w-3.5 h-3.5") }}
+                <span>GitHub</span>
+              </a>
+              <a href="/discord" target="_blank" rel="noopener noreferrer" class="hover:underline flex items-center gap-1">
+                {{ icons.discord("w-3.5 h-3.5") }}
+                <span>Discord</span>
+              </a>
+              <a href="/rss.xml" target="_blank" rel="noopener noreferrer" class="hover:underline flex items-center gap-1 text-[#fb923c]">
+                {{ icons.rss("w-3.5 h-3.5") }}
+                <span>RSS Feed</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Right Column: Desktop Sticky Table of Contents -->
+      {% if tocList.length > 1 %}
+        <aside class="hidden xl:block">
+          <div class="sticky top-20 card-brutal p-4 max-h-[calc(100vh-6rem)] overflow-y-auto bg-[#fffdf9] shadow-brutal">
+            <div class="text-xs font-mono font-bold uppercase tracking-wider text-black pb-2 mb-3 border-b-2 border-black flex items-center justify-between">
+              <span>ON THIS PAGE</span>
+              <span class="px-1.5 py-0.5 bg-[#fde047] text-[10px] border border-black font-bold">{{ tocList.length }}</span>
+            </div>
+            <nav class="space-y-1 font-mono text-xs" id="desktop-toc">
+              {% for item in tocList %}
+                <a
+                  href="#{{ item.id }}"
+                  class="toc-nav-link block py-1 px-2 border-l-2 border-transparent hover:border-black hover:bg-[#fde047]/40 transition-all {{ 'pl-4 text-black/60 font-normal' if item.level == 3 else 'font-bold text-black' }}"
+                  data-target="{{ item.id }}"
+                >
+                  {{ item.title }}
+                </a>
+              {% endfor %}
+            </nav>
+            <div class="mt-4 pt-3 border-t border-black/15 text-[11px] font-mono text-black/50">
+              <a href="#hero" class="hover:text-black hover:underline flex items-center gap-1">
+                <span>↑ Scroll to top</span>
+              </a>
+            </div>
+          </div>
+        </aside>
+      {% endif %}
+    </div>
   </main>
 </div>
+
+<!-- Conditionally Load Mermaid.js Only If The Page Uses Diagrams -->
+{% if 'class="mermaid' in content %}
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      themeVariables: {
+        primaryColor: "#fde047",
+        primaryBorderColor: "#000000",
+        primaryTextColor: "#000000",
+        lineColor: "#000000",
+        secondaryColor: "#86efac",
+        tertiaryColor: "#f6eedb",
+        background: "#fffdf9",
+        mainBkg: "#fffdf9",
+        nodeBorder: "#000000",
+        clusterBkg: "#fffdf9",
+        clusterBorder: "#000000",
+        fontFamily: '"Space Mono", monospace',
+        fontSize: "12px"
+      }
+    });
+  </script>
+{% endif %}
