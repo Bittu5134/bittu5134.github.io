@@ -8,7 +8,7 @@ ogType: article
 <!-- Reading Progress Bar (Fixed Top) -->
 <div
   id="reading-progress"
-  class="fixed top-0 left-0 h-1 bg-[#fde047] border-b border-black z-[100] transition-all duration-75"
+  class="fixed top-0 left-0 h-1.5 bg-[#fde047] z-[100] transition-all duration-75"
   style="width: 0%"
   aria-hidden="true"
 ></div>
@@ -193,7 +193,7 @@ ogType: article
                 class="bg-white dark:bg-[#161b22] border border-neutral-200 dark:border-[#30363d] rounded-xl p-5 shadow-sm hover:border-neutral-400 dark:hover:border-neutral-500 hover:shadow transition-all flex flex-col justify-between group"
               >
                 <span class="text-neutral-500 dark:text-neutral-400 font-semibold mb-2 text-xs flex items-center gap-1">
-                  ← PREVIOUS DISPATCH
+                  ← PREVIOUS ARTICLE
                 </span>
                 <span class="font-sans font-bold text-base text-neutral-900 dark:text-neutral-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors line-clamp-2">
                   {{ prevPost.data.title }}
@@ -209,7 +209,7 @@ ogType: article
                 class="bg-white dark:bg-[#161b22] border border-neutral-200 dark:border-[#30363d] rounded-xl p-5 shadow-sm hover:border-neutral-400 dark:hover:border-neutral-500 hover:shadow transition-all flex flex-col justify-between text-right group"
               >
                 <span class="text-neutral-500 dark:text-neutral-400 font-semibold mb-2 text-xs flex items-center justify-end gap-1">
-                  NEXT DISPATCH →
+                  NEXT ARTICLE →
                 </span>
                 <span class="font-sans font-bold text-base text-neutral-900 dark:text-neutral-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors line-clamp-2">
                   {{ nextPost.data.title }}

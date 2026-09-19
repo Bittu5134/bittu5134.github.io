@@ -13,7 +13,7 @@
       <div class="flex flex-wrap items-center gap-2 sm:gap-3">
         <a
           href="/blog"
-          class="btn-brutal-yellow px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm"
+          class="btn-brutal-yellow px-3.5 sm:px-4 py-1.5 sm:py-2 text-sm"
         >
           {{ icons.bookOpen("w-4 h-4") }}
           <span>ALL ARTICLES ({{ collections.blogs.length }})</span>
@@ -23,7 +23,7 @@
           href="/rss.xml"
           target="_blank"
           rel="noopener noreferrer"
-          class="btn-brutal bg-[#fb923c] px-3 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm"
+          class="btn-brutal bg-[#fb923c] px-3.5 py-1.5 sm:py-2 text-sm"
           title="Subscribe to RSS Feed"
         >
           {{ icons.rss("w-4 h-4") }}
@@ -34,14 +34,14 @@
 
     <!-- Zine Articles Stack -->
     <div class="space-y-4 sm:space-y-6">
-      {% for post in collections.blogs %}
+      {% for post in collections.blogs.slice(0, 2) %}
         <article class="card-brutal p-4 sm:p-8 group bg-[#fffdf9]">
           <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-2 mb-3 pb-3 border-b-2 border-black/10">
             <div class="flex items-center gap-2">
-              <span class="px-2.5 py-1 bg-[#86efac] border border-black font-mono text-xs font-bold text-black shadow-brutal-xs">
+              <span class="px-2.5 py-1 bg-[#86efac] border-2 border-black font-mono text-sm font-bold text-black">
                 {{ (post.data.displayDate or post.data.date) | upper }}
               </span>
-              <span class="font-mono text-xs sm:text-sm text-black/60 font-bold">
+              <span class="font-mono text-sm text-black/60 font-bold">
                 // {{ (post.data.readTime or '5 min read') | upper }}
               </span>
             </div>
@@ -63,16 +63,16 @@
             </a>
           </h3>
 
-          <p class="font-mono text-xs sm:text-sm text-black/80 leading-relaxed mb-5">
+          <p class="font-mono text-sm sm:text-base text-black/80 leading-relaxed mb-5">
             {{ post.data.summary }}
           </p>
 
           <div class="flex items-center justify-between pt-2">
             <a
               href="{{ post.url }}"
-              class="btn-brutal-yellow px-4 py-2 text-xs sm:text-sm"
+              class="btn-brutal-yellow px-4 py-2 text-sm"
             >
-              <span>READ DISPATCH</span>
+              <span>READ ARTICLE</span>
               {{ icons.arrowUpRight("w-4 h-4") }}
             </a>
           </div>

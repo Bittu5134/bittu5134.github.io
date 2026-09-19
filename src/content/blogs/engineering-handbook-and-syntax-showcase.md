@@ -3,7 +3,6 @@ slug: engineering-handbook-and-syntax-showcase
 title: "Engineering Handbook: Full Pipeline Showcase"
 date: 2026-03-18
 displayDate: "March 18, 2026"
-readTime: "9 min read"
 summary: "The definitive reference and stress test for the unified remark+rehype pipeline: Shiki highlighting, Mermaid graphs, KaTeX math, GitHub callouts, GFM tables, task lists, footnotes, figure captions, code titles, and external links."
 tags:
   - Engineering

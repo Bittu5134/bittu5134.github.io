@@ -1,10 +1,11 @@
 /**
- * Pagefind Static Search Controller
+ * Pagefind Static Search & Filter Controller
  * bittu.dev
  *
- * Integrates Cloudflare / Liam Bigelow's industry-standard Pagefind static search engine
- * with the site's neo-brutalist interface, Wasm chunked querying, snippet highlighting,
- * and URL parameter synchronization.
+ * Minimal, functional search controller:
+ * - Multi-tag filtering
+ * - Fast sorting
+ * - Clean Pagefind Wasm querying
  */
 
 (function () {
@@ -15,12 +16,14 @@
       this.pagefind = null;
       this.isPagefindLoading = false;
       this.currentQuery = "";
-      this.currentTag = "ALL";
+      this.selectedTags = new Set();
+      this.currentSort = "date-desc";
 
       // DOM elements
       this.searchInput = document.getElementById("blog-search-input");
       this.searchClearBtn = document.getElementById("blog-search-clear");
       this.tagButtons = document.querySelectorAll(".blog-tag-filter-btn");
+      this.sortSelect = document.getElementById("blog-sort-select");
       this.articleCards = Array.from(document.querySelectorAll(".blog-post-card"));
       this.cardsContainer = document.getElementById("blog-posts-list");
       this.noResultsBox = document.getElementById("blog-no-results");
@@ -50,16 +53,20 @@
     }
 
     init() {
-      // Preload Pagefind in background
       this.loadPagefind();
 
-      // Read initial parameters from URL (?tag=... & ?q=...)
       const params = new URLSearchParams(window.location.search);
-      const initialTag = params.get("tag");
+      const initialTagParam = params.get("tag") || params.get("tags");
       const initialQuery = params.get("q");
+      const initialSort = params.get("sort");
 
-      if (initialTag) {
-        this.currentTag = initialTag.toUpperCase();
+      if (initialTagParam) {
+        initialTagParam.split(",").forEach((t) => {
+          const clean = t.trim().toUpperCase();
+          if (clean && clean !== "ALL") {
+            this.selectedTags.add(clean);
+          }
+        });
         this.updateTagButtonsUI();
       }
 
@@ -68,10 +75,14 @@
         this.currentQuery = initialQuery;
       }
 
+      if (initialSort && this.sortSelect) {
+        this.sortSelect.value = initialSort;
+        this.currentSort = initialSort;
+      }
+
       this.bindEvents();
 
-      // Trigger initial search if query or tag was passed
-      if (initialTag || initialQuery) {
+      if (initialTagParam || initialQuery || (initialSort && initialSort !== "date-desc")) {
         this.applySearch();
       }
     }
@@ -97,17 +108,34 @@
 
       this.tagButtons.forEach((btn) => {
         btn.addEventListener("click", () => {
-          this.currentTag = (btn.getAttribute("data-tag") || "ALL").toUpperCase();
+          const btnTag = (btn.getAttribute("data-tag") || "ALL").toUpperCase();
+          if (btnTag === "ALL") {
+            this.selectedTags.clear();
+          } else {
+            if (this.selectedTags.has(btnTag)) {
+              this.selectedTags.delete(btnTag);
+            } else {
+              this.selectedTags.add(btnTag);
+            }
+          }
           this.updateTagButtonsUI();
           this.applySearch();
           this.updateUrlParams();
         });
       });
 
+      this.sortSelect?.addEventListener("change", (e) => {
+        this.currentSort = e.target.value;
+        this.applySearch();
+        this.updateUrlParams();
+      });
+
       this.resetFiltersBtn?.addEventListener("click", () => {
         if (this.searchInput) this.searchInput.value = "";
         this.currentQuery = "";
-        this.currentTag = "ALL";
+        this.selectedTags.clear();
+        this.currentSort = "date-desc";
+        if (this.sortSelect) this.sortSelect.value = "date-desc";
         this.updateTagButtonsUI();
         this.applySearch();
         this.updateUrlParams();
@@ -115,25 +143,31 @@
     }
 
     updateTagButtonsUI() {
+      const isAllActive = this.selectedTags.size === 0;
       this.tagButtons.forEach((btn) => {
         const btnTag = (btn.getAttribute("data-tag") || "").toUpperCase();
-        if (btnTag === this.currentTag) {
-          btn.classList.add("active", "bg-[#fde047]", "shadow-brutal-xs", "-translate-y-0.5");
-          btn.classList.remove("bg-[#fffdf9]");
+        const isActive = (btnTag === "ALL" && isAllActive) || this.selectedTags.has(btnTag);
+
+        if (isActive) {
+          btn.classList.add("active", "bg-[#fde047]", "font-black");
+          btn.classList.remove("bg-[#fffdf9]", "font-bold");
         } else {
-          btn.classList.remove("active", "bg-[#fde047]", "shadow-brutal-xs", "-translate-y-0.5");
-          btn.classList.add("bg-[#fffdf9]");
+          btn.classList.remove("active", "bg-[#fde047]", "font-black");
+          btn.classList.add("bg-[#fffdf9]", "font-bold");
         }
       });
     }
 
     updateUrlParams() {
       const params = new URLSearchParams();
-      if (this.currentTag && this.currentTag !== "ALL") {
-        params.set("tag", this.currentTag);
+      if (this.selectedTags.size > 0) {
+        params.set("tag", Array.from(this.selectedTags).join(","));
       }
       if (this.currentQuery) {
         params.set("q", this.currentQuery);
+      }
+      if (this.currentSort && this.currentSort !== "date-desc") {
+        params.set("sort", this.currentSort);
       }
 
       const queryString = params.toString();
@@ -143,10 +177,47 @@
       window.history.replaceState({}, "", newUrl);
     }
 
+    cardMatchesTags(card) {
+      if (this.selectedTags.size === 0) return true;
+      const rawTags = (card.getAttribute("data-tags") || "").toUpperCase();
+      const cardTags = rawTags.split("|||").map((t) => t.trim()).filter(Boolean);
+      return Array.from(this.selectedTags).every((selected) => cardTags.includes(selected));
+    }
+
+    sortCards(cards) {
+      return cards.slice().sort((a, b) => {
+        if (this.currentSort === "date-desc") {
+          const dateA = new Date(a.getAttribute("data-date") || 0).getTime();
+          const dateB = new Date(b.getAttribute("data-date") || 0).getTime();
+          return dateB - dateA;
+        }
+        if (this.currentSort === "date-asc") {
+          const dateA = new Date(a.getAttribute("data-date") || 0).getTime();
+          const dateB = new Date(b.getAttribute("data-date") || 0).getTime();
+          return dateA - dateB;
+        }
+        if (this.currentSort === "read-time-asc") {
+          const timeA = parseInt(a.getAttribute("data-readtime") || "0", 10) || 0;
+          const timeB = parseInt(b.getAttribute("data-readtime") || "0", 10) || 0;
+          return timeA - timeB;
+        }
+        if (this.currentSort === "read-time-desc") {
+          const timeA = parseInt(a.getAttribute("data-readtime") || "0", 10) || 0;
+          const timeB = parseInt(b.getAttribute("data-readtime") || "0", 10) || 0;
+          return timeB - timeA;
+        }
+        if (this.currentSort === "title-asc") {
+          const titleA = a.getAttribute("data-title") || "";
+          const titleB = b.getAttribute("data-title") || "";
+          return titleA.localeCompare(titleB);
+        }
+        return 0;
+      });
+    }
+
     async applySearch() {
       const q = this.currentQuery.trim();
 
-      // Show or hide clear button
       if (this.searchClearBtn) {
         if (q) {
           this.searchClearBtn.classList.remove("hidden");
@@ -155,75 +226,79 @@
         }
       }
 
-      // If no query, filter only by active tag
+      // Filter and sort without search query
       if (!q) {
-        let visibleCount = 0;
+        const matchedCards = [];
+        const unmatchedCards = [];
+
         this.articleCards.forEach((card) => {
-          const tags = (card.getAttribute("data-tags") || "").toUpperCase();
-          const matchesTag = this.currentTag === "ALL" || tags.includes(this.currentTag);
           const snippetEl = card.querySelector(".blog-match-snippet");
           if (snippetEl) snippetEl.classList.add("hidden");
 
-          if (matchesTag) {
+          if (this.cardMatchesTags(card)) {
             card.classList.remove("hidden");
-            visibleCount++;
+            matchedCards.push(card);
           } else {
             card.classList.add("hidden");
+            unmatchedCards.push(card);
           }
         });
 
-        this.updateStatusUI(visibleCount, q);
+        const sortedMatched = this.sortCards(matchedCards);
+
+        if (this.cardsContainer) {
+          sortedMatched.forEach((card) => this.cardsContainer.appendChild(card));
+          unmatchedCards.forEach((card) => this.cardsContainer.appendChild(card));
+        }
+
+        this.updateStatusUI(matchedCards.length, q);
         return;
       }
 
-      // Query Pagefind static Wasm index
+      const cleanQ = q.replace(/^#+/, "").trim();
+      const rawTokens = cleanQ.toLowerCase().split(/\s+/).map((t) => t.replace(/^#+/, "").trim()).filter(Boolean);
+
+      // Query Pagefind Wasm index
       const pf = await this.loadPagefind();
       if (pf) {
         try {
-          const searchOptions = {};
-          if (this.currentTag !== "ALL") {
-            searchOptions.filters = { tag: this.currentTag };
-          }
-
-          const searchResult = await pf.search(q, searchOptions);
+          const searchResult = await pf.search(cleanQ);
           const loadedResults = await Promise.all(
             searchResult.results.map((r) => r.data())
           );
 
-          // Map results by clean slug/URL
           const resultsMap = new Map();
           loadedResults.forEach((res, rank) => {
-            // Normalize URL path to match post cards
             const path = res.url.replace(/\/$/, "");
             const slug = path.split("/").pop();
             resultsMap.set(slug, { ...res, rank });
           });
 
-          let visibleCount = 0;
-
-          // Score and rank cards according to Pagefind results
           const matchedCards = [];
           const unmatchedCards = [];
 
           this.articleCards.forEach((card) => {
             const slug = card.getAttribute("data-slug") || "";
-            const tags = (card.getAttribute("data-tags") || "").toUpperCase();
-            const matchesTag = this.currentTag === "ALL" || tags.includes(this.currentTag);
+            const matchesTag = this.cardMatchesTags(card);
             const pfMatch = resultsMap.get(slug);
+            const title = (card.getAttribute("data-title") || "").toLowerCase();
+            const summary = (card.getAttribute("data-summary") || "").toLowerCase();
+            const rawTags = (card.getAttribute("data-tags") || "").toLowerCase().replace(/\|\|\|/g, " ");
+            const localMatch = rawTokens.every((t) => title.includes(t) || summary.includes(t) || rawTags.includes(t));
+            const queryMatches = Boolean(pfMatch || localMatch);
             const snippetEl = card.querySelector(".blog-match-snippet");
 
-            if (pfMatch && matchesTag) {
+            if (queryMatches && matchesTag) {
               card.classList.remove("hidden");
               if (snippetEl) {
-                if (pfMatch.excerpt) {
-                  snippetEl.innerHTML = `<span class="font-bold text-amber-800 dark:text-amber-400">Pagefind excerpt: </span>${pfMatch.excerpt}`;
+                if (pfMatch && pfMatch.excerpt) {
+                  snippetEl.innerHTML = `<span class="font-bold text-amber-700">Excerpt: </span>${pfMatch.excerpt}`;
                   snippetEl.classList.remove("hidden");
                 } else {
                   snippetEl.classList.add("hidden");
                 }
               }
-              matchedCards.push({ card, rank: pfMatch.rank });
-              visibleCount++;
+              matchedCards.push({ card, rank: pfMatch ? pfMatch.rank : 999 });
             } else {
               card.classList.add("hidden");
               if (snippetEl) snippetEl.classList.add("hidden");
@@ -231,30 +306,37 @@
             }
           });
 
-          // Re-order DOM cards according to Pagefind ranking
-          matchedCards.sort((a, b) => a.rank - b.rank);
+          let finalSortedCards = [];
+          if (this.currentSort !== "date-desc") {
+            finalSortedCards = this.sortCards(matchedCards.map((m) => m.card));
+          } else {
+            matchedCards.sort((a, b) => a.rank - b.rank);
+            finalSortedCards = matchedCards.map((m) => m.card);
+          }
+
           if (this.cardsContainer) {
-            matchedCards.forEach(({ card }) => this.cardsContainer.appendChild(card));
+            finalSortedCards.forEach((card) => this.cardsContainer.appendChild(card));
             unmatchedCards.forEach((card) => this.cardsContainer.appendChild(card));
           }
 
-          this.updateStatusUI(visibleCount, q);
+          this.updateStatusUI(matchedCards.length, q);
           return;
         } catch (err) {
           console.warn("[pagefind] Search query error, falling back to local scan:", err);
         }
       }
 
-      // Local fallback in case Pagefind is still downloading
-      let fallbackCount = 0;
-      const tokens = q.toLowerCase().split(/\s+/).filter(Boolean);
+      // Local fallback
+      const matchedCards = [];
+      const unmatchedCards = [];
+
       this.articleCards.forEach((card) => {
         const title = (card.getAttribute("data-title") || "").toLowerCase();
         const summary = (card.getAttribute("data-summary") || "").toLowerCase();
-        const tags = (card.getAttribute("data-tags") || "").toLowerCase();
-        const matchesTag = this.currentTag === "ALL" || tags.toUpperCase().includes(this.currentTag);
-        const matchesQuery = tokens.every(
-          (t) => title.includes(t) || summary.includes(t) || tags.includes(t)
+        const rawTags = (card.getAttribute("data-tags") || "").toLowerCase().replace(/\|\|\|/g, " ");
+        const matchesTag = this.cardMatchesTags(card);
+        const matchesQuery = rawTokens.every(
+          (t) => title.includes(t) || summary.includes(t) || rawTags.includes(t)
         );
 
         const snippetEl = card.querySelector(".blog-match-snippet");
@@ -262,22 +344,27 @@
 
         if (matchesTag && matchesQuery) {
           card.classList.remove("hidden");
-          fallbackCount++;
+          matchedCards.push(card);
         } else {
           card.classList.add("hidden");
+          unmatchedCards.push(card);
         }
       });
 
-      this.updateStatusUI(fallbackCount, q);
+      const finalSortedCards = this.sortCards(matchedCards);
+      if (this.cardsContainer) {
+        finalSortedCards.forEach((card) => this.cardsContainer.appendChild(card));
+        unmatchedCards.forEach((card) => this.cardsContainer.appendChild(card));
+      }
+
+      this.updateStatusUI(matchedCards.length, q);
     }
 
     updateStatusUI(visibleCount, query) {
       if (this.statusContainer && this.statusCount) {
-        if (query || this.currentTag !== "ALL") {
+        if (query || this.selectedTags.size > 0 || (this.currentSort && this.currentSort !== "date-desc")) {
           this.statusContainer.classList.remove("hidden");
-          const tagInfo = this.currentTag !== "ALL" ? ` in #${this.currentTag}` : "";
-          const queryInfo = query ? ` matching "${query}"` : "";
-          this.statusCount.textContent = `Found ${visibleCount} dispatch${visibleCount === 1 ? "" : "es"}${queryInfo}${tagInfo}`;
+          this.statusCount.textContent = `Found ${visibleCount} article${visibleCount === 1 ? "" : "s"}`;
         } else {
           this.statusContainer.classList.add("hidden");
         }

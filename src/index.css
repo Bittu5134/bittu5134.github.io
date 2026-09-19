@@ -45,7 +45,7 @@
     @apply px-3 sm:px-4 py-2 border-b-[3px] border-black flex items-center justify-between select-none;
   }
   .tag-pill {
-    @apply px-2 py-0.5 bg-[#f6eedb] border border-black font-mono text-xs font-bold text-black uppercase;
+    @apply px-2.5 py-0.5 bg-[#f6eedb] border border-black font-mono text-sm font-bold text-black uppercase;
   }
   .btn-brutal,
   .btn-brutal-yellow,

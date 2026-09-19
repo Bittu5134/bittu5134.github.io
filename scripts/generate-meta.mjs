@@ -78,7 +78,7 @@ function parseMarkdownFile(filepath) {
 
   // Calculate readTime dynamically using industry standard reading-time
   const stats = getReadingTime(content);
-  const readTime = meta.readTime || stats.text;
+  const readTime = stats.text;
 
   return {
     slug: meta.slug || fallbackSlug,

@@ -63,7 +63,7 @@ SECTION 3: COMPLETE TECHNICAL ARTICLES & DISPATCHES
 ---
 Title: Engineering Handbook: Full Pipeline Showcase
 Date: March 18, 2026
-Read Time: 9 min read
+Read Time: 7 min read
 Tags: Engineering, Architecture, WebRTC, Go, Mermaid, Showcase
 URL: https://bittu.dev/blog/engineering-handbook-and-syntax-showcase
 Cover: https://bittu.devhttps://picsum.photos/600/300
@@ -382,7 +382,7 @@ All external links automatically receive `target="_blank" rel="noopener noreferr
 ---
 Title: Scaling WebRTC Signaling in Go: Lessons from 500 Concurrent Peers
 Date: March 8, 2026
-Read Time: 6 min read
+Read Time: 3 min read
 Tags: Go, WebRTC, Redis, Networking
 URL: https://bittu.dev/blog/scaling-webrtc-signaling-in-go
 Cover: https://bittu.dev/images/blogs/webrtc-signaling.svg
@@ -497,7 +497,7 @@ The low footprint of Go goroutines paired with Redis connection pooling enabled 
 ---
 Title: Reverse Engineering the Modern Minecraft Network Protocol
 Date: January 22, 2026
-Read Time: 8 min read
+Read Time: 3 min read
 Tags: Minecraft, Reverse Engineering, Protocols, C++
 URL: https://bittu.dev/blog/reverse-engineering-minecraft-protocol
 Cover: https://bittu.dev/images/blogs/minecraft-protocol.svg
@@ -597,7 +597,7 @@ Building custom network tools for Minecraft opens endless possibilities—from h
 ---
 Title: Coordinate Geometry in PyMuPDF: Extracting Unruly Academic LaTeX PDFs
 Date: November 14, 2025
-Read Time: 5 min read
+Read Time: 3 min read
 Tags: Python, PyMuPDF, Algorithms, AI
 URL: https://bittu.dev/blog/spatial-geometry-parsing-in-pymupdf
 Cover: https://bittu.dev/images/blogs/spatial-geometry.svg

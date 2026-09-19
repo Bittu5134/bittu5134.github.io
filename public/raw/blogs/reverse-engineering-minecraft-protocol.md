@@ -3,7 +3,6 @@ slug: reverse-engineering-minecraft-protocol
 title: "Reverse Engineering the Modern Minecraft Network Protocol"
 date: 2026-01-22
 displayDate: "January 22, 2026"
-readTime: "8 min read"
 summary: "Unpacking the binary wire format of Minecraft Java Edition. From variable-length integers (VarInt) and zlib packet compression to handshake state machines and live packet sniffing."
 tags:
   - Minecraft

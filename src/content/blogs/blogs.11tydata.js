@@ -1,3 +1,6 @@
+import fs from "node:fs";
+import getReadingTime from "reading-time";
+
 export default {
   layout: "layouts/post.njk",
   tags: ["posts"],
@@ -15,8 +18,17 @@ export default {
       return "";
     },
     readTime: (data) => {
-      if (data.readTime) return data.readTime;
-      return "5 min read";
+      if (data.page && data.page.inputPath) {
+        try {
+          const raw = fs.readFileSync(data.page.inputPath, "utf-8");
+          const body = raw.replace(/^---[\s\S]*?---\n?/, "");
+          const stats = getReadingTime(body);
+          return stats.text;
+        } catch {
+          // fallback
+        }
+      }
+      return "3 min read";
     },
     coverImage: (data) => data.coverImage || "",
     coverAlt: (data) => data.coverAlt || (data.title ? `${data.title} cover image` : ""),
