@@ -1,3 +1,7 @@
+.github/agents
+.github/hooks
+.github/skills/
+
 # Logs
 logs
 *.log

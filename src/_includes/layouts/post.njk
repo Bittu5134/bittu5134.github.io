@@ -71,12 +71,13 @@ ogType: article
         <div class="post-article-surface bg-white dark:bg-[#161b22] rounded-xl border border-neutral-200 dark:border-[#30363d] shadow-sm p-6 sm:p-10 md:p-14">
           <!-- Cover Image Hero (if present) -->
           {% if coverImage %}
-            <div class="mb-10 rounded-lg overflow-hidden border border-neutral-200 dark:border-[#30363d] shadow-sm bg-[#12151e]">
+            <div class="mb-10 rounded-xl overflow-hidden border-2 border-black dark:border-[#30363d] shadow-brutal-xs bg-[#12151e]">
               <img
                 src="{{ coverImage }}"
                 alt="{{ coverAlt if coverAlt else title }}"
                 class="w-full h-auto max-h-[480px] object-cover"
-                loading="eager"
+                loading="lazy"
+                decoding="async"
                 data-pagefind-meta="image[src]"
               />
             </div>

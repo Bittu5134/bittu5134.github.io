@@ -93,9 +93,9 @@
       <div class="flex flex-wrap gap-2.5 sm:gap-3">
         {% for tech in techStack %}
           <span class="tech-badge {{ tech.bgClass }}">
-            {% if tech.svgPath %}
-              <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-black shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="{{ tech.svgPath }}"/>
+            {% if tech.iconId %}
+              <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-black shrink-0" fill="currentColor" aria-hidden="true">
+                <use href="#{{ tech.iconId }}"/>
               </svg>
             {% endif %}
             <span>{{ tech.name }}</span>

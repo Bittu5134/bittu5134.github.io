@@ -5,7 +5,7 @@
     <link>https://bittu.dev/blog</link>
     <description>Essays and deep dives into low-level systems, reverse engineering, distributed networking, and software craft by Bittu (Bittu5134).</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 19 Sep 2026 16:14:24 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 19 Sep 2026 16:47:47 GMT</lastBuildDate>
     <atom:link href="https://bittu.dev/rss.xml" rel="self" type="application/rss+xml" />
     <item>
       <title><![CDATA[Engineering Handbook: Full Pipeline Showcase]]></title>
@@ -13,7 +13,7 @@
       <guid isPermaLink="true">https://bittu.dev/blog/engineering-handbook-and-syntax-showcase</guid>
       <pubDate>Tue, 17 Mar 2026 18:30:00 GMT</pubDate>
       <description><![CDATA[The definitive reference and stress test for the unified remark+rehype pipeline: Shiki highlighting, Mermaid graphs, KaTeX math, GitHub callouts, GFM tables, task lists, footnotes, figure captions, code titles, and external links.]]></description>
-      <enclosure url="https://bittu.devhttps://picsum.photos/600/300" type="image/svg+xml" length="0" />
+      <enclosure url="https://bittu.dev/images/blogs/feature-showcase.svg" type="image/svg+xml" length="6239" />
     </item>
     <item>
       <title><![CDATA[Scaling WebRTC Signaling in Go: Lessons from 500 Concurrent Peers]]></title>

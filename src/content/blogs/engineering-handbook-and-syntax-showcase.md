@@ -11,7 +11,7 @@ tags:
   - Go
   - Mermaid
   - Showcase
-coverImage: https://picsum.photos/600/300
+coverImage: /images/blogs/feature-showcase.svg
 coverAlt: "Comprehensive engineering syntax and markdown feature showcase"
 ---
 
