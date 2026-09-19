@@ -143,28 +143,29 @@ permalink: "/blog/index.html"
           data-readtime="{{ post.data.readTime or '3 min read' }}"
         >
           <!-- Metadata Bar: Mint date stamp + read time + clean tags -->
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mb-4 pb-3 border-b-2 border-black/10">
-            <div class="flex items-center gap-2.5">
-              <span class="px-2.5 py-1 bg-[#86efac] border-2 border-black font-mono text-xs sm:text-sm font-bold text-black">
+          <div class="flex items-center justify-between gap-3 mb-4 pb-3 border-b-2 border-black/10 overflow-hidden">
+            <!-- Date & Read Time: Always protected from shrinking or wrapping -->
+            <div class="flex items-center gap-2 sm:gap-2.5 shrink-0 whitespace-nowrap">
+              <span class="px-2 sm:px-2.5 py-1 bg-[#86efac] border-2 border-black font-mono text-xs sm:text-sm font-bold text-black shrink-0">
                 <time datetime="{{ (post.data.date or post.date) | dateIso }}">
                   {{ (post.data.displayDate or ((post.data.date or post.date) | dateDisplay)) | upper }}
                 </time>
               </span>
-              <span class="font-mono text-xs sm:text-sm text-black/70 font-bold">
+              <span class="font-mono text-xs sm:text-sm text-black/70 font-bold shrink-0">
                 // {{ (post.data.readTime or '3 min read') | upper }}
               </span>
             </div>
 
-            <!-- Tags: Display up to first 5 tags, +N if more -->
-            <div class="flex flex-wrap gap-1.5">
+            <!-- Tags: Display up to first 5 tags, gracefully hide if they overflow the available width -->
+            <div class="hidden sm:flex items-center justify-end gap-1.5 overflow-hidden flex-nowrap shrink">
               {% for tag in validTags.slice(0, 5) %}
-                <span class="tag-pill">
+                <span class="tag-pill whitespace-nowrap truncate max-w-[140px]">
                   #{{ tag }}
                 </span>
               {% endfor %}
               {% if validTags.length > 5 %}
                 <span
-                  class="tag-pill opacity-75"
+                  class="tag-pill opacity-75 shrink-0 whitespace-nowrap"
                   title="{{ validTags.slice(5) | join(', ') }}"
                 >
                   +{{ validTags.length - 5 }}
