@@ -525,54 +525,55 @@ img, svg, video {
   font-weight: normal !important;
 }
 
-/* ─── GitHub-Style Callout Alerts ───────────────────────────── */
+/* ─── GitHub-Style Callout Alerts (Brutalist Box) ─────────────── */
 .prose-retro .github-alert {
   margin: 1.75rem 0;
   padding: 0.875rem 1.125rem;
-  border-radius: 0 6px 6px 0;
-  border-left: 4px solid #3b82f6;
-  background-color: #eff6ff;
+  border-radius: 0;
+  border: 2px solid #14161f;
+  box-shadow: 3px 3px 0 #14161f;
+  background-color: #f0f9ff;
   max-width: 46rem;
 }
 
 .prose-retro .github-alert-note {
-  border-left-color: #0969da;
-  background-color: #f0f7ff;
+  border-color: #0369a1;
+  background-color: #f0f9ff;
 }
 .prose-retro .github-alert-note .github-alert-title {
-  color: #0969da;
+  color: #0369a1;
 }
 
 .prose-retro .github-alert-tip {
-  border-left-color: #1a7f37;
-  background-color: #f0fff4;
+  border-color: #15803d;
+  background-color: #f0fdf4;
 }
 .prose-retro .github-alert-tip .github-alert-title {
-  color: #1a7f37;
+  color: #15803d;
 }
 
 .prose-retro .github-alert-important {
-  border-left-color: #8250df;
-  background-color: #fbf5ff;
+  border-color: #7e22ce;
+  background-color: #faf5ff;
 }
 .prose-retro .github-alert-important .github-alert-title {
-  color: #8250df;
+  color: #7e22ce;
 }
 
 .prose-retro .github-alert-warning {
-  border-left-color: #9a6700;
-  background-color: #fff8c5;
+  border-color: #b45309;
+  background-color: #fffbeb;
 }
 .prose-retro .github-alert-warning .github-alert-title {
-  color: #9a6700;
+  color: #b45309;
 }
 
 .prose-retro .github-alert-caution {
-  border-left-color: #cf222e;
-  background-color: #ffebe9;
+  border-color: #b91c1c;
+  background-color: #fef2f2;
 }
 .prose-retro .github-alert-caution .github-alert-title {
-  color: #cf222e;
+  color: #b91c1c;
 }
 
 .github-alert-title {
