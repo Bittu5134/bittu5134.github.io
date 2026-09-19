@@ -90,17 +90,6 @@
   id="mobile-drawer"
   class="hidden fixed top-[54px] sm:top-[58px] left-0 right-0 z-50 lg:hidden bg-[#fffdf9] border-b-[4px] border-black shadow-brutal-lg max-h-[calc(100vh-65px)] overflow-y-auto"
 >
-  <!-- Close Button Bar -->
-  <div class="flex justify-end p-2.5 pb-0">
-    <button
-      id="drawer-close-btn"
-      aria-label="Close menu"
-      class="font-mono text-xs font-bold p-1.5 bg-black text-white hover:bg-red-500 active:scale-95 flex items-center justify-center cursor-pointer border-2 border-black"
-    >
-      {{ icons.x("w-4 h-4") }}
-    </button>
-  </div>
-
   <!-- Navigation Links list -->
   <div class="p-4 space-y-2.5">
     <a
@@ -148,28 +137,26 @@
     </a>
 
     <!-- Quick External Actions -->
-    <div class="pt-2 border-t-2 border-black/15">
+    <div class="pt-3 border-t-2 border-black/15 grid grid-cols-2 gap-2">
       <a
         href="https://github.com/Bittu5134"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="GitHub Profile (@Bittu5134)"
-        class="btn-brutal-purple w-full px-3 py-2 text-xs"
+        class="btn-brutal-purple px-3 py-2 text-xs"
       >
         {{ icons.github("w-4 h-4 text-black shrink-0") }}
         <span>GITHUB</span>
       </a>
-    </div>
 
-    <div class="pt-1">
       <a
         href="/discord"
         target="_blank"
         rel="noopener noreferrer"
-        class="btn-brutal w-full bg-[#c4b5fd] px-3 py-2 text-xs"
+        class="btn-brutal bg-[#86efac] hover:bg-[#4ade80] px-3 py-2 text-xs"
       >
         {{ icons.discord("w-4 h-4 text-black shrink-0") }}
-        <span>JOIN DISCORD COMMUNITY</span>
+        <span>DISCORD</span>
       </a>
     </div>
   </div>
