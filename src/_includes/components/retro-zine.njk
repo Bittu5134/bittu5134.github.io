@@ -46,14 +46,23 @@
               </span>
             </div>
 
+            {% set validTags = [] %}
+            {% for tag in post.data.tags %}
+              {% if tag != "posts" %}
+                {% set validTags = (validTags.push(tag), validTags) %}
+              {% endif %}
+            {% endfor %}
             <div class="flex flex-wrap gap-1.5">
-              {% for tag in post.data.tags %}
-                {% if tag != "posts" %}
-                  <span class="tag-pill">
-                    #{{ tag | upper }}
-                  </span>
-                {% endif %}
+              {% for tag in validTags.slice(0, 5) %}
+                <span class="tag-pill">
+                  #{{ tag | upper }}
+                </span>
               {% endfor %}
+              {% if validTags.length > 5 %}
+                <span class="tag-pill opacity-75" title="{{ validTags.slice(5) | join(', ') }}">
+                  +{{ validTags.length - 5 }}
+                </span>
+              {% endif %}
             </div>
           </div>
 

@@ -22,58 +22,22 @@ function ensureDirs() {
   });
 }
 
-// 1. Read and parse all markdown blogs
+import matter from "gray-matter";
+
+// 1. Read and parse all markdown blogs directly with gray-matter
 function parseMarkdownFile(filepath) {
-  const raw = fs.readFileSync(filepath, "utf-8").replace(/\r\n/g, "\n");
+  const raw = fs.readFileSync(filepath, "utf-8");
   const fallbackSlug = path.basename(filepath, ".md");
-  const fmMatch = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+  const parsed = matter(raw);
+  const data = parsed.data || {};
+  const content = parsed.content.trim();
 
-  let meta = {};
-  let content = raw;
-
-  if (fmMatch) {
-    content = fmMatch[2].trim();
-    const yamlBlock = fmMatch[1];
-    const lines = yamlBlock.split("\n");
-    let currentKey = "";
-    let inList = false;
-
-    for (const line of lines) {
-      const trimmed = line.trim();
-      if (!trimmed || trimmed.startsWith("#")) continue;
-
-      if (trimmed.startsWith("- ") && inList && currentKey) {
-        const item = trimmed.slice(2).trim().replace(/^["']|["']$/g, "");
-        if (Array.isArray(meta[currentKey])) {
-          meta[currentKey].push(item);
-        }
-        continue;
-      }
-
-      const colonIdx = line.indexOf(":");
-      if (colonIdx !== -1) {
-        const key = line.slice(0, colonIdx).trim();
-        const value = line.slice(colonIdx + 1).trim();
-
-        if (value === "") {
-          currentKey = key;
-          inList = true;
-          meta[key] = [];
-        } else {
-          inList = false;
-          currentKey = key;
-          if (value.startsWith("[") && value.endsWith("]")) {
-            meta[key] = value
-              .slice(1, -1)
-              .split(",")
-              .map((v) => v.trim().replace(/^["']|["']$/g, ""))
-              .filter(Boolean);
-          } else {
-            meta[key] = value.replace(/^["']|["']$/g, "");
-          }
-        }
-      }
-    }
+  // Normalize tags: accept array or comma-separated string, exclude empty / "posts"
+  let tags = [];
+  if (Array.isArray(data.tags)) {
+    tags = data.tags.filter(Boolean);
+  } else if (typeof data.tags === "string") {
+    tags = data.tags.split(",").map((t) => t.trim()).filter(Boolean);
   }
 
   // Calculate readTime dynamically using industry standard reading-time
@@ -81,14 +45,14 @@ function parseMarkdownFile(filepath) {
   const readTime = stats.text;
 
   return {
-    slug: meta.slug || fallbackSlug,
-    title: meta.title || fallbackSlug,
-    date: meta.displayDate || meta.date || "",
+    slug: data.slug || fallbackSlug,
+    title: data.title || fallbackSlug,
+    date: data.displayDate || (data.date ? new Date(data.date).toISOString().split("T")[0] : ""),
     readTime,
-    summary: meta.summary || "",
-    tags: Array.isArray(meta.tags) ? meta.tags : [],
-    coverImage: meta.coverImage || "",
-    coverAlt: meta.coverAlt || "",
+    summary: data.summary || "",
+    tags,
+    coverImage: data.coverImage || "",
+    coverAlt: data.coverAlt || "",
     content,
     raw,
   };
@@ -115,29 +79,12 @@ export async function generateMeta() {
     .map((f) => parseMarkdownFile(path.join(blogsDir, f)))
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-  console.log(`[generate-meta] Loaded ${blogFiles.length} markdown blog posts.`);
+  console.log(`[generate-meta] Loaded ${blogFiles.length} markdown blog posts directly from frontmatter.`);
 
   // Copy raw markdown posts to public/raw/blogs/
   for (const post of blogFiles) {
     fs.writeFileSync(path.join(rawBlogsDir, `${post.slug}.md`), post.raw, "utf-8");
   }
-
-  // Write lightweight metadata JSON for list and preview views
-  const blogsMeta = blogFiles.map(({ slug, title, date, readTime, summary, tags, coverImage, coverAlt }) => ({
-    slug,
-    title,
-    date,
-    readTime,
-    summary,
-    tags,
-    coverImage,
-    coverAlt,
-  }));
-  fs.writeFileSync(
-    path.resolve(__dirname, "../src/_data/blogs.json"),
-    JSON.stringify(blogsMeta, null, 2),
-    "utf-8"
-  );
 
 
 
