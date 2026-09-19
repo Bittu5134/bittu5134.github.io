@@ -50,9 +50,6 @@
 
         <!-- AT A GLANCE card -->
         <div class="p-5 sm:p-6 bg-[#fde047] border-[3px] border-black shadow-brutal">
-          <h3 class="font-mono text-xs sm:text-sm font-bold text-black uppercase tracking-wider mb-4 pb-2 border-b-2 border-black">
-            AT A GLANCE:
-          </h3>
           <ul class="space-y-3 font-mono text-xs sm:text-sm font-bold text-black">
             <li class="flex items-start gap-2.5">
               {{ icons.trophy("w-4 h-4 text-black shrink-0 mt-0.5") }}
@@ -85,11 +82,6 @@
 
     <!-- Row 2: Core Technologies & Tooling -->
     <div class="p-4 sm:p-6 card-brutal">
-      <div class="mb-3 sm:mb-4">
-        <span class="font-mono text-xs sm:text-sm font-bold text-black uppercase tracking-wider">
-          CORE TECHNOLOGIES &amp; TOOLING:
-        </span>
-      </div>
       <div class="flex flex-wrap gap-2.5 sm:gap-3">
         {% for tech in techStack %}
           <span class="tech-badge {{ tech.bgClass }}">
