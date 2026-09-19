@@ -9,31 +9,31 @@ permalink: "/blog/index.html"
 <div class="min-h-screen bg-[#f6eedb] retro-dots-bg text-[#14161f] font-sans selection:bg-[#fde047] selection:text-black">
   {% include "components/retro-header.njk" %}
 
-  <main class="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12" data-pagefind-ignore>
-    <!-- Editorial Header Banner -->
-    <header class="mb-10 pb-6 border-b border-black/15">
-      <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-4">
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-10" data-pagefind-ignore>
+    <!-- Header Banner: Retro Terminal Aesthetic + Clean Editorial Typography -->
+    <header class="mb-8 pb-5 border-b-2 border-black/15">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
-          <div class="flex items-center gap-2 font-mono text-xs sm:text-sm font-bold text-black/60 uppercase tracking-widest mb-1.5">
+          <div class="flex items-center gap-2 font-mono text-xs sm:text-sm font-bold text-black/60 tracking-wider mb-1">
             <span>BITTU.DEV</span>
             <span>/</span>
-            <span>WRITING</span>
+            <span class="text-black font-black">~/blogs</span>
           </div>
-          <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-black tracking-tight">
-            Articles &amp; Dispatches
+          <h1 class="text-3xl sm:text-4xl md:text-5xl font-mono font-black text-black tracking-tight">
+            ~/blogs
           </h1>
-          <p class="mt-2.5 font-sans text-base sm:text-lg text-black/75 max-w-2xl leading-relaxed">
-            Deep dives into low-level systems, network protocols, distributed signaling, and software architecture.
+          <p class="mt-2 font-mono text-sm sm:text-base text-black/75 max-w-2xl leading-relaxed">
+            Technical deep dives, network protocols, systems engineering notes, and architecture write-ups.
           </p>
         </div>
 
         <!-- External RSS & Context Feeds -->
-        <div class="flex items-center gap-2 shrink-0 pt-2 sm:pt-0">
+        <div class="flex items-center gap-2 shrink-0 pt-1 sm:pt-0">
           <a
             href="/rss.xml"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#fffdf9] hover:bg-[#fb923c] text-black border border-black rounded font-mono text-xs sm:text-sm font-bold transition-colors"
+            class="btn-brutal bg-[#fb923c] px-3 py-1.5 text-xs sm:text-sm"
             title="Subscribe via standard RSS 2.0"
           >
             {{ icons.rss("w-3.5 h-3.5 text-black") }}
@@ -43,7 +43,7 @@ permalink: "/blog/index.html"
             href="/llms.txt"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#fffdf9] hover:bg-[#86efac] text-black border border-black rounded font-mono text-xs sm:text-sm font-bold transition-colors"
+            class="btn-brutal bg-[#86efac] px-3 py-1.5 text-xs sm:text-sm"
             title="Structured plain-text feed for LLMs"
           >
             {{ icons.terminal("w-3.5 h-3.5 text-black") }}
@@ -53,24 +53,24 @@ permalink: "/blog/index.html"
       </div>
     </header>
 
-    <!-- Search & Filter Controls: Standard, focused toolbar -->
-    <section class="mb-10 space-y-4" aria-label="Search and filter articles">
+    <!-- Search & Filter Controls: Standard layout with brutalist retro styling -->
+    <section class="mb-8 space-y-3" aria-label="Search and filter articles">
       <div class="flex flex-col sm:flex-row items-stretch gap-3">
         <!-- Search Input -->
-        <div class="flex-1 bg-[#fffdf9] border-2 border-black rounded-lg px-3.5 py-2.5 flex items-center gap-2.5 focus-within:ring-2 focus-within:ring-amber-500 transition-all shadow-sm">
-          <svg class="w-4 h-4 text-black/50 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-          </svg>
+        <div class="flex-1 card-brutal px-3.5 sm:px-4 py-2 bg-[#fffdf9] flex items-center gap-2.5 shadow-brutal-xs h-11 sm:h-12">
+          <div class="text-black/50 shrink-0">
+            <svg class="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          </div>
           <input
             type="search"
             id="blog-search-input"
             placeholder="Search articles by title, keywords, or #tag..."
-            class="w-full font-sans text-sm sm:text-base text-black placeholder:text-black/45 focus:outline-none bg-transparent"
+            class="w-full font-mono text-xs sm:text-sm text-black placeholder:text-black/45 focus:outline-none bg-transparent"
             aria-label="Search articles"
           />
           <button
             id="blog-search-clear"
-            class="hidden px-2 py-0.5 font-mono text-xs font-bold bg-[#f87171] text-black border border-black rounded hover:bg-red-400 cursor-pointer shrink-0"
+            class="hidden px-2 py-0.5 font-mono text-xs font-bold bg-[#f87171] text-black border border-black hover:bg-red-400 cursor-pointer shrink-0"
             aria-label="Clear search"
           >
             CLEAR
@@ -78,8 +78,8 @@ permalink: "/blog/index.html"
         </div>
 
         <!-- Sort Select -->
-        <div class="bg-[#fffdf9] border-2 border-black rounded-lg px-3 py-2 flex items-center gap-2 shrink-0 shadow-sm">
-          <label for="blog-sort-select" class="flex items-center gap-1.5 text-black/70 font-mono text-xs sm:text-sm font-bold shrink-0 cursor-pointer">
+        <div class="card-brutal px-3 sm:px-4 py-2 bg-[#fffdf9] flex items-center justify-between sm:justify-start gap-2 shrink-0 shadow-brutal-xs h-11 sm:h-12">
+          <label for="blog-sort-select" class="flex items-center gap-1.5 text-black font-mono text-xs sm:text-sm font-bold shrink-0 cursor-pointer">
             <svg class="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 4h18M3 10h12M3 16h6"/>
             </svg>
@@ -100,16 +100,16 @@ permalink: "/blog/index.html"
       </div>
 
       <!-- Tag Filter Pills Toolbar -->
-      <div class="flex flex-wrap items-center gap-1.5 pt-1" id="blog-tags-container" aria-label="Filter articles by tag">
+      <div class="flex flex-wrap items-center gap-2 pt-1" id="blog-tags-container" aria-label="Filter articles by tag">
         <button
-          class="blog-tag-filter-btn active px-3 py-1 bg-[#fde047] border border-black rounded-full font-mono text-xs sm:text-sm font-black cursor-pointer select-none transition-colors"
+          class="blog-tag-filter-btn active px-3.5 py-1.5 bg-[#fde047] border-2 border-black font-mono text-xs sm:text-sm font-black cursor-pointer select-none"
           data-tag="ALL"
         >
           ALL ({{ collections.blogs.length }})
         </button>
         {% for tag in collections.blogTags %}
           <button
-            class="blog-tag-filter-btn px-3 py-1 bg-[#fffdf9] hover:bg-[#fde047] border border-black/40 hover:border-black rounded-full font-mono text-xs sm:text-sm font-bold text-black/80 hover:text-black cursor-pointer select-none transition-colors"
+            class="blog-tag-filter-btn px-3.5 py-1.5 bg-[#fffdf9] hover:bg-[#fde047] border-2 border-black font-mono text-xs sm:text-sm font-bold text-black cursor-pointer select-none transition-colors"
             data-tag="{{ tag }}"
           >
             #{{ tag }}
@@ -134,7 +134,7 @@ permalink: "/blog/index.html"
         {% endfor %}
 
         <article
-          class="blog-post-card group bg-[#fffdf9] border-2 border-black rounded-xl p-6 sm:p-8 hover:border-amber-600 shadow-sm hover:shadow-md transition-all"
+          class="blog-post-card card-brutal p-5 sm:p-7 group bg-[#fffdf9] transition-all"
           data-slug="{{ post.data.slug or post.fileSlug }}"
           data-title="{{ (post.data.title or '') | lower }}"
           data-summary="{{ (post.data.summary or '') | lower }}"
@@ -142,28 +142,29 @@ permalink: "/blog/index.html"
           data-date="{{ (post.data.date or post.date) | dateIso }}"
           data-readtime="{{ post.data.readTime or '3 min read' }}"
         >
-          <!-- Metadata Byline Bar -->
-          <div class="flex flex-wrap items-center justify-between gap-2.5 mb-3 text-xs sm:text-sm font-mono text-black/60">
-            <div class="flex items-center gap-2">
-              <time datetime="{{ (post.data.date or post.date) | dateIso }}" class="font-bold text-black">
-                {{ post.data.displayDate or ((post.data.date or post.date) | dateDisplay) }}
-              </time>
-              <span>·</span>
-              <span class="font-medium text-black/75">
-                {{ post.data.readTime or '3 min read' }}
+          <!-- Metadata Bar: Mint date stamp + read time + clean tags -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mb-4 pb-3 border-b-2 border-black/10">
+            <div class="flex items-center gap-2.5">
+              <span class="px-2.5 py-1 bg-[#86efac] border-2 border-black font-mono text-xs sm:text-sm font-bold text-black">
+                <time datetime="{{ (post.data.date or post.date) | dateIso }}">
+                  {{ (post.data.displayDate or ((post.data.date or post.date) | dateDisplay)) | upper }}
+                </time>
+              </span>
+              <span class="font-mono text-xs sm:text-sm text-black/70 font-bold">
+                // {{ (post.data.readTime or '3 min read') | upper }}
               </span>
             </div>
 
             <!-- Tags: Display up to first 5 tags, +N if more -->
             <div class="flex flex-wrap gap-1.5">
               {% for tag in validTags.slice(0, 5) %}
-                <span class="px-2 py-0.5 bg-[#f6eedb] border border-black/20 rounded font-mono text-xs font-semibold text-black/80">
+                <span class="tag-pill">
                   #{{ tag }}
                 </span>
               {% endfor %}
               {% if validTags.length > 5 %}
                 <span
-                  class="px-2 py-0.5 bg-neutral-200 border border-black/20 rounded font-mono text-xs font-semibold text-black/70"
+                  class="tag-pill opacity-75"
                   title="{{ validTags.slice(5) | join(', ') }}"
                 >
                   +{{ validTags.length - 5 }}
@@ -173,28 +174,28 @@ permalink: "/blog/index.html"
           </div>
 
           <!-- Article Title -->
-          <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-black leading-snug tracking-tight mb-2.5 group-hover:text-amber-600 transition-colors">
-            <a href="{{ post.url }}" class="hover:underline underline-offset-4 decoration-amber-500">
+          <h2 class="text-xl sm:text-2xl md:text-3xl font-black text-black leading-snug tracking-tight mb-2.5 group-hover:text-[#d97706] transition-colors">
+            <a href="{{ post.url }}" class="hover:underline underline-offset-4 decoration-2">
               {{ post.data.title }}
             </a>
           </h2>
 
           <!-- Summary / Excerpt -->
-          <p class="font-sans text-sm sm:text-base text-neutral-700 leading-relaxed mb-4">
+          <p class="font-mono text-xs sm:text-sm text-black/80 leading-relaxed mb-4">
             {{ post.data.summary }}
           </p>
 
           <!-- Search Match Snippet (populated dynamically by Pagefind) -->
-          <div class="blog-match-snippet hidden mb-4 p-3 bg-amber-500/10 border-l-4 border-amber-500 font-sans text-xs sm:text-sm text-black/90 leading-relaxed rounded-r"></div>
+          <div class="blog-match-snippet hidden mb-4 p-3 bg-amber-500/10 border-l-4 border-amber-500 font-mono text-xs sm:text-sm text-black/90 leading-relaxed"></div>
 
-          <!-- Read Link -->
+          <!-- Read Action Button -->
           <div>
             <a
               href="{{ post.url }}"
-              class="inline-flex items-center gap-1.5 font-sans font-bold text-sm text-black group-hover:text-amber-600 group-hover:translate-x-0.5 transition-all"
+              class="btn-brutal-yellow inline-flex items-center gap-2 px-4 py-2 text-xs sm:text-sm font-bold shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-y-0 active:shadow-none transition-all"
             >
-              <span>Read article</span>
-              {{ icons.arrowRight("w-4 h-4") }}
+              <span>READ ARTICLE</span>
+              {{ icons.arrowUpRight("w-4 h-4") }}
             </a>
           </div>
         </article>
@@ -204,21 +205,21 @@ permalink: "/blog/index.html"
     <!-- Empty Results State -->
     <div
       id="blog-no-results"
-      class="hidden p-8 sm:p-12 bg-[#fffdf9] border-2 border-black rounded-xl text-center space-y-4 my-8 shadow-sm"
+      class="hidden p-8 sm:p-12 card-brutal text-center space-y-4 my-8"
     >
-      <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-100 text-amber-900 border border-amber-300 font-mono text-xs font-bold rounded-full">
-        <span>No matching dispatches</span>
+      <div class="inline-block px-3 py-1.5 bg-[#f87171] border-2 border-black font-mono font-black text-xs sm:text-sm shadow-brutal-xs mx-auto mb-2 text-black">
+        ERROR 404
       </div>
-      <h3 class="font-bold text-xl sm:text-2xl text-black">No articles found</h3>
-      <p class="font-sans text-sm sm:text-base text-neutral-600 max-w-md mx-auto">
+      <h3 class="font-sans font-black text-xl sm:text-2xl text-black">No Articles Found</h3>
+      <p class="font-mono text-xs sm:text-sm text-black/75 max-w-md mx-auto">
         No articles match your query or active tag filters. Try searching for broader terms or clearing your filters.
       </p>
       <div>
         <button
           id="blog-reset-filters-btn"
-          class="btn-brutal-yellow inline-flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-lg shadow-sm cursor-pointer transition-all"
+          class="btn-brutal-yellow inline-flex items-center gap-2 px-4 py-2 text-xs sm:text-sm font-bold shadow-brutal-xs cursor-pointer transition-all"
         >
-          <span>Reset all filters</span>
+          <span>RESET ALL FILTERS</span>
         </button>
       </div>
     </div>
