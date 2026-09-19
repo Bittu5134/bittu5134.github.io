@@ -64,22 +64,23 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Post Article Copy Link Button
-  const postCopyLinkBtn = document.querySelector(".post-copy-link-btn");
-  if (postCopyLinkBtn) {
-    postCopyLinkBtn.addEventListener("click", () => {
-      const url = postCopyLinkBtn.getAttribute("data-url") || window.location.href;
+  // Post Article Copy Link Buttons (Header & Footer)
+  document.querySelectorAll(".post-copy-link-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const url = btn.getAttribute("data-url") || window.location.href;
       navigator.clipboard.writeText(url).then(() => {
-        const originalHtml = postCopyLinkBtn.innerHTML;
-        postCopyLinkBtn.innerHTML = '<span>LINK COPIED!</span>';
-        postCopyLinkBtn.classList.add("bg-[#86efac]");
+        const originalHtml = btn.innerHTML;
+        btn.innerHTML = '<span>Copied!</span>';
+        btn.classList.add("bg-[#86efac]");
+        btn.classList.remove("bg-[#fde047]");
         setTimeout(() => {
-          postCopyLinkBtn.innerHTML = originalHtml;
-          postCopyLinkBtn.classList.remove("bg-[#86efac]");
+          btn.innerHTML = originalHtml;
+          btn.classList.remove("bg-[#86efac]");
+          btn.classList.add("bg-[#fde047]");
         }, 2000);
       }).catch((err) => console.warn("Failed to copy article link:", err));
     });
-  }
+  });
 
   /* -------------------------------------------------------------------------- */
   /* 2. Mobile Navigation Drawer                                               */
@@ -636,124 +637,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* -------------------------------------------------------------------------- */
-  /* 11. Blog Search & Tag Real-Time Filtering                                  */
+  /* 11. Blog Search & Filtering handled exclusively by pagefind-search.js     */
   /* -------------------------------------------------------------------------- */
-  const searchInput = document.getElementById("blog-search-input");
-  const searchClearBtn = document.getElementById("blog-search-clear");
-  const tagButtons = document.querySelectorAll(".blog-tag-filter-btn");
-  const articleCards = document.querySelectorAll(".blog-post-card");
-  const noResultsBox = document.getElementById("blog-no-results");
-  const resetFiltersBtn = document.getElementById("blog-reset-filters-btn");
-
-  if (articleCards.length > 0) {
-    // If Pagefind static search engine is present, defer to it
-    if (window.pagefindBlogSearch || document.querySelector('script[src*="pagefind"]')) return;
-
-    let currentTag = "ALL";
-    let currentQuery = "";
-
-    // Parse URL parameter ?tag=... on page load
-    const urlParams = new URLSearchParams(window.location.search);
-    const initialTag = urlParams.get("tag");
-    if (initialTag) {
-      currentTag = initialTag.toUpperCase();
-      tagButtons.forEach((b) => {
-        if ((b.getAttribute("data-tag") || "").toUpperCase() === currentTag) {
-          b.classList.add("active", "bg-[#fde047]", "shadow-brutal-xs", "-translate-y-0.5");
-          b.classList.remove("bg-[#fffdf9]");
-        } else {
-          b.classList.remove("active", "bg-[#fde047]", "shadow-brutal-xs", "-translate-y-0.5");
-          b.classList.add("bg-[#fffdf9]");
-        }
-      });
-    }
-
-    function applyFilters() {
-      let visibleCount = 0;
-      const q = currentQuery.toLowerCase().trim();
-
-      articleCards.forEach((card) => {
-        const title = card.getAttribute("data-title") || "";
-        const summary = card.getAttribute("data-summary") || "";
-        const tags = card.getAttribute("data-tags") || "";
-
-        const matchesTag =
-          currentTag === "ALL" || tags.toUpperCase().includes(currentTag);
-
-        const matchesQuery =
-          !q ||
-          title.includes(q) ||
-          summary.includes(q) ||
-          tags.includes(q);
-
-        if (matchesTag && matchesQuery) {
-          card.classList.remove("hidden");
-          visibleCount++;
-        } else {
-          card.classList.add("hidden");
-        }
-      });
-
-      if (visibleCount === 0) {
-        noResultsBox?.classList.remove("hidden");
-      } else {
-        noResultsBox?.classList.add("hidden");
-      }
-
-      if (searchClearBtn) {
-        if (q) {
-          searchClearBtn.classList.remove("hidden");
-        } else {
-          searchClearBtn.classList.add("hidden");
-        }
-      }
-    }
-
-    searchInput?.addEventListener("input", (e) => {
-      currentQuery = e.target.value;
-      applyFilters();
-    });
-
-    searchClearBtn?.addEventListener("click", () => {
-      if (searchInput) searchInput.value = "";
-      currentQuery = "";
-      applyFilters();
-    });
-
-    tagButtons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        tagButtons.forEach((b) => {
-          b.classList.remove("active", "bg-[#fde047]", "shadow-brutal-xs", "-translate-y-0.5");
-          b.classList.add("bg-[#fffdf9]");
-        });
-        btn.classList.add("active", "bg-[#fde047]", "shadow-brutal-xs", "-translate-y-0.5");
-        btn.classList.remove("bg-[#fffdf9]");
-
-        currentTag = (btn.getAttribute("data-tag") || "ALL").toUpperCase();
-        applyFilters();
-      });
-    });
-
-    resetFiltersBtn?.addEventListener("click", () => {
-      if (searchInput) searchInput.value = "";
-      currentQuery = "";
-      currentTag = "ALL";
-      tagButtons.forEach((b) => {
-        if (b.getAttribute("data-tag") === "ALL") {
-          b.classList.add("active", "bg-[#fde047]", "shadow-brutal-xs", "-translate-y-0.5");
-          b.classList.remove("bg-[#fffdf9]");
-        } else {
-          b.classList.remove("active", "bg-[#fde047]", "shadow-brutal-xs", "-translate-y-0.5");
-          b.classList.add("bg-[#fffdf9]");
-        }
-      });
-      applyFilters();
-    });
-
-    if (initialTag) {
-      applyFilters();
-    }
-  }
 
   /* -------------------------------------------------------------------------- */
   /* 12. Dark / Light Theme Controller (Strictly Scoped to Post Pages)         */

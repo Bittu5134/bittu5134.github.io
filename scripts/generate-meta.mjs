@@ -97,50 +97,7 @@ export async function generateMeta() {
     console.warn(`[generate-meta] Failed to load projects:`, e.message);
   }
 
-  // 2. Generate public/rss.xml
-  const lastBuildDate = new Date().toUTCString();
-  const itemsXml = blogFiles
-    .map((post) => {
-      const pubDate = new Date(post.date).toUTCString();
-      const postUrl = `${SITE_URL}/blog/${post.slug}`;
-      let enclosure = "";
-      if (post.coverImage) {
-        let fileLength = 0;
-        try {
-          const localImgPath = path.join(publicDir, post.coverImage.replace(/^\//, ""));
-          if (fs.existsSync(localImgPath)) {
-            fileLength = fs.statSync(localImgPath).size;
-          }
-        } catch {
-          // ignore stat errors
-        }
-        enclosure = `\n      <enclosure url="${SITE_URL}${post.coverImage}" type="image/svg+xml" length="${fileLength}" />`;
-      }
-      return `    <item>
-      <title><![CDATA[${post.title}]]></title>
-      <link>${postUrl}</link>
-      <guid isPermaLink="true">${postUrl}</guid>
-      <pubDate>${pubDate}</pubDate>
-      <description><![CDATA[${post.summary}]]></description>${enclosure}
-    </item>`;
-    })
-    .join("\n");
-
-  const rssContent = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Bittu - Systems &amp; Software Blog</title>
-    <link>${SITE_URL}/blog</link>
-    <description>Essays and deep dives into low-level systems, reverse engineering, distributed networking, and software craft by Bittu (Bittu5134).</description>
-    <language>en-us</language>
-    <lastBuildDate>${lastBuildDate}</lastBuildDate>
-    <atom:link href="${SITE_URL}/rss.xml" rel="self" type="application/rss+xml" />
-${itemsXml}
-  </channel>
-</rss>
-`;
-  fs.writeFileSync(path.join(publicDir, "rss.xml"), rssContent, "utf-8");
-
+  // 2. RSS feed is generated declaratively via official @11ty/eleventy-plugin-rss in src/rss.njk
   // 3. Generate public/sitemap.xml
   const today = new Date().toISOString().split("T")[0];
   const urls = [

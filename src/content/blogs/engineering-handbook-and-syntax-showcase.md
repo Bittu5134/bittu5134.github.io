@@ -11,7 +11,7 @@ tags:
   - Go
   - Mermaid
   - Showcase
-coverImage: /images/blogs/feature-showcase.svg
+coverImage: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&auto=format&fit=crop&q=80"
 coverAlt: "Comprehensive engineering syntax and markdown feature showcase"
 ---
 
@@ -83,7 +83,7 @@ $$
 \nabla \times \mathbf{B} = \mu_0 \mathbf{J} + \mu_0 \varepsilon_0 \frac{\partial \mathbf{E}}{\partial t}
 $$
 
-The Shannon entropy formula[^1] for a discrete probability distribution $P$:
+The Shannon entropy formula for a discrete probability distribution $P$:
 
 $$
 H(P) = -\sum_{x \in \mathcal{X}} P(x) \log_2 P(x)
@@ -237,9 +237,9 @@ sequenceDiagram
     participant Redis as Redis Pub/Sub
     actor Bob as Bob (Peer 2)
 
-    Alice->>Server: WS Connect / Join Room 'lobby'
+    Alice->>Server: WS Connect / Join Room lobby
     Server->>Redis: SADD room:lobby:peers alice
-    Bob->>Server: WS Connect / Join Room 'lobby'
+    Bob->>Server: WS Connect / Join Room lobby
     Server->>Redis: SADD room:lobby:peers bob
     Alice->>Server: Send SDP Offer
     Server->>Bob: Forward SDP Offer
@@ -278,7 +278,7 @@ Markdown tables render with clean header rows and readable borders.
 
 ---
 
-## 7. Task Lists & Strikethrough (GFM)
+## 7. Task Lists and Strikethrough (GFM)
 
 - [x] Zero-dependency build pipeline in `.eleventy.js`
 - [x] Shiki syntax highlighting across Go, Rust, Python, Bash
@@ -304,7 +304,7 @@ The Shannon entropy formula[^1] quantifies the average information content of a 
 
 ---
 
-## 9. Figures & Image Captions
+## 9. Figures and Image Captions
 
 Images written as standalone paragraphs are automatically parsed into semantic `<figure>` elements, deriving a centered `<figcaption>` from the image's alt text:
 

@@ -276,6 +276,7 @@ async function buildProcessor() {
     .use(rehypeAutolinkHeadings, {
       behavior: "wrap",
       properties: { className: ["header-anchor"] },
+      test: (node) => node.properties?.id !== "footnote-label",
     })
     .use(rehypeStringify, { allowDangerousHtml: true });
 }

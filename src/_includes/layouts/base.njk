@@ -17,7 +17,8 @@
     <meta property="og:description" content="{{ summary if summary else (description if description else 'Systems engineer & cybersecurity student at IIT Kanpur. Builds open-source tools, WebRTC infra, and got featured on Minecraft Live.') }}" />
     <meta property="og:type" content="{{ ogType if ogType else 'website' }}" />
     <meta property="og:url" content="https://bittu.dev{{ page.url }}" />
-    <meta property="og:image" content="https://bittu.dev{{ coverImage if coverImage else '/images/avatar.webp' }}" />
+    {% set resolvedCover = coverImage if (coverImage and (coverImage.startsWith('http://') or coverImage.startsWith('https://'))) else ('https://bittu.dev' + (coverImage if coverImage else '/images/avatar.webp')) %}
+    <meta property="og:image" content="{{ resolvedCover }}" />
     {% if coverAlt %}<meta property="og:image:alt" content="{{ coverAlt }}" />{% endif %}
 
     <!-- Twitter Card Meta -->
@@ -26,7 +27,7 @@
     <meta name="twitter:creator" content="@Bittu5134" />
     <meta name="twitter:title" content="{{ title if title else 'Bittu | Systems Hacker & Modder' }}" />
     <meta name="twitter:description" content="{{ summary if summary else (description if description else 'Systems engineer & cybersecurity student at IIT Kanpur.') }}" />
-    <meta name="twitter:image" content="https://bittu.dev{{ coverImage if coverImage else '/images/avatar.webp' }}" />
+    <meta name="twitter:image" content="{{ resolvedCover }}" />
     {% if coverAlt %}<meta name="twitter:image:alt" content="{{ coverAlt }}" />{% endif %}
 
     <!-- Article Metadata -->
@@ -44,24 +45,18 @@
     <link rel="preload" href="/fonts/SpaceMono-Regular.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/images/avatar.avif" as="image" type="image/avif" />
 
-    <!-- Early Theme Preference (Prevent FOUC - Strictly Scoped to Blog Post Pages) -->
+    <!-- Early Theme Preference (Strictly Permanent Dark on Blog Post Pages) -->
     <script>
       (function() {
         try {
           var path = window.location.pathname;
-          var isPostPage = path.indexOf("/blog/") === 0 && path !== "/blog/" && path !== "/blog/index.html";
-          if (!isPostPage) {
-            document.documentElement.setAttribute("data-theme", "light");
-            document.documentElement.classList.remove("dark");
-            return;
-          }
-          var saved = localStorage.getItem("theme");
-          var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-          if (saved === "dark" || (!saved && prefersDark)) {
+          var isPostPage = (path.indexOf("/blog/") === 0 && path !== "/blog/" && path !== "/blog/index.html") ||
+                           document.querySelector('meta[property="og:type"][content="article"]');
+          if (isPostPage) {
             document.documentElement.setAttribute("data-theme", "dark");
             document.documentElement.classList.add("dark");
             var metaTheme = document.querySelector('meta[name="theme-color"]');
-            if (metaTheme) metaTheme.setAttribute("content", "#0d1117");
+            if (metaTheme) metaTheme.setAttribute("content", "#0b0f17");
           } else {
             document.documentElement.setAttribute("data-theme", "light");
             document.documentElement.classList.remove("dark");
@@ -74,8 +69,13 @@
     <link rel="stylesheet" href="/assets/css/index.css" />
 
     <!-- KaTeX (loaded only if page contains math output) -->
-    {% if content and '.katex' in content %}
+    {% if content and 'katex' in content %}
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css" crossorigin="anonymous" />
+    {% endif %}
+
+    <!-- Littlefoot Footnote Popovers (loaded if post has footnotes) -->
+    {% if content and ('data-footnote-ref' in content or 'fn-' in content or 'footnote' in content) %}
+      <link rel="stylesheet" href="/assets/css/littlefoot.css" />
     {% endif %}
 
     <!-- RSS -->

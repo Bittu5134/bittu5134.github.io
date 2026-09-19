@@ -1,13 +1,18 @@
 import { setupMarkdown } from "./scripts/markdown-engine.js";
 import { generateMeta } from "./scripts/generate-meta.mjs";
 import getReadingTime from "reading-time";
+import pluginRss from "@11ty/eleventy-plugin-rss";
+import { minify } from "html-minifier-terser";
 
 export default async function (eleventyConfig) {
+  // 0. Official RSS Plugin
+  eleventyConfig.addPlugin(pluginRss);
+
   // 1. Setup Markdown engine (Shiki SSG syntax highlighting, Mermaid diagrams, GitHub alerts, anchors)
   const md = await setupMarkdown();
   eleventyConfig.setLibrary("md", md);
 
-  // 2. Lifecycle hook: Sync RSS, sitemaps, robots, raw markdown, and metadata before each build
+  // 2. Lifecycle hook: Sync sitemaps, robots, raw markdown, and metadata before each build
   eleventyConfig.on("eleventy.before", async () => {
     try {
       await generateMeta();
@@ -51,20 +56,21 @@ export default async function (eleventyConfig) {
     return Array.from(tagsSet).sort((a, b) => a.localeCompare(b));
   });
 
-  // 6. Lightweight Vanilla HTML Minifier (zero-dependency, preserves pre/code/textarea blocks)
-  eleventyConfig.addTransform("htmlmin", function (content) {
+  // 6. Established HTML Minifier with html-minifier-terser
+  eleventyConfig.addTransform("htmlmin", async function (content) {
     if ((this.page.outputPath || "").endsWith(".html")) {
-      const preservedBlocks = [];
-      let minified = content.replace(/<(pre|code|textarea)[\s\S]*?<\/\1>/gi, (match) => {
-        preservedBlocks.push(match);
-        return `___PRESERVED_BLOCK_${preservedBlocks.length - 1}___`;
-      });
-      minified = minified
-        .replace(/<!--(?![\s\S]*?\[if)[\s\S]*?-->/g, "")
-        .replace(/>\s+</g, "><")
-        .replace(/\s{2,}/g, " ");
-      minified = minified.replace(/___PRESERVED_BLOCK_(\d+)___/g, (_, index) => preservedBlocks[Number(index)]);
-      return minified.trim();
+      try {
+        return await minify(content, {
+          collapseWhitespace: true,
+          removeComments: true,
+          conservativeCollapse: true,
+          minifyCSS: true,
+          minifyJS: false, // preserve inline scripts with safe execution
+        });
+      } catch (err) {
+        console.warn("[htmlmin] Error minifying " + this.page.outputPath + ":", err.message);
+        return content;
+      }
     }
     return content;
   });
@@ -73,6 +79,8 @@ export default async function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "public": "." });
   eleventyConfig.addPassthroughCopy({ "public/.nojekyll": ".nojekyll" });
   eleventyConfig.addPassthroughCopy({ "src/assets/js": "assets/js" });
+  eleventyConfig.addPassthroughCopy({ "node_modules/littlefoot/dist/littlefoot.js": "assets/js/littlefoot.js" });
+  eleventyConfig.addPassthroughCopy({ "node_modules/littlefoot/dist/littlefoot.css": "assets/css/littlefoot.css" });
 
   // 8. Template Filters
   // Table of Contents generator from rendered HTML

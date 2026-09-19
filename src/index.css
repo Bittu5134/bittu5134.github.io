@@ -147,6 +147,12 @@ img, svg, video {
   background-size: 20px 20px;
 }
 
+.retro-dots-dark {
+  background-color: #0b0f17;
+  background-image: radial-gradient(rgba(148, 163, 184, 0.12) 1.25px, transparent 1.25px);
+  background-size: 22px 22px;
+}
+
 /* Selection style */
 ::selection {
   background-color: #fde047;
@@ -713,7 +719,6 @@ img, svg, video {
 }
 
 .prose-retro .footnotes::before {
-  content: "Footnotes";
   display: block;
   font-family: 'Space Grotesk', sans-serif;
   font-size: 0.8125rem;
@@ -788,52 +793,6 @@ img, svg, video {
   .animate-cassette-ticker { animation: none; }
 }
 
-/* ─── Littlefoot Footnote Popovers & Badges ─────────────────── */
-.littlefoot__button {
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
-  vertical-align: middle;
-  height: 1.35rem;
-  padding: 0 0.45rem !important;
-  margin: 0 0.2rem !important;
-  font-family: 'Space Mono', monospace !important;
-  font-size: 0.75rem !important;
-  font-weight: 700 !important;
-  color: #000000 !important;
-  background-color: #fde047 !important;
-  border: 1px solid rgba(0, 0, 0, 0.2) !important;
-  border-radius: 4px !important;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.littlefoot__button:hover {
-  background-color: #fbbf24 !important;
-  transform: translateY(-1px);
-}
-
-.littlefoot__popover {
-  border: 1px solid #e5e7eb !important;
-  border-radius: 8px !important;
-  background-color: #ffffff !important;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
-  color: #1f2328 !important;
-  max-width: 28rem !important;
-  z-index: 90 !important;
-}
-
-.littlefoot__content {
-  font-family: 'Space Grotesk', sans-serif !important;
-  font-size: 0.875rem !important;
-  line-height: 1.65 !important;
-  padding: 0.75rem 1rem !important;
-}
-
-.littlefoot__content a {
-  color: #d97706 !important;
-  text-decoration: underline !important;
-}
 
 /* ─── Dark Theme System ([data-theme="dark"] / .dark) ───────── */
 /* Strictly scoped to individual blog post pages */
@@ -949,9 +908,10 @@ img, svg, video {
 /* Summary quote banner */
 [data-theme="dark"] [data-pagefind-meta="summary"],
 .dark [data-pagefind-meta="summary"] {
-  background-color: rgba(245, 158, 11, 0.12) !important;
-  border-left-color: #f59e0b !important;
-  color: #e6edf3 !important;
+  background-color: #131923 !important;
+  border: 1px solid #1e293b !important;
+  border-left: 3px solid #fde047 !important;
+  color: #cbd5e1 !important;
 }
 
 /* Tag filter pills */
@@ -1241,40 +1201,31 @@ img, svg, video {
 }
 
 /* Footnotes section in dark mode */
+.prose-retro .footnotes #footnote-label {
+  display: none !important;
+}
+
 [data-theme="dark"] .prose-retro .footnotes,
 .dark .prose-retro .footnotes {
   border-top-color: #30363d !important;
   color: #8b949e !important;
 }
 
-/* Littlefoot popovers & buttons in dark mode */
-[data-theme="dark"] .littlefoot__button,
-.dark .littlefoot__button {
-  background-color: #fde047 !important;
-  border: 1px solid rgba(0, 0, 0, 0.4) !important;
-  color: #000000 !important;
-  box-shadow: none !important;
+/* Littlefoot dark mode styling */
+.dark .littlefoot,
+[data-theme="dark"] .littlefoot {
+  --button-background-color: #1e293b;
+  --button-text-color: #fde047;
+  --button-active-background-color: #fde047;
+  --button-active-text-color: #000000;
+  --button-border-radius: 4px;
+  --popover-background-color: #131923;
+  --popover-text-color: #e2e8f0;
+  --popover-border: 1px solid #334155;
+  --popover-border-radius: 8px;
+  --popover-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
 }
 
-[data-theme="dark"] .littlefoot__popover,
-.dark .littlefoot__popover {
-  background-color: #161b22 !important;
-  border-color: #30363d !important;
-  color: #c9d1d9 !important;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6) !important;
-}
-
-[data-theme="dark"] .littlefoot__content,
-[data-theme="dark"] .littlefoot__content p,
-.dark .littlefoot__content,
-.dark .littlefoot__content p {
-  color: #c9d1d9 !important;
-}
-
-[data-theme="dark"] .littlefoot__content a,
-.dark .littlefoot__content a {
-  color: #58a6ff !important;
-}
 
 /* Mermaid diagrams in dark mode */
 [data-theme="dark"] .prose-retro .mermaid-container,
