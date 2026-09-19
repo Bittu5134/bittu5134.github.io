@@ -359,6 +359,8 @@ ogType: article
         allowMultiple: false,
         activateOnHover: false,
         dismissOnUnhover: false,
+        anchorPattern: /#(user-content-)?fn[:\-_\d]/gi,
+        buttonTemplate: '<button class="littlefoot__button" id="<% reference %>" aria-label="Footnote <% number %>" title="See Footnote <% number %>"><span class="littlefoot__number"><% number %></span></button>'
       });
     }
 

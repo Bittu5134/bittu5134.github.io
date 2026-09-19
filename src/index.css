@@ -1219,11 +1219,25 @@ img, svg, video {
   --button-active-background-color: #fde047;
   --button-active-text-color: #000000;
   --button-border-radius: 4px;
+  --button-height: 1.25rem;
+  --button-padding: 0 0.4rem;
   --popover-background-color: #131923;
   --popover-text-color: #e2e8f0;
   --popover-border: 1px solid #334155;
   --popover-border-radius: 8px;
   --popover-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+}
+
+.littlefoot__button {
+  font-family: 'Space Mono', monospace !important;
+  font-weight: 700 !important;
+  font-size: 0.75rem !important;
+  line-height: 1 !important;
+  border: 1px solid #334155 !important;
+}
+
+.littlefoot__button:hover {
+  border-color: #fde047 !important;
 }
 
 
