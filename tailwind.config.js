@@ -17,6 +17,7 @@ export default {
         'brutal': '4px 4px 0px 0px #000000',
         'brutal-lg': '6px 6px 0px 0px #000000',
         'brutal-xl': '8px 8px 0px 0px #000000',
+        'brutal-bottom': '0px 4px 0px 0px #000000',
         'brutal-amber': '4px 4px 0px 0px #f49a60',
         'brutal-cyan': '4px 4px 0px 0px #35a7ff',
         'brutal-yellow': '4px 4px 0px 0px #fde047',
