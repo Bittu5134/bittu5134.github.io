@@ -146,19 +146,19 @@ permalink: "/blog/index.html"
               </span>
             </div>
 
-            <!-- Tags: Display up to first 5 tags, gracefully hide if they overflow the available width -->
+            <!-- Tags: Display up to first 4 tags without ugly ellipsis, gracefully hide if they overflow the available width -->
             <div class="hidden sm:flex items-center justify-end gap-1.5 overflow-hidden flex-nowrap shrink">
-              {% for tag in validTags.slice(0, 5) %}
-                <span class="tag-pill whitespace-nowrap truncate max-w-[140px]">
+              {% for tag in validTags.slice(0, 4) %}
+                <span class="tag-pill whitespace-nowrap shrink-0 text-xs">
                   #{{ tag }}
                 </span>
               {% endfor %}
-              {% if validTags.length > 5 %}
+              {% if validTags.length > 4 %}
                 <span
-                  class="tag-pill opacity-75 shrink-0 whitespace-nowrap"
-                  title="{{ validTags.slice(5) | join(', ') }}"
+                  class="tag-pill opacity-75 shrink-0 whitespace-nowrap text-xs"
+                  title="{{ validTags.slice(4) | join(', ') }}"
                 >
-                  +{{ validTags.length - 5 }}
+                  +{{ validTags.length - 4 }}
                 </span>
               {% endif %}
             </div>
