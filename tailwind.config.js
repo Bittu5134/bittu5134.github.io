@@ -1,3 +1,5 @@
+import typography from '@tailwindcss/typography';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -89,13 +91,14 @@ export default {
           light: "#ffd4a3",
           dark: "#ce784e",
         },
-        argentinian_blue: {
-          DEFAULT: "#35a7ff",
-          100: "#00233d",
-          200: "#00457a",
-          300: "#0068b8",
-          400: "#008bf5",
-          500: "#35a7ff",
+        reading: {
+          bg: "#0a0c10",
+          surface: "#0e1015",
+          elevated: "#12141a",
+          border: "#27272a",
+          subtle: "#1f2228",
+          muted: "#a1a1aa",
+          faint: "#71717a",
         },
       },
     },
@@ -128,5 +131,5 @@ export default {
     borderCollapse: false,
     borderSpacing: false,
   },
-  plugins: [],
+  plugins: [typography],
 };

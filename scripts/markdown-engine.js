@@ -240,7 +240,7 @@ async function buildProcessor() {
     .use(remarkGithubAlerts)                 // > [!TYPE] → blockquote[data-alert]
     .use(remarkFlexibleCodeTitles, { container: false }) // lang:title.ext syntax without wrapping container
     // ── Bridge (MDAST → HAST) ──────────────────────────────
-    .use(remarkRehype, { allowDangerousHtml: true })
+    .use(remarkRehype, { allowDangerousHtml: true, clobberPrefix: "" })
     .use(rehypeRaw)                          // pass raw inline HTML through
     // ── Rehype (HAST → HTML) ───────────────────────────────
     .use(rehypeMermaidBlocks)                // intercept mermaid fences BEFORE Shiki

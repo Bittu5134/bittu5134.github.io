@@ -1,7 +1,7 @@
 .github/agents
 .github/hooks
 .github/skills/
-
+.impeccable/
 # Logs
 logs
 *.log
