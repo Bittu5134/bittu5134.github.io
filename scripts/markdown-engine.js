@@ -124,7 +124,9 @@ function rehypeCodeBlockWrapper() {
 
           const rawLang = node.properties?.["data-lang"] || node.properties?.dataLang || "";
           const lang = rawLang ? String(rawLang).toUpperCase() : "TEXT";
-          const displayLabel = title ? `${lang} · ${title}` : lang;
+          const displayLabel = title
+            ? `<span class="lang-tag">${lang}</span><span class="file-sep"> · </span><span class="code-filename">${title}</span>`
+            : `<span class="lang-tag">${lang}</span>`;
 
           const codeNode = node.children?.find((c) => c.tagName === "code") || node.children?.[0];
           const rawCode = hastText(codeNode || node);
@@ -137,7 +139,7 @@ function rehypeCodeBlockWrapper() {
             children: [
               {
                 type: "raw",
-                value: `<div class="code-header"><span class="lang-badge">${displayLabel}</span><button class="code-copy-btn" data-code="${encodedCode}" aria-label="Copy code to clipboard"><svg class="w-3.5 h-3.5 copy-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg><span class="copy-text">COPY</span></button></div><div class="code-content">`,
+                value: `<div class="code-header"><span class="lang-badge">${displayLabel}</span><button class="code-copy-btn" data-code="${encodedCode}" aria-label="Copy code to clipboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="copy-icon" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg><span class="copy-text">COPY</span></button></div><div class="code-content">`,
               },
               node,
               { type: "raw", value: `</div>` },

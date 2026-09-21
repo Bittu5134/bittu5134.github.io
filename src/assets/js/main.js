@@ -38,31 +38,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Contact Email copy
   setupCopyButton("copy-email-contact", "hello@bittu.dev", ".email-default", ".email-copied");
 
-  // Blog Article Share link copy & Web Share API
-  const shareBtn = document.getElementById("share-article-btn");
-  if (shareBtn) {
-    shareBtn.addEventListener("click", () => {
-      const title = shareBtn.getAttribute("data-title") || document.title;
-      const url = shareBtn.getAttribute("data-url") || window.location.href;
-
-      if (navigator.share && navigator.canShare && navigator.canShare({ title, url })) {
-        navigator.share({ title, url }).catch(() => {});
-      } else {
-        navigator.clipboard.writeText(url).then(() => {
-          const defaultEl = shareBtn.querySelector(".share-default");
-          const copiedEl = shareBtn.querySelector(".share-copied");
-          if (defaultEl && copiedEl) {
-            defaultEl.classList.add("hidden");
-            copiedEl.classList.remove("hidden");
-            setTimeout(() => {
-              defaultEl.classList.remove("hidden");
-              copiedEl.classList.add("hidden");
-            }, 2000);
-          }
-        }).catch((err) => console.warn("Failed to copy share link:", err));
-      }
-    });
-  }
 
   // Post Article Copy Link Buttons (Header & Footer)
   document.querySelectorAll(".post-copy-link-btn").forEach((btn) => {

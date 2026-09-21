@@ -142,6 +142,24 @@ export default async function (eleventyConfig) {
       .replace(/^-+|-+$/g, "");
   });
 
+  // Filter to pick a blog post that is not current, not newer, and not older
+  eleventyConfig.addFilter("getRandomOtherPost", function (allPosts, currentUrl, newerUrl, olderUrl) {
+    if (!allPosts || !allPosts.length) return null;
+    const excluded = new Set([currentUrl, newerUrl, olderUrl].filter(Boolean));
+    const candidates = allPosts.filter((p) => !excluded.has(p.url));
+    if (candidates.length === 0) {
+      const fallback = allPosts.filter((p) => p.url !== currentUrl);
+      if (fallback.length === 0) return null;
+      return fallback[0];
+    }
+    // Stable pseudo-random pick based on currentUrl char codes
+    let hash = 0;
+    for (let i = 0; i < (currentUrl || "").length; i++) {
+      hash = (hash * 31 + currentUrl.charCodeAt(i)) >>> 0;
+    }
+    return candidates[hash % candidates.length];
+  });
+
   return {
     dir: {
       input: "src",
