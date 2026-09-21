@@ -246,7 +246,7 @@ async function buildProcessor() {
     .use(rehypeMermaidBlocks)                // intercept mermaid fences BEFORE Shiki
     .use(rehypeSlug)                         // add id= to headings
     .use(rehypeShiki, {
-      theme: "github-dark",
+      theme: "catppuccin-mocha",
       langs: [
         "go", "javascript", "typescript", "tsx", "jsx",
         "cpp", "c", "python", "bash", "sh", "zsh",

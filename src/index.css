@@ -462,11 +462,11 @@ img, svg, video {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.45rem 1rem;
+  padding: 0.5rem 1rem;
   background-color: #1f2428;
   border-bottom: 1px solid #30363d;
   font-family: 'Space Mono', monospace;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
 }
 
 .lang-badge {
@@ -488,7 +488,7 @@ img, svg, video {
   border-radius: 4px;
   color: #c9d1d9;
   font-family: 'Space Mono', monospace;
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.15s ease;
@@ -721,7 +721,7 @@ img, svg, video {
 .prose-retro .footnotes::before {
   display: block;
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -748,7 +748,7 @@ img, svg, video {
   color: #d97706;
   border-radius: 3px;
   background-color: rgba(217, 119, 6, 0.1);
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   vertical-align: middle;
 }
 
@@ -811,13 +811,13 @@ img, svg, video {
 
 [data-theme="dark"] body,
 .dark body {
-  background-color: #0a0c10 !important;
-  color: #d4d4d8 !important;
+  background-color: #1e1e2e !important;
+  color: #cdd6f4 !important;
 }
 
 [data-theme="dark"] .retro-dots-bg,
 .dark .retro-dots-bg {
-  background-color: #0a0c10 !important;
+  background-color: #1e1e2e !important;
   background-image: none !important;
 }
 
@@ -834,7 +834,7 @@ img, svg, video {
 .dark .prose-retro h4,
 .dark .prose-retro h5,
 .dark .prose-retro h6 {
-  color: #f4f4f5 !important;
+  color: #cdd6f4 !important;
   font-family: 'Space Grotesk', sans-serif;
 }
 
@@ -845,7 +845,7 @@ img, svg, video {
 .dark .prose-retro,
 .dark .prose-retro p,
 .dark .prose-retro li {
-  color: #d4d4d8 !important;
+  color: #cdd6f4 !important;
 }
 
 [data-theme="dark"] .prose-retro strong,
@@ -856,24 +856,24 @@ img, svg, video {
 [data-theme="dark"] .prose-retro hr,
 .dark .prose-retro hr {
   border: 0 !important;
-  border-top: 1px solid #27272a !important;
+  border-top: 1px solid #313244 !important;
   margin: 3rem 0;
 }
 
-/* Prose links */
+/* Prose links (Catppuccin Sapphire / Blue with Lavender hover) */
 [data-theme="dark"] .prose-retro a:not(.header-anchor):not(.toc-nav-link):not(.data-footnote-backref),
 .dark .prose-retro a:not(.header-anchor):not(.toc-nav-link):not(.data-footnote-backref) {
-  color: #e4e4e7 !important;
+  color: #89b4fa !important;
   text-decoration: underline !important;
-  text-decoration-color: #52525b !important;
+  text-decoration-color: #585b70 !important;
   text-underline-offset: 3px !important;
   transition: all 0.15s ease;
 }
 
 [data-theme="dark"] .prose-retro a:not(.header-anchor):not(.toc-nav-link):not(.data-footnote-backref):hover,
 .dark .prose-retro a:not(.header-anchor):not(.toc-nav-link):not(.data-footnote-backref):hover {
-  color: #ffffff !important;
-  text-decoration-color: #a1a1aa !important;
+  color: #b4befe !important;
+  text-decoration-color: #89b4fa !important;
   background-color: transparent !important;
 }
 
@@ -884,25 +884,25 @@ img, svg, video {
 }
 [data-theme="dark"] .prose-retro .header-anchor::after,
 .dark .prose-retro .header-anchor::after {
-  color: #71717a !important;
+  color: #6c7086 !important;
 }
 
-/* Inline code in dark mode */
+/* Inline code in dark mode (Catppuccin Pink on Surface 0) */
 [data-theme="dark"] .prose-retro code:not(pre code),
 .dark .prose-retro code:not(pre code) {
-  background-color: #18181b !important;
-  border: 1px solid #27272a !important;
-  color: #e4e4e7 !important;
+  background-color: #313244 !important;
+  border: 1px solid #45475a !important;
+  color: #f5c2e7 !important;
   font-family: 'Space Mono', monospace;
   border-radius: 4px;
 }
 
-/* Editorial blockquotes */
+/* Editorial blockquotes (Catppuccin Lavender accent) */
 [data-theme="dark"] .prose-retro blockquote:not(.github-alert),
 .dark .prose-retro blockquote:not(.github-alert) {
   background-color: transparent !important;
-  border-left: 2px solid #3f3f46 !important;
-  color: #a1a1aa !important;
+  border-left: 2px solid #b4befe !important;
+  color: #bac2de !important;
   font-style: italic;
   padding-left: 1rem;
 }
@@ -910,16 +910,16 @@ img, svg, video {
 /* Figure captions */
 [data-theme="dark"] .prose-retro .prose-figure figcaption,
 .dark .prose-retro .prose-figure figcaption {
-  color: #71717a !important;
+  color: #a6adc8 !important;
 }
 
-/* Code block wrapper and copy button */
+/* Code block wrapper and copy button (Catppuccin Mantle + Crust) */
 [data-theme="dark"] .code-block-wrapper,
 .dark .code-block-wrapper {
   margin: 2rem 0;
-  border: 1px solid #27272a !important;
+  border: 1px solid #313244 !important;
   border-radius: 8px;
-  background-color: #0e1015 !important;
+  background-color: #181825 !important;
   box-shadow: none !important;
   overflow: hidden;
 }
@@ -929,11 +929,11 @@ img, svg, video {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.4rem 0.875rem;
-  background-color: #12141a !important;
-  border-bottom: 1px solid #27272a !important;
+  padding: 0.5rem 1rem;
+  background-color: #11111b !important;
+  border-bottom: 1px solid #313244 !important;
   font-family: 'Space Mono', monospace;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
 }
 
 [data-theme="dark"] .lang-badge,
@@ -941,8 +941,8 @@ img, svg, video {
   font-weight: 500;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: #71717a !important;
-  font-size: 0.7rem;
+  color: #b4befe !important;
+  font-size: 0.75rem;
 }
 
 [data-theme="dark"] .code-copy-btn,
@@ -950,13 +950,13 @@ img, svg, video {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.2rem 0.5rem;
+  padding: 0.25rem 0.55rem;
   background-color: transparent !important;
-  color: #a1a1aa !important;
-  border: 1px solid #27272a !important;
+  color: #a6adc8 !important;
+  border: 1px solid #313244 !important;
   border-radius: 4px;
   font-family: 'Space Mono', monospace;
-  font-size: 0.7rem;
+  font-size: 0.8125rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.15s ease;
@@ -964,19 +964,19 @@ img, svg, video {
 
 [data-theme="dark"] .code-copy-btn:hover,
 .dark .code-copy-btn:hover {
-  background-color: #27272a !important;
-  color: #f4f4f5 !important;
-  border-color: #3f3f46 !important;
+  background-color: #313244 !important;
+  color: #cdd6f4 !important;
+  border-color: #45475a !important;
 }
 
-/* Tables in dark mode */
+/* Tables in dark mode (Catppuccin Mantle & Surface 0) */
 [data-theme="dark"] .table-responsive-wrapper,
 .dark .table-responsive-wrapper {
   width: 100%;
   overflow-x: auto;
   margin: 2rem 0;
-  background-color: #0e1015 !important;
-  border: 1px solid #27272a !important;
+  background-color: #181825 !important;
+  border: 1px solid #313244 !important;
   border-radius: 8px;
 }
 
@@ -992,11 +992,11 @@ img, svg, video {
 [data-theme="dark"] .prose-retro th,
 .dark .prose-retro th {
   padding: 0.625rem 0.875rem;
-  background-color: #141720 !important;
-  color: #e4e4e7 !important;
-  border-bottom: 1px solid #27272a !important;
+  background-color: #11111b !important;
+  color: #cdd6f4 !important;
+  border-bottom: 1px solid #313244 !important;
   font-family: 'Space Mono', monospace;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -1005,8 +1005,8 @@ img, svg, video {
 [data-theme="dark"] .prose-retro td,
 .dark .prose-retro td {
   padding: 0.625rem 0.875rem;
-  color: #d4d4d8 !important;
-  border-bottom: 1px solid #27272a !important;
+  color: #cdd6f4 !important;
+  border-bottom: 1px solid #313244 !important;
 }
 
 [data-theme="dark"] .prose-retro tr:last-child td,
@@ -1016,82 +1016,82 @@ img, svg, video {
 
 [data-theme="dark"] .prose-retro tr:nth-child(even) td,
 .dark .prose-retro tr:nth-child(even) td {
-  background-color: rgba(255, 255, 255, 0.015) !important;
+  background-color: rgba(255, 255, 255, 0.02) !important;
 }
 
-/* GitHub Alert Callouts in dark mode (Refined 1px card without heavy side-tab) */
+/* GitHub Alert Callouts in Catppuccin Mocha */
 [data-theme="dark"] .prose-retro .github-alert,
 .dark .prose-retro .github-alert {
   margin: 1.75rem 0;
   padding: 0.875rem 1.125rem;
   border-radius: 6px;
-  border: 1px solid #27272a !important;
+  border: 1px solid #313244 !important;
   box-shadow: none !important;
-  background-color: rgba(18, 20, 26, 0.6) !important;
+  background-color: rgba(24, 24, 37, 0.7) !important;
 }
 
 [data-theme="dark"] .prose-retro .github-alert-note,
 .dark .prose-retro .github-alert-note {
-  border-color: rgba(59, 130, 246, 0.3) !important;
-  background-color: rgba(59, 130, 246, 0.05) !important;
+  border-color: rgba(137, 180, 250, 0.35) !important;
+  background-color: rgba(137, 180, 250, 0.06) !important;
 }
 [data-theme="dark"] .prose-retro .github-alert-note .github-alert-title,
 .dark .prose-retro .github-alert-note .github-alert-title {
-  color: #60a5fa !important;
+  color: #89b4fa !important;
 }
 
 [data-theme="dark"] .prose-retro .github-alert-tip,
 .dark .prose-retro .github-alert-tip {
-  border-color: rgba(34, 197, 94, 0.3) !important;
-  background-color: rgba(34, 197, 94, 0.05) !important;
+  border-color: rgba(166, 227, 161, 0.35) !important;
+  background-color: rgba(166, 227, 161, 0.06) !important;
 }
 [data-theme="dark"] .prose-retro .github-alert-tip .github-alert-title,
 .dark .prose-retro .github-alert-tip .github-alert-title {
-  color: #4ade80 !important;
+  color: #a6e3a1 !important;
 }
 
 [data-theme="dark"] .prose-retro .github-alert-important,
 .dark .prose-retro .github-alert-important {
-  border-color: rgba(168, 85, 247, 0.3) !important;
-  background-color: rgba(168, 85, 247, 0.05) !important;
+  border-color: rgba(203, 166, 247, 0.35) !important;
+  background-color: rgba(203, 166, 247, 0.06) !important;
 }
 [data-theme="dark"] .prose-retro .github-alert-important .github-alert-title,
 .dark .prose-retro .github-alert-important .github-alert-title {
-  color: #c084fc !important;
+  color: #cba6f7 !important;
 }
 
 [data-theme="dark"] .prose-retro .github-alert-warning,
 .dark .prose-retro .github-alert-warning {
-  border-color: rgba(245, 158, 11, 0.3) !important;
-  background-color: rgba(245, 158, 11, 0.05) !important;
+  border-color: rgba(249, 226, 175, 0.35) !important;
+  background-color: rgba(249, 226, 175, 0.06) !important;
 }
 [data-theme="dark"] .prose-retro .github-alert-warning .github-alert-title,
 .dark .prose-retro .github-alert-warning .github-alert-title {
-  color: #fbbf24 !important;
+  color: #f9e2af !important;
 }
 
 [data-theme="dark"] .prose-retro .github-alert-caution,
 .dark .prose-retro .github-alert-caution {
-  border-color: rgba(239, 68, 68, 0.3) !important;
-  background-color: rgba(239, 68, 68, 0.05) !important;
+  border-color: rgba(243, 139, 168, 0.35) !important;
+  background-color: rgba(243, 139, 168, 0.06) !important;
 }
 [data-theme="dark"] .prose-retro .github-alert-caution .github-alert-title,
 .dark .prose-retro .github-alert-caution .github-alert-title {
-  color: #f87171 !important;
+  color: #f38ba8 !important;
 }
 
 [data-theme="dark"] .prose-retro .github-alert-body,
 [data-theme="dark"] .prose-retro .github-alert-body p,
 .dark .prose-retro .github-alert-body,
 .dark .prose-retro .github-alert-body p {
-  color: #d4d4d8 !important;
-  font-size: 0.9rem;
+  color: #cdd6f4 !important;
+  font-size: 1rem;
 }
 [data-theme="dark"] .prose-retro .github-alert-body code,
 .dark .prose-retro .github-alert-body code {
-  background-color: #18181b !important;
-  border-color: #27272a !important;
-  color: #e4e4e7 !important;
+  background-color: #313244 !important;
+  border-color: #45475a !important;
+  color: #f5c2e7 !important;
 }
 
 /* Footnotes section in dark mode */
@@ -1099,9 +1099,9 @@ img, svg, video {
 .dark .prose-retro .footnotes {
   margin-top: 3.5rem;
   padding-top: 1.5rem;
-  border-top: 1px solid #27272a !important;
-  font-size: 0.8125rem;
-  color: #a1a1aa !important;
+  border-top: 1px solid #313244 !important;
+  font-size: 0.875rem;
+  color: #a6adc8 !important;
 }
 
 [data-theme="dark"] .prose-retro .footnotes ol,
@@ -1120,7 +1120,7 @@ img, svg, video {
 .dark .prose-retro .data-footnote-backref {
   display: inline-block;
   margin-left: 0.35rem;
-  color: #71717a !important;
+  color: #89b4fa !important;
   text-decoration: none !important;
   background-color: transparent !important;
   padding: 0;
@@ -1128,16 +1128,17 @@ img, svg, video {
 
 [data-theme="dark"] .prose-retro .data-footnote-backref:hover,
 .dark .prose-retro .data-footnote-backref:hover {
-  color: #f4f4f5 !important;
+  color: #b4befe !important;
 }
 
 /* Mermaid diagrams in dark mode */
 [data-theme="dark"] .prose-retro .mermaid-container,
 .dark .prose-retro .mermaid-container {
   margin: 2rem 0;
-  background-color: #0e1015 !important;
-  border: 1px solid #27272a !important;
+  background-color: #181825 !important;
+  border: 1px solid #313244 !important;
   border-radius: 8px;
   padding: 1.5rem 1rem;
 }
+
 

@@ -5,73 +5,73 @@ ogType: article
 {% import "macros/icons.njk" as icons %}
 {% set tocList = content | toc %}
 
-<!-- Reading Progress Bar (Subtle & Minimal) -->
+<!-- Reading Progress Bar (Catppuccin Lavender) -->
 <div
   id="reading-progress"
-  class="fixed top-0 left-0 h-[2px] bg-zinc-400 z-50 transition-all duration-75"
+  class="fixed top-0 left-0 h-[2px] bg-[#b4befe] z-50 transition-all duration-75"
   style="width: 0%"
   aria-hidden="true"
 ></div>
 
-<div class="min-h-screen bg-reading-bg text-zinc-300 font-sans selection:bg-zinc-700 selection:text-white">
+<div class="min-h-screen bg-[#1e1e2e] text-[#cdd6f4] font-sans selection:bg-[#585b70] selection:text-[#cdd6f4]">
   <!-- Minimal Top Navigation Bar -->
-  <header class="sticky top-0 z-40 bg-reading-bg/95 backdrop-blur-sm border-b border-zinc-800/60 px-4 sm:px-6 py-2 sm:py-3">
-    <div class="max-w-3xl mx-auto flex items-center justify-between gap-4 text-xs font-mono">
-      <!-- Minimal Breadcrumb Navigation with 44px tap targets -->
-      <nav aria-label="Breadcrumb" class="flex items-center gap-2 truncate text-zinc-400">
+  <header class="sticky top-0 z-40 bg-[#181825]/95 backdrop-blur-sm border-b border-[#313244] px-4 sm:px-6 py-2 sm:py-3">
+    <div class="max-w-3xl mx-auto flex items-center justify-between gap-4 text-sm font-mono">
+      <!-- Minimal Breadcrumb Navigation -->
+      <nav aria-label="Breadcrumb" class="flex items-center gap-2 truncate text-[#a6adc8]">
         <a
           href="/"
-          class="hover:text-zinc-100 transition-colors font-medium shrink-0 min-h-[44px] inline-flex items-center py-2"
+          class="hover:text-[#cdd6f4] transition-colors font-medium shrink-0 min-h-[44px] inline-flex items-center py-2"
         >
           bittu.dev
         </a>
-        <span class="text-zinc-600">/</span>
+        <span class="text-[#585b70]">/</span>
         <a
           href="/blog"
-          class="hover:text-zinc-100 transition-colors font-medium shrink-0 min-h-[44px] inline-flex items-center py-2"
+          class="hover:text-[#cdd6f4] transition-colors font-medium shrink-0 min-h-[44px] inline-flex items-center py-2"
         >
           blog
         </a>
       </nav>
 
       <!-- Clean Action Links with 44px touch envelopes -->
-      <div class="flex items-center gap-1 sm:gap-3 shrink-0 text-zinc-400">
+      <div class="flex items-center gap-1.5 sm:gap-3 shrink-0 text-[#a6adc8]">
         {% if slug %}
           <a
             href="/raw/blogs/{{ slug }}.md"
             target="_blank"
             rel="noopener noreferrer"
-            class="hover:text-zinc-100 transition-colors flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-400 rounded px-2.5 sm:px-1.5 min-h-[44px] touch-manipulation"
+            class="hover:text-[#cdd6f4] transition-colors flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#89b4fa] rounded px-2.5 sm:px-1.5 min-h-[44px] touch-manipulation"
             title="View plain Markdown source"
           >
-            {{ icons.code("w-3.5 h-3.5 text-zinc-400") }}
+            {{ icons.code("w-4 h-4 text-[#a6adc8]") }}
             <span>Raw</span>
           </a>
         {% endif %}
 
         <button
           id="share-article-btn"
-          class="hover:text-zinc-100 transition-colors flex items-center gap-1.5 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-400 rounded px-2.5 sm:px-1.5 min-h-[44px] touch-manipulation"
+          class="hover:text-[#cdd6f4] transition-colors flex items-center gap-1.5 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#89b4fa] rounded px-2.5 sm:px-1.5 min-h-[44px] touch-manipulation"
           data-title="{{ title }}"
           data-url="https://bittu.dev{{ page.url }}"
           title="Share article"
         >
           <span class="share-default flex items-center gap-1.5">
-            {{ icons.share2("w-3.5 h-3.5 text-zinc-400") }}
+            {{ icons.share2("w-4 h-4 text-[#a6adc8]") }}
             <span>Share</span>
           </span>
-          <span class="share-copied hidden flex items-center gap-1.5 text-emerald-400 font-medium">
-            {{ icons.check("w-3.5 h-3.5 text-emerald-400 stroke-[2.5]") }}
+          <span class="share-copied hidden flex items-center gap-1.5 text-[#a6e3a1] font-medium">
+            {{ icons.check("w-4 h-4 text-[#a6e3a1] stroke-[2.5]") }}
             <span>Copied</span>
           </span>
         </button>
 
         <button
-          class="post-copy-link-btn hover:text-zinc-100 transition-colors flex items-center gap-1.5 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-400 rounded px-2.5 sm:px-1.5 min-h-[44px] touch-manipulation"
+          class="post-copy-link-btn hover:text-[#cdd6f4] transition-colors flex items-center gap-1.5 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#89b4fa] rounded px-2.5 sm:px-1.5 min-h-[44px] touch-manipulation"
           data-url="https://bittu.dev{{ page.url }}"
           title="Copy direct link"
         >
-          {{ icons.copy("w-3.5 h-3.5 text-zinc-400") }}
+          {{ icons.copy("w-4 h-4 text-[#a6adc8]") }}
           <span>Copy link</span>
         </button>
       </div>
@@ -83,7 +83,7 @@ ogType: article
     <article id="article-top" class="min-w-0" data-pagefind-body>
       <!-- Optional Cover Image -->
       {% if coverImage %}
-        <div class="mb-10 rounded-lg overflow-hidden border border-zinc-800/80 bg-zinc-900">
+        <div class="mb-10 rounded-lg overflow-hidden border border-[#313244] bg-[#181825]">
           <img
             src="{{ coverImage }}"
             alt="{{ coverAlt if coverAlt else title }}"
@@ -97,33 +97,33 @@ ogType: article
 
       <!-- Article Header -->
       <header class="mb-10">
-        <!-- Date & Read Time: AAA Contrast -->
-        <div class="flex items-center gap-2 text-xs font-mono text-zinc-400 mb-3.5">
+        <!-- Date & Read Time -->
+        <div class="flex items-center gap-2 text-sm font-mono text-[#a6adc8] mb-3.5">
           <time datetime="{{ date | dateIso }}">{{ (displayDate or date) | dateDisplay }}</time>
-          <span class="text-zinc-600">·</span>
+          <span class="text-[#585b70]">·</span>
           <span>{{ readTime or (content | readingTime) }}</span>
         </div>
 
         <!-- Article Title -->
-        <h1 class="text-3xl sm:text-4xl md:text-[2.6rem] font-bold text-zinc-100 leading-[1.22] tracking-tight mb-5 font-sans" data-pagefind-meta="title">
+        <h1 class="text-3xl sm:text-4xl md:text-[2.6rem] font-bold text-[#cdd6f4] leading-[1.22] tracking-tight mb-5 font-sans" data-pagefind-meta="title">
           {{ title }}
         </h1>
 
         <!-- Summary / Lead Paragraph -->
         {% if summary %}
-          <p class="text-base sm:text-lg text-zinc-300 font-normal leading-relaxed mb-6" data-pagefind-meta="summary">
+          <p class="text-base sm:text-lg text-[#bac2de] font-normal leading-relaxed mb-6" data-pagefind-meta="summary">
             {{ summary }}
           </p>
         {% endif %}
 
-        <!-- Tags List with Accessible Contrast & Touch Envelope -->
+        <!-- Tags List with Catppuccin Accents -->
         {% if tags and tags.length > 0 %}
-          <div class="flex flex-wrap items-center gap-x-3.5 gap-y-2 text-xs font-mono text-zinc-400 pt-1">
+          <div class="flex flex-wrap items-center gap-x-3.5 gap-y-2 text-sm font-mono text-[#a6adc8] pt-1">
             {% for tag in tags %}
               {% if tag != "posts" %}
                 <a
                   href="/blog?tag={{ tag | urlencode }}"
-                  class="hover:text-zinc-200 transition-colors py-1 inline-flex items-center"
+                  class="hover:text-[#b4befe] transition-colors py-1 inline-flex items-center"
                   data-pagefind-filter="tag"
                 >
                   #{{ tag }}
@@ -136,19 +136,19 @@ ogType: article
 
       <!-- Minimal Table of Contents -->
       {% if tocList.length > 1 %}
-        <details class="mb-10 border border-zinc-800/80 rounded-lg p-4 bg-reading-surface/60 group">
-          <summary class="cursor-pointer font-mono text-xs text-zinc-300 flex items-center justify-between select-none focus-visible:outline-none min-h-[36px]">
+        <details class="mb-10 border border-[#313244] rounded-lg p-4 bg-[#181825]/70 group">
+          <summary class="cursor-pointer font-mono text-sm text-[#cdd6f4] flex items-center justify-between select-none focus-visible:outline-none min-h-[36px]">
             <span class="flex items-center gap-2 font-medium">
               <span>Table of contents</span>
-              <span class="text-zinc-400">({{ tocList.length }} sections)</span>
+              <span class="text-[#a6adc8]">({{ tocList.length }} sections)</span>
             </span>
-            <span class="text-zinc-400 text-[10px] group-open:rotate-180 transition-transform duration-150">▼</span>
+            <span class="text-[#a6adc8] text-xs group-open:rotate-180 transition-transform duration-150">▼</span>
           </summary>
-          <nav class="mt-3 pt-3 border-t border-zinc-800/60 space-y-1 text-xs font-mono">
+          <nav class="mt-3 pt-3 border-t border-[#313244] space-y-1.5 text-sm font-mono">
             {% for item in tocList %}
               <a
                 href="#{{ item.id }}"
-                class="block py-1 text-zinc-400 hover:text-zinc-200 transition-colors {{ 'pl-3 text-zinc-400/90' if item.level == 3 else 'text-zinc-300 font-medium' }}"
+                class="block py-1 text-[#a6adc8] hover:text-[#89b4fa] transition-colors {{ 'pl-3 text-[#7f849c]' if item.level == 3 else 'text-[#bac2de] font-medium' }}"
               >
                 {{ item.title }}
               </a>
@@ -158,15 +158,15 @@ ogType: article
       {% endif %}
 
       <!-- Markdown Content Body -->
-      <div class="prose prose-invert prose-zinc max-w-none text-zinc-300 prose-retro">
+      <div class="prose prose-invert prose-zinc max-w-none text-[#cdd6f4] prose-retro">
         {{ content | safe }}
       </div>
 
       <!-- Post Footer: Navigation & Actions -->
-      <div class="mt-16 pt-8 border-t border-zinc-800/80 flex items-center justify-between gap-4 font-mono text-xs text-zinc-400 flex-wrap sm:flex-nowrap">
+      <div class="mt-16 pt-8 border-t border-[#313244] flex items-center justify-between gap-4 font-mono text-sm text-[#a6adc8] flex-wrap sm:flex-nowrap">
         <a
           href="/blog"
-          class="hover:text-zinc-100 transition-colors min-h-[44px] inline-flex items-center gap-1.5"
+          class="hover:text-[#cdd6f4] transition-colors min-h-[44px] inline-flex items-center gap-1.5"
         >
           <span>← Back to all posts</span>
         </a>
@@ -177,14 +177,14 @@ ogType: article
               href="/raw/blogs/{{ slug }}.md"
               target="_blank"
               rel="noopener noreferrer"
-              class="hover:text-zinc-100 transition-colors min-h-[44px] inline-flex items-center px-1"
+              class="hover:text-[#cdd6f4] transition-colors min-h-[44px] inline-flex items-center px-1"
             >
               Raw MD
             </a>
           {% endif %}
 
           <button
-            class="post-copy-link-btn hover:text-zinc-100 transition-colors cursor-pointer min-h-[44px] inline-flex items-center px-1"
+            class="post-copy-link-btn hover:text-[#cdd6f4] transition-colors cursor-pointer min-h-[44px] inline-flex items-center px-1"
             data-url="https://bittu.dev{{ page.url }}"
           >
             Copy link
@@ -196,14 +196,14 @@ ogType: article
       {% set prevPost = collections.blogs | getPreviousCollectionItem(page) %}
       {% set nextPost = collections.blogs | getNextCollectionItem(page) %}
       {% if prevPost or nextPost %}
-        <nav class="mt-8 pt-6 border-t border-zinc-800/50 grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs font-mono">
+        <nav class="mt-8 pt-6 border-t border-[#313244]/60 grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm font-mono">
           {% if prevPost %}
             <a
               href="{{ prevPost.url }}"
-              class="flex flex-col gap-1 group text-zinc-400 hover:text-zinc-200 transition-colors py-2"
+              class="flex flex-col gap-1 group text-[#a6adc8] hover:text-[#cdd6f4] transition-colors py-2"
             >
-              <span class="text-zinc-400 uppercase tracking-wider text-[11px] font-semibold">← Older</span>
-              <span class="font-sans font-medium text-sm text-zinc-200 group-hover:text-zinc-100 transition-colors line-clamp-2">
+              <span class="text-[#7f849c] uppercase tracking-wider text-xs font-semibold">← Older</span>
+              <span class="font-sans font-medium text-base text-[#bac2de] group-hover:text-[#cdd6f4] transition-colors line-clamp-2">
                 {{ prevPost.data.title }}
               </span>
             </a>
@@ -214,10 +214,10 @@ ogType: article
           {% if nextPost %}
             <a
               href="{{ nextPost.url }}"
-              class="flex flex-col gap-1 sm:text-right group text-zinc-400 hover:text-zinc-200 transition-colors py-2"
+              class="flex flex-col gap-1 sm:text-right group text-[#a6adc8] hover:text-[#cdd6f4] transition-colors py-2"
             >
-              <span class="text-zinc-400 uppercase tracking-wider text-[11px] font-semibold">Newer →</span>
-              <span class="font-sans font-medium text-sm text-zinc-200 group-hover:text-zinc-100 transition-colors line-clamp-2">
+              <span class="text-[#7f849c] uppercase tracking-wider text-xs font-semibold">Newer →</span>
+              <span class="font-sans font-medium text-base text-[#bac2de] group-hover:text-[#cdd6f4] transition-colors line-clamp-2">
                 {{ nextPost.data.title }}
               </span>
             </a>
@@ -225,27 +225,27 @@ ogType: article
         </nav>
       {% endif %}
 
-      <!-- Minimal Author Bio Line with AAA Text Contrast & 44px Touch Targets -->
-      <div class="mt-12 pt-6 border-t border-zinc-800/60 flex items-center justify-between flex-wrap gap-4 text-xs font-mono text-zinc-400">
+      <!-- Minimal Author Bio Line with Catppuccin Palette -->
+      <div class="mt-12 pt-6 border-t border-[#313244] flex items-center justify-between flex-wrap gap-4 text-sm font-mono text-[#a6adc8]">
         <div class="flex items-center gap-3">
           <img
             src="/images/avatar.webp"
             alt="Bittu avatar"
-            class="w-8 h-8 rounded-full border border-zinc-700/80 object-cover shrink-0"
+            class="w-8 h-8 rounded-full border border-[#45475a] object-cover shrink-0"
             loading="lazy"
           />
-          <span class="text-zinc-300 font-medium">Bittu · Systems &amp; Security</span>
+          <span class="text-[#bac2de] font-medium">Bittu · Systems &amp; Security</span>
         </div>
         <div class="flex items-center gap-2">
-          <a href="https://github.com/Bittu5134" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-200 transition-colors min-h-[44px] inline-flex items-center px-2">
+          <a href="https://github.com/Bittu5134" target="_blank" rel="noopener noreferrer" class="hover:text-[#89b4fa] transition-colors min-h-[44px] inline-flex items-center px-2">
             GitHub
           </a>
-          <span class="text-zinc-600">·</span>
-          <a href="/discord" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-200 transition-colors min-h-[44px] inline-flex items-center px-2">
+          <span class="text-[#585b70]">·</span>
+          <a href="/discord" target="_blank" rel="noopener noreferrer" class="hover:text-[#89b4fa] transition-colors min-h-[44px] inline-flex items-center px-2">
             Discord
           </a>
-          <span class="text-zinc-600">·</span>
-          <a href="/rss.xml" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-200 transition-colors min-h-[44px] inline-flex items-center px-2">
+          <span class="text-[#585b70]">·</span>
+          <a href="/rss.xml" target="_blank" rel="noopener noreferrer" class="hover:text-[#fab387] transition-colors min-h-[44px] inline-flex items-center px-2">
             RSS
           </a>
         </div>
@@ -265,17 +265,17 @@ ogType: article
         securityLevel: "loose",
         theme: "dark",
         themeVariables: {
-          primaryColor: "#18181b",
-          primaryBorderColor: "#3f3f46",
-          primaryTextColor: "#f4f4f5",
-          lineColor: "#71717a",
-          secondaryColor: "#121215",
-          tertiaryColor: "#0a0c10",
-          background: "#0a0c10",
-          mainBkg: "#18181b",
-          nodeBorder: "#52525b",
-          clusterBkg: "#0e1015",
-          clusterBorder: "#27272a",
+          primaryColor: "#313244",
+          primaryBorderColor: "#89b4fa",
+          primaryTextColor: "#cdd6f4",
+          lineColor: "#9399b2",
+          secondaryColor: "#181825",
+          tertiaryColor: "#11111b",
+          background: "#1e1e2e",
+          mainBkg: "#181825",
+          nodeBorder: "#89b4fa",
+          clusterBkg: "#181825",
+          clusterBorder: "#45475a",
           fontFamily: '"Space Grotesk", sans-serif',
           fontSize: "13px"
         }
