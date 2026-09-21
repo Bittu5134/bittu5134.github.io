@@ -63,7 +63,7 @@ SECTION 3: COMPLETE TECHNICAL ARTICLES & DISPATCHES
 ---
 Title: Engineering Handbook: Full Pipeline Showcase
 Date: March 18, 2026
-Read Time: 7 min read
+Read Time: 6 min read
 Tags: Engineering, Architecture, WebRTC, Go, Mermaid, Showcase
 URL: https://bittu.dev/blog/engineering-handbook-and-syntax-showcase
 Cover: https://bittu.devhttps://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&auto=format&fit=crop&q=80
@@ -365,17 +365,6 @@ The Shannon entropy formula[^1] quantifies the average information content of a 
 Images written as standalone paragraphs are automatically parsed into semantic `<figure>` elements, deriving a centered `<figcaption>` from the image's alt text:
 
 ![Architecture overview diagram of our zero-overhead build pipeline](/images/blogs/pipeline-flow.svg)
-
----
-
-## 10. External Links
-
-All external links automatically receive `target="_blank" rel="noopener noreferrer"`:
-
-- [Unified.js ecosystem](https://unifiedjs.com) — the remark/rehype framework
-- [Shiki syntax highlighter](https://shiki.style) — SSG-compatible highlighting
-- [KaTeX math renderer](https://katex.org) — fast LaTeX in the browser
-- [Mermaid.js diagrams](https://mermaid.js.org) — flowcharts, sequences, state machines
 
 ================================================================================
 

@@ -236,56 +236,62 @@ ogType: article
           </div>
         </div>
 
-        <!-- Previous / Next Navigation & All Blogs Link -->
+        <!-- Previous / Next Navigation & See More Blogs -->
         {% set prevPost = collections.blogs | getPreviousCollectionItem(page) %}
         {% set nextPost = collections.blogs | getNextCollectionItem(page) %}
-        <div class="space-y-4">
-          {% if prevPost or nextPost %}
-            <nav class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm font-mono">
-              {% if prevPost %}
-                <a
-                  href="{{ prevPost.url }}"
-                  class="p-3.5 bg-[#181825] border border-[#313244] rounded-lg hover:border-[#89b4fa] transition-colors flex flex-col gap-1 group"
-                >
-                  <span class="text-[#7f849c] uppercase tracking-wider text-xs font-semibold">← Older</span>
-                  <span class="font-sans font-medium text-base text-[#cdd6f4] group-hover:text-[#89b4fa] transition-colors line-clamp-2">
+        {% if prevPost or nextPost or true %}
+          <div class="pt-6 border-t border-[#313244] space-y-3 font-mono text-sm">
+            {% if prevPost %}
+              <div class="flex items-baseline justify-between gap-3 group">
+                <div class="flex items-baseline gap-2 min-w-0">
+                  <span class="text-[#7f849c] shrink-0 text-xs uppercase tracking-wider">Previous:</span>
+                  <a
+                    href="{{ prevPost.url }}"
+                    class="font-sans font-medium text-[#cdd6f4] hover:text-[#89b4fa] transition-colors truncate"
+                  >
                     {{ prevPost.data.title }}
-                  </span>
-                </a>
-              {% else %}
-                <div></div>
-              {% endif %}
+                  </a>
+                </div>
+                <time datetime="{{ prevPost.date | dateIso }}" class="text-xs text-[#7f849c] shrink-0 font-mono">
+                  {{ (prevPost.data.displayDate or prevPost.date) | dateDisplay }}
+                </time>
+              </div>
+            {% endif %}
 
-              {% if nextPost %}
-                <a
-                  href="{{ nextPost.url }}"
-                  class="p-3.5 bg-[#181825] border border-[#313244] rounded-lg hover:border-[#89b4fa] transition-colors flex flex-col gap-1 sm:text-right group"
-                >
-                  <span class="text-[#7f849c] uppercase tracking-wider text-xs font-semibold">Newer →</span>
-                  <span class="font-sans font-medium text-base text-[#cdd6f4] group-hover:text-[#89b4fa] transition-colors line-clamp-2">
+            {% if nextPost %}
+              <div class="flex items-baseline justify-between gap-3 group">
+                <div class="flex items-baseline gap-2 min-w-0">
+                  <span class="text-[#7f849c] shrink-0 text-xs uppercase tracking-wider">Next:</span>
+                  <a
+                    href="{{ nextPost.url }}"
+                    class="font-sans font-medium text-[#cdd6f4] hover:text-[#89b4fa] transition-colors truncate"
+                  >
                     {{ nextPost.data.title }}
-                  </span>
-                </a>
-              {% endif %}
-            </nav>
-          {% endif %}
+                  </a>
+                </div>
+                <time datetime="{{ nextPost.date | dateIso }}" class="text-xs text-[#7f849c] shrink-0 font-mono">
+                  {{ (nextPost.data.displayDate or nextPost.date) | dateDisplay }}
+                </time>
+              </div>
+            {% endif %}
 
-          <div class="pt-2 text-center">
-            <a
-              href="/blog"
-              class="inline-flex items-center gap-1.5 text-sm font-mono text-[#a6adc8] hover:text-[#cdd6f4] transition-colors py-2"
-            >
-              <span>← Back to all posts</span>
-            </a>
+            <div class="pt-2 flex items-center">
+              <a
+                href="/blog"
+                class="inline-flex items-center gap-1.5 text-xs font-mono text-[#a6adc8] hover:text-[#89b4fa] transition-colors group"
+              >
+                <span>See more blogs</span>
+                <span class="transition-transform group-hover:translate-x-0.5">→</span>
+              </a>
+            </div>
           </div>
-        </div>
+        {% endif %}
       </footer>
 
       <!-- Giscus Comments Section (GitHub Discussions) -->
       <section class="mt-14 pt-8 border-t border-[#313244]" id="comments">
         <div class="flex items-center justify-between mb-6">
           <h2 class="text-xl sm:text-2xl font-bold font-sans text-[#cdd6f4]">Discussion</h2>
-          <span class="text-xs font-mono text-[#a6adc8]">Powered by GitHub Discussions</span>
         </div>
         <div class="giscus-container min-h-[160px]">
           <script src="https://giscus.app/client.js"
@@ -474,3 +480,30 @@ ogType: article
     }
   </script>
 {% endif %}
+
+<!-- Conditionally Load & Initialize Littlefoot Footnote Popovers -->
+{% if content and ('data-footnote-ref' in content or 'fnref' in content or 'footnote' in content) %}
+  <script type="module">
+    import littlefoot from "/assets/js/littlefoot.js";
+
+    function initLittlefoot() {
+      littlefoot({
+        activateDelay: 100,
+        dismissDelay: 100,
+        hoverDelay: 250,
+        allowMultiple: false,
+        activateOnHover: false,
+        dismissOnUnhover: false,
+        anchorPattern: /#(user-content-)?fn[:\-_\d]/gi,
+        buttonTemplate: '<button class="littlefoot__button" id="<% reference %>" aria-label="Footnote <% number %>" title="See Footnote <% number %>"><span class="littlefoot__number"><% number %></span></button>'
+      });
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initLittlefoot);
+    } else {
+      initLittlefoot();
+    }
+  </script>
+{% endif %}
+

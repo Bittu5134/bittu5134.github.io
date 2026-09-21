@@ -309,14 +309,3 @@ The Shannon entropy formula[^1] quantifies the average information content of a 
 Images written as standalone paragraphs are automatically parsed into semantic `<figure>` elements, deriving a centered `<figcaption>` from the image's alt text:
 
 ![Architecture overview diagram of our zero-overhead build pipeline](/images/blogs/pipeline-flow.svg)
-
----
-
-## 10. External Links
-
-All external links automatically receive `target="_blank" rel="noopener noreferrer"`:
-
-- [Unified.js ecosystem](https://unifiedjs.com) — the remark/rehype framework
-- [Shiki syntax highlighter](https://shiki.style) — SSG-compatible highlighting
-- [KaTeX math renderer](https://katex.org) — fast LaTeX in the browser
-- [Mermaid.js diagrams](https://mermaid.js.org) — flowcharts, sequences, state machines
