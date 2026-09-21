@@ -74,9 +74,12 @@
         </div>
 
         <!-- Shader Card (desktop only) -->
-        <div class="hidden lg:flex flex-col flex-1 card-brutal overflow-hidden min-h-[150px] bg-black">
+        <div class="hidden lg:flex flex-col flex-1 card-brutal overflow-hidden min-h-[150px] bg-black relative">
           <div class="relative flex-1 w-full bg-black min-h-[120px]">
             <canvas id="metaballs-canvas" class="w-full h-full block absolute inset-0"></canvas>
+            <span class="absolute bottom-1.5 right-2 font-mono text-xs font-bold text-white tracking-widest pointer-events-none select-none z-10">
+              //GLSL SHADER
+            </span>
           </div>
         </div>
 

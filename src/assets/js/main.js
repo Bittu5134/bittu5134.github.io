@@ -68,6 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const menuIconClose = document.getElementById("menu-icon-close");
   const menuText = document.getElementById("menu-text");
 
+  const headerEl = document.querySelector("header");
   let isMenuOpen = false;
 
   function setMenuOpen(open) {
@@ -79,6 +80,11 @@ document.addEventListener("DOMContentLoaded", () => {
       menuIconClose?.classList.remove("hidden");
       if (menuText) menuText.textContent = "CLOSE";
       menuToggleBtn?.setAttribute("aria-expanded", "true");
+      // Keep header fixed to top of viewport even if user scrolled down before opening drawer
+      if (headerEl) {
+        headerEl.classList.remove("sticky");
+        headerEl.classList.add("fixed", "top-0", "left-0", "right-0");
+      }
       document.body.style.overflow = "hidden";
     } else {
       mobileDrawer?.classList.add("hidden");
@@ -87,6 +93,10 @@ document.addEventListener("DOMContentLoaded", () => {
       menuIconClose?.classList.add("hidden");
       if (menuText) menuText.textContent = "MENU";
       menuToggleBtn?.setAttribute("aria-expanded", "false");
+      if (headerEl) {
+        headerEl.classList.remove("fixed", "left-0", "right-0");
+        headerEl.classList.add("sticky");
+      }
       document.body.style.overflow = "";
     }
   }
