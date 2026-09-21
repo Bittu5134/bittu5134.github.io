@@ -1174,25 +1174,25 @@ img, svg, video {
   padding: 1.5rem 1rem;
 }
 
-/* Littlefoot Footnote Popovers & Buttons */
+/* Littlefoot Footnote Popovers & Buttons (Retro Light Theme) */
 .littlefoot {
   --button-background-color: #fde047;
-  --button-text-color: #11111b;
-  --button-active-background-color: #89b4fa;
-  --button-active-text-color: #11111b;
+  --button-text-color: #14161f;
+  --button-active-background-color: #86efac;
+  --button-active-text-color: #14161f;
   --button-border-radius: 4px;
-  --button-height: 1.35rem;
-  --button-padding: 0 0.5rem;
+  --button-height: 1.25rem;
+  --button-padding: 0 0.4rem;
   --button-transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
-  --popover-background-color: #181825;
-  --popover-text-color: #cdd6f4;
-  --popover-border: 1px solid #45475a;
-  --popover-border-radius: 8px;
-  --popover-shadow: 0 16px 32px -6px rgba(0, 0, 0, 0.6), 0 8px 16px -4px rgba(0, 0, 0, 0.4);
+  --popover-background-color: #fffdf9;
+  --popover-text-color: #14161f;
+  --popover-border: 2px solid #000000;
+  --popover-border-radius: 4px;
+  --popover-shadow: 4px 4px 0px 0px #000000;
   --popover-horizontal-padding: 1.15rem;
   --popover-vertical-padding: 0.85rem;
-  --popover-tooltip-size: 7px;
-  --popover-scroll-indicator-color: #89b4fa;
+  --popover-tooltip-size: 8px;
+  --popover-scroll-indicator-color: #d97706;
 }
 
 .littlefoot__button {
@@ -1203,10 +1203,10 @@ img, svg, video {
   font-weight: 800 !important;
   font-size: 0.7rem !important;
   line-height: 1 !important;
-  color: #11111b !important;
+  color: #14161f !important;
   background-color: #fde047 !important;
-  border: 1px solid rgba(0, 0, 0, 0.3) !important;
-  box-shadow: 1px 1px 0px 0px rgba(0, 0, 0, 0.8) !important;
+  border: 1.5px solid #000000 !important;
+  box-shadow: 1.5px 1.5px 0px 0px #000000 !important;
   vertical-align: super !important;
   position: relative !important;
   top: -0.15em !important;
@@ -1223,14 +1223,13 @@ img, svg, video {
   background-color: #fbbf24 !important;
   color: #000000 !important;
   transform: translateY(-1px) !important;
-  box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.9) !important;
-  border-color: #000000 !important;
+  box-shadow: 2px 2px 0px 0px #000000 !important;
 }
 
 .littlefoot__button.is-active,
 .littlefoot__button:active {
-  background-color: #89b4fa !important;
-  color: #11111b !important;
+  background-color: #86efac !important;
+  color: #14161f !important;
   box-shadow: none !important;
   transform: translateY(1px) !important;
 }
@@ -1241,37 +1240,39 @@ img, svg, video {
 }
 
 .littlefoot__popover {
-  border: 1px solid #45475a !important;
-  background-color: #181825 !important;
-  border-radius: 8px !important;
+  border: 2px solid #000000 !important;
+  background-color: #fffdf9 !important;
+  border-radius: 4px !important;
+  box-shadow: 4px 4px 0px 0px #000000 !important;
   z-index: 100 !important;
 }
 
 .littlefoot__tooltip {
-  background-color: #181825 !important;
-  border-color: #45475a !important;
+  background-color: #fffdf9 !important;
+  border-color: #000000 !important;
 }
 
 .littlefoot__content {
   font-family: 'Space Grotesk', sans-serif !important;
   font-size: 0.875rem !important;
   line-height: 1.65 !important;
-  color: #cdd6f4 !important;
+  color: #14161f !important;
 }
 
 .littlefoot__content p {
   margin: 0 !important;
-  color: #cdd6f4 !important;
+  color: #14161f !important;
 }
 
 .littlefoot__content a {
-  color: #89b4fa !important;
+  color: #d97706 !important;
+  font-weight: 700 !important;
   text-decoration: underline !important;
   text-underline-offset: 2px;
 }
 
 .littlefoot__content a:hover {
-  color: #b4befe !important;
+  color: #b45309 !important;
 }
 
 

@@ -45,22 +45,12 @@
     <link rel="preload" href="/fonts/SpaceMono-Regular.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/images/avatar.avif" as="image" type="image/avif" />
 
-    <!-- Early Theme Preference (Strictly Permanent Dark on Blog Post Pages) -->
+    <!-- Theme Preference (Retro Light Theme) -->
     <script>
       (function() {
         try {
-          var path = window.location.pathname;
-          var isPostPage = (path.indexOf("/blog/") === 0 && path !== "/blog/" && path !== "/blog/index.html") ||
-                           document.querySelector('meta[property="og:type"][content="article"]');
-          if (isPostPage) {
-            document.documentElement.setAttribute("data-theme", "dark");
-            document.documentElement.classList.add("dark");
-            var metaTheme = document.querySelector('meta[name="theme-color"]');
-            if (metaTheme) metaTheme.setAttribute("content", "#1e1e2e");
-          } else {
-            document.documentElement.setAttribute("data-theme", "light");
-            document.documentElement.classList.remove("dark");
-          }
+          document.documentElement.setAttribute("data-theme", "light");
+          document.documentElement.classList.remove("dark");
         } catch (e) {}
       })();
     </script>
