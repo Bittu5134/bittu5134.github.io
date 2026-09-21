@@ -9,8 +9,6 @@ tags:
   - Reverse Engineering
   - Protocols
   - C++
-coverImage: /images/blogs/minecraft-protocol.svg
-coverAlt: "Minecraft Java wire protocol reverse engineering diagrams"
 ---
 
 ## Introduction: The Architecture of Minecraft Packets

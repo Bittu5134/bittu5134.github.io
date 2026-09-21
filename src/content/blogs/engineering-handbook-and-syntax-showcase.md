@@ -11,8 +11,6 @@ tags:
   - Go
   - Mermaid
   - Showcase
-coverImage: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&auto=format&fit=crop&q=80"
-coverAlt: "Comprehensive engineering syntax and markdown feature showcase"
 ---
 
 ## 1. The Architecture of Our Blog Pipeline

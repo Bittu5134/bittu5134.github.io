@@ -9,8 +9,6 @@ tags:
   - WebRTC
   - Redis
   - Networking
-coverImage: /images/blogs/webrtc-signaling.svg
-coverAlt: "Go WebRTC low latency signaling architecture diagram"
 ---
 
 ## The Problem: WebRTC Signaling at Scale

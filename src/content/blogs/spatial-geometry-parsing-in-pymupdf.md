@@ -9,8 +9,6 @@ tags:
   - PyMuPDF
   - Algorithms
   - AI
-coverImage: /images/blogs/spatial-geometry.svg
-coverAlt: "PyMuPDF coordinate geometry extraction pipeline flowchart"
 ---
 
 ## Why Standard PDF Parsers Fail on LaTeX Documents

@@ -15,10 +15,20 @@
     <meta property="og:site_name" content="Bittu (Bittu5134)" />
     <meta property="og:title" content="{{ title if title else 'Bittu | Systems Hacker & Modder' }}" />
     <meta property="og:description" content="{{ summary if summary else (description if description else 'Systems engineer & cybersecurity student at IIT Kanpur. Builds open-source tools, WebRTC infra, and got featured on Minecraft Live.') }}" />
-    <meta property="og:type" content="{{ ogType if ogType else 'website' }}" />
+    <meta property="og:type" content="{{ ogType if ogType else ('article' if date else 'website') }}" />
     <meta property="og:url" content="https://bittu.dev{{ page.url }}" />
-    {% set resolvedCover = coverImage if (coverImage and (coverImage.startsWith('http://') or coverImage.startsWith('https://'))) else ('https://bittu.dev' + (coverImage if coverImage else '/images/avatar.webp')) %}
+    {% set rawOg = ogImage if ogImage else coverImage %}
+    {% if not rawOg %}
+      {% set rawOg = '/images/avatar.webp' %}
+    {% elif rawOg.endsWith('.svg') %}
+      {% set rawOg = rawOg | replace('.svg', '.png') %}
+    {% endif %}
+    {% set resolvedCover = rawOg if (rawOg.startsWith('http://') or rawOg.startsWith('https://')) else ('https://bittu.dev' + rawOg) %}
     <meta property="og:image" content="{{ resolvedCover }}" />
+    <meta property="og:image:secure_url" content="{{ resolvedCover }}" />
+    {% if resolvedCover.endsWith('.png') %}<meta property="og:image:type" content="image/png" />{% endif %}
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     {% if coverAlt %}<meta property="og:image:alt" content="{{ coverAlt }}" />{% endif %}
 
     <!-- Twitter Card Meta -->
@@ -34,10 +44,38 @@
     {% if date %}<meta property="article:published_time" content="{{ date | dateIso }}" />{% endif %}
     {% if tags %}
       {% for tag in tags %}
-        {% if tag != "posts" %}
+        {% if tag != "posts" and tag != "all" %}
           <meta property="article:tag" content="{{ tag }}" />
         {% endif %}
       {% endfor %}
+    {% endif %}
+
+    <!-- JSON-LD Structured Data -->
+    {% if date %}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": {{ (title if title else "Bittu Dispatch") | json | safe }},
+      "description": {{ (summary if summary else (description if description else "")) | json | safe }},
+      "image": [{{ resolvedCover | json | safe }}],
+      "datePublished": {{ date | dateIso | json | safe }},
+      "author": {
+        "@type": "Person",
+        "name": "Bittu (Bittu5134)",
+        "url": "https://bittu.dev"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Bittu",
+        "url": "https://bittu.dev"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://bittu.dev{{ page.url }}"
+      }
+    }
+    </script>
     {% endif %}
 
     <!-- Preload Critical Local Fonts & Hero Avatar -->
