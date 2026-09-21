@@ -288,14 +288,14 @@ img, svg, video {
 .prose-retro ul {
   list-style-type: disc;
   list-style-position: outside;
-  margin-left: 1.5rem;
+  margin-left: 1.25rem;
   margin-bottom: 1.5rem;
 }
 
 .prose-retro ol {
   list-style-type: decimal;
   list-style-position: outside;
-  margin-left: 1.5rem;
+  margin-left: 1.25rem;
   margin-bottom: 1.5rem;
 }
 
@@ -305,6 +305,18 @@ img, svg, video {
   margin-bottom: 0.5rem;
   padding-left: 0.25rem;
   line-height: 1.75;
+}
+
+.prose-retro ul > li::marker {
+  color: #89b4fa;
+  font-size: 0.85em;
+}
+
+.prose-retro ol > li::marker {
+  font-family: 'Space Mono', monospace;
+  font-weight: 600;
+  color: #89b4fa;
+  font-size: 0.875em;
 }
 
 /* GFM Task Lists */
@@ -403,17 +415,20 @@ img, svg, video {
 .prose-retro a[target="_blank"]::after {
   content: " ↗";
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.8em;
-  font-weight: 600;
-  color: #9ca3af;
+  font-size: 0.75em;
+  font-weight: 500;
+  color: #89b4fa;
   text-decoration: none;
-  display: inline-block;
-  vertical-align: super;
-  line-height: 0;
+  display: inline;
+  margin-left: 0.15em;
+  line-height: 1;
+  opacity: 0.7;
+  transition: opacity 0.15s ease, transform 0.15s ease;
 }
 
 .prose-retro a[target="_blank"]:hover::after {
-  color: #d97706;
+  opacity: 1;
+  color: #b4befe;
 }
 
 /* Heading Permalinks (# on hover) */
@@ -711,45 +726,72 @@ img, svg, video {
 
 /* ─── Footnotes ─────────────────────────────────────────────── */
 .prose-retro .footnotes {
-  margin-top: 4rem;
-  padding-top: 2rem;
+  margin-top: 3.5rem;
+  padding-top: 1.5rem;
   border-top: 1px solid rgba(0, 0, 0, 0.12);
   font-size: 0.875rem;
   color: #4b5563;
 }
 
-.prose-retro .footnotes::before {
-  display: block;
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.875rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #9ca3af;
-  margin-bottom: 1rem;
+.prose-retro .footnotes #footnote-label,
+.prose-retro .footnotes h2 {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  overflow: visible !important;
+  clip: auto !important;
+  white-space: normal !important;
+  display: block !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-size: 0.875rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.06em !important;
+  color: #6b7280;
+  margin-top: 0 !important;
+  margin-bottom: 1rem !important;
+  border: none !important;
+  padding: 0 !important;
 }
 
 .prose-retro .footnotes ol {
-  list-style: decimal;
+  list-style-type: decimal;
   margin-left: 1.25rem;
+  margin-bottom: 0;
+  padding-left: 0.25rem;
 }
 
 .prose-retro .footnotes li {
-  margin-bottom: 0.5rem;
-  line-height: 1.6;
+  margin-bottom: 0.625rem;
+  line-height: 1.65;
+  font-size: 0.875rem;
+}
+
+.prose-retro .footnotes li::marker {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #9ca3af;
+}
+
+.prose-retro .footnotes li p {
+  display: inline;
+  margin: 0 !important;
 }
 
 .prose-retro .data-footnote-backref {
   display: inline-block;
-  padding: 0.2rem 0.4rem;
-  margin-left: 0.25rem;
+  padding: 0.15rem 0.35rem;
+  margin-left: 0.35rem;
   text-decoration: none;
+  font-family: 'Space Mono', monospace;
   font-weight: 700;
   color: #d97706;
   border-radius: 3px;
   background-color: rgba(217, 119, 6, 0.1);
-  font-size: 0.875rem;
-  vertical-align: middle;
+  font-size: 0.8125rem;
+  vertical-align: baseline;
+  transition: all 0.15s ease;
 }
 
 .prose-retro .data-footnote-backref:hover {
@@ -1104,16 +1146,29 @@ img, svg, video {
   color: #a6adc8 !important;
 }
 
+[data-theme="dark"] .prose-retro .footnotes #footnote-label,
+[data-theme="dark"] .prose-retro .footnotes h2,
+.dark .prose-retro .footnotes #footnote-label,
+.dark .prose-retro .footnotes h2 {
+  color: #cdd6f4 !important;
+}
+
 [data-theme="dark"] .prose-retro .footnotes ol,
 .dark .prose-retro .footnotes ol {
-  list-style: decimal;
+  list-style-type: decimal;
   margin-left: 1.25rem;
 }
 
 [data-theme="dark"] .prose-retro .footnotes li,
 .dark .prose-retro .footnotes li {
-  margin-bottom: 0.5rem;
-  line-height: 1.6;
+  margin-bottom: 0.625rem;
+  line-height: 1.65;
+  color: #a6adc8 !important;
+}
+
+[data-theme="dark"] .prose-retro .footnotes li::marker,
+.dark .prose-retro .footnotes li::marker {
+  color: #7f849c !important;
 }
 
 [data-theme="dark"] .prose-retro .data-footnote-backref,
@@ -1124,11 +1179,13 @@ img, svg, video {
   text-decoration: none !important;
   background-color: transparent !important;
   padding: 0;
+  vertical-align: baseline;
 }
 
 [data-theme="dark"] .prose-retro .data-footnote-backref:hover,
 .dark .prose-retro .data-footnote-backref:hover {
   color: #b4befe !important;
+  text-decoration: underline !important;
 }
 
 /* Mermaid diagrams in dark mode */
