@@ -198,7 +198,7 @@ Generated: ${today}
 - Contact: hello@bittu.dev
 - GitHub: https://github.com/Bittu5134
 - LinkedIn: https://www.linkedin.com/in/bittu5134
-- X / Twitter: https://x.com/Bittu5134
+- X / Twitter: https://x.com/404lostsquid
 
 ## Open-Source Projects
 ${projectsMarkdown}
@@ -268,7 +268,7 @@ Email: hello@bittu.dev
 Website: ${SITE_URL}
 GitHub: https://github.com/Bittu5134
 LinkedIn: https://www.linkedin.com/in/bittu5134
-X / Twitter: https://x.com/Bittu5134
+X / Twitter: https://x.com/404lostsquid
 Patreon: https://www.patreon.com/lazybittu
 
 Education: B.Tech Cybersecurity & Computing — Indian Institute of Technology Kanpur (expected 2030)

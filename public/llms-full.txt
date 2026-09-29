@@ -15,7 +15,7 @@ Email: hello@bittu.dev
 Website: https://bittu.dev
 GitHub: https://github.com/Bittu5134
 LinkedIn: https://www.linkedin.com/in/bittu5134
-X / Twitter: https://x.com/Bittu5134
+X / Twitter: https://x.com/404lostsquid
 Patreon: https://www.patreon.com/lazybittu
 
 Education: B.Tech Cybersecurity & Computing — Indian Institute of Technology Kanpur (expected 2030)
@@ -82,7 +82,7 @@ Category: AI / COMPUTER VISION
 Language: Python
 Topics: convulational-neural-network, ensemble-model, machine-learning, pytorch, sobel-edge-detector
 
-### 8. IITK-Resume-Model
+### 8. Resume-Model
 Live: https://iitk-resume.bittu.dev | Source: https://github.com/Bittu5134/IITK-Resume-Model
 Description: A tool that parses academic PDFs by their layout geometry (since normal parsers choke on tables) and scores them. Built for IIT Kanpur's career office.
 Category: PARSER / GEOMETRY
@@ -635,7 +635,7 @@ However, they do **not** embed semantic structure:
 - A two-column table is actually just 50 disjoint text boxes placed near each other.
 - Section dividers and horizontal rules are raw vector drawing operations (`re`, `l`, `m` PDF commands) with no association to the text above or below them.
 
-When building the **IITK-Resume-Engine** for the Academics & Career Council, standard text extractors scrambled multi-column course lists into gibberish.
+When building [**Resume-Model**](https://github.com/Bittu5134/IITK-Resume-Model) for the Academics & Career Council, standard text extractors scrambled multi-column course lists into gibberish.
 
 ```mermaid
 flowchart TD
