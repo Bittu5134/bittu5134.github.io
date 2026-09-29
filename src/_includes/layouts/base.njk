@@ -5,40 +5,47 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="alternate icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ title if title else "Bittu | Systems Hacker & Modder" }}</title>
-    <meta name="description" content="{{ summary if summary else (description if description else 'Systems engineer & cybersecurity student at IIT Kanpur. Builds open-source tools, WebRTC infra, and got featured on Minecraft Live.') }}" />
+    <title>{{ title if title else "Bittu | Software & CyberSec" }}</title>
+    <meta name="description" content="{{ summary if summary else (description if description else 'Your friendly, neighborhood Technomancer') }}" />
     <meta name="author" content="Bittu (Bittu5134)" />
     <meta name="theme-color" content="#f6eedb" />
     <link rel="canonical" href="https://bittu.dev{{ page.url }}" />
 
     <!-- OpenGraph / Social Meta -->
-    <meta property="og:site_name" content="Bittu (Bittu5134)" />
-    <meta property="og:title" content="{{ title if title else 'Bittu | Systems Hacker & Modder' }}" />
-    <meta property="og:description" content="{{ summary if summary else (description if description else 'Systems engineer & cybersecurity student at IIT Kanpur. Builds open-source tools, WebRTC infra, and got featured on Minecraft Live.') }}" />
+    <meta property="og:site_name" content="{{ siteName if siteName else 'bittu.dev' }}" />
+    <meta property="og:title" content="{{ title if title else 'Bittu | Software & CyberSec' }}" />
+    <meta property="og:description" content="{{ summary if summary else (description if description else 'Your friendly, neighborhood Technomancer') }}" />
     <meta property="og:type" content="{{ ogType if ogType else ('article' if date else 'website') }}" />
     <meta property="og:url" content="https://bittu.dev{{ page.url }}" />
     {% set rawOg = ogImage if ogImage else coverImage %}
     {% if not rawOg %}
-      {% set rawOg = '/images/avatar.webp' %}
+      {% set rawOg = '/images/og_banner.webp' %}
     {% elif rawOg.endsWith('.svg') %}
       {% set rawOg = rawOg | replace('.svg', '.png') %}
     {% endif %}
     {% set resolvedCover = rawOg if (rawOg.startsWith('http://') or rawOg.startsWith('https://')) else ('https://bittu.dev' + rawOg) %}
     <meta property="og:image" content="{{ resolvedCover }}" />
     <meta property="og:image:secure_url" content="{{ resolvedCover }}" />
-    {% if resolvedCover.endsWith('.png') %}<meta property="og:image:type" content="image/png" />{% endif %}
+    {% if resolvedCover.endsWith('.png') %}
+      <meta property="og:image:type" content="image/png" />
+    {% elif resolvedCover.endsWith('.webp') %}
+      <meta property="og:image:type" content="image/webp" />
+    {% elif resolvedCover.endsWith('.jpg') or resolvedCover.endsWith('.jpeg') %}
+      <meta property="og:image:type" content="image/jpeg" />
+    {% endif %}
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    {% if coverAlt %}<meta property="og:image:alt" content="{{ coverAlt }}" />{% endif %}
+    {% set resolvedAlt = coverAlt if coverAlt else (alt if alt else (title if title else 'Bittu | Software & CyberSec')) %}
+    <meta property="og:image:alt" content="{{ resolvedAlt }}" />
 
     <!-- Twitter Card Meta -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@Bittu5134" />
-    <meta name="twitter:creator" content="@Bittu5134" />
-    <meta name="twitter:title" content="{{ title if title else 'Bittu | Systems Hacker & Modder' }}" />
-    <meta name="twitter:description" content="{{ summary if summary else (description if description else 'Systems engineer & cybersecurity student at IIT Kanpur.') }}" />
+    <meta name="twitter:site" content="@404lostsquid" />
+    <meta name="twitter:creator" content="@404lostsquid" />
+    <meta name="twitter:title" content="{{ title if title else 'Bittu | Software & CyberSec' }}" />
+    <meta name="twitter:description" content="{{ summary if summary else (description if description else 'Your friendly, neighborhood Technomancer') }}" />
     <meta name="twitter:image" content="{{ resolvedCover }}" />
-    {% if coverAlt %}<meta name="twitter:image:alt" content="{{ coverAlt }}" />{% endif %}
+    <meta name="twitter:image:alt" content="{{ resolvedAlt }}" />
 
     <!-- Article Metadata -->
     {% if date %}<meta property="article:published_time" content="{{ date | dateIso }}" />{% endif %}
