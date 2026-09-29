@@ -76,13 +76,13 @@
       <link rel="stylesheet" href="/assets/css/blog.css" />
     {% endif %}
 
-    <!-- KaTeX (loaded only if page contains math output) -->
-    {% if content and 'katex' in content %}
+    <!-- KaTeX (loaded only on blog pages that contain rendered math output) -->
+    {% if isBlogPage and content and ('class="katex"' in content or 'class="katex-display"' in content) %}
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css" crossorigin="anonymous" />
     {% endif %}
 
-    <!-- Littlefoot Footnotes CSS (loaded only if page contains footnotes) -->
-    {% if content and ('data-footnote-ref' in content or 'fnref' in content or 'footnote' in content) %}
+    <!-- Littlefoot Footnotes CSS (loaded only on blog pages that contain rendered footnotes) -->
+    {% if isBlogPage and content and ('data-footnote-ref' in content or 'class="footnote-ref"' in content or 'id="footnotes"' in content) %}
       <link rel="stylesheet" href="/assets/css/littlefoot.css" />
     {% endif %}
 
