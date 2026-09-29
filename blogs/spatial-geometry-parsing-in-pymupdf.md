@@ -19,7 +19,7 @@ However, they do **not** embed semantic structure:
 - A two-column table is actually just 50 disjoint text boxes placed near each other.
 - Section dividers and horizontal rules are raw vector drawing operations (`re`, `l`, `m` PDF commands) with no association to the text above or below them.
 
-When building the **IITK-Resume-Engine** for the Academics & Career Council, standard text extractors scrambled multi-column course lists into gibberish.
+When building [**Resume-Model**](https://github.com/Bittu5134/IITK-Resume-Model) for the Academics & Career Council, standard text extractors scrambled multi-column course lists into gibberish.
 
 ```mermaid
 flowchart TD
