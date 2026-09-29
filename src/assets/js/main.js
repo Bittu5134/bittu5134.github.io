@@ -326,22 +326,12 @@ document.addEventListener("DOMContentLoaded", () => {
   if (audio && minimizedBtn && expandedDeck) {
     let isPlaying = false;
     let currentTrackIndex = 0;
-    let volume = 0.30;
+    let volume = 1.0;
     let isMinimized = window.innerWidth < 768;
+    let isSwitchingTrack = false;
 
     function pad(n) {
       return String(n).padStart(2, "0");
-    }
-
-    function updateTrackUI() {
-      const track = TRACKS[currentTrackIndex];
-      if (!track) return;
-      audio.src = track.url;
-      setTrackDisplayText(`${isPlaying ? "▶ " : "■ "}${track.title} - ${track.artist}`);
-      restartTickerAnimation();
-      if (trackCounter) {
-        trackCounter.textContent = `${pad(currentTrackIndex + 1)}/${pad(TRACKS.length)}`;
-      }
     }
 
     function setMinimizedState(minimized) {
@@ -392,6 +382,46 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
+    function loadTrack(index, autoplay = false) {
+      currentTrackIndex = (index + TRACKS.length) % TRACKS.length;
+      const track = TRACKS[currentTrackIndex];
+      if (!track) return;
+
+      isSwitchingTrack = true;
+      audio.pause();
+      audio.src = track.url;
+      audio.load();
+
+      if (trackCounter) {
+        trackCounter.textContent = `${pad(currentTrackIndex + 1)}/${pad(TRACKS.length)}`;
+      }
+
+      if (autoplay) {
+        updatePlayingState(true);
+        restartTickerAnimation();
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              isSwitchingTrack = false;
+            })
+            .catch((err) => {
+              console.warn("Audio play blocked or interrupted:", err);
+              isSwitchingTrack = false;
+              if (audio.paused) {
+                updatePlayingState(false);
+              }
+            });
+        } else {
+          isSwitchingTrack = false;
+        }
+      } else {
+        updatePlayingState(false);
+        restartTickerAnimation();
+        isSwitchingTrack = false;
+      }
+    }
+
     function applyVolume(vol) {
       volume = vol;
       // Acoustic logarithmic volume curve
@@ -399,33 +429,46 @@ document.addEventListener("DOMContentLoaded", () => {
       if (volumeText) {
         volumeText.textContent = `${Math.round(vol * 100)}%`;
       }
+      if (volumeSlider && volumeSlider.value !== String(vol)) {
+        volumeSlider.value = String(vol);
+      }
     }
 
     // Toggle Play/Pause
     function togglePlay() {
-      if (isPlaying) {
-        audio.pause();
-      } else {
-        if (!audio.src || !audio.src.includes(TRACKS[currentTrackIndex].url)) {
-          audio.src = TRACKS[currentTrackIndex].url;
+      if (!audio.src || !audio.src.includes(TRACKS[currentTrackIndex].url)) {
+        loadTrack(currentTrackIndex, true);
+        return;
+      }
+      if (audio.paused) {
+        updatePlayingState(true);
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+          playPromise.catch((err) => {
+            console.warn("Audio play blocked:", err);
+            updatePlayingState(false);
+          });
         }
-        audio.play().catch((err) => console.warn("Audio play blocked:", err));
+      } else {
+        audio.pause();
       }
     }
 
     function nextTrack() {
-      currentTrackIndex = (currentTrackIndex + 1) % TRACKS.length;
-      updateTrackUI();
-      if (isPlaying) {
-        audio.play().catch((err) => console.warn("Audio play blocked:", err));
-      }
+      // Autoplay next track if playing, stay paused if paused
+      const wasPlaying = isPlaying && !audio.paused;
+      loadTrack(currentTrackIndex + 1, wasPlaying);
     }
 
     function prevTrack() {
-      currentTrackIndex = (currentTrackIndex - 1 + TRACKS.length) % TRACKS.length;
-      updateTrackUI();
-      if (isPlaying) {
-        audio.play().catch((err) => console.warn("Audio play blocked:", err));
+      const wasPlaying = isPlaying && !audio.paused;
+      if (audio.currentTime > 3) {
+        audio.currentTime = 0;
+        if (wasPlaying) {
+          audio.play().catch((err) => console.warn("Audio play blocked:", err));
+        }
+      } else {
+        loadTrack(currentTrackIndex - 1, wasPlaying);
       }
     }
 
@@ -436,9 +479,28 @@ document.addEventListener("DOMContentLoaded", () => {
     nextBtn?.addEventListener("click", nextTrack);
     prevBtn?.addEventListener("click", prevTrack);
 
-    audio.addEventListener("play", () => updatePlayingState(true));
-    audio.addEventListener("pause", () => updatePlayingState(false));
-    audio.addEventListener("ended", nextTrack);
+    audio.addEventListener("play", () => {
+      updatePlayingState(true);
+    });
+    audio.addEventListener("playing", () => {
+      updatePlayingState(true);
+    });
+    audio.addEventListener("pause", () => {
+      // Ignore synthetic pause events fired when switching src or on naturally ended
+      if (isSwitchingTrack || audio.ended) return;
+      updatePlayingState(false);
+    });
+    audio.addEventListener("ended", () => {
+      // Seamlessly advance to next song and autoplay unless user paused
+      loadTrack(currentTrackIndex + 1, true);
+    });
+    audio.addEventListener("error", () => {
+      if (isSwitchingTrack) return;
+      console.warn("Cassette audio playback error:", audio.error);
+      const track = TRACKS[currentTrackIndex];
+      setTrackDisplayText(`⚠ Error loading ${track?.title || "track"}`);
+      updatePlayingState(false);
+    });
 
     volumeSlider?.addEventListener("input", (e) => {
       applyVolume(parseFloat(e.target.value));
@@ -446,7 +508,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Initialize state
     applyVolume(volume);
-    updateTrackUI();
+    loadTrack(0, false);
     setMinimizedState(isMinimized);
   }
 
