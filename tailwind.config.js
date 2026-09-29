@@ -13,6 +13,11 @@ export default {
         mono: ['"Space Mono"', 'monospace'],
         pixel: ['"Space Mono"', 'monospace'],
       },
+      borderWidth: {
+        '3': '3px',
+        '5': '5px',
+        '6': '6px',
+      },
       boxShadow: {
         'brutal-xs': '2px 2px 0px 0px #000000',
         'brutal-sm': '3px 3px 0px 0px #000000',

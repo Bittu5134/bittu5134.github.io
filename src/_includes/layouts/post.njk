@@ -121,7 +121,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
             <!-- Share Popover Dropdown (Flat, High Contrast) -->
             <div
               id="share-popover"
-              class="hidden absolute right-0 top-full mt-2 w-52 bg-[#faf3e0] border-2 border-black p-2 z-50 text-xs font-mono flex flex-col gap-1"
+              class="hidden absolute right-0 top-full mt-2 w-52 bg-[#faf3e0] border-2 border-black p-2 z-50 text-xs font-mono flex-col gap-1"
               role="menu"
               aria-label="Share options"
             >
@@ -372,9 +372,6 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 
   <!-- Canonical Site Footer -->
   {% include "components/retro-footer.njk" %}
-
-  <!-- Ambient Cassette Deck Player -->
-  {# {% include "components/retro-cassette-player.njk" %} #}
 </div>
 
 <!-- Reading Progress Scroll Observer -->
@@ -427,6 +424,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
       if (!sharePopover) return;
       const isHidden = sharePopover.classList.contains("hidden");
       sharePopover.classList.toggle("hidden", !isHidden);
+      sharePopover.classList.toggle("flex", isHidden);
       shareBtn.setAttribute("aria-expanded", String(isHidden));
     }
 
@@ -446,6 +444,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
     document.addEventListener("click", function(e) {
       if (sharePopover && !sharePopover.classList.contains("hidden") && !sharePopover.contains(e.target) && e.target !== shareBtn) {
         sharePopover.classList.add("hidden");
+        sharePopover.classList.remove("flex");
         shareBtn.setAttribute("aria-expanded", "false");
       }
     });
