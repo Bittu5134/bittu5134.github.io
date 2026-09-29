@@ -9,7 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const SITE_URL = "https://bittu.dev";
-const blogsDir = path.resolve(__dirname, "../src/content/blogs");
+const blogsDir = path.resolve(__dirname, "../blogs");
 const blogImagesDir = path.resolve(blogsDir, "images");
 const publicDir = path.resolve(__dirname, "../public");
 const publicBlogImagesDir = path.resolve(publicDir, "images/blogs");
@@ -86,7 +86,7 @@ function parseMarkdownFile(filepath) {
 export async function generateMeta() {
   ensureDirs();
 
-  // Copy any co-located blog images from src/content/blogs/images to public/images/blogs
+  // Copy any co-located blog images from blogs/images to public/images/blogs
   if (fs.existsSync(blogImagesDir)) {
     const images = fs.readdirSync(blogImagesDir);
     for (const img of images) {

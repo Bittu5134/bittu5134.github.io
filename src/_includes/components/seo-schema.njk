@@ -1,0 +1,179 @@
+{# Comprehensive Schema.org JSON-LD Structured Data #}
+{% if (layout == "layouts/post.njk" or date) and page.url != "/blog/" %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://bittu.dev{{ page.url }}#article",
+      "isPartOf": {
+        "@type": "Blog",
+        "@id": "https://bittu.dev/blog/#blog",
+        "name": {{ site.title | json | safe }},
+        "url": "https://bittu.dev/blog/"
+      },
+      "headline": {{ (title if title else "Bittu Dispatch") | json | safe }},
+      "description": {{ (summary if summary else (description if description else "")) | json | safe }},
+      "image": [{{ resolvedCover | json | safe }}],
+      "datePublished": {{ date | dateIso | json | safe }},
+      "dateModified": {{ (dateModified if dateModified else (date | dateIso)) | json | safe }},
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://bittu.dev{{ page.url }}"
+      },
+      "wordCount": {{ wordCount or 0 }},
+      "inLanguage": "en-US",
+      {% if keywords %}"keywords": {{ keywords | json | safe }},{% endif %}
+      "author": {
+        "@type": "Person",
+        "@id": "https://bittu.dev/#person",
+        "name": {{ site.author.name | json | safe }},
+        "alternateName": {{ site.author.alternateName | json | safe }},
+        "url": {{ site.author.url | json | safe }},
+        "image": {{ site.author.image | json | safe }},
+        "jobTitle": {{ site.author.jobTitle | json | safe }},
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": {{ site.author.alumniOf.name | json | safe }}
+        },
+        "sameAs": {{ site.author.sameAs | json | safe }}
+      },
+      "publisher": {
+        "@type": "Person",
+        "@id": "https://bittu.dev/#person",
+        "name": {{ site.author.name | json | safe }},
+        "url": {{ site.author.url | json | safe }},
+        "logo": {
+          "@type": "ImageObject",
+          "url": {{ site.author.image | json | safe }}
+        }
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://bittu.dev{{ page.url }}#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://bittu.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://bittu.dev/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": {{ title | json | safe }},
+          "item": "https://bittu.dev{{ page.url }}"
+        }
+      ]
+    }
+  ]
+}
+</script>
+{% elif page.url == "/blog/" or page.url == "/blog/index.html" %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Blog",
+      "@id": "https://bittu.dev/blog/#blog",
+      "name": {{ site.title | json | safe }},
+      "description": {{ site.description | json | safe }},
+      "url": "https://bittu.dev/blog/",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://bittu.dev/#person",
+        "name": {{ site.author.name | json | safe }},
+        "alternateName": {{ site.author.alternateName | json | safe }},
+        "url": {{ site.author.url | json | safe }},
+        "image": {{ site.author.image | json | safe }}
+      },
+      "publisher": {
+        "@type": "Person",
+        "@id": "https://bittu.dev/#person",
+        "name": {{ site.author.name | json | safe }},
+        "url": {{ site.author.url | json | safe }}
+      },
+      "blogPost": [
+        {% for post in collections.blogs %}
+        {
+          "@type": "BlogPosting",
+          "@id": "https://bittu.dev{{ post.url }}#article",
+          "headline": {{ (post.data.title or "") | json | safe }},
+          "description": {{ (post.data.summary or post.data.description or "") | json | safe }},
+          "url": "https://bittu.dev{{ post.url }}",
+          "datePublished": {{ (post.data.date or post.date) | dateIso | json | safe }}
+        }{% if not loop.last %},{% endif %}
+        {% endfor %}
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://bittu.dev/blog/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://bittu.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://bittu.dev/blog/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+{% elif page.url == "/" or page.url == "/index.html" %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://bittu.dev/#website",
+      "url": "https://bittu.dev/",
+      "name": "Bittu",
+      "description": {{ site.description | json | safe }},
+      "inLanguage": "en-US",
+      "publisher": {
+        "@id": "https://bittu.dev/#person"
+      }
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": "https://bittu.dev/#profilepage",
+      "url": "https://bittu.dev/",
+      "name": "Bittu | Systems Hacker & Modder",
+      "mainEntity": {
+        "@type": "Person",
+        "@id": "https://bittu.dev/#person",
+        "name": {{ site.author.name | json | safe }},
+        "alternateName": {{ site.author.alternateName | json | safe }},
+        "url": {{ site.author.url | json | safe }},
+        "image": {{ site.author.image | json | safe }},
+        "jobTitle": {{ site.author.jobTitle | json | safe }},
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": {{ site.author.alumniOf.name | json | safe }}
+        },
+        "sameAs": {{ site.author.sameAs | json | safe }}
+      }
+    }
+  ]
+}
+</script>
+{% endif %}

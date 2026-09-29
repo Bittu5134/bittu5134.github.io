@@ -1,0 +1,140 @@
+/*! MIT License
+ * Modified from Pavel Pertsev's Gruvbox theme, licensed under the MIT License
+ * https://github.com/morhetz/gruvbox
+ */
+
+/*! MIT License
+ * Copyright (c) 2018 GitHub Inc.
+ * https://github.com/primer/primitives/blob/main/LICENSE
+ */
+
+main {
+  /* Syntax Highlighting (Gruvbox Light) */
+  --color-prettylights-syntax-comment: #928374; /* fg4 */
+  --color-prettylights-syntax-constant: #458588; /* blue */
+  --color-prettylights-syntax-entity: #b16286; /* purple */
+  --color-prettylights-syntax-storage-modifier-import: #665c54; /* fg2 */
+  --color-prettylights-syntax-entity-tag: #98971a; /* green */
+  --color-prettylights-syntax-keyword: #cc241d; /* red */
+  --color-prettylights-syntax-string: #689d6a; /* aqua */
+  --color-prettylights-syntax-variable: #d65d0e; /* orange */
+  --color-prettylights-syntax-brackethighlighter-unmatched: #cc241d; /* red */
+  --color-prettylights-syntax-invalid-illegal-text: #3c3836; /* fg0 */
+  --color-prettylights-syntax-invalid-illegal-bg: #9d0006; /* dark red */
+  --color-prettylights-syntax-carriage-return-text: #3c3836; /* fg0 */
+  --color-prettylights-syntax-carriage-return-bg: #9d0006; /* dark red */
+  --color-prettylights-syntax-string-regexp: #689d6a; /* aqua */
+  --color-prettylights-syntax-markup-list: #d79921; /* yellow */
+  --color-prettylights-syntax-markup-heading: #458588; /* blue */
+  --color-prettylights-syntax-markup-italic: #665c54; /* fg2 */
+  --color-prettylights-syntax-markup-bold: #665c54; /* fg2 */
+  --color-prettylights-syntax-markup-deleted-text: #cc241d; /* red */
+  --color-prettylights-syntax-markup-deleted-bg: #9d0006; /* dark red */
+  --color-prettylights-syntax-markup-inserted-text: #98971a; /* green */
+  --color-prettylights-syntax-markup-inserted-bg: #79740e; /* dark green */
+  --color-prettylights-syntax-markup-changed-text: #d79921; /* yellow */
+  --color-prettylights-syntax-markup-changed-bg: #b57614; /* dark yellow */
+  --color-prettylights-syntax-markup-ignored-text: #665c54; /* fg2 */
+  --color-prettylights-syntax-markup-ignored-bg: #458588; /* blue */
+  --color-prettylights-syntax-meta-diff-range: #b16286; /* purple */
+  --color-prettylights-syntax-brackethighlighter-angle: #928374; /* fg4 */
+  --color-prettylights-syntax-sublimelinter-gutter-mark: #a89984; /* bg4 */
+  --color-prettylights-syntax-constant-other-reference-link: #458588; /* blue */
+
+  /* Buttons */
+  --color-btn-text: #000000; /* Pure Ink Black */
+  --color-btn-bg: #f4ebd0; /* bg1 warm */
+  --color-btn-border: #000000;
+  --color-btn-shadow: 0 0 transparent;
+  --color-btn-inset-shadow: 0 0 transparent;
+  --color-btn-hover-bg: #fde047; /* Gruvbox Yellow hover */
+  --color-btn-hover-border: #000000;
+  --color-btn-active-bg: #86efac; /* Mint active */
+  --color-btn-active-border: #000000;
+  --color-btn-selected-bg: #fde047;
+
+  /* Primary Action Button ("Sign in with GitHub" / "Comment") */
+  --color-btn-primary-text: #000000;
+  --color-btn-primary-bg: #86efac; /* Mint Green */
+  --color-btn-primary-border: #000000;
+  --color-btn-primary-shadow: 0 0 transparent;
+  --color-btn-primary-inset-shadow: 0 0 transparent;
+  --color-btn-primary-hover-bg: #4ade80;
+  --color-btn-primary-hover-border: #000000;
+  --color-btn-primary-selected-bg: #22c55e;
+  --color-btn-primary-selected-shadow: 0 0 transparent;
+  --color-btn-primary-disabled-text: #665c54;
+  --color-btn-primary-disabled-bg: #ebdbb2;
+  --color-btn-primary-disabled-border: #000000;
+
+  --color-action-list-item-default-hover-bg: #fde047;
+  --color-segmented-control-bg: #f4ebd0;
+  --color-segmented-control-button-bg: #faf3e0;
+  --color-segmented-control-button-selected-border: #000000;
+
+  /* Canvas & Foreground */
+  --color-fg-default: #000000; /* High contrast black */
+  --color-fg-muted: #3c3836;   /* Gruvbox fg0 */
+  --color-fg-subtle: #665c54;  /* Gruvbox fg2 */
+
+  --color-canvas-default: #faf3e0; /* Warm Parchment */
+  --color-canvas-overlay: #f4ebd0; /* Secondary Surface */
+  --color-canvas-inset: #f6eedb;   /* Inset Textarea */
+  --color-canvas-subtle: #f4ebd0;
+
+  --color-border-default: #000000; /* Solid Black Borders */
+  --color-border-muted: #3c3836;
+  --color-neutral-muted: #ebdbb2;
+
+  /* Accents */
+  --color-accent-fg: #af3a03;      /* Gruvbox Deep Orange */
+  --color-accent-emphasis: #000000;
+  --color-accent-muted: #fde047;
+  --color-accent-subtle: #fef3c7;
+
+  /* States */
+  --color-success-fg: #79740e;
+  --color-attention-fg: #d79921;
+  --color-attention-muted: #fde047;
+  --color-attention-subtle: #fef3c7;
+  --color-danger-fg: #cc241d;
+  --color-danger-muted: #fca5a5;
+  --color-danger-subtle: #fee2e2;
+
+  --color-primer-shadow-inset: 0 0 transparent;
+  --color-scale-gray-7: #f4ebd0;
+  --color-scale-blue-8: #076678;
+
+  /* Extensions */
+  --color-social-reaction-bg-hover: #fde047;
+  --color-social-reaction-bg-reacted-hover: #86efac;
+}
+
+main .pagination-loader-container {
+  background-image: url("https://github.com/images/modules/pulls/progressive-disclosure-line.svg");
+}
+
+main .gsc-loading-image {
+  background-image: url("https://github.githubassets.com/images/mona-loading-default.gif");
+}
+
+/* Neo-Brutalist Canvas Resets for Giscus Components */
+main .gsc-comment-box,
+main .gsc-timeline-item,
+main .gsc-comment {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+main .gsc-comment-header {
+  background-color: #f4ebd0 !important;
+  border-bottom: 2px solid #000000 !important;
+}
+
+main .gsc-comment-box-textarea {
+  background-color: #faf3e0 !important;
+  color: #000000 !important;
+  border: 2px solid #000000 !important;
+  border-radius: 0 !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+}

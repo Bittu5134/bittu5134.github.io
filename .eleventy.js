@@ -32,12 +32,12 @@ export default async function (eleventyConfig) {
   }
 
   // 4. Watch for blog content and styles
-  eleventyConfig.addWatchTarget("./src/content/blogs/");
+  eleventyConfig.addWatchTarget("./blogs/");
   eleventyConfig.addWatchTarget("./src/index.css");
 
   // 5. Reactive Blogs collection sorted chronologically descending
   eleventyConfig.addCollection("blogs", function (collectionApi) {
-    return collectionApi.getFilteredByGlob("./src/content/blogs/*.md").sort((a, b) => {
+    return collectionApi.getFilteredByGlob(["./blogs/*.md", "./src/blogs/*.md"]).sort((a, b) => {
       const dateA = new Date(a.data.date || a.date);
       const dateB = new Date(b.data.date || b.date);
       return dateB - dateA;
@@ -47,7 +47,7 @@ export default async function (eleventyConfig) {
   // 5.1 Unique tags collection for blog filtering
   eleventyConfig.addCollection("blogTags", function (collectionApi) {
     const tagsSet = new Set();
-    const posts = collectionApi.getFilteredByGlob("./src/content/blogs/*.md");
+    const posts = collectionApi.getFilteredByGlob(["./blogs/*.md", "./src/blogs/*.md"]);
     posts.forEach((post) => {
       (post.data.tags || []).forEach((t) => {
         if (t && t !== "posts") tagsSet.add(t);

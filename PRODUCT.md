@@ -33,7 +33,7 @@ Authentic builder proof: real open-source systems projects, verifiable Minecraft
 
 - **Static-First Performance:** Built on Eleventy (11ty v3), Tailwind CSS, Python font subsetting, and client-side Pagefind Wasm search.
 - **Zero Heavy Runtime Frameworks:** Vanilla JavaScript for client interactions (lo-fi cassette player, search controller, mobile navigation, dark mode for posts).
-- **Pure Markdown Frontmatter Content:** Blog workflow driven purely by Markdown files in `src/content/blogs/` with gray-matter frontmatter; no manual JSON sync required.
+- **Pure Markdown Frontmatter Content:** Blog workflow driven purely by Markdown files in root `/blogs/` with gray-matter frontmatter; no manual JSON sync required. Easy and immediate to upload new posts at the project root.
 - **Multi-Device Responsiveness:** Tight layout constraints on mobile and tablet without horizontal scrolling or squished metadata.
 
 ## Brand Commitments

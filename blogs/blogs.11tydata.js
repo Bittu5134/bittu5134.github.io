@@ -69,5 +69,30 @@ export default {
       }
       return getDeterministicAbstractCover(data.slug || data.page?.fileSlug || data.title);
     },
+    wordCount: (data) => {
+      if (data.page && data.page.inputPath) {
+        try {
+          const raw = fs.readFileSync(data.page.inputPath, "utf-8");
+          const body = raw.replace(/^---[\s\S]*?---\n?/, "");
+          const words = body.trim().split(/\s+/).filter(Boolean);
+          return words.length;
+        } catch {
+          // fallback
+        }
+      }
+      return 0;
+    },
+    dateModified: (data) => {
+      const mod = data.updated || data.dateModified || data.date;
+      if (mod) {
+        const d = new Date(mod);
+        return !isNaN(d.getTime()) ? d.toISOString().split("T")[0] : String(mod);
+      }
+      return "";
+    },
+    keywords: (data) => {
+      const tags = (data.tags || []).filter((t) => t && t !== "posts");
+      return tags.join(", ");
+    },
   },
 };

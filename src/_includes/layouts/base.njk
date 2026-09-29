@@ -51,32 +51,7 @@
     {% endif %}
 
     <!-- JSON-LD Structured Data -->
-    {% if date %}
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      "headline": {{ (title if title else "Bittu Dispatch") | json | safe }},
-      "description": {{ (summary if summary else (description if description else "")) | json | safe }},
-      "image": [{{ resolvedCover | json | safe }}],
-      "datePublished": {{ date | dateIso | json | safe }},
-      "author": {
-        "@type": "Person",
-        "name": "Bittu (Bittu5134)",
-        "url": "https://bittu.dev"
-      },
-      "publisher": {
-        "@type": "Person",
-        "name": "Bittu",
-        "url": "https://bittu.dev"
-      },
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://bittu.dev{{ page.url }}"
-      }
-    }
-    </script>
-    {% endif %}
+    {% include "components/seo-schema.njk" %}
 
     <!-- Preload Critical Local Fonts & Hero Avatar -->
     <link rel="preload" href="/fonts/SpaceGrotesk-Variable.woff2" as="font" type="font/woff2" crossorigin />
