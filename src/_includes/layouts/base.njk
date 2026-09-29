@@ -6,14 +6,14 @@
     <link rel="alternate icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ title if title else "Bittu | Software & CyberSec" }}</title>
-    <meta name="description" content="{{ summary if summary else (description if description else 'Your friendly, neighborhood Technomancer') }}" />
+    <meta name="description" content="{{ summary if summary else (description if description else "Your friendly, neighborhood Technomancer. Cybersecurity @ IIT Kanpur '30") }}" />
     <meta name="author" content="Bittu (Bittu5134)" />
     <link rel="canonical" href="https://bittu.dev{{ page.url }}" />
 
     <!-- OpenGraph / Social Meta -->
     <meta property="og:site_name" content="{{ siteName if siteName else 'bittu.dev' }}" />
     <meta property="og:title" content="{{ title if title else 'Bittu | Software & CyberSec' }}" />
-    <meta property="og:description" content="{{ summary if summary else (description if description else 'Your friendly, neighborhood Technomancer') }}" />
+    <meta property="og:description" content="{{ summary if summary else (description if description else "Your friendly, neighborhood Technomancer. Cybersecurity @ IIT Kanpur '30") }}" />
     <meta property="og:type" content="{{ ogType if ogType else ('article' if date else 'website') }}" />
     <meta property="og:url" content="https://bittu.dev{{ page.url }}" />
     {% set rawOg = ogImage if ogImage else coverImage %}
@@ -52,7 +52,7 @@
     <meta name="twitter:site" content="@404lostsquid" />
     <meta name="twitter:creator" content="@404lostsquid" />
     <meta name="twitter:title" content="{{ title if title else 'Bittu | Software & CyberSec' }}" />
-    <meta name="twitter:description" content="{{ summary if summary else (description if description else 'Your friendly, neighborhood Technomancer') }}" />
+    <meta name="twitter:description" content="{{ summary if summary else (description if description else "Your friendly, neighborhood Technomancer. Cybersecurity @ IIT Kanpur '30") }}" />
     <meta name="twitter:image" content="{{ resolvedCover }}" />
     <meta name="twitter:image:alt" content="{{ resolvedAlt }}" />
 

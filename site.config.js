@@ -9,7 +9,7 @@ export default {
   // ── Global Site Details ─────────────────────────────────────────────
   name: "bittu.dev",
   title: "Bittu | Software & CyberSec",
-  description: "Your friendly, neighborhood Technomancer",
+  description: "Your friendly, neighborhood Technomancer. Cybersecurity @ IIT Kanpur '30",
   url: "https://bittu.dev",
   feedUrl: "https://bittu.dev/rss.xml",
 
