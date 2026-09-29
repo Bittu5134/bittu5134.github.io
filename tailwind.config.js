@@ -2,6 +2,7 @@
 export default {
   content: [
     "./src/**/*.{html,njk,md,js}",
+    "./site.config.js",
   ],
   darkMode: ["selector", '[data-theme="dark"]'],
   theme: {

@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import siteConfig from "../site.config.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -139,56 +140,47 @@ for (const c of customSymbols) {
   );
 }
 
-// 3. Export Tech Stack Icons
-console.log("[sync-icons] Exporting Tech stack icons...");
-const techMappings = {
-  go: "node_modules/simple-icons/icons/go.svg",
-  python: "node_modules/simple-icons/icons/python.svg",
-  cplusplus: "node_modules/simple-icons/icons/cplusplus.svg",
-  typescript: "node_modules/simple-icons/icons/typescript.svg",
-  linux: "node_modules/simple-icons/icons/linux.svg",
-  webrtc: "node_modules/simple-icons/icons/webrtc.svg",
-  docker: "node_modules/simple-icons/icons/docker.svg",
-  redis: "node_modules/simple-icons/icons/redis.svg",
-  fastapi: "node_modules/simple-icons/icons/fastapi.svg",
-  cloudflare: "node_modules/simple-icons/icons/cloudflare.svg",
-};
-
+// 3. Export Tech Stack Icons from site.config.js
+console.log("[sync-icons] Exporting Tech stack icons from site.config.js...");
+const skills = siteConfig.skills || [];
 const updatedTechStack = [];
-for (const [techKey, srcPath] of Object.entries(techMappings)) {
-  const raw = readNode(srcPath);
-  fs.writeFileSync(path.join(techDir, `${techKey}.svg`), raw, "utf-8");
 
-  // Extract path data
-  const pathMatch = raw.match(/<path[^>]*d=["']([^"']+)["']/i);
-  const pathData = pathMatch ? pathMatch[1] : "";
+for (const skill of skills) {
+  const iconId = skill.iconId || `icon-tech-${skill.name.toLowerCase().replace(/[^a-z0-9]/g, "")}`;
+  const techKey = iconId.replace(/^icon-tech-/, "");
 
-  const nameMap = {
-    go: { name: "Go", bgClass: "bg-[#38bdf8]" },
-    python: { name: "Python", bgClass: "bg-[#fde047]" },
-    cplusplus: { name: "C / C++", bgClass: "bg-[#fb923c]" },
-    typescript: { name: "TypeScript", bgClass: "bg-[#86efac]" },
-    linux: { name: "Linux & Sockets", bgClass: "bg-[#c4b5fd]" },
-    webrtc: { name: "WebRTC", bgClass: "bg-[#f472b6]" },
-    docker: { name: "Docker", bgClass: "bg-[#38bdf8]" },
-    redis: { name: "Redis", bgClass: "bg-[#fde047]" },
-    fastapi: { name: "FastAPI / Gin", bgClass: "bg-[#a7f3d0]" },
-    cloudflare: { name: "Cloudflare Workers", bgClass: "bg-[#fb923c]" },
-  };
+  let srcPath = `node_modules/simple-icons/icons/${techKey}.svg`;
+  if (!fs.existsSync(path.join(rootDir, srcPath))) {
+    srcPath = `node_modules/@tabler/icons/icons/outline/${techKey}.svg`;
+  }
+  if (!fs.existsSync(path.join(rootDir, srcPath))) {
+    srcPath = `node_modules/@tabler/icons/icons/filled/${techKey}.svg`;
+  }
 
-  const meta = nameMap[techKey];
-  updatedTechStack.push({
-    name: meta.name,
-    bgClass: meta.bgClass,
-    iconId: `icon-tech-${techKey}`,
-    iconFile: `/assets/icons/tech/${techKey}.svg`,
-  });
+  if (fs.existsSync(path.join(rootDir, srcPath))) {
+    const raw = readNode(srcPath);
+    fs.writeFileSync(path.join(techDir, `${techKey}.svg`), raw, "utf-8");
 
-  const inner = extractInner(raw);
-  const viewBox = extractViewBox(raw);
-  spriteSymbols.push(
-    `<symbol id="icon-tech-${techKey}" fill="currentColor" viewBox="${viewBox}">${inner}</symbol>`
-  );
+    const inner = extractInner(raw);
+    const viewBox = extractViewBox(raw);
+    spriteSymbols.push(
+      `<symbol id="${iconId}" fill="currentColor" viewBox="${viewBox}">${inner}</symbol>`
+    );
+
+    updatedTechStack.push({
+      name: skill.name,
+      bgClass: skill.bgClass,
+      iconId,
+      iconFile: `/assets/icons/tech/${techKey}.svg`,
+    });
+  } else {
+    console.warn(`[sync-icons] Warning: No SVG icon found for ${skill.name} (${iconId})`);
+    updatedTechStack.push({
+      name: skill.name,
+      bgClass: skill.bgClass,
+      iconId: null,
+    });
+  }
 }
 
 // Update src/_data/techStack.js with official paths
@@ -209,9 +201,8 @@ const homepageUsedIcons = new Set([
   "icon-file-text", "icon-user", "icon-mail", "icon-rss", "icon-book-open", "icon-graduation-cap",
   "icon-trophy", "icon-zap", "icon-copy", "icon-bug", "icon-star", "icon-git-fork", "icon-code",
   "icon-github", "icon-twitter", "icon-discord", "icon-patreon", "icon-reddit", "icon-linkedin",
-  "icon-pixel-monster", "icon-planet-minecraft", "icon-tech-go", "icon-tech-python", "icon-tech-cplusplus",
-  "icon-tech-typescript", "icon-tech-linux", "icon-tech-webrtc", "icon-tech-docker", "icon-tech-redis",
-  "icon-tech-fastapi", "icon-tech-cloudflare"
+  "icon-pixel-monster", "icon-planet-minecraft",
+  ...skills.map((s) => s.iconId).filter(Boolean)
 ]);
 
 const homeSymbols = spriteSymbols.filter(s => {

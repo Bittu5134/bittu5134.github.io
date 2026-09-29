@@ -13,10 +13,16 @@ export default [
     "iconFile": "/assets/icons/tech/python.svg"
   },
   {
-    "name": "C / C++",
+    "name": "C++",
     "bgClass": "bg-[#fb923c]",
     "iconId": "icon-tech-cplusplus",
     "iconFile": "/assets/icons/tech/cplusplus.svg"
+  },
+  {
+    "name": "C",
+    "bgClass": "bg-[#93c5fd]",
+    "iconId": "icon-tech-c",
+    "iconFile": "/assets/icons/tech/c.svg"
   },
   {
     "name": "TypeScript",
@@ -25,16 +31,10 @@ export default [
     "iconFile": "/assets/icons/tech/typescript.svg"
   },
   {
-    "name": "Linux & Sockets",
+    "name": "Linux",
     "bgClass": "bg-[#c4b5fd]",
     "iconId": "icon-tech-linux",
     "iconFile": "/assets/icons/tech/linux.svg"
-  },
-  {
-    "name": "WebRTC",
-    "bgClass": "bg-[#f472b6]",
-    "iconId": "icon-tech-webrtc",
-    "iconFile": "/assets/icons/tech/webrtc.svg"
   },
   {
     "name": "Docker",
@@ -43,21 +43,57 @@ export default [
     "iconFile": "/assets/icons/tech/docker.svg"
   },
   {
+    "name": "PostgreSQL",
+    "bgClass": "bg-[#60a5fa]",
+    "iconId": "icon-tech-postgresql",
+    "iconFile": "/assets/icons/tech/postgresql.svg"
+  },
+  {
     "name": "Redis",
-    "bgClass": "bg-[#fde047]",
+    "bgClass": "bg-[#f87171]",
     "iconId": "icon-tech-redis",
     "iconFile": "/assets/icons/tech/redis.svg"
   },
   {
-    "name": "FastAPI / Gin",
+    "name": "PyTorch",
+    "bgClass": "bg-[#fb923c]",
+    "iconId": "icon-tech-pytorch",
+    "iconFile": "/assets/icons/tech/pytorch.svg"
+  },
+  {
+    "name": "WebRTC",
+    "bgClass": "bg-[#f472b6]",
+    "iconId": "icon-tech-webrtc",
+    "iconFile": "/assets/icons/tech/webrtc.svg"
+  },
+  {
+    "name": "FastAPI",
     "bgClass": "bg-[#a7f3d0]",
     "iconId": "icon-tech-fastapi",
     "iconFile": "/assets/icons/tech/fastapi.svg"
   },
   {
-    "name": "Cloudflare Workers",
-    "bgClass": "bg-[#fb923c]",
+    "name": "Cloudflare",
+    "bgClass": "bg-[#fdba74]",
     "iconId": "icon-tech-cloudflare",
     "iconFile": "/assets/icons/tech/cloudflare.svg"
+  },
+  {
+    "name": "Git",
+    "bgClass": "bg-[#f87171]",
+    "iconId": "icon-tech-git",
+    "iconFile": "/assets/icons/tech/git.svg"
+  },
+  {
+    "name": "Proxmox",
+    "bgClass": "bg-[#fca5a5]",
+    "iconId": "icon-tech-proxmox",
+    "iconFile": "/assets/icons/tech/proxmox.svg"
+  },
+  {
+    "name": "Svelte",
+    "bgClass": "bg-[#fb923c]",
+    "iconId": "icon-tech-svelte",
+    "iconFile": "/assets/icons/tech/svelte.svg"
   }
 ];
