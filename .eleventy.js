@@ -168,6 +168,20 @@ export default async function (eleventyConfig) {
       .replace(/^-+|-+$/g, "");
   });
 
+  // ISO 8601 duration filter for Schema.org timeRequired (e.g. "6 min read" -> "PT6M")
+  eleventyConfig.addFilter("isoDuration", function (value) {
+    if (!value) return "PT3M";
+    const match = String(value).match(/\d+/);
+    const minutes = match ? parseInt(match[0], 10) : 3;
+    return `PT${minutes}M`;
+  });
+
+  // Filter out internal tags like "posts"
+  eleventyConfig.addFilter("filterTags", function (tags) {
+    if (!Array.isArray(tags)) return [];
+    return tags.filter((t) => t && t !== "posts");
+  });
+
   // Filter to pick a blog post that is not current, not newer, and not older
   eleventyConfig.addFilter("getRandomOtherPost", function (allPosts, currentUrl, newerUrl, olderUrl) {
     if (!allPosts || !allPosts.length) return null;

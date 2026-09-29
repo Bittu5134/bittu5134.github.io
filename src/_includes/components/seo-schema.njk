@@ -1,12 +1,16 @@
 {# Comprehensive Schema.org JSON-LD Structured Data #}
-{% if (layout == "layouts/post.njk" or date) and page.url != "/blog/" %}
+{% if (layout == "layouts/post.njk" or date) and page.url != "/blog/" and page.url != "/blog/index.html" %}
+{% set cleanTags = tags | filterTags %}
+{% set primarySection = (cleanTags[0] if cleanTags.length else "Engineering") %}
+{% set techDependencies = (cleanTags | join(", ") if cleanTags.length else "Software Systems") %}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "BlogPosting",
+      "@type": ["BlogPosting", "TechArticle"],
       "@id": "https://bittu.dev{{ page.url }}#article",
+      "url": "https://bittu.dev{{ page.url }}",
       "isPartOf": {
         "@type": "Blog",
         "@id": "https://bittu.dev/blog/#blog",
@@ -15,7 +19,12 @@
       },
       "headline": {{ (title if title else "Bittu Dispatch") | json | safe }},
       "description": {{ (summary if summary else (description if description else "")) | json | safe }},
-      "image": [{{ resolvedCover | json | safe }}],
+      "image": {
+        "@type": "ImageObject",
+        "url": {{ resolvedCover | json | safe }},
+        "width": 1200,
+        "height": 630
+      },
       "datePublished": {{ date | dateIso | json | safe }},
       "dateModified": {{ (dateModified if dateModified else (date | dateIso)) | json | safe }},
       "mainEntityOfPage": {
@@ -23,7 +32,11 @@
         "@id": "https://bittu.dev{{ page.url }}"
       },
       "wordCount": {{ wordCount or 0 }},
+      "timeRequired": {{ (readTime if readTime else "3 min read") | isoDuration | json | safe }},
       "inLanguage": "en-US",
+      "articleSection": {{ primarySection | json | safe }},
+      "dependencies": {{ techDependencies | json | safe }},
+      "proficiencyLevel": "Advanced",
       {% if keywords %}"keywords": {{ keywords | json | safe }},{% endif %}
       "author": {
         "@type": "Person",
@@ -44,7 +57,7 @@
         "@id": "https://bittu.dev/#person",
         "name": {{ site.author.name | json | safe }},
         "url": {{ site.author.url | json | safe }},
-        "logo": {
+        "image": {
           "@type": "ImageObject",
           "url": {{ site.author.image | json | safe }}
         }
@@ -101,7 +114,11 @@
         "@type": "Person",
         "@id": "https://bittu.dev/#person",
         "name": {{ site.author.name | json | safe }},
-        "url": {{ site.author.url | json | safe }}
+        "url": {{ site.author.url | json | safe }},
+        "image": {
+          "@type": "ImageObject",
+          "url": {{ site.author.image | json | safe }}
+        }
       },
       "blogPost": [
         {% for post in collections.blogs %}
@@ -146,7 +163,7 @@
       "@type": "WebSite",
       "@id": "https://bittu.dev/#website",
       "url": "https://bittu.dev/",
-      "name": "Bittu",
+      "name": "bittu.dev",
       "description": {{ site.description | json | safe }},
       "inLanguage": "en-US",
       "publisher": {
@@ -157,7 +174,7 @@
       "@type": "ProfilePage",
       "@id": "https://bittu.dev/#profilepage",
       "url": "https://bittu.dev/",
-      "name": "Bittu | Systems Hacker & Modder",
+      "name": "Bittu | Software & CyberSec",
       "mainEntity": {
         "@type": "Person",
         "@id": "https://bittu.dev/#person",
