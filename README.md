@@ -1,14 +1,21 @@
-Personal Website
+# Personal Website & Retro Deck (`bittu.dev`)
 
-Welcome to my personal website! This site serves as a digital portfolio and a space where I showcase my projects, skills, and experiences.
-🚀 Technologies Used
+Welcome to my personal website! A neo-brutalist retro cassette deck portfolio and blog built for speed, static reliability, and aesthetic delight.
 
-    React: The foundation of this website, providing a fast and dynamic user interface.
-    Tailwind CSS: Used for responsive and modern styling, allowing for rapid and customizable design.
-    Framer Motion: Incorporated for smooth, interactive animations, enhancing the user experience.
+## 🚀 Technologies Used
 
-🌟 Features
+- **Eleventy (11ty) & Vanilla JS**: Zero-runtime framework overhead with ultra-fast build times and 100% static HTML.
+- **Tailwind CSS**: Neo-brutalist retro styling with custom typography and brutalist shadows.
+- **Pure Static Architecture**: Pre-compiled static pages optimized natively for GitHub Pages without SPA redirect hacks.
+- **Modern Asset Pipelines**:
+  - WebM Opus audio tracks (80k VBR) for cassette player music.
+  - AVIF & WebP image formats with responsive source sets.
+  - Automated build-time micro-subsetted WOFF2 fonts with `pyftsubset` (`Space Grotesk`, `Space Mono` Regular, Bold, and Italic).
+- **AI Context Support**: Standard `llms.txt` and `llms-full.txt` auto-generated at build time.
 
-    Responsive Layout: The website is fully responsive, ensuring it looks great on all devices.
-    Animations: Subtle animations powered by Framer Motion that add a smooth, interactive feel.
-    Dynamic Content: All projects and content are displayed dynamically with React components, making the site easy to update and maintain.
+## 🌟 Features
+
+- **Interactive Cassette Deck**: Authentic retro tape deck playing local WebM Opus tracks with zero external streaming lag.
+- **Markdown Blog Engine**: Pre-rendered static blog posts with auto-generated RSS and sitemaps.
+- **Zero Third-Party Render Blocking**: 100% self-contained assets hosted on-origin.
+- **Responsive Neo-Brutalist Design**: Hand-crafted borders, retro dot grid backgrounds, and tactile UI elements.

@@ -1,0 +1,864 @@
+/**
+ * main.js - Ultra-lightweight Vanilla JS for bittu.dev
+ * Handles interactivity with zero framework overhead (< 6KB)
+ */
+
+document.addEventListener("DOMContentLoaded", () => {
+  /* -------------------------------------------------------------------------- */
+  /* 1. Clipboard Copy Helpers                                                  */
+  /* -------------------------------------------------------------------------- */
+  function setupCopyButton(btnId, textToCopy, defaultSelector, copiedSelector) {
+    const btn = document.getElementById(btnId);
+    if (!btn) return;
+
+    btn.addEventListener("click", () => {
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        const defaultEl = btn.querySelector(defaultSelector);
+        const copiedEl = btn.querySelector(copiedSelector);
+        if (defaultEl && copiedEl) {
+          defaultEl.classList.add("hidden");
+          copiedEl.classList.remove("hidden");
+          setTimeout(() => {
+            defaultEl.classList.remove("hidden");
+            copiedEl.classList.add("hidden");
+          }, 2000);
+        }
+      }).catch((err) => {
+        console.warn("Failed to copy:", err);
+      });
+    });
+  }
+
+  // Hero Discord copy
+  setupCopyButton("copy-discord-hero", "bittu5134", ".discord-default", ".discord-copied");
+
+  // Contact Discord copy
+  setupCopyButton("copy-discord-contact", "bittu5134", ".discord-default", ".discord-copied");
+
+  // Contact Email copy
+  setupCopyButton("copy-email-contact", "hello@bittu.dev", ".email-default", ".email-copied");
+
+
+  // Post Article Copy Link Buttons (Header & Footer)
+  document.querySelectorAll(".post-copy-link-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const url = btn.getAttribute("data-url") || window.location.href;
+      navigator.clipboard.writeText(url).then(() => {
+        const originalHtml = btn.innerHTML;
+        btn.innerHTML = '<span>Copied!</span>';
+        btn.classList.add("bg-[#86efac]");
+        btn.classList.remove("bg-[#fde047]");
+        setTimeout(() => {
+          btn.innerHTML = originalHtml;
+          btn.classList.remove("bg-[#86efac]");
+          btn.classList.add("bg-[#fde047]");
+        }, 2000);
+      }).catch((err) => console.warn("Failed to copy article link:", err));
+    });
+  });
+
+  /* -------------------------------------------------------------------------- */
+  /* 2. Mobile Navigation Drawer                                               */
+  /* -------------------------------------------------------------------------- */
+  const menuToggleBtn = document.getElementById("menu-toggle-btn");
+  const drawerCloseBtn = document.getElementById("drawer-close-btn");
+  const mobileDrawer = document.getElementById("mobile-drawer");
+  const mobileBackdrop = document.getElementById("mobile-backdrop");
+  const menuIconOpen = document.getElementById("menu-icon-open");
+  const menuIconClose = document.getElementById("menu-icon-close");
+  const menuText = document.getElementById("menu-text");
+
+  const headerEl = document.querySelector("header");
+  let isMenuOpen = false;
+
+  function setMenuOpen(open) {
+    isMenuOpen = open;
+    if (open) {
+      mobileDrawer?.classList.remove("hidden");
+      mobileBackdrop?.classList.remove("hidden");
+      menuIconOpen?.classList.add("hidden");
+      menuIconClose?.classList.remove("hidden");
+      if (menuText) menuText.textContent = "CLOSE";
+      menuToggleBtn?.setAttribute("aria-expanded", "true");
+      // Keep header fixed to top of viewport even if user scrolled down before opening drawer
+      if (headerEl) {
+        headerEl.classList.remove("sticky");
+        headerEl.classList.add("fixed", "top-0", "left-0", "right-0");
+      }
+      document.body.style.overflow = "hidden";
+    } else {
+      mobileDrawer?.classList.add("hidden");
+      mobileBackdrop?.classList.add("hidden");
+      menuIconOpen?.classList.remove("hidden");
+      menuIconClose?.classList.add("hidden");
+      if (menuText) menuText.textContent = "MENU";
+      menuToggleBtn?.setAttribute("aria-expanded", "false");
+      if (headerEl) {
+        headerEl.classList.remove("fixed", "left-0", "right-0");
+        headerEl.classList.add("sticky");
+      }
+      document.body.style.overflow = "";
+    }
+  }
+
+  menuToggleBtn?.addEventListener("click", () => setMenuOpen(!isMenuOpen));
+  drawerCloseBtn?.addEventListener("click", () => setMenuOpen(false));
+  mobileBackdrop?.addEventListener("click", () => setMenuOpen(false));
+
+  document.querySelectorAll(".mobile-nav-link").forEach((link) => {
+    link.addEventListener("click", () => setMenuOpen(false));
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth >= 1024 && isMenuOpen) {
+      setMenuOpen(false);
+    }
+  });
+
+  /* -------------------------------------------------------------------------- */
+  /* 3. Projects Category Filter                                                */
+  /* -------------------------------------------------------------------------- */
+  const filterButtons = document.querySelectorAll(".project-filter-btn");
+  const projectsGrid = document.getElementById("projects-grid");
+  let nonPinnedRendered = false;
+
+  function renderNonPinnedCards() {
+    if (nonPinnedRendered || !projectsGrid) return;
+    const dataEl = document.getElementById("non-pinned-projects-data");
+    if (!dataEl) return;
+    try {
+      const nonPinned = JSON.parse(dataEl.textContent || "[]");
+      nonPinned.forEach((p) => {
+        const card = document.createElement("div");
+        card.className = "project-card card-brutal flex flex-col justify-between overflow-hidden hidden";
+        card.setAttribute("data-filter-category", p.filterCategory || "");
+        card.setAttribute("data-category", p.category || "");
+        card.setAttribute("data-pinned", "false");
+        card.setAttribute("data-popularity", String(p.popularity || 0));
+
+        let starsHtml = "";
+        if (p.stars > 0) {
+          starsHtml = `<span class="inline-flex items-center gap-1 font-mono text-xs font-bold text-black/80 bg-[#fffdf9] border border-black px-1.5 py-0.5" title="${p.stars} stargazers on GitHub"><svg class="w-3.5 h-3.5 text-[#f59e0b] fill-[#f59e0b] shrink-0" aria-hidden="true"><use href="#icon-star"/></svg><span>${p.stars}</span></span>`;
+        }
+        let forksHtml = "";
+        if (p.forks > 0) {
+          forksHtml = `<span class="inline-flex items-center gap-1 font-mono text-xs font-bold text-black/80 bg-[#fffdf9] border border-black px-1.5 py-0.5" title="${p.forks} forks on GitHub"><svg class="w-3.5 h-3.5 text-black/70 shrink-0" aria-hidden="true"><use href="#icon-git-fork"/></svg><span>${p.forks}</span></span>`;
+        }
+
+        let langHtml = "";
+        if (p.language) {
+          langHtml = `<span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full border border-black/40 shrink-0" style="background-color: ${p.languageColor || '#888'}"></span><span>${p.language}</span></span>`;
+        }
+        let statsHtml = "";
+        if (p.statsText) {
+          statsHtml = `${p.language ? '<span class="text-black/30">/</span>' : ''}<span class="text-[#d97706]">${p.statsText}</span>`;
+        }
+
+        let tagsHtml = "";
+        if (Array.isArray(p.tags)) {
+          tagsHtml = p.tags.map((t) => `<span class="tag-pill">#${String(t).toUpperCase()}</span>`).join("");
+        }
+
+        let visitBtn = "";
+        if (p.liveUrl) {
+          visitBtn = `<a href="${p.liveUrl}" target="_blank" rel="noopener noreferrer" class="btn-brutal-yellow px-3 sm:px-3.5 py-1.5 sm:py-2 text-xs"><span>VISIT</span><svg class="w-3.5 h-3.5 text-black shrink-0" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></a>`;
+        }
+        let ghBtn = "";
+        if (p.githubUrl) {
+          ghBtn = `<a href="${p.githubUrl}" target="_blank" rel="noopener noreferrer" class="btn-brutal-white px-3 sm:px-3.5 py-1.5 sm:py-2 text-xs hover:bg-[#86efac]"><svg class="w-3.5 h-3.5 text-black shrink-0" aria-hidden="true"><use href="#icon-github"/></svg><span>GITHUB</span></a>`;
+        }
+
+        card.innerHTML = `
+          <div class="hidden sm:block h-6 w-full border-b-[3px] border-black ${p.headerBgClass || 'bg-[#86efac]'}"></div>
+          <div class="p-5 sm:p-6 flex flex-col flex-1 justify-between">
+            <div>
+              <div class="flex items-start justify-between gap-2 mb-1">
+                <h3 class="text-xl sm:text-2xl font-black text-black">${p.title || ''}</h3>
+                <div class="flex items-center gap-1.5 shrink-0">${starsHtml}${forksHtml}</div>
+              </div>
+              <div class="flex flex-wrap items-center gap-x-2.5 gap-y-1 font-mono text-xs font-bold text-black/70 mb-3">${langHtml}${statsHtml}</div>
+              <p class="font-mono text-xs sm:text-sm text-black/80 leading-relaxed mb-4">${p.description || ''}</p>
+            </div>
+            <div>
+              <div class="flex flex-wrap gap-1.5 mb-4 sm:mb-5">${tagsHtml}</div>
+              <div class="flex flex-wrap items-center gap-2 sm:gap-3 pt-3 border-t-2 border-black/10">${visitBtn}${ghBtn}</div>
+            </div>
+          </div>
+        `;
+        projectsGrid.appendChild(card);
+      });
+      nonPinnedRendered = true;
+    } catch (e) {
+      console.warn("Failed to parse non-pinned projects data:", e);
+    }
+  }
+
+  filterButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const selectedFilter = btn.getAttribute("data-filter");
+
+      // Lazily render non-pinned cards if user picks any category other than PINNED
+      if (selectedFilter !== "PINNED") {
+        renderNonPinnedCards();
+      }
+
+      const allCards = document.querySelectorAll(".project-card");
+
+      // Update button styling
+      filterButtons.forEach((b) => {
+        b.className = "project-filter-btn px-2.5 sm:px-3 py-1 sm:py-1.5 border-2 border-black transition-all cursor-pointer bg-[#fffdf9] hover:bg-[#f6eedb]";
+      });
+      btn.className = "project-filter-btn px-2.5 sm:px-3 py-1 sm:py-1.5 border-2 border-black transition-all cursor-pointer bg-[#fde047] shadow-brutal-xs font-black -translate-y-0.5";
+
+      // Filter project cards
+      const matchingCards = [];
+      allCards.forEach((card) => {
+        const filterCat = card.getAttribute("data-filter-category");
+        const fullCat = card.getAttribute("data-category") || "";
+        const isPinned = card.getAttribute("data-pinned") === "true";
+
+        let matches = false;
+        if (selectedFilter === "PINNED") {
+          matches = isPinned;
+        } else if (selectedFilter === "ALL") {
+          matches = true;
+        } else {
+          matches = filterCat === selectedFilter || fullCat.includes(selectedFilter);
+        }
+
+        if (matches) {
+          matchingCards.push(card);
+        } else {
+          card.classList.add("hidden");
+        }
+      });
+
+      // If category isn't PINNED, sort matching cards by popularity descending
+      if (selectedFilter !== "PINNED") {
+        matchingCards.sort((a, b) => {
+          const popA = parseInt(a.getAttribute("data-popularity") || "0", 10);
+          const popB = parseInt(b.getAttribute("data-popularity") || "0", 10);
+          return popB - popA;
+        });
+      }
+
+      // Show top 4, hide the rest
+      matchingCards.forEach((card, index) => {
+        if (index < 4) {
+          card.classList.remove("hidden");
+        } else {
+          card.classList.add("hidden");
+        }
+      });
+    });
+  });
+
+  /* -------------------------------------------------------------------------- */
+  /* 3.5 Live IST Clock                                                         */
+  /* -------------------------------------------------------------------------- */
+  const clockEl = document.getElementById("hero-clock");
+  if (clockEl) {
+    function updateClock() {
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString("en-US", {
+        timeZone: "Asia/Kolkata",
+        hour: "2-digit",
+        minute: "2-digit",
+        // second: "2-digit",
+        hour12: false
+      });
+      clockEl.textContent = `${timeStr} IST`;
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /* 4. Lo-Fi Cassette Player                                                   */
+  /* -------------------------------------------------------------------------- */
+  const TRACKS = [
+    { title: "Miku", artist: "Anamanaguchi", url: "https://files.catbox.moe/4fmz63.webm" },
+    { title: "Pigstep", artist: "Lena Raine", url: "https://files.catbox.moe/7opziz.webm" },
+    { title: "Bad Apple!!", artist: "Masayoshi Minoshima ft. Nomico", url: "https://files.catbox.moe/ehjjw2.webm" },
+    { title: "MEGALOVANIA", artist: "Toby Fox", url: "https://files.catbox.moe/k9ginr.webm" },
+    { title: "Caramelldansen", artist: "Caramell", url: "https://files.catbox.moe/eadyic.webm" },
+    { title: "Running in the 90's", artist: "Maurizio De Jorio", url: "https://files.catbox.moe/j7gf0i.webm" },
+  ];
+
+  const audio = document.getElementById("cassette-audio");
+  const minimizedBtn = document.getElementById("cassette-minimized-btn");
+  const expandedDeck = document.getElementById("cassette-expanded-deck");
+  const minimizeBtn = document.getElementById("cassette-minimize-btn");
+  const playBtn = document.getElementById("cassette-play-btn");
+  const prevBtn = document.getElementById("cassette-prev-btn");
+  const nextBtn = document.getElementById("cassette-next-btn");
+  const playIcon = document.getElementById("cassette-play-icon");
+  const pauseIcon = document.getElementById("cassette-pause-icon");
+  const playText = document.getElementById("cassette-play-text");
+  const trackDisplays = document.querySelectorAll(".cassette-track-display");
+  const trackDisplay = document.getElementById("cassette-track-display");
+  const trackTicker = document.getElementById("cassette-track-ticker");
+  const trackCounter = document.getElementById("cassette-track-counter");
+  const volumeSlider = document.getElementById("cassette-volume-slider");
+  const volumeText = document.getElementById("cassette-volume-text");
+  const leftSpool = document.getElementById("cassette-left-spool");
+  const rightSpool = document.getElementById("cassette-right-spool");
+  const minimizedLabel = document.getElementById("cassette-minimized-label");
+
+  function setTrackDisplayText(text) {
+    if (trackDisplays.length > 0) {
+      trackDisplays.forEach((el) => {
+        el.textContent = text;
+      });
+    } else if (trackDisplay) {
+      trackDisplay.textContent = text;
+    }
+  }
+
+  function restartTickerAnimation() {
+    if (trackTicker) {
+      trackTicker.style.animation = "none";
+      void trackTicker.offsetWidth;
+      trackTicker.style.animation = "";
+    }
+  }
+
+  if (audio && minimizedBtn && expandedDeck) {
+    let isPlaying = false;
+    let currentTrackIndex = 0;
+    let volume = 1.0;
+    let isMinimized = window.innerWidth < 768;
+    let isSwitchingTrack = false;
+
+    function pad(n) {
+      return String(n).padStart(2, "0");
+    }
+
+    function setMinimizedState(minimized) {
+      isMinimized = minimized;
+      if (minimized) {
+        minimizedBtn.classList.remove("hidden");
+        expandedDeck.classList.add("hidden");
+      } else {
+        minimizedBtn.classList.add("hidden");
+        expandedDeck.classList.remove("hidden");
+      }
+    }
+
+    function updatePlayingState(playing) {
+      isPlaying = playing;
+      const track = TRACKS[currentTrackIndex];
+
+      if (playing) {
+        playIcon?.classList.add("hidden");
+        pauseIcon?.classList.remove("hidden");
+        if (playText) playText.textContent = "PAUSE";
+        playBtn?.classList.remove("bg-[#fde047]", "hover:bg-[#fb923c]");
+        playBtn?.classList.add("bg-[#86efac]", "hover:bg-[#6ee7b7]");
+        leftSpool?.classList.add("animate-spinSlow");
+        rightSpool?.classList.add("animate-spinSlow");
+        document.querySelectorAll(".cassette-disc-icon svg").forEach((svg) => {
+          svg.classList.add("animate-spin");
+        });
+        if (minimizedLabel) minimizedLabel.textContent = "PLAYING...";
+        if (track) {
+          setTrackDisplayText(`▶ ${track.title} - ${track.artist}`);
+        }
+      } else {
+        playIcon?.classList.remove("hidden");
+        pauseIcon?.classList.add("hidden");
+        if (playText) playText.textContent = "PLAY";
+        playBtn?.classList.remove("bg-[#86efac]", "hover:bg-[#6ee7b7]");
+        playBtn?.classList.add("bg-[#fde047]", "hover:bg-[#fb923c]");
+        leftSpool?.classList.remove("animate-spinSlow");
+        rightSpool?.classList.remove("animate-spinSlow");
+        document.querySelectorAll(".cassette-disc-icon svg").forEach((svg) => {
+          svg.classList.remove("animate-spin");
+        });
+        if (minimizedLabel) minimizedLabel.textContent = "TAPE DECK";
+        if (track) {
+          setTrackDisplayText(`■ ${track.title} - ${track.artist}`);
+        }
+      }
+    }
+
+    function loadTrack(index, autoplay = false) {
+      currentTrackIndex = (index + TRACKS.length) % TRACKS.length;
+      const track = TRACKS[currentTrackIndex];
+      if (!track) return;
+
+      isSwitchingTrack = true;
+      audio.pause();
+      audio.src = track.url;
+      audio.load();
+
+      if (trackCounter) {
+        trackCounter.textContent = `${pad(currentTrackIndex + 1)}/${pad(TRACKS.length)}`;
+      }
+
+      if (autoplay) {
+        updatePlayingState(true);
+        restartTickerAnimation();
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              isSwitchingTrack = false;
+            })
+            .catch((err) => {
+              console.warn("Audio play blocked or interrupted:", err);
+              isSwitchingTrack = false;
+              if (audio.paused) {
+                updatePlayingState(false);
+              }
+            });
+        } else {
+          isSwitchingTrack = false;
+        }
+      } else {
+        updatePlayingState(false);
+        restartTickerAnimation();
+        isSwitchingTrack = false;
+      }
+    }
+
+    function applyVolume(vol) {
+      volume = vol;
+      // Acoustic logarithmic volume curve
+      audio.volume = Math.min(1, Math.max(0, vol * vol));
+      if (volumeText) {
+        volumeText.textContent = `${Math.round(vol * 100)}%`;
+      }
+      if (volumeSlider && volumeSlider.value !== String(vol)) {
+        volumeSlider.value = String(vol);
+      }
+    }
+
+    // Toggle Play/Pause
+    function togglePlay() {
+      if (!audio.src || !audio.src.includes(TRACKS[currentTrackIndex].url)) {
+        loadTrack(currentTrackIndex, true);
+        return;
+      }
+      if (audio.paused) {
+        updatePlayingState(true);
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+          playPromise.catch((err) => {
+            console.warn("Audio play blocked:", err);
+            updatePlayingState(false);
+          });
+        }
+      } else {
+        audio.pause();
+      }
+    }
+
+    function nextTrack() {
+      // Autoplay next track if playing, stay paused if paused
+      const wasPlaying = isPlaying && !audio.paused;
+      loadTrack(currentTrackIndex + 1, wasPlaying);
+    }
+
+    function prevTrack() {
+      const wasPlaying = isPlaying && !audio.paused;
+      if (audio.currentTime > 3) {
+        audio.currentTime = 0;
+        if (wasPlaying) {
+          audio.play().catch((err) => console.warn("Audio play blocked:", err));
+        }
+      } else {
+        loadTrack(currentTrackIndex - 1, wasPlaying);
+      }
+    }
+
+    // Event listeners
+    minimizedBtn.addEventListener("click", () => setMinimizedState(false));
+    minimizeBtn?.addEventListener("click", () => setMinimizedState(true));
+    playBtn?.addEventListener("click", togglePlay);
+    nextBtn?.addEventListener("click", nextTrack);
+    prevBtn?.addEventListener("click", prevTrack);
+
+    audio.addEventListener("play", () => {
+      updatePlayingState(true);
+    });
+    audio.addEventListener("playing", () => {
+      updatePlayingState(true);
+    });
+    audio.addEventListener("pause", () => {
+      // Ignore synthetic pause events fired when switching src or on naturally ended
+      if (isSwitchingTrack || audio.ended) return;
+      updatePlayingState(false);
+    });
+    audio.addEventListener("ended", () => {
+      // Seamlessly advance to next song and autoplay unless user paused
+      loadTrack(currentTrackIndex + 1, true);
+    });
+    audio.addEventListener("error", () => {
+      if (isSwitchingTrack) return;
+      console.warn("Cassette audio playback error:", audio.error);
+      const track = TRACKS[currentTrackIndex];
+      setTrackDisplayText(`⚠ Error loading ${track?.title || "track"}`);
+      updatePlayingState(false);
+    });
+
+    volumeSlider?.addEventListener("input", (e) => {
+      applyVolume(parseFloat(e.target.value));
+    });
+
+    // Initialize state
+    applyVolume(volume);
+    loadTrack(0, false);
+    setMinimizedState(isMinimized);
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /* 5. WebGL Metaballs Raymarching Shader                                      */
+  /* -------------------------------------------------------------------------- */
+  const canvas = document.getElementById("metaballs-canvas");
+  if (canvas) {
+    const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+    if (gl) {
+      const vsSource = `
+        attribute vec2 position;
+        void main() {
+          gl_Position = vec4(position, 0.0, 1.0);
+        }
+      `;
+
+      const fsSource = `
+        precision highp float;
+        uniform vec2 iResolution;
+        uniform float iTime;
+
+        float opSmoothUnion(float d1, float d2, float k) {
+          float h = clamp(0.5 + 0.5 * (d2 - d1) / k, 0.0, 1.0);
+          return mix(d2, d1, h) - k * h * (1.0 - h);
+        }
+
+        float sdSphere(vec3 p, float s) {
+          return length(p) - s;
+        }
+
+        float map(vec3 p) {
+          float d = 2.0;
+          for (int i = 0; i < 16; i++) {
+            float fi = float(i);
+            float time = iTime * (fract(fi * 412.531 + 0.513) - 0.5) * 2.0;
+            d = opSmoothUnion(
+              sdSphere(p + sin(time + fi * vec3(52.5126, 64.62744, 632.25)) * vec3(2.0, 2.0, 0.8), mix(0.5, 1.0, fract(fi * 412.531 + 0.5124))),
+              d,
+              0.4
+            );
+          }
+          return d;
+        }
+
+        vec3 calcNormal(in vec3 p) {
+          const float h = 1e-5;
+          const vec2 k = vec2(1.0, -1.0);
+          return normalize(k.xyy * map(p + k.xyy * h) +
+                           k.yyx * map(p + k.yyx * h) +
+                           k.yxy * map(p + k.yxy * h) +
+                           k.xxx * map(p + k.xxx * h));
+        }
+
+        void main() {
+          vec2 uv = gl_FragCoord.xy / iResolution.xy;
+          vec3 rayOri = vec3((uv - 0.5) * vec2(iResolution.x / iResolution.y, 1.0) * 6.0, 3.0);
+          vec3 rayDir = vec3(0.0, 0.0, -1.0);
+
+          float depth = 0.0;
+          vec3 p = rayOri;
+
+          for (int i = 0; i < 64; i++) {
+            p = rayOri + rayDir * depth;
+            float dist = map(p);
+            depth += dist;
+            if (dist < 1e-6) break;
+          }
+
+          vec3 col = vec3(0.0);
+
+          if (depth < 6.0) {
+            vec3 normal = calcNormal(p);
+            float diffuse = clamp(dot(normal, vec3(0.5, 0.5, 1.0)), 0.0, 1.0);
+            col = diffuse * (cos(vec3(1.0, 2.0, 3.0) + p.z * 0.5) * 0.5 + 0.5);
+            col = mix(col, vec3(0.0), 1.0 - exp(-0.001 * depth * depth * depth));
+          }
+
+          gl_FragColor = vec4(col, 1.0);
+        }
+      `;
+
+      function createShader(glCtx, type, source) {
+        const shader = glCtx.createShader(type);
+        glCtx.shaderSource(shader, source);
+        glCtx.compileShader(shader);
+        if (!glCtx.getShaderParameter(shader, glCtx.COMPILE_STATUS)) {
+          console.warn("Shader compile error:", glCtx.getShaderInfoLog(shader));
+          glCtx.deleteShader(shader);
+          return null;
+        }
+        return shader;
+      }
+
+      const vertexShader = createShader(gl, gl.VERTEX_SHADER, vsSource);
+      const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
+
+      if (vertexShader && fragmentShader) {
+        const program = gl.createProgram();
+        gl.attachShader(program, vertexShader);
+        gl.attachShader(program, fragmentShader);
+        gl.linkProgram(program);
+
+        if (gl.getProgramParameter(program, gl.LINK_STATUS)) {
+          gl.useProgram(program);
+
+          const positionLocation = gl.getAttribLocation(program, "position");
+          const resolutionLocation = gl.getUniformLocation(program, "iResolution");
+          const timeLocation = gl.getUniformLocation(program, "iTime");
+
+          const positionBuffer = gl.createBuffer();
+          gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+          gl.bufferData(
+            gl.ARRAY_BUFFER,
+            new Float32Array([
+              -1.0, -1.0,
+               1.0, -1.0,
+              -1.0,  1.0,
+              -1.0,  1.0,
+               1.0, -1.0,
+               1.0,  1.0,
+            ]),
+            gl.STATIC_DRAW
+          );
+
+          gl.enableVertexAttribArray(positionLocation);
+          gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+
+          let isVisible = false;
+          let startTime = performance.now();
+          let animationFrameId = null;
+
+          function resizeCanvas() {
+            const rect = canvas.getBoundingClientRect();
+            const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+            const displayWidth = Math.max(1, Math.floor(rect.width * dpr));
+            const displayHeight = Math.max(1, Math.floor(rect.height * dpr));
+
+            if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
+              canvas.width = displayWidth;
+              canvas.height = displayHeight;
+              gl.viewport(0, 0, displayWidth, displayHeight);
+            }
+          }
+
+          function render(now) {
+            if (!isVisible) return;
+
+            resizeCanvas();
+
+            gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+            gl.uniform1f(timeLocation, (now - startTime) * 0.001);
+
+            gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+            animationFrameId = requestAnimationFrame(render);
+          }
+
+          if ("IntersectionObserver" in window) {
+            const observer = new IntersectionObserver((entries) => {
+              entries.forEach((entry) => {
+                isVisible = entry.isIntersecting;
+                if (isVisible) {
+                  if (!animationFrameId) {
+                    animationFrameId = requestAnimationFrame(render);
+                  }
+                } else if (animationFrameId) {
+                  cancelAnimationFrame(animationFrameId);
+                  animationFrameId = null;
+                }
+              });
+            }, { threshold: 0.05 });
+
+            observer.observe(canvas);
+          } else {
+            isVisible = true;
+            requestAnimationFrame(render);
+          }
+        }
+      }
+    }
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /* 8. Code Block Copy Buttons (Shiki Code Fences)                             */
+  /* -------------------------------------------------------------------------- */
+  document.querySelectorAll(".code-copy-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const rawCode = decodeURIComponent(btn.getAttribute("data-code") || "");
+      navigator.clipboard
+        .writeText(rawCode)
+        .then(() => {
+          const copyText = btn.querySelector(".copy-text");
+          if (copyText) {
+            const original = copyText.textContent;
+            copyText.textContent = "COPIED!";
+            btn.classList.add("text-[#86efac]", "border-[#86efac]", "bg-[#1f2937]");
+            setTimeout(() => {
+              copyText.textContent = original;
+              btn.classList.remove("text-[#86efac]", "border-[#86efac]", "bg-[#1f2937]");
+            }, 2000);
+          }
+        })
+        .catch((err) => console.warn("Failed to copy code block:", err));
+    });
+  });
+
+  /* -------------------------------------------------------------------------- */
+  /* 9. Article Reading Progress Bar                                            */
+  /* -------------------------------------------------------------------------- */
+  const progressBar = document.getElementById("reading-progress");
+  if (progressBar) {
+    const updateProgress = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? Math.min(100, Math.max(0, (scrollTop / docHeight) * 100)) : 0;
+      progressBar.style.width = `${progress}%`;
+    };
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    updateProgress();
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /* 10. Table of Contents Scroll-Spy                                           */
+  /* -------------------------------------------------------------------------- */
+  const tocLinks = document.querySelectorAll(".toc-nav-link");
+  if (tocLinks.length > 0) {
+    const headingIds = Array.from(tocLinks).map((link) => link.getAttribute("data-target"));
+    const headings = headingIds.map((id) => document.getElementById(id)).filter(Boolean);
+
+    if ("IntersectionObserver" in window && headings.length > 0) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const id = entry.target.getAttribute("id");
+              tocLinks.forEach((link) => {
+                if (link.getAttribute("data-target") === id) {
+                  link.classList.add("active");
+                } else {
+                  link.classList.remove("active");
+                }
+              });
+            }
+          });
+        },
+        { rootMargin: "0px 0px -70% 0px", threshold: 0 }
+      );
+
+      headings.forEach((heading) => observer.observe(heading));
+    }
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /* 11. Blog Search & Filtering handled exclusively by pagefind-search.js     */
+  /* -------------------------------------------------------------------------- */
+
+  /* -------------------------------------------------------------------------- */
+  /* 12. Dark / Light Theme Controller (Strictly Scoped to Post Pages)         */
+  /* -------------------------------------------------------------------------- */
+  function initThemeController() {
+    const path = window.location.pathname;
+    const isPostPage = path.indexOf("/blog/") === 0 && path !== "/blog/" && path !== "/blog/index.html";
+
+    // Strict scope isolation: Never activate or toggle theme on non-post pages (home, blog listing, etc.)
+    if (!isPostPage) {
+      document.documentElement.setAttribute("data-theme", "light");
+      document.documentElement.classList.remove("dark");
+      const metaTheme = document.querySelector('meta[name="theme-color"]');
+      if (metaTheme) metaTheme.setAttribute("content", "#f6eedb");
+      return;
+    }
+
+    const themeToggleBtns = document.querySelectorAll("#theme-toggle-btn");
+
+    function getActiveTheme() {
+      return document.documentElement.getAttribute("data-theme") || "light";
+    }
+
+    function updateThemeColorMeta(theme) {
+      const meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) {
+        meta.setAttribute("content", theme === "dark" ? "#0d1117" : "#f6eedb");
+      }
+    }
+
+    function updateToggleIcons(theme) {
+      themeToggleBtns.forEach((btn) => {
+        const lightIcon = btn.querySelector(".theme-icon-light");
+        const darkIcon = btn.querySelector(".theme-icon-dark");
+        if (theme === "dark") {
+          lightIcon?.classList.remove("hidden");
+          lightIcon?.classList.add("flex");
+          darkIcon?.classList.add("hidden");
+          darkIcon?.classList.remove("flex");
+        } else {
+          lightIcon?.classList.add("hidden");
+          lightIcon?.classList.remove("flex");
+          darkIcon?.classList.remove("hidden");
+          darkIcon?.classList.add("flex");
+        }
+      });
+    }
+
+    function setTheme(theme, isManual = true) {
+      document.documentElement.setAttribute("data-theme", theme);
+      if (theme === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+
+      if (isManual) {
+        try {
+          localStorage.setItem("theme", theme);
+        } catch (e) {}
+      }
+
+      updateToggleIcons(theme);
+      updateThemeColorMeta(theme);
+
+      // Dispatch event for components that need re-rendering (Mermaid diagrams)
+      window.dispatchEvent(new CustomEvent("theme-change", { detail: { theme } }));
+    }
+
+    // Initialize UI icons on load based on active theme
+    const currentTheme = getActiveTheme();
+    updateToggleIcons(currentTheme);
+    updateThemeColorMeta(currentTheme);
+
+    themeToggleBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const current = getActiveTheme();
+        const next = current === "dark" ? "light" : "dark";
+        setTheme(next, true);
+      });
+    });
+
+    // Auto-switch based on system theme if user has not set a manual preference
+    if (window.matchMedia) {
+      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+      mediaQuery.addEventListener("change", (e) => {
+        try {
+          if (!localStorage.getItem("theme")) {
+            setTheme(e.matches ? "dark" : "light", false);
+          }
+        } catch (err) {}
+      });
+    }
+  }
+
+  initThemeController();
+});

@@ -1,0 +1,39 @@
+# Bittu (Bittu5134)
+> Software engineer at IIT Kanpur specialising in low-level systems programming, WebRTC networking, protocol reverse-engineering, and AI tooling. This file is the canonical agent-readable index of all public work and technical writing at bittu.dev.
+
+Canonical site: https://bittu.dev
+Generated: 2026-09-29
+
+## Identity & Expertise
+- Full name: Bittu (handle: Bittu5134)
+- Education: B.Tech Cybersecurity & Computing, IIT Kanpur (expected 2030)
+- Core skills: Go, Python, C/C++, TypeScript — Linux sockets, POSIX daemons, WebRTC/STUN/TURN, Redis, FastAPI/Gin, Cloudflare Workers, PyMuPDF, PyTorch, RAG pipelines
+- Contact: hello@bittu.dev
+- GitHub: https://github.com/Bittu5134
+- LinkedIn: https://www.linkedin.com/in/bittu5134
+- X / Twitter: https://x.com/Bittu5134
+
+## Open-Source Projects
+- [ORV-Reader](https://orv.pages.dev): A web-publishing platform that compiles Markdown into fast static pages and EPUBs. Built to be clean and lightweight way to read stuff on slow connections. Source: https://github.com/Bittu5134/ORV-Reader
+- [PeerBasket](https://peerbasket.bittu.dev): A hassle-free, lobby-based PeerJS discovery server written in Go  that handles peer discovery for real-time p2p interactions and multiplayer sessions. Source: https://github.com/Bittu5134/PeerBasket
+- [GH-Follow-Tracker](https://follow.lazybittu.workers.dev/): A little service on Cloudflare Workers that tracks GitHub followers and generates live SVG badges, with Discord/Slack alerts when things change. Source: https://github.com/Bittu5134/GH-Follow-Tracker
+- [LOTM-Reader](https://beyonder.pages.dev): A community driven webnovel reader built with Svelte, with offline caching and a tons of optimizations.  Built to be faster and cleaner than what was out there. Source: https://github.com/Bittu5134/LOTM-Reader
+- [NetShip](https://github.com/Bittu5134/NetShip): A host telemetry agent in Go that watches socket activity and maps out process trees. Built it to understand how endpoint detection tools actually work under the hood.
+- [Sharelock](https://github.com/Bittu5134/Sharelock): A retrieval system that lets you just ask questions about IIT Kanpur's academic policy manual instead of reading the whole thing. Built as a RAG pipeline with an MCP server.
+- [InfraPulse](https://infrapulse.bittu.dev): A defect-detection tool that flags and prioritizes infrastructure issues from photos using a small vision-model ensemble. Built for a campus hackathon. Source: https://github.com/Bittu5134/InfraPulse
+- [IITK-Resume-Engine](https://github.com/Bittu5134/IITK-Resume-Engine): 
+
+## Technical Writing
+- [Engineering Handbook: Full Pipeline Showcase](https://bittu.dev/blogs/engineering-handbook-and-syntax-showcase.md): The definitive reference and stress test for the unified remark+rehype pipeline: Shiki highlighting, Mermaid graphs, KaTeX math, GitHub callouts, GFM tables, task lists, footnotes, figure captions, code titles, and external links. [Engineering, Architecture, WebRTC, Go, Mermaid, Showcase] — 6 min read. Rendered HTML: https://bittu.dev/blog/engineering-handbook-and-syntax-showcase
+- [Scaling WebRTC Signaling in Go: Lessons from 500 Concurrent Peers](https://bittu.dev/blogs/scaling-webrtc-signaling-in-go.md): A deep dive into building PeerBasket low-latency signaling server in Go. How we achieved 41ms average latency and 0% packet loss across 500 concurrent peers with Redis TTL heartbeat pruning and IP token buckets. [Go, WebRTC, Redis, Networking] — 3 min read. Rendered HTML: https://bittu.dev/blog/scaling-webrtc-signaling-in-go
+- [Reverse Engineering the Modern Minecraft Network Protocol](https://bittu.dev/blogs/reverse-engineering-minecraft-protocol.md): Unpacking the binary wire format of Minecraft Java Edition. From variable-length integers (VarInt) and zlib packet compression to handshake state machines and live packet sniffing. [Minecraft, Reverse Engineering, Protocols, C++] — 3 min read. Rendered HTML: https://bittu.dev/blog/reverse-engineering-minecraft-protocol
+- [Coordinate Geometry in PyMuPDF: Extracting Unruly Academic LaTeX PDFs](https://bittu.dev/blogs/spatial-geometry-parsing-in-pymupdf.md): Why standard PDF parsers struggle with academic transcripts and resumes, and how we solved it for CDW IIT Kanpur using 2D spatial coordinate clustering and step-gradient scoring. [Python, PyMuPDF, Algorithms, AI] — 3 min read. Rendered HTML: https://bittu.dev/blog/spatial-geometry-parsing-in-pymupdf
+
+## Full Single-File Context
+- [llms-full.txt](https://bittu.dev/llms-full.txt): Complete plain-text payload — full project descriptions, all blog post content verbatim, and author profile. Optimised for single-shot context injection into coding assistants and RAG pipelines.
+
+## Additional Links
+- [Blog Archive](https://bittu.dev/blog): Chronological index of all technical articles with tags and reading times.
+- [RSS Feed](https://bittu.dev/rss.xml): Machine-readable RSS 2.0 feed for new article syndication.
+- [Planet Minecraft](https://www.planetminecraft.com/member/bittu5134/): Published Minecraft technical datapacks and game modifications (2.3M+ downloads).
+- [Patreon](https://www.patreon.com/lazybittu): Support channel for independent open-source tools and systems research.

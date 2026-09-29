@@ -1,0 +1,552 @@
+---
+layout: layouts/base.njk
+ogType: article
+isBlogPage: true
+---
+<!--
+THESIS: A unified neo-brutalist dispatch sheet that shares the homepage's tactile retro-terminal world while offering a solid, distraction-free reading canvas.
+OWN-WORLD: Paper ground (#f6eedb, retro-dots-bg), crisp 2px black borders, solid #fffdf9 card body, signature yellow (#fde047), mint (#86efac), lavender (#c4b5fd), Space Grotesk & Space Mono typography.
+STORY: The reader arrives at an authentic engineering publication dispatch, absorbs complex architecture with clear wayfinding and tactile interactions, and navigates deeper into the blog.
+FIRST VIEWPORT: Reading progress strip along top edge, canonical site header, breadcrumb path, article card with tag pills, bold dispatch title, brief callout, and date/read-time metadata.
+FORM: Neo-Brutalist Technical Blog Dispatch.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+-->
+
+{% import "macros/icons.njk" as icons %}
+{% set tocList = content | toc %}
+
+<!-- Top Reading Progress Indicator (Neo-Brutalist Yellow / Black) -->
+<div
+  id="reading-progress"
+  class="fixed top-0 left-0 h-[3px] bg-[#fde047] z-50 border-b border-black transition-all duration-75"
+  style="width: 0%"
+  aria-hidden="true"
+></div>
+
+<div class="min-h-screen bg-[#f6eedb] retro-dots-bg text-[#14161f] font-sans selection:bg-[#fde047] selection:text-black flex flex-col justify-between">
+  <!-- Consistent Site Header -->
+  {% include "components/retro-header.njk" %}
+
+  <!-- Main Content Area -->
+  <main class="max-w-4xl mx-auto px-3 sm:px-6 py-5 sm:py-8 w-full flex-1">
+    <!-- Breadcrumb Navigation Bar -->
+    <nav aria-label="Breadcrumb" class="mb-4 flex items-center justify-between gap-2 text-xs sm:text-sm font-mono">
+      <div class="flex items-center gap-1.5 sm:gap-2 truncate text-black">
+        <a href="/" class="hover:underline font-bold text-black shrink-0">~</a>
+        <span class="text-black font-bold">/</span>
+        <a href="/blog" class="hover:underline font-bold text-black shrink-0">blogs</a>
+        <span class="text-black font-bold">/</span>
+        <span class="text-black font-bold truncate">{{ slug or (title | truncate(32)) }}</span>
+      </div>
+
+      <a
+        href="/rss.xml"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#fb923c] border-2 border-black text-xs font-bold text-black hover:bg-[#f97316] transition-colors"
+        title="Subscribe via RSS"
+      >
+        {{ icons.rss("w-3.5 h-3.5 text-black") }}
+        <span>RSS</span>
+      </a>
+    </nav>
+
+    <!-- The Article Card: Flat, Warm Parchment Sheet -->
+    <article
+      id="article-top"
+      class="p-5 sm:p-8 md:p-12 bg-[#faf3e0] border-2 border-black"
+      data-pagefind-body
+    >
+      <!-- Article Header -->
+      <header class="mb-8 pb-6 border-b-2 border-black">
+        <!-- Tags Row -->
+        {% if tags %}
+          <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-3.5">
+            {% for tag in tags %}
+              {% if tag != "posts" %}
+                <a
+                  href="/blog/?tag={{ tag | urlencode }}"
+                  class="px-2.5 py-0.5 bg-[#f6eedb] border border-black font-mono text-[11px] sm:text-xs font-bold text-black hover:bg-[#fde047] transition-colors"
+                >
+                  #{{ tag | upper }}
+                </a>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <!-- Title -->
+        <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-mono font-black text-black tracking-tight leading-[1.15] mb-4">
+          {{ title }}
+        </h1>
+
+        <!-- Summary Callout -->
+        {% if summary %}
+          <div
+            class="p-3.5 sm:p-4 bg-[#fef3c7] border-2 border-black border-l-6 border-l-black font-mono text-xs sm:text-sm text-black mb-5 leading-relaxed font-medium"
+            data-pagefind-meta="summary"
+          >
+            {{ summary }}
+          </div>
+        {% endif %}
+
+        <!-- Metadata Row: Date, Read Time, Share Button -->
+        <div class="flex items-center justify-between flex-wrap gap-3 pt-2 font-mono text-xs sm:text-sm">
+          <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
+            <span class="px-2.5 py-1 bg-[#86efac] border-2 border-black font-bold text-black shrink-0">
+              <time datetime="{{ date | dateIso }}">{{ (displayDate or date) | dateDisplay | upper }}</time>
+            </span>
+            <span class="font-bold text-black shrink-0">
+              // {{ (content | readingTime) | upper }}
+            </span>
+            <span class="hidden sm:inline font-bold text-black shrink-0">
+              // BY <a href="/" class="hover:underline text-black">BITTU</a>
+            </span>
+          </div>
+
+          <!-- Share Button & Popover (Flat, Never opens navigator on PC) -->
+          <div class="relative shrink-0">
+            <button
+              id="share-article-btn"
+              class="bg-[#faf3e0] hover:bg-[#fde047] border-2 border-black px-3 py-1 text-xs font-bold text-black flex items-center gap-1.5 cursor-pointer select-none transition-colors"
+              data-title="{{ title }}"
+              data-url="https://bittu.dev{{ page.url }}"
+              aria-haspopup="true"
+              aria-expanded="false"
+              title="Share article"
+            >
+              {{ icons.share2("w-3.5 h-3.5 text-black") }}
+              <span>SHARE</span>
+            </button>
+
+            <!-- Share Popover Dropdown (Flat, High Contrast) -->
+            <div
+              id="share-popover"
+              class="hidden absolute right-0 top-full mt-2 w-52 bg-[#faf3e0] border-2 border-black p-2 z-50 text-xs font-mono flex-col gap-1"
+              role="menu"
+              aria-label="Share options"
+            >
+              <a
+                href="https://twitter.com/intent/tweet?text={{ title | urlencode }}&url={{ ('https://bittu.dev' + page.url) | urlencode }}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex items-center gap-2 p-2 hover:bg-[#fde047] text-black font-bold transition-colors"
+                role="menuitem"
+              >
+                {{ icons.twitter("w-3.5 h-3.5 text-black") }}
+                <span>Share on X</span>
+              </a>
+
+              <a
+                href="https://www.linkedin.com/sharing/share-offsite/?url={{ ('https://bittu.dev' + page.url) | urlencode }}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex items-center gap-2 p-2 hover:bg-[#38bdf8] text-black font-bold transition-colors"
+                role="menuitem"
+              >
+                {{ icons.linkedin("w-3.5 h-3.5 text-black") }}
+                <span>Share on LinkedIn</span>
+              </a>
+
+              <a
+                href="https://reddit.com/submit?url={{ ('https://bittu.dev' + page.url) | urlencode }}&title={{ title | urlencode }}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex items-center gap-2 p-2 hover:bg-[#fed7aa] text-black font-bold transition-colors"
+                role="menuitem"
+              >
+                {{ icons.reddit("w-3.5 h-3.5 text-black") }}
+                <span>Share on Reddit</span>
+              </a>
+
+              <div class="border-t border-black/20 my-1"></div>
+
+              <button
+                id="popover-copy-link-btn"
+                class="w-full text-left flex items-center justify-between p-2 hover:bg-[#86efac] text-black font-bold transition-colors cursor-pointer"
+                role="menuitem"
+              >
+                <span class="flex items-center gap-2">
+                  {{ icons.copy("w-3.5 h-3.5 text-black") }}
+                  <span id="popover-copy-text">Copy link</span>
+                </span>
+                <span class="text-[10px] bg-black text-white px-1.5 py-0.5 font-mono">URL</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Optional Cover Image (Flat, High-Contrast Frame) -->
+      {% if coverImage %}
+        <div class="mb-8 border-2 border-black bg-[#faf3e0] overflow-hidden">
+          <img
+            src="{{ coverImage }}"
+            alt="{{ coverAlt if coverAlt else title }}"
+            class="w-full h-auto max-h-[460px] object-cover"
+            loading="lazy"
+            decoding="async"
+            data-pagefind-meta="image[src]"
+          />
+        </div>
+      {% endif %}
+
+      <!-- Table of Contents (Flat, Warm Panel) -->
+      {% if tocList and tocList.length > 2 %}
+        <details class="mb-8 bg-[#f4ebd0] border-2 border-black p-4 sm:p-5 group">
+          <summary class="font-mono text-xs sm:text-sm font-black uppercase text-black cursor-pointer flex items-center justify-between select-none">
+            <span class="flex items-center gap-2">
+              {{ icons.bookOpen("w-4 h-4 text-black") }}
+              <span>TABLE OF CONTENTS ({{ tocList.length }} SECTIONS)</span>
+            </span>
+            <span class="font-mono text-xs font-bold transition-transform group-open:rotate-180">▼</span>
+          </summary>
+          <nav class="mt-3.5 pt-3 border-t-2 border-black space-y-1 text-xs sm:text-sm font-mono">
+            {% for item in tocList %}
+              <a
+                href="#{{ item.id }}"
+                class="block py-1 text-black hover:text-black hover:bg-[#fde047] transition-colors {{ 'pl-4 text-black/85 font-medium' if item.level == 3 else 'font-bold text-black' }}"
+              >
+                {{ item.title }}
+              </a>
+            {% endfor %}
+          </nav>
+        </details>
+      {% endif %}
+
+      <!-- Markdown Article Content Body (Pure Ink Black Contrast) -->
+      <div class="prose prose-retro max-w-none text-black">
+        {{ content | safe }}
+      </div>
+
+      <!-- Post Footer: Author Card + Navigation -->
+      <footer class="mt-12 pt-8 border-t-2 border-black space-y-6">
+        <!-- Author Profile Box (Flat, Slim) -->
+        <div class="py-2.5 px-4 sm:py-3 sm:px-5 bg-[#f4ebd0] border-2 border-black flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <a href="/" class="shrink-0" title="Go to Home">
+              <img
+                src="/images/avatar.webp"
+                alt="Bittu avatar"
+                class="w-10 h-10 rounded-sm border-2 border-black object-cover"
+                loading="lazy"
+              />
+            </a>
+            <div>
+              <div class="font-mono text-sm sm:text-base font-bold text-black flex items-center gap-2">
+                <a href="/" class="hover:underline text-black">Bittu (Bittu5134)</a>
+                <span class="px-1.5 py-0 leading-none inline-flex items-center h-4 bg-[#fde047] border border-black text-[9px] sm:text-[10px] font-mono font-bold uppercase">AUTHOR</span>
+              </div>
+              <div class="font-mono text-xs text-black font-medium">
+                Software Engineer &amp; Cybersecurity student at IIT Kanpur.
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 font-mono text-xs font-bold shrink-0">
+            <a
+              href="https://github.com/Bittu5134"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="px-2.5 py-1 bg-[#faf3e0] border-2 border-black hover:bg-[#c4b5fd] transition-colors flex items-center gap-1 text-black"
+            >
+              {{ icons.github("w-3.5 h-3.5") }}
+              <span>GITHUB</span>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/bittu5134"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="px-2.5 py-1 bg-[#faf3e0] border-2 border-black hover:bg-[#38bdf8] transition-colors flex items-center gap-1 text-black"
+            >
+              {{ icons.linkedin("w-3.5 h-3.5") }}
+              <span>LINKEDIN</span>
+            </a>
+            <a
+              href="/rss.xml"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="px-2.5 py-1 bg-[#faf3e0] border-2 border-black hover:bg-[#fb923c] transition-colors flex items-center gap-1 text-black"
+            >
+              {{ icons.rss("w-3.5 h-3.5") }}
+              <span>RSS</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- 1-Line Post Navigation (Flat, High Contrast) -->
+        {% set newerPost = collections.blogs | getPreviousCollectionItem(page) %}
+        {% set olderPost = collections.blogs | getNextCollectionItem(page) %}
+        {% set randomPost = collections.blogs | getRandomOtherPost(page.url, newerPost.url if newerPost else "", olderPost.url if olderPost else "") %}
+        {% if newerPost or olderPost or randomPost %}
+          <div class="p-3.5 sm:p-4 bg-[#faf3e0] border-2 border-black space-y-2.5 font-mono text-xs sm:text-sm">
+            {% if newerPost %}
+              <div class="flex items-baseline justify-between gap-3 group">
+                <div class="flex items-baseline gap-2 min-w-0">
+                  <span class="text-black/70 font-black uppercase text-xs shrink-0">NEXT:</span>
+                  <a
+                    href="{{ newerPost.url }}"
+                    class="font-mono font-bold text-black hover:underline truncate"
+                  >
+                    {{ newerPost.data.title }}
+                  </a>
+                </div>
+                <time datetime="{{ newerPost.date | dateIso }}" class="text-xs text-black/80 font-medium shrink-0">
+                  {{ (newerPost.data.displayDate or newerPost.date) | dateDisplay }}
+                </time>
+              </div>
+            {% endif %}
+
+            {% if olderPost %}
+              <div class="flex items-baseline justify-between gap-3 group">
+                <div class="flex items-baseline gap-2 min-w-0">
+                  <span class="text-black/70 font-black uppercase text-xs shrink-0">PREV:</span>
+                  <a
+                    href="{{ olderPost.url }}"
+                    class="font-mono font-bold text-black hover:underline truncate"
+                  >
+                    {{ olderPost.data.title }}
+                  </a>
+                </div>
+                <time datetime="{{ olderPost.date | dateIso }}" class="text-xs text-black/80 font-medium shrink-0">
+                  {{ (olderPost.data.displayDate or olderPost.date) | dateDisplay }}
+                </time>
+              </div>
+            {% endif %}
+
+            {% if randomPost %}
+              <div class="flex items-baseline justify-between gap-3 group">
+                <div class="flex items-baseline gap-2 min-w-0">
+                  <span class="text-black/70 font-black uppercase text-xs shrink-0">RANDOM:</span>
+                  <a
+                    href="{{ randomPost.url }}"
+                    class="font-mono font-bold text-black hover:underline truncate"
+                  >
+                    {{ randomPost.data.title }}
+                  </a>
+                </div>
+                <time datetime="{{ randomPost.date | dateIso }}" class="text-xs text-black/80 font-medium shrink-0">
+                  {{ (randomPost.data.displayDate or randomPost.date) | dateDisplay }}
+                </time>
+              </div>
+            {% endif %}
+
+            <div class="pt-2 border-t-2 border-black/15 flex items-center justify-between">
+              <a
+                href="/blog"
+                class="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-black hover:underline transition-colors group"
+              >
+                <span>← SEE ALL BLOGS</span>
+              </a>
+              <a
+                href="#article-top"
+                class="text-xs font-mono font-bold text-black hover:underline transition-colors"
+              >
+                ▲ TOP
+              </a>
+            </div>
+          </div>
+        {% endif %}
+      </footer>
+
+      <!-- Giscus Comments Section -->
+      <section class="mt-8" id="comments">
+        <div class="giscus-container min-h-[160px]">
+          <script src="https://giscus.app/client.js"
+            data-repo="Bittu5134/bittu5134.github.io"
+            data-repo-id="MDEwOlJlcG9zaXRvcnkzOTkzNDM2NDE="
+            data-category="Announcements"
+            data-category-id="DIC_kwDOF82AGc4DGpnm"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="top"
+            data-theme="gruvbox_light"
+            data-lang="en"
+            crossorigin="anonymous"
+            async>
+          </script>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <!-- Canonical Site Footer -->
+  {% include "components/retro-footer.njk" %}
+</div>
+
+<!-- Reading Progress Scroll Observer -->
+<script>
+  (function() {
+    const progressBar = document.getElementById("reading-progress");
+    if (!progressBar) return;
+    function updateProgress() {
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight <= 0) {
+        progressBar.style.width = "0%";
+        return;
+      }
+      const progress = Math.min(100, Math.max(0, (window.scrollY / totalHeight) * 100));
+      progressBar.style.width = progress + "%";
+    }
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    updateProgress();
+  })();
+</script>
+
+<!-- Share Widget Logic (Mobile uses Web Share API, Desktop uses Flat Popover) -->
+<script>
+  (function() {
+    const shareBtn = document.getElementById("share-article-btn");
+    const sharePopover = document.getElementById("share-popover");
+    const copyBtn = document.getElementById("popover-copy-link-btn");
+    const copyText = document.getElementById("popover-copy-text");
+    if (!shareBtn) return;
+    const title = shareBtn.getAttribute("data-title") || document.title;
+    const url = shareBtn.getAttribute("data-url") || window.location.href;
+
+    shareBtn.addEventListener("click", async function(e) {
+      e.stopPropagation();
+      const isMobile = window.matchMedia("(max-width: 767px)").matches || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      if (isMobile && navigator.share) {
+        try {
+          await navigator.share({ title, url });
+        } catch (err) {
+          if (err.name !== "AbortError") {
+            togglePopover();
+          }
+        }
+      } else {
+        togglePopover();
+      }
+    });
+
+    function togglePopover() {
+      if (!sharePopover) return;
+      const isHidden = sharePopover.classList.contains("hidden");
+      sharePopover.classList.toggle("hidden", !isHidden);
+      sharePopover.classList.toggle("flex", isHidden);
+      shareBtn.setAttribute("aria-expanded", String(isHidden));
+    }
+
+    if (copyBtn) {
+      copyBtn.addEventListener("click", async function(e) {
+        e.stopPropagation();
+        try {
+          await navigator.clipboard.writeText(url);
+          if (copyText) {
+            copyText.textContent = "COPIED!";
+            setTimeout(() => { copyText.textContent = "Copy link"; }, 2000);
+          }
+        } catch (e) {}
+      });
+    }
+
+    document.addEventListener("click", function(e) {
+      if (sharePopover && !sharePopover.classList.contains("hidden") && !sharePopover.contains(e.target) && e.target !== shareBtn) {
+        sharePopover.classList.add("hidden");
+        sharePopover.classList.remove("flex");
+        shareBtn.setAttribute("aria-expanded", "false");
+      }
+    });
+  })();
+</script>
+
+<!-- Conditionally Load Mermaid.js with Light/Retro Theme -->
+{% if 'class="mermaid' in content %}
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+
+    function getMermaidConfig() {
+      return {
+        startOnLoad: false,
+        securityLevel: "loose",
+        theme: "neutral",
+        themeVariables: {
+          primaryColor: "#fde047",
+          primaryBorderColor: "#000000",
+          primaryTextColor: "#000000",
+          lineColor: "#000000",
+          secondaryColor: "#86efac",
+          tertiaryColor: "#f6eedb",
+          background: "#fffdf9",
+          mainBkg: "#fffdf9",
+          nodeBorder: "#000000",
+          clusterBkg: "#fcf6e8",
+          clusterBorder: "#000000",
+          fontFamily: '"Space Grotesk", sans-serif',
+          fontSize: "13px"
+        }
+      };
+    }
+
+    function decodeEntities(encodedString) {
+      const textarea = document.createElement("textarea");
+      textarea.innerHTML = encodedString;
+      return textarea.value;
+    }
+
+    async function renderDiagrams() {
+      mermaid.initialize(getMermaidConfig());
+
+      const containers = document.querySelectorAll(".mermaid-container");
+      for (let idx = 0; idx < containers.length; idx++) {
+        const container = containers[idx];
+        let code = "";
+        const encoded = container.getAttribute("data-mermaid-code");
+        if (encoded) {
+          try { code = decodeURIComponent(encoded); } catch (e) { code = encoded; }
+        }
+        if (!code) {
+          const pre = container.querySelector("pre.mermaid");
+          code = pre ? pre.textContent.trim() : "";
+        }
+        if (!code) continue;
+        code = decodeEntities(code);
+
+        try {
+          const uniqueId = "mermaid-svg-" + idx + "-" + Math.random().toString(36).substring(2, 8);
+          const { svg } = await mermaid.render(uniqueId, code);
+          container.innerHTML = svg;
+        } catch (err) {
+          console.warn("Mermaid render error for diagram " + idx + ":", err);
+          if (!container.querySelector("pre")) {
+            container.innerHTML = `<pre class="mermaid font-mono text-xs text-red-500 overflow-x-auto">${code.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</pre>`;
+          }
+        }
+      }
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", renderDiagrams);
+    } else {
+      renderDiagrams();
+    }
+  </script>
+{% endif %}
+
+<!-- Conditionally Load & Initialize Littlefoot Footnote Popovers -->
+{% if content and ('data-footnote-ref' in content or 'fnref' in content or 'footnote' in content) %}
+  <script type="module">
+    import littlefoot from "/assets/js/littlefoot.js";
+
+    function initLittlefoot() {
+      littlefoot({
+        activateDelay: 100,
+        dismissDelay: 100,
+        hoverDelay: 250,
+        allowMultiple: false,
+        activateOnHover: false,
+        dismissOnUnhover: false,
+        anchorPattern: /#(user-content-)?fn[:\-_\d]/gi,
+        buttonTemplate: '<button class="littlefoot__button" id="<% reference %>" aria-label="Footnote <% number %>" title="See Footnote <% number %>"><span class="littlefoot__number"><% number %></span></button>'
+      });
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initLittlefoot);
+    } else {
+      initLittlefoot();
+    }
+  </script>
+{% endif %}

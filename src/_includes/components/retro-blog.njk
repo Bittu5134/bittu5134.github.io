@@ -1,0 +1,92 @@
+{% import "macros/icons.njk" as icons %}
+
+<section id="blog" class="py-6 sm:py-8 px-3 sm:px-6 scroll-mt-16 sm:scroll-mt-20">
+  <div class="max-w-5xl mx-auto">
+    <!-- Section Header -->
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:gap-4 mb-6 sm:mb-8">
+      <div>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-mono font-black text-black tracking-tight">
+          ~/blogs
+        </h2>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+        <a
+          href="/blog"
+          class="btn-brutal-yellow px-3.5 sm:px-4 py-1.5 sm:py-2 text-sm"
+        >
+          {{ icons.bookOpen("w-4 h-4") }}
+          <span>ALL ARTICLES ({{ collections.blogs.length }})</span>
+          {{ icons.arrowUpRight("w-3.5 h-3.5") }}
+        </a>
+        <a
+          href="/rss.xml"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-brutal bg-[#fb923c] px-3.5 py-1.5 sm:py-2 text-sm"
+          title="Subscribe to RSS Feed"
+        >
+          {{ icons.rss("w-4 h-4") }}
+          <span>RSS</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Blog Articles Stack -->
+    <div class="space-y-4 sm:space-y-6">
+      {% for post in collections.blogs.slice(0, 2) %}
+        <article class="card-brutal p-4 sm:p-8 group bg-[#fffdf9]">
+          <div class="flex items-center justify-between gap-3 mb-3 pb-3 border-b-2 border-black/10 overflow-hidden">
+            <div class="flex items-center gap-2 shrink-0 whitespace-nowrap">
+              <span class="px-2.5 py-1 bg-[#86efac] border-2 border-black font-mono text-sm font-bold text-black shrink-0">
+                {{ (post.data.displayDate or post.data.date) | upper }}
+              </span>
+              <span class="font-mono text-sm text-black/80 font-bold shrink-0">
+                // {{ (post.data.readTime or '5 min read') | upper }}
+              </span>
+            </div>
+
+            {% set validTags = [] %}
+            {% for tag in post.data.tags %}
+              {% if tag != "posts" %}
+                {% set validTags = (validTags.push(tag), validTags) %}
+              {% endif %}
+            {% endfor %}
+            <div class="hidden sm:flex items-center justify-end gap-1.5 overflow-hidden flex-nowrap shrink">
+              {% for tag in validTags.slice(0, 5) %}
+                <span class="tag-pill whitespace-nowrap truncate max-w-[140px]">
+                  #{{ tag | upper }}
+                </span>
+              {% endfor %}
+              {% if validTags.length > 5 %}
+                <span class="tag-pill opacity-75 shrink-0 whitespace-nowrap" title="{{ validTags.slice(5) | join(', ') }}">
+                  +{{ validTags.length - 5 }}
+                </span>
+              {% endif %}
+            </div>
+          </div>
+
+          <h3 class="text-2xl sm:text-3xl font-black text-black mb-3 group-hover:text-[#d97706] transition-colors">
+            <a href="{{ post.url }}" class="hover:underline underline-offset-4">
+              {{ post.data.title }}
+            </a>
+          </h3>
+
+          <p class="font-mono text-sm sm:text-base text-black/80 leading-relaxed mb-5">
+            {{ post.data.summary }}
+          </p>
+
+          <div class="flex items-center justify-between pt-2">
+            <a
+              href="{{ post.url }}"
+              class="btn-brutal-yellow px-4 py-2 text-sm"
+            >
+              <span>READ ARTICLE</span>
+              {{ icons.arrowUpRight("w-4 h-4") }}
+            </a>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>

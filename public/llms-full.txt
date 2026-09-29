@@ -1,0 +1,721 @@
+# Bittu (Bittu5134) — Full Context Payload
+> Complete plain-text knowledge base for AI agents and coding assistants. Contains full author profile, all open-source project descriptions, and every technical blog post verbatim. Optimised for single-shot ingestion.
+
+Index: https://bittu.dev/llms.txt
+Canonical: https://bittu.dev
+Generated: 2026-09-29
+
+================================================================================
+SECTION 1 — IDENTITY & SKILLS
+================================================================================
+
+Name: Bittu
+Handle: Bittu5134
+Email: hello@bittu.dev
+Website: https://bittu.dev
+GitHub: https://github.com/Bittu5134
+LinkedIn: https://www.linkedin.com/in/bittu5134
+X / Twitter: https://x.com/Bittu5134
+Patreon: https://www.patreon.com/lazybittu
+
+Education: B.Tech Cybersecurity & Computing — Indian Institute of Technology Kanpur (expected 2030)
+
+Languages: Go, Python, C, C++, TypeScript, JavaScript
+Systems: Linux POSIX daemons, raw TCP/UDP sockets, /proc lineage tracing, SHA-256 GUIDs, memory-mapped I/O, zero-allocation Go event loops
+Networking: WebRTC signaling servers, STUN/TURN/ICE, Redis TTL heartbeat pruning, IP token-bucket rate limiting, 500-peer concurrency benchmarks
+Protocol Reversing: Minecraft Java Edition wire format — VarInt encoding, zlib packet compression, handshake state machines, live packet sniffing
+AI & ML: RAG pipelines, MCP servers, CNN defect-detection ensembles, PyTorch, scikit-learn, vision model inference
+Spatial Parsing: 2D bounding-box coordinate clustering in PyMuPDF for LaTeX tabular PDFs (academic transcripts, resumes)
+Cloud & Edge: Cloudflare Workers, Cloudflare WAF bot mitigation, Cloudflare Pages, FastAPI, Gin, SSG compilers
+Notable Deployments: 2.3M+ Minecraft datapack downloads (Planet Minecraft); public WebRTC signaling API (PeerBasket)
+
+================================================================================
+SECTION 2 — OPEN-SOURCE PROJECTS
+================================================================================
+
+### 1. ORV-Reader
+Live: https://orv.pages.dev | Source: https://github.com/Bittu5134/ORV-Reader
+Description: A web-publishing platform that compiles Markdown into fast static pages and EPUBs. Built to be clean and lightweight way to read stuff on slow connections.
+Category: WEB / CLOUD
+Language: Python
+Topics: cloudflare-pages, custom-ssg, epub, orv, pandoc
+
+### 2. PeerBasket
+Live: https://peerbasket.bittu.dev | Source: https://github.com/Bittu5134/PeerBasket
+Description: A hassle-free, lobby-based PeerJS discovery server written in Go  that handles peer discovery for real-time p2p interactions and multiplayer sessions.
+Category: SYSTEMS / P2P
+Language: Go
+Topics: gin, go, p2p, peerjs, redis
+
+### 3. GH-Follow-Tracker
+Live: https://follow.lazybittu.workers.dev/ | Source: https://github.com/Bittu5134/GH-Follow-Tracker
+Description: A little service on Cloudflare Workers that tracks GitHub followers and generates live SVG badges, with Discord/Slack alerts when things change.
+Category: SERVERLESS / MONITORING
+Language: TypeScript
+Topics: automation, cloudflare-workers, github-actions, javascript, webhooks
+
+### 4. LOTM-Reader
+Live: https://beyonder.pages.dev | Source: https://github.com/Bittu5134/LOTM-Reader
+Description: A community driven webnovel reader built with Svelte, with offline caching and a tons of optimizations.  Built to be faster and cleaner than what was out there.
+Category: WEB / OPTIMIZATION
+Language: Svelte
+Topics: epub, giscus, lotm, pandoc, svelte
+
+### 5. NetShip
+Source: https://github.com/Bittu5134/NetShip
+Description: A host telemetry agent in Go that watches socket activity and maps out process trees. Built it to understand how endpoint detection tools actually work under the hood.
+Category: SYSTEMS / EDR
+Language: Go
+Topics: edr, go, gopsutil, telemetry, webui
+
+### 6. Sharelock
+Source: https://github.com/Bittu5134/Sharelock
+Description: A retrieval system that lets you just ask questions about IIT Kanpur's academic policy manual instead of reading the whole thing. Built as a RAG pipeline with an MCP server.
+Category: AI / RAG
+Language: Python
+Topics: hackathon, mcp-server, rag, rag-chatbot, typescript
+
+### 7. InfraPulse
+Live: https://infrapulse.bittu.dev | Source: https://github.com/Bittu5134/InfraPulse
+Description: A defect-detection tool that flags and prioritizes infrastructure issues from photos using a small vision-model ensemble. Built for a campus hackathon.
+Category: AI / COMPUTER VISION
+Language: Python
+Topics: convulational-neural-network, ensemble-model, machine-learning, pytorch, sobel-edge-detector
+
+### 8. IITK-Resume-Engine
+Source: https://github.com/Bittu5134/IITK-Resume-Engine
+Description: 
+Category: PARSER / GEOMETRY
+Language: Python
+Topics: 
+
+================================================================================
+SECTION 3 — TECHNICAL ARTICLES (FULL TEXT)
+================================================================================
+
+---
+Title: Engineering Handbook: Full Pipeline Showcase
+Date: March 18, 2026
+Read Time: 6 min read
+Tags: Engineering, Architecture, WebRTC, Go, Mermaid, Showcase
+Canonical URL: https://bittu.dev/blog/engineering-handbook-and-syntax-showcase
+Raw Markdown: https://bittu.dev/blogs/engineering-handbook-and-syntax-showcase.md
+Cover Image: https://images.unsplash.com/photo-1604076913837-52ab5629fba9?w=1200&h=630&auto=format&fit=crop&q=80
+Summary: The definitive reference and stress test for the unified remark+rehype pipeline: Shiki highlighting, Mermaid graphs, KaTeX math, GitHub callouts, GFM tables, task lists, footnotes, figure captions, code titles, and external links.
+---
+
+## 1. The Architecture of Our Blog Pipeline
+
+Welcome to the engineering test dispatch for **bittu.dev**. This post acts as a live specification test harness for every frontend formatting feature supported across the unified remark + rehype pipeline.
+
+```mermaid
+flowchart TD
+    A["Markdown Source .md"] --> B["remark-parse"]
+    B --> C["remark-gfm<br/>Tables · Tasks · Footnotes"]
+    B --> D["remark-math<br/>Math: inline and block formulas"]
+    B --> E["remark-github-alerts<br/>GitHub Alert Callouts"]
+    B --> F["remark-flexible-code-titles<br/>lang:filename annotations"]
+    C --> G["remark-rehype<br/>MDAST → HAST"]
+    D --> G
+    E --> G
+    F --> G
+    G --> H["rehype-raw<br/>HTML passthrough"]
+    H --> I["rehypeMermaidBlocks<br/>Intercept mermaid fences"]
+    I --> J["rehype-slug<br/>Heading IDs"]
+    J --> K["@shikijs/rehype<br/>github-dark SSG highlighting"]
+    K --> L["rehypeCodeBlockWrapper<br/>Custom UI shell"]
+    L --> M["rehypeGithubAlerts<br/>Styled callout divs"]
+    M --> N["rehype-katex<br/>Math → HTML"]
+    N --> O["rehype-external-links<br/>target=_blank rel=noopener"]
+    O --> P["@microflash/rehype-figure<br/>figure + figcaption"]
+    P --> Q["rehype-autolink-headings<br/>Permalink anchors"]
+    Q --> R["rehype-stringify → HTML"]
+```
+
+> [!NOTE]
+> All code highlighting is compiled statically **at build time** with Shiki. The browser downloads **0 KB** of client-side syntax highlighters.
+
+---
+
+## 2. GitHub Markdown Callouts
+
+Our pipeline transforms GitHub Flavored Markdown alerts into styled callouts with colored left borders and custom SVG icons.
+
+> [!NOTE]
+> Useful background information that users should know when skimming architecture documents or API specifications.
+
+> [!TIP]
+> Use Redis pipelines and connection pooling when dispatching heartbeat notifications across high-concurrency Goroutines to avoid TCP port exhaustion.
+
+> [!IMPORTANT]
+> The Handshake packet in Minecraft Java Edition dictates protocol state. Ensure variable-length integers are sanitized before memory allocation.
+
+> [!WARNING]
+> PDF coordinate systems place origin `(0, 0)` at the bottom-left on Quartz engines and top-left on MuPDF engines. Normalize bounding boxes before clustering.
+
+> [!CAUTION]
+> Never expose raw Redis cluster administrative sockets to the public internet without strict mutual TLS authentication and IP whitelisting.
+
+---
+
+## 3. KaTeX Math Rendering
+
+Inline math uses single dollar signs: $E = mc^2$ and $\sigma = \sqrt{\frac{1}{N}\sum_{i=1}^{N}(x_i - \mu)^2}$.
+
+Display-level math uses double dollar signs and renders centered:
+
+$$
+\int_0^\infty e^{-x^2}\,dx = \frac{\sqrt{\pi}}{2}
+$$
+
+$$
+\nabla \times \mathbf{B} = \mu_0 \mathbf{J} + \mu_0 \varepsilon_0 \frac{\partial \mathbf{E}}{\partial t}
+$$
+
+The Shannon entropy formula for a discrete probability distribution $P$:
+
+$$
+H(P) = -\sum_{x \in \mathcal{X}} P(x) \log_2 P(x)
+$$
+
+---
+
+## 4. High-Throughput Code Highlighting (Shiki)
+
+Every code block includes a language badge and a one-click copy button.
+
+### Go Concurrency Worker
+
+```go:worker_pool.go
+package main
+
+import (
+	"context"
+	"fmt"
+	"sync"
+)
+
+type WorkerPool struct {
+	tasks chan func(ctx context.Context) error
+	wg    sync.WaitGroup
+}
+
+func NewWorkerPool(workers int) *WorkerPool {
+	p := &WorkerPool{
+		tasks: make(chan func(ctx context.Context) error, workers*2),
+	}
+	for i := 0; i < workers; i++ {
+		p.wg.Add(1)
+		go p.worker(i)
+	}
+	return p
+}
+
+func (p *WorkerPool) worker(id int) {
+	defer p.wg.Done()
+	ctx := context.Background()
+	for task := range p.tasks {
+		if err := task(ctx); err != nil {
+			fmt.Printf("[worker %d] task error: %v\n", id, err)
+		}
+	}
+}
+```
+
+### Rust Zero-Copy Binary Buffer
+
+```rust:packet.rs
+use std::io::{self, Cursor, Read};
+
+#[derive(Debug)]
+pub struct PacketHeader {
+    pub length: u32,
+    pub packet_id: u8,
+}
+
+pub fn parse_packet(buf: &[u8]) -> io::Result<PacketHeader> {
+    let mut cursor = Cursor::new(buf);
+    let mut len_bytes = [0u8; 4];
+    cursor.read_exact(&mut len_bytes)?;
+    let length = u32::from_be_bytes(len_bytes);
+    let mut id_byte = [0u8; 1];
+    cursor.read_exact(&mut id_byte)?;
+    Ok(PacketHeader { length, packet_id: id_byte[0] })
+}
+```
+
+### Python Spatial Coordinate Filter
+
+```python:cluster.py
+from dataclasses import dataclass
+from typing import List
+
+@dataclass
+class BoundingBox:
+    x0: float; y0: float; x1: float; y1: float; text: str
+
+def cluster_spans(spans: List[BoundingBox], y_threshold: float = 3.0) -> List[List[BoundingBox]]:
+    """Cluster 2D text bounding boxes into cohesive horizontal lines."""
+    sorted_spans = sorted(spans, key=lambda s: s.y0)
+    lines: List[List[BoundingBox]] = []
+    for span in sorted_spans:
+        y_mid = (span.y0 + span.y1) / 2
+        assigned = False
+        for line in lines:
+            line_mid = sum((s.y0 + s.y1) / 2 for s in line) / len(line)
+            if abs(y_mid - line_mid) <= y_threshold:
+                line.append(span)
+                line.sort(key=lambda s: s.x0)
+                assigned = True
+                break
+        if not assigned:
+            lines.append([span])
+    return lines
+```
+
+### Dockerfile Multi-stage Build
+
+```dockerfile:Dockerfile
+FROM golang:1.23-alpine AS builder
+WORKDIR /app
+COPY go.mod go.sum ./
+RUN go mod download
+COPY . .
+RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o signaling-hub ./cmd/server
+
+FROM gcr.io/distroless/static:nonroot
+COPY --from=builder /app/signaling-hub /signaling-hub
+EXPOSE 8080
+ENTRYPOINT ["/signaling-hub"]
+```
+
+### SQL Query with Window Functions
+
+```sql:analytics.sql
+WITH ranked_sessions AS (
+  SELECT
+    peer_id,
+    room_id,
+    connected_at,
+    disconnected_at,
+    EXTRACT(EPOCH FROM (disconnected_at - connected_at)) AS duration_s,
+    ROW_NUMBER() OVER (PARTITION BY peer_id ORDER BY connected_at DESC) AS rn
+  FROM peer_sessions
+  WHERE connected_at > NOW() - INTERVAL '7 days'
+)
+SELECT peer_id, room_id, duration_s
+FROM ranked_sessions
+WHERE rn = 1
+ORDER BY duration_s DESC
+LIMIT 50;
+```
+
+---
+
+## 5. Interactive Mermaid Diagrams
+
+Mermaid.js is lazy-loaded via ESM **only on pages that contain diagrams**.
+
+### Peer-to-Peer Signaling Sequence
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Alice as Alice (Peer 1)
+    participant Server as Go Signaling Server
+    participant Redis as Redis Pub/Sub
+    actor Bob as Bob (Peer 2)
+
+    Alice->>Server: WS Connect / Join Room lobby
+    Server->>Redis: SADD room:lobby:peers alice
+    Bob->>Server: WS Connect / Join Room lobby
+    Server->>Redis: SADD room:lobby:peers bob
+    Alice->>Server: Send SDP Offer
+    Server->>Bob: Forward SDP Offer
+    Bob->>Server: Send SDP Answer
+    Server->>Alice: Forward SDP Answer
+    Note over Alice,Bob: Direct WebRTC P2P DataChannel Active
+```
+
+### Protocol State Machine
+
+```mermaid
+stateDiagram-v2
+    [*] --> Disconnected
+    Disconnected --> Handshaking: TCP Socket Accepted
+    Handshaking --> StatusQuery: Next State = 1
+    Handshaking --> Authentication: Next State = 2
+    StatusQuery --> Disconnected: Ping / Pong Received
+    Authentication --> ActiveSession: RSA and AES Verified
+    ActiveSession --> Disconnected: Graceful Teardown
+```
+
+---
+
+## 6. GFM Tables
+
+Markdown tables render with clean header rows and readable borders.
+
+| Component | Technology | Build Stage | Client Overhead |
+|---|---|---|---|
+| **Syntax Highlighter** | Shiki (`github-dark`) | SSG Pre-Compiled | **0 KB** |
+| **Diagram Engine** | Mermaid v11 | CSR On-Demand | ~0 KB on text posts |
+| **Math Renderer** | KaTeX | SSG + CDN CSS | ~0 KB JS |
+| **Callout Transformer** | rehype plugin | SSG Pre-Compiled | 0 KB |
+| **TOC Scroll-Spy** | `IntersectionObserver` | Client Script | < 0.5 KB |
+| **Search & Filter** | Vanilla JS | Client Script | < 1.5 KB |
+
+---
+
+## 7. Task Lists and Strikethrough (GFM)
+
+- [x] Zero-dependency build pipeline in `.eleventy.js`
+- [x] Shiki syntax highlighting across Go, Rust, Python, Bash
+- [x] Dynamic TOC sidebar with scroll-spy active indicator
+- [x] On-demand conditional Mermaid.js loading
+- [x] KaTeX math rendering (inline + display)
+- [x] GFM footnotes with backref links
+- [x] Figure + figcaption from alt text
+- [x] Code block filename titles via `lang:filename` syntax
+- [x] External links with `rel="noopener noreferrer"`
+- [ ] rehype-mermaid SSR (skipped — requires Playwright)
+
+Strikethrough via `~~text~~`: ~~deprecated API endpoint~~ → use `/v2/rooms` instead.
+
+---
+
+## 8. Footnotes (GFM)
+
+The Shannon entropy formula[^1] quantifies the average information content of a message. In distributed systems, Lamport timestamps[^2] provide a partial causal ordering without synchronized clocks.
+
+[^1]: Claude Shannon, "A Mathematical Theory of Communication," *Bell System Technical Journal*, 1948.
+[^2]: Leslie Lamport, "Time, Clocks, and the Ordering of Events in a Distributed System," *CACM*, 1978.
+
+---
+
+## 9. Figures and Image Captions
+
+Images written as standalone paragraphs are automatically parsed into semantic `<figure>` elements, deriving a centered `<figcaption>` from the image's alt text:
+
+![Architecture overview diagram of our zero-overhead build pipeline](./assets/pipeline-flow.svg)
+
+================================================================================
+
+---
+Title: Scaling WebRTC Signaling in Go: Lessons from 500 Concurrent Peers
+Date: March 8, 2026
+Read Time: 3 min read
+Tags: Go, WebRTC, Redis, Networking
+Canonical URL: https://bittu.dev/blog/scaling-webrtc-signaling-in-go
+Raw Markdown: https://bittu.dev/blogs/scaling-webrtc-signaling-in-go.md
+Cover Image: https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=1200&h=630&auto=format&fit=crop&q=80
+Summary: A deep dive into building PeerBasket low-latency signaling server in Go. How we achieved 41ms average latency and 0% packet loss across 500 concurrent peers with Redis TTL heartbeat pruning and IP token buckets.
+---
+
+## The Problem: WebRTC Signaling at Scale
+
+WebRTC handles peer-to-peer audio, video, and arbitrary data channels seamlessly—but getting two clients connected requires an external channel to exchange **Session Description Protocol (SDP)** offers/answers and **Interactive Connectivity Establishment (ICE)** candidates.
+
+When building [PeerBasket](https://peerbasket.bittu.dev), our goal was ambitious: support instant room-based signaling across 500+ concurrent peers with minimal memory overhead on bare-metal infrastructure.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor PeerA as Peer A (Initiator)
+    participant Hub as Go Signaling Hub
+    participant Redis as Redis TTL and PubSub
+    actor PeerB as Peer B (Receiver)
+
+    PeerA->>Hub: WS Connect and Join Room
+    Hub->>Redis: SET room:lobby:peer:A EX 12
+    PeerB->>Hub: WS Connect and Join Room
+    Hub->>Redis: SET room:lobby:peer:B EX 12
+    PeerA->>Hub: Send SDP Offer (via WritePump)
+    Hub->>PeerB: Dispatch SDP Offer
+    PeerB->>Hub: Send SDP Answer
+    Hub->>PeerA: Dispatch SDP Answer
+    Note over PeerA,PeerB: Direct P2P DataChannel Established (41ms RTT)
+```
+
+> [!TIP]
+> Always enforce TCP write deadlines on outbound WebSocket connections in Go. Lingering slow clients can silently block buffer writes and starve the central Goroutine pool.
+
+---
+
+## 1. Concurrency Model: Gorilla WebSocket & Goroutine Pools
+
+A naive WebSocket server spawns two goroutines per connection (one reader, one writer). At 500 active peers with bursts of ICE candidates, contention on mutexes causes jitter.
+
+We redesigned the connection worker around non-blocking channels with bounded queues:
+
+```go
+type PeerConnection struct {
+    ID        string
+    RoomID    string
+    Conn      *websocket.Conn
+    SendQueue chan []byte
+    mu        sync.RWMutex
+}
+
+func (p *PeerConnection) WritePump() {
+    ticker := time.NewTicker(pingPeriod)
+    defer func() {
+        ticker.Stop()
+        p.Conn.Close()
+    }()
+
+    for {
+        select {
+        case msg, ok := <-p.SendQueue:
+            if !ok {
+                p.Conn.WriteMessage(websocket.CloseMessage, []byte{})
+                return
+            }
+            p.Conn.SetWriteDeadline(time.Now().Add(writeWait))
+            if err := p.Conn.WriteMessage(websocket.TextMessage, msg); err != nil {
+                return
+            }
+        case <-ticker.C:
+            p.Conn.SetWriteDeadline(time.Now().Add(writeWait))
+            if err := p.Conn.WriteMessage(websocket.PingMessage, nil); err != nil {
+                return
+            }
+        }
+    }
+}
+```
+
+---
+
+## 2. Redis TTL Heartbeat Pruning
+
+When peers disconnect unexpectedly (browser crash, Wi-Fi loss), TCP sockets linger in `CLOSE_WAIT` or drop silently without firing client-side teardown events.
+
+We implemented an atomic Redis TTL sliding-window key scheme:
+- Every active peer sends a lightweight ping frame every **5 seconds**.
+- Redis updates the key `room:{roomID}:peer:{peerID}` with `EXPIRE 12`.
+- Redis KeySpace Notifications trigger automatic room eviction events if a client drops off for more than two consecutive intervals.
+
+> [!NOTE]
+> Setting Redis TTL to `2.4x` the ping interval prevents spurious disconnects caused by transient packet jitter over cellular connections.
+
+---
+
+## 3. Results & Benchmarks
+
+Benchmarked with `k6` and distributed simulated WebSocket clients on bare-metal Proxmox nodes:
+
+| Metric | Target | Result | Status |
+|---|---|---|---|
+| **Concurrent Peers** | 500 | 500 | Verified |
+| **Median Signaling Latency** | < 80ms | **41ms** | Optimal |
+| **Packet Drop Rate** | < 0.5% | **0.0%** | Optimal |
+| **Server Memory (RSS)** | < 120MB | **38MB** | Optimal |
+
+The low footprint of Go goroutines paired with Redis connection pooling enabled high throughput without degrading signaling responsiveness.
+
+================================================================================
+
+---
+Title: Reverse Engineering the Modern Minecraft Network Protocol
+Date: January 22, 2026
+Read Time: 3 min read
+Tags: Minecraft, Reverse Engineering, Protocols, C++
+Canonical URL: https://bittu.dev/blog/reverse-engineering-minecraft-protocol
+Raw Markdown: https://bittu.dev/blogs/reverse-engineering-minecraft-protocol.md
+Cover Image: https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=1200&h=630&auto=format&fit=crop&q=80
+Summary: Unpacking the binary wire format of Minecraft Java Edition. From variable-length integers (VarInt) and zlib packet compression to handshake state machines and live packet sniffing.
+---
+
+## Introduction: The Architecture of Minecraft Packets
+
+Minecraft Java Edition communicates over TCP using a custom binary wire protocol. Unlike modern REST or GraphQL APIs, game state updates happen through tightly packed binary streams with minimal serialization overhead.
+
+Let us dissect how data flows over the wire from handshake to play state.
+
+```mermaid
+stateDiagram-v2
+    [*] --> Handshaking
+    Handshaking --> Status: Next State = 1 (Server List Ping)
+    Handshaking --> Login: Next State = 2 (Join Game)
+    Status --> [*]: Disconnect after Pong
+    Login --> Play: Encryption and Auth Verified
+    Play --> [*]: Player Disconnect
+```
+
+> [!IMPORTANT]
+> The initial Handshake packet `(Packet ID: 0x00)` is the only unencrypted packet allowed to dictate state transitions. Sending invalid protocol versions here results in immediate TCP socket termination.
+
+---
+
+## 1. The VarInt Wire Format
+
+At the core of the protocol is the **VarInt** (variable-length integer), encoded similarly to Protocol Buffer LEB128:
+- Each byte uses 7 bits for data and 1 most significant bit (MSB) as a continuation flag.
+- Values between `0` and `127` take only **1 byte**.
+
+```cpp
+// Reading a VarInt from a raw byte buffer in C++
+int32_t readVarInt(ByteBuffer& buf) {
+    int32_t value = 0;
+    int32_t position = 0;
+    uint8_t currentByte;
+
+    while (true) {
+        currentByte = buf.readByte();
+        value |= (currentByte & 0x7F) << position;
+
+        if ((currentByte & 0x80) == 0) break;
+        position += 7;
+
+        if (position >= 32) {
+            throw std::runtime_error("VarInt is too big (> 5 bytes)");
+        }
+    }
+    return value;
+}
+```
+
+---
+
+## 2. Packet Framing & Compression
+
+Every packet starts with a framing header:
+
+```
++---------------------+-------------------+---------------------+
+| Packet Length       | Packet ID         | Data Payload        |
+| (VarInt)            | (VarInt)          | (Byte Array)        |
++---------------------+-------------------+---------------------+
+```
+
+When compression is enabled (typically for packets > 256 bytes threshold):
+
+```
++---------------------+-------------------+-----------------------------------+
+| Total Packet Length | Data Length       | Zlib Compressed (ID + Payload)    |
+| (VarInt)            | (VarInt, 0 if raw)| (Raw Deflate Stream)              |
++---------------------+-------------------+-----------------------------------+
+```
+
+> [!NOTE]
+> If `Data Length` is `0`, the payload remains uncompressed even with compression enabled. This avoids expanding already-tiny packets with zlib header overhead.
+
+---
+
+## 3. Protocol State Machine Transitions
+
+A client connection transitions through 4 distinct protocol states:
+
+1. **Handshaking**: Initial packet specifying target protocol version (`765`), server address, and next desired state (`Status` or `Login`).
+2. **Status**: Server list ping query (returns MOTD, online player count, and favicon PNG base64).
+3. **Login**: Encryption handshake (RSA + AES-128 CFB8), Mojang authentication session verification.
+4. **Play**: Active gameplay synchronization (chunks, entity metadata, velocity vectors, block updates).
+
+Building custom network tools for Minecraft opens endless possibilities—from high-performance proxies to protocol analyzers.
+
+================================================================================
+
+---
+Title: Coordinate Geometry in PyMuPDF: Extracting Unruly Academic LaTeX PDFs
+Date: November 14, 2025
+Read Time: 3 min read
+Tags: Python, PyMuPDF, Algorithms, AI
+Canonical URL: https://bittu.dev/blog/spatial-geometry-parsing-in-pymupdf
+Raw Markdown: https://bittu.dev/blogs/spatial-geometry-parsing-in-pymupdf.md
+Cover Image: https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1200&h=630&auto=format&fit=crop&q=80
+Summary: Why standard PDF parsers struggle with academic transcripts and resumes, and how we solved it for CDW IIT Kanpur using 2D spatial coordinate clustering and step-gradient scoring.
+---
+
+## Why Standard PDF Parsers Fail on LaTeX Documents
+
+LaTeX compilers (pdfLaTeX, XeLaTeX) generate visual perfection by positioning text snippets using absolute Cartesian coordinates (`x0, y0, x1, y1`). 
+
+However, they do **not** embed semantic structure:
+- A two-column table is actually just 50 disjoint text boxes placed near each other.
+- Section dividers and horizontal rules are raw vector drawing operations (`re`, `l`, `m` PDF commands) with no association to the text above or below them.
+
+When building the **IITK-Resume-Engine** for the Academics & Career Council, standard text extractors scrambled multi-column course lists into gibberish.
+
+```mermaid
+flowchart TD
+    A["Raw Academic PDF"] --> B["PyMuPDF Text Spans and Bounding Boxes"]
+    B --> C{"Spatial Y-Overlap Grouping"}
+    C -->|"Within Tolerance 3.0pt"| D["Sort Horizontal Spans by X-Coord"]
+    C -->|"Delta > 3.0pt"| E["Create New Logical Text Row"]
+    D --> F["Topological Column Slicing"]
+    E --> F
+    F --> G["IIT Kanpur 4,400+ Course Code Registry Match"]
+    G --> H["Structured JSON: CPI, Grades and Credits"]
+```
+
+> [!WARNING]
+> PDF coordinate systems place origin `(0, 0)` at the top-left on some PDF engines and bottom-left on others. Failing to normalize coordinate inversions causes vertical cluster algorithms to invert multi-line sentences upside-down.
+
+---
+
+## The Solution: 2D Geometric Clustering
+
+Using `PyMuPDF` (`fitz`), we extracted low-level text spans with bounding boxes and built a geometric clustering pipeline:
+
+```python
+import fitz
+
+def extract_spatial_spans(page):
+    blocks = page.get_text("dict")["blocks"]
+    spans = []
+    for block in blocks:
+        if "lines" in block:
+            for line in block["lines"]:
+                for span in line["spans"]:
+                    text = span["text"].strip()
+                    if text:
+                        spans.append({
+                            "text": text,
+                            "bbox": span["bbox"],  # (x0, y0, x1, y1)
+                            "size": span["size"],
+                            "font": span["font"],
+                            "flags": span["flags"]
+                        })
+    return spans
+```
+
+---
+
+## 1. Topological Sorting & Dynamic Row Grouping
+
+Instead of relying on vertical order alone, we group spans into logical horizontal rows by computing overlap intervals on the Y-axis:
+
+```python
+def group_into_rows(spans, tolerance=3.0):
+    rows = []
+    sorted_spans = sorted(spans, key=lambda s: s["bbox"][1])
+    
+    for span in sorted_spans:
+        y_mid = (span["bbox"][1] + span["bbox"][3]) / 2
+        matched = False
+        for row in rows:
+            if abs(row["y_mid"] - y_mid) <= tolerance:
+                row["spans"].append(span)
+                row["spans"].sort(key=lambda s: s["bbox"][0])  # Sort by X
+                matched = True
+                break
+        if not matched:
+            rows.append({"y_mid": y_mid, "spans": [span]})
+            
+    return rows
+```
+
+> [!TIP]
+> A tolerance delta between `2.5pt` and `3.5pt` reliably accounts for subscript/superscript baseline shifts without improperly merging adjacent table rows.
+
+---
+
+## 2. Recognizing 4,400+ IITK Courses
+
+Once rows are reconstructed spatially:
+- Course codes (e.g., `CS210A`, `ESC101`, `EE671`) are mapped against the 4,400+ course registry.
+- CPI metrics, grade distributions, and semester credits are accurately extracted with 99.4% precision.
+- A 6-track step-gradient scoring model produces instant counterfactual guidance for students.
+
+Spatial parsing transformed an intractable document formatting problem into deterministic coordinate geometry.

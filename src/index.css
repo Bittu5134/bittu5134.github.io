@@ -1,0 +1,208 @@
+/* ─── Self-Hosted Local Fonts ────────────────────────────── */
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('/fonts/SpaceGrotesk-Variable.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Space Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/SpaceMono-Regular.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Space Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/SpaceMono-Bold.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Space Mono';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/SpaceMono-Italic.woff2') format('woff2');
+}
+
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .card-brutal {
+    @apply bg-[#fffdf9] border-[3px] border-black shadow-brutal hover:shadow-brutal-lg hover:-translate-y-0.5 transition-all;
+  }
+  .card-header-bar {
+    @apply px-3 sm:px-4 py-2 border-b-[3px] border-black flex items-center justify-between select-none;
+  }
+  .tag-pill {
+    @apply px-2.5 py-0.5 bg-[#f6eedb] border border-black font-mono text-sm font-bold text-black uppercase;
+  }
+  .btn-brutal,
+  .btn-brutal-yellow,
+  .btn-brutal-white,
+  .btn-brutal-purple,
+  .btn-brutal-pink,
+  .btn-brutal-green {
+    @apply font-mono font-bold border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-1.5 cursor-pointer;
+  }
+  .btn-brutal-yellow { @apply bg-[#fde047] hover:bg-[#fb923c] text-black; }
+  .btn-brutal-white  { @apply bg-[#fffdf9] hover:bg-[#fde047] text-black; }
+  .btn-brutal-purple { @apply bg-[#fffdf9] hover:bg-[#c4b5fd] text-black; }
+  .btn-brutal-pink   { @apply bg-[#f472b6] hover:bg-[#fb7185] text-black; }
+  .btn-brutal-green  { @apply bg-[#86efac] hover:bg-[#22c55e] text-black; }
+
+  .nav-btn-desktop {
+    @apply cursor-pointer px-3 py-1 bg-[#fffdf9] border-2 border-black text-xs sm:text-sm font-black shadow-brutal-xs hover:bg-[#fde047] hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all tracking-tight flex items-center gap-1.5;
+  }
+  .nav-btn-mobile {
+    @apply w-full flex items-center justify-between px-3.5 py-2.5 bg-[#f6eedb] border-2 border-black font-mono text-sm font-bold shadow-brutal-xs hover:bg-[#fde047] active:translate-x-1 active:translate-y-0.5 transition-all cursor-pointer;
+  }
+
+  .profile-link {
+    @apply flex items-center justify-between p-2.5 bg-[#f6eedb] border border-black font-mono text-xs sm:text-sm font-bold text-black transition-colors;
+  }
+
+  .btn-hero-brutal {
+    @apply cursor-pointer px-4 sm:px-5 py-2.5 sm:py-3 text-black font-mono font-bold text-xs sm:text-sm border-[3px] border-black shadow-brutal hover:shadow-brutal-lg hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5 sm:gap-2;
+  }
+
+  .tech-badge {
+    @apply px-3 sm:px-3.5 py-1.5 sm:py-2 border-2 border-black font-mono text-xs sm:text-sm font-bold shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5 select-none cursor-default;
+  }
+}
+
+/* Minimal Vanilla Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-color: #000;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+ul, ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+
+html,
+body,
+#root {
+  overflow-x: clip;
+  font-family: 'Space Grotesk', sans-serif;
+  background-color: #f7f1e3;
+  color: #14161f;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: 100%;
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
+
+button {
+  cursor: pointer;
+}
+
+img, svg, video {
+  display: block;
+  max-width: 100%;
+}
+
+/* Retro graph paper / dot grid background */
+.retro-dots-bg {
+  background-color: #f6eedb;
+  background-image: radial-gradient(#d3c6ab 1.5px, transparent 1.5px);
+  background-size: 20px 20px;
+}
+
+.retro-dots-dark {
+  background-color: #0b0f17;
+  background-image: radial-gradient(rgba(148, 163, 184, 0.12) 1.25px, transparent 1.25px);
+  background-size: 22px 22px;
+}
+
+/* Selection style */
+::selection {
+  background-color: #fde047;
+  color: #000000;
+}
+
+/* Chunky retro scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ede3ce;
+  border-left: 2px solid #14161f;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #f59e0b;
+  border: 2px solid #14161f;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #d97706;
+}
+
+
+/* ─── Cassette LCD Marquee ─────────────────────────────────── */
+@keyframes cassetteTicker {
+  0%   { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-cassette-ticker {
+  display: inline-flex;
+  width: max-content;
+  animation: cassetteTicker 12s linear infinite;
+  will-change: transform;
+}
+.animate-cassette-ticker:hover { animation-play-state: paused; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-cassette-ticker,
+  .animate-ticker,
+  .animate-tickerFast,
+  .animate-spinSlow,
+  .animate-wiggle,
+  .animate-bounceSubtle {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+

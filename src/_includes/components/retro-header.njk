@@ -1,0 +1,163 @@
+{% import "macros/icons.njk" as icons %}
+{% set isHomePage = (page.url == "/") %}
+
+<header class="sticky top-0 z-50 px-3 sm:px-6 pt-2.5 pb-2 bg-[#f6eedb]/95 backdrop-blur-md border-b-[3px] border-black">
+  <div class="max-w-6xl mx-auto flex items-center justify-between gap-2 sm:gap-4">
+    <!-- Brand Logo -->
+    <div class="flex items-center gap-2">
+      <a
+        href="/"
+        class="btn-brutal-yellow px-2.5 sm:px-3 py-1 text-black"
+        aria-label="Bittu Home"
+      >
+        {{ icons.pixelMonster("w-5 h-5 text-black shrink-0") }}
+        <span class="font-mono text-sm sm:text-base font-black tracking-widest">BITTU.DEV</span>
+      </a>
+    </div>
+
+    <!-- Desktop Navigation Links -->
+    <nav class="hidden lg:flex items-center gap-2 font-mono">
+      <a
+        href="{{ '#projects' if isHomePage else '/#projects' }}"
+        class="nav-btn-desktop"
+      >
+        {{ icons.folder("w-3.5 h-3.5 text-black shrink-0") }}
+        <span>Projects</span>
+      </a>
+
+      <a
+        href="{{ '#blog' if isHomePage else '/blog' }}"
+        class="nav-btn-desktop {{ 'bg-[#fde047]' if page.url and page.url.startsWith('/blog') else '' }}"
+      >
+        {{ icons.fileText("w-3.5 h-3.5 text-black shrink-0") }}
+        <span>Blogs</span>
+      </a>
+
+      <a
+        href="{{ '#about' if isHomePage else '/#about' }}"
+        class="nav-btn-desktop"
+      >
+        {{ icons.user("w-3.5 h-3.5 text-black shrink-0") }}
+        <span>About</span>
+      </a>
+
+      <a
+        href="{{ '#contact' if isHomePage else '/#contact' }}"
+        class="nav-btn-desktop"
+      >
+        {{ icons.mail("w-3.5 h-3.5 text-black shrink-0") }}
+        <span>Contact</span>
+      </a>
+    </nav>
+
+    <!-- Actions & Mobile Hamburger -->
+    <div class="flex items-center gap-2">
+      <a
+        href="https://github.com/Bittu5134"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="GitHub Profile (@Bittu5134)"
+        class="btn-brutal-purple px-2.5 py-1 sm:py-1.5 text-xs sm:text-sm"
+      >
+        {{ icons.github("w-4 h-4 sm:w-5 sm:h-5 text-black shrink-0") }}
+        <span class="hidden sm:inline-block font-mono text-xs sm:text-sm font-bold">GITHUB</span>
+      </a>
+
+      <!-- Mobile Hamburger Toggle Button -->
+      <button
+        id="menu-toggle-btn"
+        class="lg:hidden btn-brutal-yellow px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-black select-none"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+      >
+        <span id="menu-icon-open">{{ icons.menu("w-4 h-4 text-black shrink-0") }}</span>
+        <span id="menu-icon-close" class="hidden">{{ icons.x("w-4 h-4 text-black shrink-0") }}</span>
+        <span id="menu-text">MENU</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Backdrop Overlay -->
+<div
+  id="mobile-backdrop"
+  class="hidden fixed inset-0 top-[54px] sm:top-[58px] bg-black/50 backdrop-blur-sm z-40 lg:hidden transition-opacity duration-200"
+  aria-hidden="true"
+></div>
+
+<!-- Mobile Slide-down Neo-Brutalist Drawer -->
+<div
+  id="mobile-drawer"
+  class="hidden fixed top-[54px] sm:top-[58px] left-0 right-0 z-50 lg:hidden bg-[#fffdf9] border-b-[4px] border-black shadow-brutal-lg max-h-[calc(100vh-65px)] overflow-y-auto"
+>
+  <!-- Navigation Links list -->
+  <div class="p-4 space-y-2.5">
+    <a
+      href="{{ '#projects' if isHomePage else '/#projects' }}"
+      class="mobile-nav-link nav-btn-mobile"
+    >
+      <span class="flex items-center gap-2">
+        {{ icons.folder("w-4 h-4 text-black shrink-0") }}
+        <span class="text-black font-black">Projects</span>
+      </span>
+      <span class="text-black/80 font-mono text-xs font-bold">→</span>
+    </a>
+
+    <a
+      href="{{ '#blog' if isHomePage else '/blog' }}"
+      class="mobile-nav-link nav-btn-mobile {{ 'bg-[#fde047]' if page.url and page.url.startsWith('/blog') else '' }}"
+    >
+      <span class="flex items-center gap-2">
+        {{ icons.fileText("w-4 h-4 text-black shrink-0") }}
+        <span class="text-black font-black">Blog</span>
+      </span>
+      <span class="text-black/80 font-mono text-xs font-bold">→</span>
+    </a>
+
+    <a
+      href="{{ '#about' if isHomePage else '/#about' }}"
+      class="mobile-nav-link nav-btn-mobile"
+    >
+      <span class="flex items-center gap-2">
+        {{ icons.user("w-4 h-4 text-black shrink-0") }}
+        <span class="text-black font-black">About</span>
+      </span>
+      <span class="text-black/80 font-mono text-xs font-bold">→</span>
+    </a>
+
+    <a
+      href="{{ '#contact' if isHomePage else '/#contact' }}"
+      class="mobile-nav-link nav-btn-mobile"
+    >
+      <span class="flex items-center gap-2">
+        {{ icons.mail("w-4 h-4 text-black shrink-0") }}
+        <span class="text-black font-black">Contact</span>
+      </span>
+      <span class="text-black/80 font-mono text-xs font-bold">→</span>
+    </a>
+
+    <!-- Quick External Actions -->
+    <div class="pt-3 border-t-2 border-black/15 grid grid-cols-2 gap-2">
+      <a
+        href="https://github.com/Bittu5134"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="GitHub Profile (@Bittu5134)"
+        class="btn-brutal-purple px-3 py-2 text-xs"
+      >
+        {{ icons.github("w-4 h-4 text-black shrink-0") }}
+        <span>GITHUB</span>
+      </a>
+
+      <a
+        href="/discord"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-brutal bg-[#86efac] hover:bg-[#4ade80] px-3 py-2 text-xs"
+      >
+        {{ icons.discord("w-4 h-4 text-black shrink-0") }}
+        <span>DISCORD</span>
+      </a>
+    </div>
+  </div>
+</div>
