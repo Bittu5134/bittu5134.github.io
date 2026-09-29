@@ -21,7 +21,7 @@ Generated: 2026-09-29
 - [NetShip](https://github.com/Bittu5134/NetShip): A host telemetry agent in Go that watches socket activity and maps out process trees. Built it to understand how endpoint detection tools actually work under the hood.
 - [Sharelock](https://github.com/Bittu5134/Sharelock): A retrieval system that lets you just ask questions about IIT Kanpur's academic policy manual instead of reading the whole thing. Built as a RAG pipeline with an MCP server.
 - [InfraPulse](https://infrapulse.bittu.dev): A defect-detection tool that flags and prioritizes infrastructure issues from photos using a small vision-model ensemble. Built for a campus hackathon. Source: https://github.com/Bittu5134/InfraPulse
-- [IITK-Resume-Engine](https://github.com/Bittu5134/IITK-Resume-Engine): 
+- [Resume-Model](https://iitk-resume.bittu.dev): A tool that parses academic PDFs by their layout geometry (since normal parsers choke on tables) and scores them. Built for IIT Kanpur's career office. Source: https://github.com/Bittu5134/IITK-Resume-Model
 
 ## Technical Writing
 - [Engineering Handbook: Full Pipeline Showcase](https://bittu.dev/blogs/engineering-handbook-and-syntax-showcase.md): The definitive reference and stress test for the unified remark+rehype pipeline: Shiki highlighting, Mermaid graphs, KaTeX math, GitHub callouts, GFM tables, task lists, footnotes, figure captions, code titles, and external links. [Engineering, Architecture, WebRTC, Go, Mermaid, Showcase] — 6 min read. Rendered HTML: https://bittu.dev/blog/engineering-handbook-and-syntax-showcase

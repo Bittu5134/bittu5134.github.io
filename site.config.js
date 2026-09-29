@@ -87,13 +87,18 @@ export default {
       statsText: "Policy Manual MCP Agent",
       language: "Python",
     },
-    "IITK-Resume-Engine": {
+    "IITK-Resume-Model": {
       order: 8,
+      title: "Resume-Model",
       category: "PARSER / GEOMETRY",
       filterCategory: "TOOLS",
       badge: "CAMPUS TOOL",
       statsText: "2D Coordinate PDF Extractor",
       language: "Python",
+      githubUrl: "https://github.com/Bittu5134/IITK-Resume-Model",
+      liveUrl: "https://iitk-resume.bittu.dev",
+      blurb:
+        "A tool that parses academic PDFs by their layout geometry (since normal parsers choke on tables) and scores them. Built for IIT Kanpur's career office.",
     },
   },
 
