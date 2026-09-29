@@ -79,58 +79,6 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
           {{ title }}
         </h1>
 
-        <!-- Author Profile Box (Top of Post) -->
-        <div class="mb-5 py-2.5 px-4 sm:py-3 sm:px-5 bg-[#f4ebd0] border-2 border-black flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div class="flex items-center gap-3">
-            <a href="/" class="shrink-0" title="Go to Home">
-              <img
-                src="/images/avatar.webp"
-                alt="Bittu avatar"
-                class="w-10 h-10 rounded-sm border-2 border-black object-cover"
-                loading="lazy"
-              />
-            </a>
-            <div>
-              <div class="font-mono text-sm sm:text-base font-bold text-black flex items-center gap-2">
-                <a href="/" class="hover:underline text-black">Bittu (Bittu5134)</a>
-                <span class="px-1.5 py-0 leading-none inline-flex items-center h-4 bg-[#fde047] border border-black text-[9px] sm:text-[10px] font-mono font-bold uppercase">AUTHOR</span>
-              </div>
-              <div class="font-mono text-xs text-black font-medium">
-                Software Engineer &amp; Cybersecurity student at IIT Kanpur.
-              </div>
-            </div>
-          </div>
-          <div class="flex items-center gap-2 font-mono text-xs font-bold shrink-0">
-            <a
-              href="https://github.com/Bittu5134"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="px-2.5 py-1 bg-[#faf3e0] border-2 border-black hover:bg-[#c4b5fd] transition-colors flex items-center gap-1 text-black"
-            >
-              {{ icons.github("w-3.5 h-3.5") }}
-              <span>GITHUB</span>
-            </a>
-            <a
-              href="https://www.linkedin.com/in/bittu5134"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="px-2.5 py-1 bg-[#faf3e0] border-2 border-black hover:bg-[#38bdf8] transition-colors flex items-center gap-1 text-black"
-            >
-              {{ icons.linkedin("w-3.5 h-3.5") }}
-              <span>LINKEDIN</span>
-            </a>
-            <a
-              href="/rss.xml"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="px-2.5 py-1 bg-[#faf3e0] border-2 border-black hover:bg-[#fb923c] transition-colors flex items-center gap-1 text-black"
-            >
-              {{ icons.rss("w-3.5 h-3.5") }}
-              <span>RSS</span>
-            </a>
-          </div>
-        </div>
-
         <!-- Summary Callout -->
         {% if summary %}
           <div
@@ -270,8 +218,60 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
         {{ content | safe }}
       </div>
 
-      <!-- Post Footer: Navigation & Discussion -->
+      <!-- Post Footer: Author Card + Navigation -->
       <footer class="mt-12 pt-8 border-t-2 border-black space-y-6">
+        <!-- Author Profile Box (Flat, Slim) -->
+        <div class="py-2.5 px-4 sm:py-3 sm:px-5 bg-[#f4ebd0] border-2 border-black flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <a href="/" class="shrink-0" title="Go to Home">
+              <img
+                src="/images/avatar.webp"
+                alt="Bittu avatar"
+                class="w-10 h-10 rounded-sm border-2 border-black object-cover"
+                loading="lazy"
+              />
+            </a>
+            <div>
+              <div class="font-mono text-sm sm:text-base font-bold text-black flex items-center gap-2">
+                <a href="/" class="hover:underline text-black">Bittu (Bittu5134)</a>
+                <span class="px-1.5 py-0 leading-none inline-flex items-center h-4 bg-[#fde047] border border-black text-[9px] sm:text-[10px] font-mono font-bold uppercase">AUTHOR</span>
+              </div>
+              <div class="font-mono text-xs text-black font-medium">
+                Software Engineer &amp; Cybersecurity student at IIT Kanpur.
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 font-mono text-xs font-bold shrink-0">
+            <a
+              href="https://github.com/Bittu5134"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="px-2.5 py-1 bg-[#faf3e0] border-2 border-black hover:bg-[#c4b5fd] transition-colors flex items-center gap-1 text-black"
+            >
+              {{ icons.github("w-3.5 h-3.5") }}
+              <span>GITHUB</span>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/bittu5134"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="px-2.5 py-1 bg-[#faf3e0] border-2 border-black hover:bg-[#38bdf8] transition-colors flex items-center gap-1 text-black"
+            >
+              {{ icons.linkedin("w-3.5 h-3.5") }}
+              <span>LINKEDIN</span>
+            </a>
+            <a
+              href="/rss.xml"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="px-2.5 py-1 bg-[#faf3e0] border-2 border-black hover:bg-[#fb923c] transition-colors flex items-center gap-1 text-black"
+            >
+              {{ icons.rss("w-3.5 h-3.5") }}
+              <span>RSS</span>
+            </a>
+          </div>
+        </div>
+
         <!-- 1-Line Post Navigation (Flat, High Contrast) -->
         {% set newerPost = collections.blogs | getPreviousCollectionItem(page) %}
         {% set olderPost = collections.blogs | getNextCollectionItem(page) %}
@@ -362,7 +362,6 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
             data-input-position="bottom"
             data-theme="gruvbox_light"
             data-lang="en"
-            data-loading="lazy"
             crossorigin="anonymous"
             async>
           </script>
