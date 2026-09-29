@@ -1,0 +1,1158 @@
+/* ─── Blog CSS: Typography + Prose Styles ──────────────────── */
+/* This file is only loaded on blog post pages and the blog archive */
+/* It extends the base index.css with typography plugin + prose styles */
+
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Blog Markdown Prose (Readability-First Architecture) ───── */
+.prose-retro {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.0625rem; /* ~17px base size on mobile */
+  line-height: 1.8;
+  color: #000000;
+  max-width: 100%;
+}
+
+@media (min-width: 640px) {
+  .prose-retro {
+    font-size: 1.0625rem; /* ~17px on tablet */
+    line-height: 1.85;
+  }
+}
+
+@media (min-width: 1024px) {
+  .prose-retro {
+    font-size: 1.125rem; /* ~18px base reading size on large desktop */
+    line-height: 1.85;
+  }
+}
+
+/* Paragraphs capped for optical line length (~65-75 chars) */
+.prose-retro > p,
+.prose-retro > ul,
+.prose-retro > ol,
+.prose-retro > blockquote {
+  max-width: 46rem; /* ~736px comfortable reading measure */
+}
+
+.prose-retro p {
+  font-family: 'Space Grotesk', sans-serif;
+  margin-bottom: 1.5rem;
+  color: #000000;
+}
+
+/* Headings */
+.prose-retro h1,
+.prose-retro h2,
+.prose-retro h3,
+.prose-retro h4,
+.prose-retro h5,
+.prose-retro h6 {
+  font-family: 'Space Grotesk', sans-serif;
+  color: #000000;
+  font-weight: 800;
+  scroll-margin-top: 5.5rem;
+}
+
+.prose-retro h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  margin-top: 3.25rem;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .prose-retro h2 {
+    font-size: 1.875rem;
+  }
+}
+
+.prose-retro h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  margin-top: 2.5rem;
+  margin-bottom: 0.875rem;
+}
+
+@media (min-width: 640px) {
+  .prose-retro h3 {
+    font-size: 1.4rem;
+  }
+}
+
+.prose-retro h4 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.45;
+  margin-top: 2rem;
+  margin-bottom: 0.625rem;
+}
+
+/* Inline text styles */
+.prose-retro strong {
+  font-weight: 700;
+  color: #000;
+}
+
+.prose-retro em {
+  font-style: italic;
+}
+
+.prose-retro del {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+/* Lists */
+.prose-retro ul {
+  list-style-type: disc;
+  list-style-position: outside;
+  margin-left: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.prose-retro ol {
+  list-style-type: decimal;
+  list-style-position: outside;
+  margin-left: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.prose-retro ul > li,
+.prose-retro ol > li {
+  font-family: 'Space Grotesk', sans-serif;
+  margin-bottom: 0.5rem;
+  padding-left: 0.25rem;
+  line-height: 1.75;
+}
+
+.prose-retro ul > li::marker {
+  color: #000000;
+  font-size: 0.9em;
+}
+
+.prose-retro ol > li::marker {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  color: #000000;
+  font-size: 0.875em;
+}
+
+/* GFM Task Lists */
+.prose-retro ul.contains-task-list {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.prose-retro li.task-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  padding-left: 0;
+  margin-bottom: 0.625rem;
+  line-height: 1.7;
+}
+
+.prose-retro input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-top: 0.25rem;
+  flex-shrink: 0;
+  border: 2px solid #000000;
+  border-radius: 0;
+  background-color: #faf3e0;
+  cursor: default;
+  display: inline-grid;
+  place-content: center;
+  transition: all 0.15s ease;
+}
+
+.prose-retro input[type="checkbox"]:checked {
+  background-color: #fde047;
+  border-color: #000000;
+}
+
+.prose-retro input[type="checkbox"]:checked::before {
+  content: "";
+  width: 0.625rem;
+  height: 0.35rem;
+  border-left: 2px solid #000000;
+  border-bottom: 2px solid #000000;
+  transform: rotate(-45deg) translate(1px, -1px);
+}
+
+/* Standard Editorial Blockquotes (NOT alert callouts) */
+.prose-retro blockquote:not(.github-alert) {
+  border-left: 4px solid #000000;
+  padding: 0.875rem 1.25rem;
+  margin: 2rem 0;
+  background-color: #f4ebd0;
+  border-radius: 0;
+  color: #000000;
+  font-family: 'Space Grotesk', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.prose-retro blockquote:not(.github-alert) p {
+  margin-bottom: 0;
+  color: inherit;
+  font-family: inherit;
+}
+
+/* Inline Code */
+.prose-retro code:not(pre code) {
+  padding: 0.2rem 0.45rem;
+  background-color: #eedebd;
+  border: 1.5px solid #000000;
+  border-radius: 0;
+  color: #000000;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.875em;
+  font-weight: 700;
+}
+
+/* Links */
+.prose-retro a {
+  color: #000000;
+  text-decoration: underline;
+  text-decoration-color: #000000;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 2px;
+  font-weight: 700;
+  transition: all 0.15s ease;
+}
+
+.prose-retro a:hover {
+  color: #000000;
+  text-decoration-color: #000000;
+  background-color: #fde047;
+}
+
+/* Subtle external link indicator */
+.prose-retro a[target="_blank"]::after {
+  content: " ↗";
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.75em;
+  font-weight: 700;
+  color: #000000;
+  text-decoration: none;
+  display: inline;
+  margin-left: 0.15em;
+  line-height: 1;
+  opacity: 1;
+  transition: opacity 0.15s ease;
+}
+
+.prose-retro a[target="_blank"]:hover::after {
+  opacity: 1;
+  color: #000000;
+}
+
+/* Heading Permalinks (# on hover) */
+.prose-retro .header-anchor {
+  color: inherit;
+  text-decoration: none !important;
+  position: relative;
+  border: none !important;
+  background: transparent !important;
+}
+
+.prose-retro .header-anchor::after {
+  content: " #";
+  opacity: 0;
+  color: #d97706;
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 0.85em;
+  transition: opacity 0.15s ease;
+}
+
+.prose-retro h2:hover .header-anchor::after,
+.prose-retro h3:hover .header-anchor::after,
+.prose-retro h4:hover .header-anchor::after {
+  opacity: 1;
+}
+
+/* Horizontal Rules (Clean, crisp, flat ink divider) */
+.prose-retro hr {
+  margin: 3rem 0;
+  border: 0;
+  border-top: 2px solid #000000;
+}
+
+/* ─── Code Block Wrapper (Flat Neo-Brutalist Paper Terminal) ─ */
+.code-block-wrapper {
+  margin: 2rem 0;
+  border: 2px solid #000000;
+  border-radius: 0;
+  background-color: #1e222a; /* github-dark background */
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background-color: #14171d;
+  border-bottom: 2px solid #000000;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.875rem;
+}
+
+.lang-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #94a3b8;
+  user-select: none;
+  font-size: 0.75rem;
+  font-family: 'Space Mono', monospace;
+}
+
+.lang-badge .lang-tag {
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+.lang-badge .file-sep {
+  opacity: 0.6;
+  color: #94a3b8;
+  padding: 0 0.25rem;
+}
+
+.lang-badge .code-filename {
+  text-transform: none;
+  color: #94a3b8;
+  font-weight: 700;
+}
+
+.code-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  background-color: #faf3e0;
+  border: 1.5px solid #000000;
+  border-radius: 0;
+  color: #000000;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+
+.code-copy-btn svg,
+.code-copy-btn .copy-icon {
+  width: 0.875rem;
+  height: 0.875rem;
+  display: inline-block;
+  flex-shrink: 0;
+  stroke: currentColor;
+}
+
+.code-copy-btn:hover {
+  background-color: #fde047;
+  color: #000000;
+}
+
+.code-copy-btn:active {
+  background-color: #86efac;
+}
+
+.code-content {
+  overflow-x: auto;
+  padding: 1.125rem 1.25rem;
+}
+
+/* Shiki pre/code reset */
+.code-block-wrapper .shiki,
+.code-block-wrapper pre.shiki {
+  margin: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+.code-block-wrapper .shiki code,
+.code-block-wrapper pre.shiki code {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  color: inherit !important;
+  font-weight: normal !important;
+}
+
+/* ─── GitHub-Style Callout Alerts (Flat High-Contrast Brutalist) ─────────────── */
+.prose-retro .github-alert {
+  margin: 1.75rem 0;
+  padding: 0.875rem 1.125rem;
+  border-radius: 0;
+  border: 2px solid #000000;
+  box-shadow: none;
+  background-color: #f0f9ff;
+  max-width: 46rem;
+}
+
+.prose-retro .github-alert-note {
+  border-color: #000000;
+  border-left: 6px solid #0284c7;
+  background-color: #e0f2fe;
+}
+.prose-retro .github-alert-note .github-alert-title {
+  color: #0369a1;
+}
+
+.prose-retro .github-alert-tip {
+  border-color: #000000;
+  border-left: 6px solid #16a34a;
+  background-color: #dcfce7;
+}
+.prose-retro .github-alert-tip .github-alert-title {
+  color: #15803d;
+}
+
+.prose-retro .github-alert-important {
+  border-color: #000000;
+  border-left: 6px solid #9333ea;
+  background-color: #f3e8ff;
+}
+.prose-retro .github-alert-important .github-alert-title {
+  color: #7e22ce;
+}
+
+.prose-retro .github-alert-warning {
+  border-color: #000000;
+  border-left: 6px solid #ea580c;
+  background-color: #ffedd5;
+}
+.prose-retro .github-alert-warning .github-alert-title {
+  color: #c2410c;
+}
+
+.prose-retro .github-alert-caution {
+  border-color: #000000;
+  border-left: 6px solid #dc2626;
+  background-color: #fee2e2;
+}
+.prose-retro .github-alert-caution .github-alert-title {
+  color: #b91c1c;
+}
+
+.github-alert-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 800;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.5rem;
+}
+
+.github-alert-body {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: #000000;
+  font-weight: 500;
+}
+
+.github-alert-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* ─── Mermaid Diagram Container (Flat Parchment) ─────────────── */
+.prose-retro .mermaid-container {
+  margin: 2rem 0;
+  border: 2px solid #000000;
+  border-radius: 0;
+  background-color: #fbf7ee;
+  padding: 1.75rem 1rem;
+  overflow-x: auto;
+  box-shadow: none;
+}
+
+.prose-retro .mermaid-container pre.mermaid {
+  margin: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+.prose-retro .mermaid-container svg {
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  display: block;
+}
+
+/* ─── KaTeX Math ────────────────────────────────────────────── */
+.prose-retro .math-inline {
+  display: inline;
+  font-size: 1em;
+}
+
+.prose-retro .math-display {
+  overflow-x: auto;
+  padding: 1.5rem 0;
+  text-align: center;
+  display: block;
+  margin: 2rem 0;
+  font-size: 1.0625rem;
+}
+
+/* ─── Tables (Flat High-Contrast) ─────────────── */
+.table-responsive-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin: 2rem 0;
+  border: 2px solid #000000;
+  border-radius: 0;
+  background-color: #faf3e0;
+  box-shadow: none;
+}
+
+.prose-retro table {
+  width: 100%;
+  text-align: left;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.9375rem;
+  border-collapse: collapse;
+  margin: 0;
+}
+
+.prose-retro th {
+  padding: 0.75rem 1rem;
+  background-color: #fde047;
+  border-bottom: 2px solid #000000;
+  font-weight: 800;
+  color: #000000;
+}
+
+.prose-retro td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #000000;
+  color: #000000;
+  background-color: transparent;
+}
+
+.prose-retro tr:last-child td {
+  border-bottom: none;
+}
+
+.prose-retro tr:nth-child(even) td {
+  background-color: #f4ebd0;
+}
+
+/* ─── Figures and Image Captions ────────────────────────────── */
+.prose-retro .prose-figure {
+  margin: 2.5rem 0;
+  text-align: center;
+}
+
+.prose-retro .prose-figure img {
+  margin: 0 auto;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  max-width: 100%;
+  height: auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.prose-retro .prose-figure figcaption {
+  margin-top: 0.625rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-style: italic;
+}
+
+/* ─── Footnotes ─────────────────────────────────────────────── */
+/* When Littlefoot popovers are active, hide the static bottom footnotes list */
+.prose-retro .footnotes {
+  display: none !important;
+}
+
+.prose-retro .footnotes ol {
+  list-style-type: decimal;
+  margin-left: 1.25rem;
+  margin-bottom: 0;
+  padding-left: 0.25rem;
+}
+
+.prose-retro .footnotes li {
+  margin-bottom: 0.625rem;
+  line-height: 1.65;
+  font-size: 0.875rem;
+}
+
+.prose-retro .footnotes li::marker {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #9ca3af;
+}
+
+.prose-retro .footnotes li p {
+  display: inline;
+  margin: 0 !important;
+}
+
+.prose-retro .data-footnote-backref {
+  display: inline-block;
+  padding: 0.15rem 0.35rem;
+  margin-left: 0.35rem;
+  text-decoration: none;
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  color: #d97706;
+  border-radius: 3px;
+  background-color: rgba(217, 119, 6, 0.1);
+  font-size: 0.8125rem;
+  vertical-align: baseline;
+  transition: all 0.15s ease;
+}
+
+.prose-retro .data-footnote-backref:hover {
+  background-color: #d97706;
+  color: #ffffff;
+}
+
+/* ─── Table of Contents (Desktop Sidebar Active State) ──────── */
+.toc-nav-link {
+  color: rgba(20, 22, 31, 0.7);
+  border-left: 2px solid transparent;
+}
+
+.toc-nav-link:hover {
+  color: #000000;
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.toc-nav-link.active {
+  color: #b45309;
+  border-left-color: #d97706;
+  background-color: rgba(217, 119, 6, 0.06);
+  font-weight: 700;
+}
+
+/* ─── Cassette LCD Marquee ─────────────────────────────────── */
+@keyframes cassetteTicker {
+  0%   { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-cassette-ticker {
+  display: inline-flex;
+  width: max-content;
+  animation: cassetteTicker 12s linear infinite;
+  will-change: transform;
+}
+.animate-cassette-ticker:hover { animation-play-state: paused; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-cassette-ticker,
+  .animate-ticker,
+  .animate-tickerFast,
+  .animate-spinSlow,
+  .animate-wiggle,
+  .animate-bounceSubtle {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+
+/* ─── Dark Theme System ([data-theme="dark"] / .dark) ───────── */
+/* Strictly scoped to individual blog post pages */
+[data-theme="dark"],
+.dark {
+  color-scheme: dark;
+}
+
+[data-theme="dark"] body,
+.dark body {
+  background-color: #1e1e2e !important;
+  color: #cdd6f4 !important;
+}
+
+[data-theme="dark"] .retro-dots-bg,
+.dark .retro-dots-bg {
+  background-color: #1e1e2e !important;
+  background-image: none !important;
+}
+
+/* Headings in article */
+[data-theme="dark"] .prose-retro h1,
+[data-theme="dark"] .prose-retro h2,
+[data-theme="dark"] .prose-retro h3,
+[data-theme="dark"] .prose-retro h4,
+[data-theme="dark"] .prose-retro h5,
+[data-theme="dark"] .prose-retro h6,
+.dark .prose-retro h1,
+.dark .prose-retro h2,
+.dark .prose-retro h3,
+.dark .prose-retro h4,
+.dark .prose-retro h5,
+.dark .prose-retro h6 {
+  color: #cdd6f4 !important;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+/* Body text, lists, bold */
+[data-theme="dark"] .prose-retro,
+[data-theme="dark"] .prose-retro p,
+[data-theme="dark"] .prose-retro li,
+.dark .prose-retro,
+.dark .prose-retro p,
+.dark .prose-retro li {
+  color: #cdd6f4 !important;
+}
+
+[data-theme="dark"] .prose-retro strong,
+.dark .prose-retro strong {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .prose-retro hr,
+.dark .prose-retro hr {
+  border: 0 !important;
+  border-top: 1px solid #313244 !important;
+  margin: 3rem 0;
+}
+
+/* Prose links (Catppuccin Sapphire / Blue with Lavender hover) */
+[data-theme="dark"] .prose-retro a:not(.header-anchor):not(.toc-nav-link):not(.data-footnote-backref),
+.dark .prose-retro a:not(.header-anchor):not(.toc-nav-link):not(.data-footnote-backref) {
+  color: #89b4fa !important;
+  text-decoration: underline !important;
+  text-decoration-color: #585b70 !important;
+  text-underline-offset: 3px !important;
+  transition: all 0.15s ease;
+}
+
+[data-theme="dark"] .prose-retro a:not(.header-anchor):not(.toc-nav-link):not(.data-footnote-backref):hover,
+.dark .prose-retro a:not(.header-anchor):not(.toc-nav-link):not(.data-footnote-backref):hover {
+  color: #b4befe !important;
+  text-decoration-color: #89b4fa !important;
+  background-color: transparent !important;
+}
+
+/* Heading permalinks */
+[data-theme="dark"] .prose-retro .header-anchor,
+.dark .prose-retro .header-anchor {
+  color: inherit !important;
+}
+[data-theme="dark"] .prose-retro .header-anchor::after,
+.dark .prose-retro .header-anchor::after {
+  color: #6c7086 !important;
+}
+
+/* Inline code in dark mode (Catppuccin Pink on Surface 0) */
+[data-theme="dark"] .prose-retro code:not(pre code),
+.dark .prose-retro code:not(pre code) {
+  background-color: #313244 !important;
+  border: 1px solid #45475a !important;
+  color: #f5c2e7 !important;
+  font-family: 'Space Mono', monospace;
+  border-radius: 4px;
+}
+
+/* Editorial blockquotes (Catppuccin Lavender accent) */
+[data-theme="dark"] .prose-retro blockquote:not(.github-alert),
+.dark .prose-retro blockquote:not(.github-alert) {
+  background-color: transparent !important;
+  border-left: 2px solid #b4befe !important;
+  color: #bac2de !important;
+  font-style: italic;
+  padding-left: 1rem;
+}
+
+/* Figure captions */
+[data-theme="dark"] .prose-retro .prose-figure figcaption,
+.dark .prose-retro .prose-figure figcaption {
+  color: #a6adc8 !important;
+}
+
+/* Code block wrapper and copy button (Catppuccin Mantle + Crust) */
+[data-theme="dark"] .code-block-wrapper,
+.dark .code-block-wrapper {
+  margin: 2rem 0;
+  border: 1px solid #313244 !important;
+  border-radius: 8px;
+  background-color: #181825 !important;
+  box-shadow: none !important;
+  overflow: hidden;
+}
+
+[data-theme="dark"] .code-header,
+.dark .code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background-color: #11111b !important;
+  border-bottom: 1px solid #313244 !important;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.875rem;
+}
+
+[data-theme="dark"] .lang-badge,
+.dark .lang-badge {
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: #b4befe !important;
+  font-size: 0.75rem;
+}
+
+[data-theme="dark"] .lang-badge .lang-tag,
+.dark .lang-badge .lang-tag {
+  text-transform: uppercase;
+}
+
+[data-theme="dark"] .lang-badge .code-filename,
+.dark .lang-badge .code-filename,
+.code-filename {
+  text-transform: none !important;
+  color: inherit !important;
+}
+
+.prose-retro .code-copy-btn,
+[data-theme="dark"] .prose-retro .code-copy-btn,
+.dark .prose-retro .code-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  background-color: #faf3e0 !important;
+  border: 1.5px solid #000000 !important;
+  border-radius: 0 !important;
+  color: #000000 !important;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+
+.prose-retro .code-copy-btn:hover,
+[data-theme="dark"] .prose-retro .code-copy-btn:hover,
+.dark .prose-retro .code-copy-btn:hover {
+  background-color: #fde047 !important;
+  color: #000000 !important;
+  border-color: #000000 !important;
+}
+
+/* Tables in dark mode (Catppuccin Mantle & Surface 0) */
+[data-theme="dark"] .table-responsive-wrapper,
+.dark .table-responsive-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin: 2rem 0;
+  background-color: #181825 !important;
+  border: 1px solid #313244 !important;
+  border-radius: 8px;
+}
+
+[data-theme="dark"] .prose-retro table,
+.dark .prose-retro table {
+  width: 100%;
+  text-align: left;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.875rem;
+  border-collapse: collapse;
+}
+
+[data-theme="dark"] .prose-retro th,
+.dark .prose-retro th {
+  padding: 0.625rem 0.875rem;
+  background-color: #11111b !important;
+  color: #cdd6f4 !important;
+  border-bottom: 1px solid #313244 !important;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+[data-theme="dark"] .prose-retro td,
+.dark .prose-retro td {
+  padding: 0.625rem 0.875rem;
+  color: #cdd6f4 !important;
+  border-bottom: 1px solid #313244 !important;
+}
+
+[data-theme="dark"] .prose-retro tr:last-child td,
+.dark .prose-retro tr:last-child td {
+  border-bottom: none !important;
+}
+
+[data-theme="dark"] .prose-retro tr:nth-child(even) td,
+.dark .prose-retro tr:nth-child(even) td {
+  background-color: rgba(255, 255, 255, 0.02) !important;
+}
+
+/* GitHub Alert Callouts in Catppuccin Mocha */
+[data-theme="dark"] .prose-retro .github-alert,
+.dark .prose-retro .github-alert {
+  margin: 1.75rem 0;
+  padding: 0.875rem 1.125rem;
+  border-radius: 6px;
+  border: 1px solid #313244 !important;
+  box-shadow: none !important;
+  background-color: rgba(24, 24, 37, 0.7) !important;
+}
+
+[data-theme="dark"] .prose-retro .github-alert-note,
+.dark .prose-retro .github-alert-note {
+  border-color: rgba(137, 180, 250, 0.35) !important;
+  background-color: rgba(137, 180, 250, 0.06) !important;
+}
+[data-theme="dark"] .prose-retro .github-alert-note .github-alert-title,
+.dark .prose-retro .github-alert-note .github-alert-title {
+  color: #89b4fa !important;
+}
+
+[data-theme="dark"] .prose-retro .github-alert-tip,
+.dark .prose-retro .github-alert-tip {
+  border-color: rgba(166, 227, 161, 0.35) !important;
+  background-color: rgba(166, 227, 161, 0.06) !important;
+}
+[data-theme="dark"] .prose-retro .github-alert-tip .github-alert-title,
+.dark .prose-retro .github-alert-tip .github-alert-title {
+  color: #a6e3a1 !important;
+}
+
+[data-theme="dark"] .prose-retro .github-alert-important,
+.dark .prose-retro .github-alert-important {
+  border-color: rgba(203, 166, 247, 0.35) !important;
+  background-color: rgba(203, 166, 247, 0.06) !important;
+}
+[data-theme="dark"] .prose-retro .github-alert-important .github-alert-title,
+.dark .prose-retro .github-alert-important .github-alert-title {
+  color: #cba6f7 !important;
+}
+
+[data-theme="dark"] .prose-retro .github-alert-warning,
+.dark .prose-retro .github-alert-warning {
+  border-color: rgba(249, 226, 175, 0.35) !important;
+  background-color: rgba(249, 226, 175, 0.06) !important;
+}
+[data-theme="dark"] .prose-retro .github-alert-warning .github-alert-title,
+.dark .prose-retro .github-alert-warning .github-alert-title {
+  color: #f9e2af !important;
+}
+
+[data-theme="dark"] .prose-retro .github-alert-caution,
+.dark .prose-retro .github-alert-caution {
+  border-color: rgba(243, 139, 168, 0.35) !important;
+  background-color: rgba(243, 139, 168, 0.06) !important;
+}
+[data-theme="dark"] .prose-retro .github-alert-caution .github-alert-title,
+.dark .prose-retro .github-alert-caution .github-alert-title {
+  color: #f38ba8 !important;
+}
+
+[data-theme="dark"] .prose-retro .github-alert-body,
+[data-theme="dark"] .prose-retro .github-alert-body p,
+.dark .prose-retro .github-alert-body,
+.dark .prose-retro .github-alert-body p {
+  color: #cdd6f4 !important;
+  font-size: 1rem;
+}
+[data-theme="dark"] .prose-retro .github-alert-body code,
+.dark .prose-retro .github-alert-body code {
+  background-color: #313244 !important;
+  border-color: #45475a !important;
+  color: #f5c2e7 !important;
+}
+
+/* Footnotes section in dark mode */
+[data-theme="dark"] .prose-retro .footnotes,
+.dark .prose-retro .footnotes {
+  margin-top: 3.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #313244 !important;
+  font-size: 0.875rem;
+  color: #a6adc8 !important;
+}
+
+[data-theme="dark"] .prose-retro .footnotes #footnote-label,
+[data-theme="dark"] .prose-retro .footnotes h2,
+.dark .prose-retro .footnotes #footnote-label,
+.dark .prose-retro .footnotes h2 {
+  color: #cdd6f4 !important;
+}
+
+[data-theme="dark"] .prose-retro .footnotes ol,
+.dark .prose-retro .footnotes ol {
+  list-style-type: decimal;
+  margin-left: 1.25rem;
+}
+
+[data-theme="dark"] .prose-retro .footnotes li,
+.dark .prose-retro .footnotes li {
+  margin-bottom: 0.625rem;
+  line-height: 1.65;
+  color: #a6adc8 !important;
+}
+
+[data-theme="dark"] .prose-retro .footnotes li::marker,
+.dark .prose-retro .footnotes li::marker {
+  color: #7f849c !important;
+}
+
+[data-theme="dark"] .prose-retro .data-footnote-backref,
+.dark .prose-retro .data-footnote-backref {
+  display: inline-block;
+  margin-left: 0.35rem;
+  color: #89b4fa !important;
+  text-decoration: none !important;
+  background-color: transparent !important;
+  padding: 0;
+  vertical-align: baseline;
+}
+
+[data-theme="dark"] .prose-retro .data-footnote-backref:hover,
+.dark .prose-retro .data-footnote-backref:hover {
+  color: #b4befe !important;
+  text-decoration: underline !important;
+}
+
+/* Mermaid diagrams in dark mode */
+[data-theme="dark"] .prose-retro .mermaid-container,
+.dark .prose-retro .mermaid-container {
+  margin: 2rem 0;
+  background-color: #181825 !important;
+  border: 1px solid #313244 !important;
+  border-radius: 8px;
+  padding: 1.5rem 1rem;
+}
+
+/* Littlefoot Footnote Popovers & Buttons (Flat Retro Parchment) */
+.littlefoot {
+  --button-background-color: #fde047;
+  --button-text-color: #000000;
+  --button-active-background-color: #86efac;
+  --button-active-text-color: #000000;
+  --button-border-radius: 0;
+  --button-height: 1.25rem;
+  --button-padding: 0 0.4rem;
+  --button-transition: background-color 0.15s ease;
+  --popover-background-color: #faf3e0;
+  --popover-text-color: #000000;
+  --popover-border: 2px solid #000000;
+  --popover-border-radius: 0;
+  --popover-shadow: none;
+  --popover-horizontal-padding: 1.15rem;
+  --popover-vertical-padding: 0.85rem;
+  --popover-tooltip-size: 8px;
+  --popover-scroll-indicator-color: #000000;
+}
+
+.littlefoot__button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-family: 'Space Mono', monospace !important;
+  font-weight: 800 !important;
+  font-size: 0.7rem !important;
+  line-height: 1 !important;
+  color: #000000 !important;
+  background-color: #fde047 !important;
+  border: 1.5px solid #000000 !important;
+  box-shadow: none !important;
+  vertical-align: super !important;
+  position: relative !important;
+  top: -0.15em !important;
+  margin: 0 0.25rem !important;
+  padding: 0 0.35rem !important;
+  height: 1.15rem !important;
+  min-width: 1.15rem !important;
+  border-radius: 0 !important;
+  cursor: pointer !important;
+  transition: background-color 0.15s ease !important;
+}
+
+.littlefoot__button:hover {
+  background-color: #fbbf24 !important;
+  color: #000000 !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.littlefoot__button.is-active,
+.littlefoot__button:active {
+  background-color: #86efac !important;
+  color: #000000 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.littlefoot__button .littlefoot__number {
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+}
+
+.littlefoot__popover {
+  border: 2px solid #000000 !important;
+  background-color: #faf3e0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  z-index: 100 !important;
+}
+
+.littlefoot__tooltip {
+  background-color: #faf3e0 !important;
+  border-color: #000000 !important;
+}
+
+.littlefoot__content {
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-size: 0.875rem !important;
+  line-height: 1.65 !important;
+  color: #000000 !important;
+}
+
+.littlefoot__content p {
+  margin: 0 !important;
+  color: #000000 !important;
+}
+
+.littlefoot__content a {
+  color: #000000 !important;
+  font-weight: 700 !important;
+  text-decoration: underline 2px #000000 !important;
+  text-underline-offset: 2px;
+}
+
+.littlefoot__content a:hover {
+  background-color: #fde047 !important;
+}
+
+
+
+

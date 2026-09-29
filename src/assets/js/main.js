@@ -119,11 +119,90 @@ document.addEventListener("DOMContentLoaded", () => {
   /* 3. Projects Category Filter                                                */
   /* -------------------------------------------------------------------------- */
   const filterButtons = document.querySelectorAll(".project-filter-btn");
-  const projectCards = document.querySelectorAll(".project-card");
+  const projectsGrid = document.getElementById("projects-grid");
+  let nonPinnedRendered = false;
+
+  function renderNonPinnedCards() {
+    if (nonPinnedRendered || !projectsGrid) return;
+    const dataEl = document.getElementById("non-pinned-projects-data");
+    if (!dataEl) return;
+    try {
+      const nonPinned = JSON.parse(dataEl.textContent || "[]");
+      nonPinned.forEach((p) => {
+        const card = document.createElement("div");
+        card.className = "project-card card-brutal flex flex-col justify-between overflow-hidden hidden";
+        card.setAttribute("data-filter-category", p.filterCategory || "");
+        card.setAttribute("data-category", p.category || "");
+        card.setAttribute("data-pinned", "false");
+        card.setAttribute("data-popularity", String(p.popularity || 0));
+
+        let starsHtml = "";
+        if (p.stars > 0) {
+          starsHtml = `<span class="inline-flex items-center gap-1 font-mono text-xs font-bold text-black/80 bg-[#fffdf9] border border-black px-1.5 py-0.5" title="${p.stars} stargazers on GitHub"><svg class="w-3.5 h-3.5 text-[#f59e0b] fill-[#f59e0b] shrink-0" aria-hidden="true"><use href="#icon-star"/></svg><span>${p.stars}</span></span>`;
+        }
+        let forksHtml = "";
+        if (p.forks > 0) {
+          forksHtml = `<span class="inline-flex items-center gap-1 font-mono text-xs font-bold text-black/80 bg-[#fffdf9] border border-black px-1.5 py-0.5" title="${p.forks} forks on GitHub"><svg class="w-3.5 h-3.5 text-black/70 shrink-0" aria-hidden="true"><use href="#icon-git-fork"/></svg><span>${p.forks}</span></span>`;
+        }
+
+        let langHtml = "";
+        if (p.language) {
+          langHtml = `<span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full border border-black/40 shrink-0" style="background-color: ${p.languageColor || '#888'}"></span><span>${p.language}</span></span>`;
+        }
+        let statsHtml = "";
+        if (p.statsText) {
+          statsHtml = `${p.language ? '<span class="text-black/30">/</span>' : ''}<span class="text-[#d97706]">${p.statsText}</span>`;
+        }
+
+        let tagsHtml = "";
+        if (Array.isArray(p.tags)) {
+          tagsHtml = p.tags.map((t) => `<span class="tag-pill">#${String(t).toUpperCase()}</span>`).join("");
+        }
+
+        let visitBtn = "";
+        if (p.liveUrl) {
+          visitBtn = `<a href="${p.liveUrl}" target="_blank" rel="noopener noreferrer" class="btn-brutal-yellow px-3 sm:px-3.5 py-1.5 sm:py-2 text-xs"><span>VISIT</span><svg class="w-3.5 h-3.5 text-black shrink-0" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></a>`;
+        }
+        let ghBtn = "";
+        if (p.githubUrl) {
+          ghBtn = `<a href="${p.githubUrl}" target="_blank" rel="noopener noreferrer" class="btn-brutal-white px-3 sm:px-3.5 py-1.5 sm:py-2 text-xs hover:bg-[#86efac]"><svg class="w-3.5 h-3.5 text-black shrink-0" aria-hidden="true"><use href="#icon-github"/></svg><span>GITHUB</span></a>`;
+        }
+
+        card.innerHTML = `
+          <div class="hidden sm:block h-6 w-full border-b-[3px] border-black ${p.headerBgClass || 'bg-[#86efac]'}"></div>
+          <div class="p-5 sm:p-6 flex flex-col flex-1 justify-between">
+            <div>
+              <div class="flex items-start justify-between gap-2 mb-1">
+                <h3 class="text-xl sm:text-2xl font-black text-black">${p.title || ''}</h3>
+                <div class="flex items-center gap-1.5 shrink-0">${starsHtml}${forksHtml}</div>
+              </div>
+              <div class="flex flex-wrap items-center gap-x-2.5 gap-y-1 font-mono text-xs font-bold text-black/70 mb-3">${langHtml}${statsHtml}</div>
+              <p class="font-mono text-xs sm:text-sm text-black/80 leading-relaxed mb-4">${p.description || ''}</p>
+            </div>
+            <div>
+              <div class="flex flex-wrap gap-1.5 mb-4 sm:mb-5">${tagsHtml}</div>
+              <div class="flex flex-wrap items-center gap-2 sm:gap-3 pt-3 border-t-2 border-black/10">${visitBtn}${ghBtn}</div>
+            </div>
+          </div>
+        `;
+        projectsGrid.appendChild(card);
+      });
+      nonPinnedRendered = true;
+    } catch (e) {
+      console.warn("Failed to parse non-pinned projects data:", e);
+    }
+  }
 
   filterButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
       const selectedFilter = btn.getAttribute("data-filter");
+
+      // Lazily render non-pinned cards if user picks any category other than PINNED
+      if (selectedFilter !== "PINNED") {
+        renderNonPinnedCards();
+      }
+
+      const allCards = document.querySelectorAll(".project-card");
 
       // Update button styling
       filterButtons.forEach((b) => {
@@ -131,9 +210,9 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       btn.className = "project-filter-btn px-2.5 sm:px-3 py-1 sm:py-1.5 border-2 border-black transition-all cursor-pointer bg-[#fde047] shadow-brutal-xs font-black -translate-y-0.5";
 
-      // Filter project cards (if more than 4, show top 4 most popular: stars + forks)
+      // Filter project cards
       const matchingCards = [];
-      projectCards.forEach((card) => {
+      allCards.forEach((card) => {
         const filterCat = card.getAttribute("data-filter-category");
         const fullCat = card.getAttribute("data-category") || "";
         const isPinned = card.getAttribute("data-pinned") === "true";
@@ -154,7 +233,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
 
-      // If category isn't PINNED, sort matching cards by popularity (stars + forks) descending
+      // If category isn't PINNED, sort matching cards by popularity descending
       if (selectedFilter !== "PINNED") {
         matchingCards.sort((a, b) => {
           const popA = parseInt(a.getAttribute("data-popularity") || "0", 10);

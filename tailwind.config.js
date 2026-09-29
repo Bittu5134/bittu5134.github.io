@@ -1,5 +1,3 @@
-import typography from '@tailwindcss/typography';
-
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -168,5 +166,5 @@ export default {
     borderCollapse: false,
     borderSpacing: false,
   },
-  plugins: [typography],
+  plugins: [],
 };

@@ -201,4 +201,24 @@ fs.writeFileSync(path.join(rootDir, "src/_data/techStack.js"), techStackJsConten
 const spriteOutput = `<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="hidden" style="display:none">\n${spriteSymbols.join("\n")}\n</svg>\n`;
 fs.writeFileSync(path.join(rootDir, "src/_includes/components/icons-sprite.njk"), spriteOutput, "utf-8");
 
+// Also create a lean homepage-only sprite by filtering to used icons
+const homepageUsedIcons = new Set([
+  "icon-terminal", "icon-pickaxe", "icon-arrow-down", "icon-arrow-right", "icon-arrow-up-right",
+  "icon-check", "icon-disc-3", "icon-disc3", "icon-play", "icon-pause", "icon-skip-back", "icon-skip-forward",
+  "icon-volume-2", "icon-minus", "icon-external-link", "icon-menu", "icon-x", "icon-folder",
+  "icon-file-text", "icon-user", "icon-mail", "icon-rss", "icon-book-open", "icon-graduation-cap",
+  "icon-trophy", "icon-zap", "icon-copy", "icon-bug", "icon-star", "icon-git-fork", "icon-code",
+  "icon-github", "icon-twitter", "icon-discord", "icon-patreon", "icon-reddit", "icon-linkedin",
+  "icon-pixel-monster", "icon-planet-minecraft", "icon-tech-go", "icon-tech-python", "icon-tech-cplusplus",
+  "icon-tech-typescript", "icon-tech-linux", "icon-tech-webrtc", "icon-tech-docker", "icon-tech-redis",
+  "icon-tech-fastapi", "icon-tech-cloudflare"
+]);
+
+const homeSymbols = spriteSymbols.filter(s => {
+  const m = s.match(/id="([^"]+)"/);
+  return m && homepageUsedIcons.has(m[1]);
+});
+const homeSpriteOutput = `<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="hidden" style="display:none">\n${homeSymbols.join("\n")}\n</svg>\n`;
+fs.writeFileSync(path.join(rootDir, "src/_includes/components/icons-sprite-home.njk"), homeSpriteOutput, "utf-8");
+
 console.log(`[sync-icons] Done! Synchronized ${spriteSymbols.length} official icons into public/assets/icons/ and icons-sprite.njk.`);
