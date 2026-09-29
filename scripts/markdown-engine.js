@@ -20,6 +20,7 @@ import {
   rehypeCodeBlockWrapper,
   rehypeGithubAlertsTransformer,
   rehypeTableWrapper,
+  rehypeBlogRelativeImages,
 } from "./markdown/ast-plugins.js";
 
 let processorCache = null;
@@ -60,6 +61,7 @@ export async function buildProcessor() {
     .use(rehypeCodeBlockWrapper)             // wrap shiki <pre> in .code-block-wrapper
     .use(rehypeGithubAlertsTransformer)      // convert alert blockquotes → styled divs
     .use(rehypeTableWrapper)                 // wrap <table> in .table-responsive-wrapper
+    .use(rehypeBlogRelativeImages)           // rewrite relative blog image links (./assets/...) to /blogs/...
     .use(rehypeKatex)                        // render math nodes → KaTeX HTML
     .use(rehypeExternalLinks, {
       target: "_blank",

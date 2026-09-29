@@ -10,13 +10,10 @@ const __dirname = path.dirname(__filename);
 
 const SITE_URL = "https://bittu.dev";
 const blogsDir = path.resolve(__dirname, "../blogs");
-const blogImagesDir = path.resolve(blogsDir, "images");
 const publicDir = path.resolve(__dirname, "../public");
-const publicBlogImagesDir = path.resolve(publicDir, "images/blogs");
-const rawBlogsDir = path.resolve(publicDir, "raw/blogs");
 
 function ensureDirs() {
-  [publicDir, publicBlogImagesDir, rawBlogsDir].forEach((dir) => {
+  [publicDir].forEach((dir) => {
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
@@ -49,7 +46,22 @@ function getDeterministicAbstractCover(str) {
   return UNSPLASH_ABSTRACT_COVERS[index];
 }
 
-// 1. Read and parse all markdown blogs directly with gray-matter
+// Recursively find all markdown files in a directory (supporting nested subfolders)
+function getAllMarkdownFiles(dir) {
+  let results = [];
+  const list = fs.readdirSync(dir, { withFileTypes: true });
+  for (const entry of list) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      if (entry.name !== "node_modules" && entry.name !== ".git") {
+        results = results.concat(getAllMarkdownFiles(fullPath));
+      }
+    } else if (entry.isFile() && entry.name.endsWith(".md")) {
+      results.push(fullPath);
+    }
+  }
+  return results;
+}
 function parseMarkdownFile(filepath) {
   const raw = fs.readFileSync(filepath, "utf-8");
   const fallbackSlug = path.basename(filepath, ".md");
@@ -86,31 +98,11 @@ function parseMarkdownFile(filepath) {
 export async function generateMeta() {
   ensureDirs();
 
-  // Copy any co-located blog images from blogs/images to public/images/blogs
-  if (fs.existsSync(blogImagesDir)) {
-    const images = fs.readdirSync(blogImagesDir);
-    for (const img of images) {
-      const srcPath = path.join(blogImagesDir, img);
-      const destPath = path.join(publicBlogImagesDir, img);
-      if (fs.statSync(srcPath).isFile()) {
-        fs.copyFileSync(srcPath, destPath);
-      }
-    }
-  }
-
-
-  const blogFiles = fs
-    .readdirSync(blogsDir)
-    .filter((f) => f.endsWith(".md"))
-    .map((f) => parseMarkdownFile(path.join(blogsDir, f)))
+  const blogFiles = getAllMarkdownFiles(blogsDir)
+    .map((f) => parseMarkdownFile(f))
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   console.log(`[generate-meta] Loaded ${blogFiles.length} markdown blog posts directly from frontmatter.`);
-
-  // Copy raw markdown posts to public/raw/blogs/
-  for (const post of blogFiles) {
-    fs.writeFileSync(path.join(rawBlogsDir, `${post.slug}.md`), post.raw, "utf-8");
-  }
 
 
 
@@ -177,7 +169,7 @@ Sitemap: ${SITE_URL}/sitemap.xml
   const articlesList = blogFiles
     .map(
       (post) =>
-        `- [${post.title}](${SITE_URL}/raw/blogs/${post.slug}.md): ${post.summary} (HTML view at ${SITE_URL}/blog/${post.slug})`
+        `- [${post.title}](${SITE_URL}/blogs/${post.slug}.md): ${post.summary} (HTML view at ${SITE_URL}/blog/${post.slug})`
     )
     .join("\n");
 
@@ -217,7 +209,7 @@ Read Time: ${post.readTime}
 Tags: ${post.tags.join(", ")}
 URL: ${SITE_URL}/blog/${post.slug}
 Cover: ${post.coverImage ? `${SITE_URL}${post.coverImage}` : "None"}
-Raw Markdown: ${SITE_URL}/raw/blogs/${post.slug}.md
+Raw Markdown: ${SITE_URL}/blogs/${post.slug}.md
 Summary: ${post.summary}
 ---
 

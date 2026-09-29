@@ -306,4 +306,4 @@ The Shannon entropy formula[^1] quantifies the average information content of a 
 
 Images written as standalone paragraphs are automatically parsed into semantic `<figure>` elements, deriving a centered `<figcaption>` from the image's alt text:
 
-![Architecture overview diagram of our zero-overhead build pipeline](/images/blogs/pipeline-flow.svg)
+![Architecture overview diagram of our zero-overhead build pipeline](./assets/pipeline-flow.svg)

@@ -9,6 +9,16 @@ import { minify } from "html-minifier-terser";
 function syncBlogsToSrc() {
   const srcBlogs = path.resolve("src/blogs");
   const rootBlogs = path.resolve("blogs");
+  // If it's a symlink or points to same real path, no copying needed
+  if (fs.existsSync(srcBlogs)) {
+    try {
+      if (fs.realpathSync(srcBlogs) === fs.realpathSync(rootBlogs)) {
+        return;
+      }
+    } catch {
+      // proceed
+    }
+  }
   if (fs.existsSync(rootBlogs)) {
     fs.cpSync(rootBlogs, srcBlogs, { recursive: true });
   }
@@ -28,7 +38,7 @@ export default async function (eleventyConfig) {
   const md = await setupMarkdown();
   eleventyConfig.setLibrary("md", md);
 
-  // 2. Lifecycle hook: Sync blogs, sitemaps, robots, raw markdown, and metadata before each build
+  // 2. Lifecycle hook: Sync blogs, sitemaps, robots, and metadata before each build
   eleventyConfig.on("eleventy.before", async () => {
     try {
       syncBlogsToSrc();
@@ -44,8 +54,6 @@ export default async function (eleventyConfig) {
     eleventyConfig.watchIgnores.add("public/sitemap.xml");
     eleventyConfig.watchIgnores.add("public/robots.txt");
     eleventyConfig.watchIgnores.add("public/llms*.txt");
-    eleventyConfig.watchIgnores.add("public/raw/**");
-    eleventyConfig.watchIgnores.add("public/images/blogs/**");
   }
 
   // 4. Watch for blog content and styles
@@ -54,7 +62,7 @@ export default async function (eleventyConfig) {
 
   // 5. Reactive Blogs collection sorted chronologically descending
   eleventyConfig.addCollection("blogs", function (collectionApi) {
-    return collectionApi.getFilteredByGlob(["./blogs/*.md", "./src/blogs/*.md"]).sort((a, b) => {
+    return collectionApi.getFilteredByGlob(["./blogs/**/*.md", "./src/blogs/**/*.md"]).sort((a, b) => {
       const dateA = new Date(a.data.date || a.date);
       const dateB = new Date(b.data.date || b.date);
       return dateB - dateA;
@@ -64,7 +72,7 @@ export default async function (eleventyConfig) {
   // 5.1 Unique tags collection for blog filtering
   eleventyConfig.addCollection("blogTags", function (collectionApi) {
     const tagsSet = new Set();
-    const posts = collectionApi.getFilteredByGlob(["./blogs/*.md", "./src/blogs/*.md"]);
+    const posts = collectionApi.getFilteredByGlob(["./blogs/**/*.md", "./src/blogs/**/*.md"]);
     posts.forEach((post) => {
       (post.data.tags || []).forEach((t) => {
         if (t && t !== "posts") tagsSet.add(t);
@@ -95,6 +103,7 @@ export default async function (eleventyConfig) {
   // 7. Passthrough static assets
   eleventyConfig.addPassthroughCopy({ "public": "." });
   eleventyConfig.addPassthroughCopy({ "public/.nojekyll": ".nojekyll" });
+  eleventyConfig.addPassthroughCopy({ "blogs": "blogs" });
   eleventyConfig.addPassthroughCopy({ "src/assets/js": "assets/js" });
   eleventyConfig.addPassthroughCopy({ "node_modules/littlefoot/dist/littlefoot.mjs": "assets/js/littlefoot.js" });
   eleventyConfig.addPassthroughCopy({ "node_modules/littlefoot/dist/littlefoot.css": "assets/css/littlefoot.css" });

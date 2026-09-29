@@ -221,3 +221,28 @@ export function rehypeTableWrapper() {
     });
   };
 }
+
+/**
+ * 5. rehypeBlogRelativeImages
+ * Rewrites relative image links (e.g. ./assets/foo.png or assets/foo.png)
+ * to root-relative paths under /blogs/... so browsers can resolve them on /blog/<slug>/ pages.
+ */
+export function rehypeBlogRelativeImages() {
+  return (tree) => {
+    visit(tree, "element", (node) => {
+      if (node.tagName === "img" && node.properties?.src) {
+        let src = String(node.properties.src).trim();
+        if (
+          !src.startsWith("http://") &&
+          !src.startsWith("https://") &&
+          !src.startsWith("/") &&
+          !src.startsWith("data:")
+        ) {
+          src = src.replace(/^\.\//, "");
+          node.properties.src = `/blogs/${src}`;
+        }
+      }
+    });
+  };
+}
+
