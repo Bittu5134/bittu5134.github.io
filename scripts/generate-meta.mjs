@@ -160,56 +160,77 @@ ${urlsXml}
   const robotsContent = `User-agent: *
 Allow: /
 
-# Canonical Sitemaps & LLM Context Feeds
+# AI Agent & LLM Context Feeds
+LLMs: ${SITE_URL}/llms.txt
+LLMs-full: ${SITE_URL}/llms-full.txt
+
+# Canonical Sitemaps
 Sitemap: ${SITE_URL}/sitemap.xml
 `;
   fs.writeFileSync(path.join(publicDir, "robots.txt"), robotsContent, "utf-8");
 
   // 5. Generate public/llms.txt
   const articlesList = blogFiles
-    .map(
-      (post) =>
-        `- [${post.title}](${SITE_URL}/blogs/${post.slug}.md): ${post.summary} (HTML view at ${SITE_URL}/blog/${post.slug})`
-    )
+    .map((post) => {
+      const tags = post.tags.length ? ` [${post.tags.join(", ")}]` : "";
+      return `- [${post.title}](${SITE_URL}/blogs/${post.slug}.md): ${post.summary}${tags} — ${post.readTime}. Rendered HTML: ${SITE_URL}/blog/${post.slug}`;
+    })
     .join("\n");
 
   const projectsMarkdown = projectsList
-    .map((p) => `- [${p.title}](${p.liveUrl || p.githubUrl}): ${p.description}`)
+    .map((p) => {
+      const url = p.liveUrl || p.githubUrl;
+      const extra = p.liveUrl ? ` Source: ${p.githubUrl}` : "";
+      return `- [${p.title}](${url}): ${p.description}${extra}`;
+    })
     .join("\n");
 
-  const llmsContent = `# Bittu's Portfolio & Technical Blog
-> A portfolio and technical blog for a low-level systems builder, cybersecurity undergraduate at IIT Kanpur, and WebRTC developer.
+  const llmsContent = `# Bittu (Bittu5134)
+> Software engineer at IIT Kanpur specialising in low-level systems programming, WebRTC networking, protocol reverse-engineering, and AI tooling. This file is the canonical agent-readable index of all public work and technical writing at bittu.dev.
 
-## Projects
+Canonical site: ${SITE_URL}
+Generated: ${today}
+
+## Identity & Expertise
+- Full name: Bittu (handle: Bittu5134)
+- Education: B.Tech Cybersecurity & Computing, IIT Kanpur (expected 2030)
+- Core skills: Go, Python, C/C++, TypeScript — Linux sockets, POSIX daemons, WebRTC/STUN/TURN, Redis, FastAPI/Gin, Cloudflare Workers, PyMuPDF, PyTorch, RAG pipelines
+- Contact: hello@bittu.dev
+- GitHub: https://github.com/Bittu5134
+- LinkedIn: https://www.linkedin.com/in/bittu5134
+- X / Twitter: https://x.com/Bittu5134
+
+## Open-Source Projects
 ${projectsMarkdown}
 
 ## Technical Writing
 ${articlesList}
 
-## Full Content Payload
-- [Complete Site LLM Context](${SITE_URL}/llms-full.txt): Stitched plain-text and raw Markdown payload containing full project descriptions and complete blog post contents for single-shot ingestion.
+## Full Single-File Context
+- [llms-full.txt](${SITE_URL}/llms-full.txt): Complete plain-text payload — full project descriptions, all blog post content verbatim, and author profile. Optimised for single-shot context injection into coding assistants and RAG pipelines.
 
-## Optional & Quick Links
-- [Website Home](${SITE_URL}): Interactive Neo-Brutalist portfolio home.
-- [Technical Blog](${SITE_URL}/blog): Full web-rendered article archive.
-- [RSS 2.0 Feed](${SITE_URL}/rss.xml): Standard RSS syndication feed.
-- [GitHub Profile](https://github.com/Bittu5134): Open-source repositories and experimental code.
-- [Planet Minecraft](https://www.planetminecraft.com/member/bittu5134/): Minecraft technical datapacks and spotlighted game modifications.
-- [Patreon](https://www.patreon.com/lazybittu): Support independent open-source tools and systems research.
+## Additional Links
+- [Blog Archive](${SITE_URL}/blog): Chronological index of all technical articles with tags and reading times.
+- [RSS Feed](${SITE_URL}/rss.xml): Machine-readable RSS 2.0 feed for new article syndication.
+- [Planet Minecraft](https://www.planetminecraft.com/member/bittu5134/): Published Minecraft technical datapacks and game modifications (2.3M+ downloads).
+- [Patreon](https://www.patreon.com/lazybittu): Support channel for independent open-source tools and systems research.
 `;
   fs.writeFileSync(path.join(publicDir, "llms.txt"), llmsContent, "utf-8");
 
   // 6. Generate public/llms-full.txt
   const postsFullSection = blogFiles
     .map((post) => {
+      const coverUrl = post.coverImage
+        ? (post.coverImage.startsWith("http") ? post.coverImage : `${SITE_URL}${post.coverImage}`)
+        : "None";
       return `---
 Title: ${post.title}
 Date: ${post.date}
 Read Time: ${post.readTime}
 Tags: ${post.tags.join(", ")}
-URL: ${SITE_URL}/blog/${post.slug}
-Cover: ${post.coverImage ? `${SITE_URL}${post.coverImage}` : "None"}
+Canonical URL: ${SITE_URL}/blog/${post.slug}
 Raw Markdown: ${SITE_URL}/blogs/${post.slug}.md
+Cover Image: ${coverUrl}
 Summary: ${post.summary}
 ---
 
@@ -219,42 +240,56 @@ ${post.content}`;
 
   const projectsFullSection = projectsList
     .map((p, i) => {
-      return `${i + 1}. ${p.title} (${p.liveUrl ? `${p.liveUrl} | ` : ""}${p.githubUrl})
-${p.description}
-Category: ${p.category} | Tags: ${p.tags.join(", ")} | Stats: ${p.statsText}`;
+      const urls = [p.liveUrl && `Live: ${p.liveUrl}`, p.githubUrl && `Source: ${p.githubUrl}`]
+        .filter(Boolean).join(" | ");
+      return `### ${i + 1}. ${p.title}
+${urls}
+Description: ${p.description}
+Category: ${p.category}
+Language: ${p.language || "(see repo)"}
+Topics: ${(p.tags || []).join(", ")}`;
     })
     .join("\n\n");
 
-  const fullContent = `# Bittu's Portfolio & Technical Blog — Full Context Payload
-> Complete plain-text and Markdown knowledge base for Bittu (Bittu5134): low-level systems builder, cybersecurity undergraduate at IIT Kanpur, and WebRTC developer.
+  const fullContent = `# Bittu (Bittu5134) — Full Context Payload
+> Complete plain-text knowledge base for AI agents and coding assistants. Contains full author profile, all open-source project descriptions, and every technical blog post verbatim. Optimised for single-shot ingestion.
 
-Canonical URL: ${SITE_URL}
-Index File: ${SITE_URL}/llms.txt
-RSS Feed: ${SITE_URL}/rss.xml
+Index: ${SITE_URL}/llms.txt
+Canonical: ${SITE_URL}
+Generated: ${today}
+
+================================================================================
+SECTION 1 — IDENTITY & SKILLS
+================================================================================
+
+Name: Bittu
+Handle: Bittu5134
+Email: hello@bittu.dev
+Website: ${SITE_URL}
 GitHub: https://github.com/Bittu5134
+LinkedIn: https://www.linkedin.com/in/bittu5134
+X / Twitter: https://x.com/Bittu5134
 Patreon: https://www.patreon.com/lazybittu
 
-================================================================================
-SECTION 1: PROFILE & CORE EXPERTISE
-================================================================================
+Education: B.Tech Cybersecurity & Computing — Indian Institute of Technology Kanpur (expected 2030)
 
-Name: Bittu (Bittu5134)
-Education: Undergraduate in Cybersecurity & Computing at Indian Institute of Technology Kanpur (IIT Kanpur '30)
-Core Focus:
-- Low-Level Systems: Linux POSIX daemons, raw TCP/UDP socket interception, /proc lineage tracing with SHA-256 GUIDs, memory-mapped I/O, zero-allocation Go loops.
-- Networking & P2P: High-throughput WebRTC signaling servers, STUN/TURN, Redis TTL state sync, token-bucket rate limiting.
-- Protocol Reverse Engineering: Minecraft Java Edition wire format (VarInts, packet state machine transitions, zlib decompression).
-- Spatial Geometry: 2D coordinate bounding box parsing in PyMuPDF for complex LaTeX tabular PDFs.
-- Web & Cloud: SSG static compilers, Cloudflare WAF bot mitigation, FastAPI async backends.
+Languages: Go, Python, C, C++, TypeScript, JavaScript
+Systems: Linux POSIX daemons, raw TCP/UDP sockets, /proc lineage tracing, SHA-256 GUIDs, memory-mapped I/O, zero-allocation Go event loops
+Networking: WebRTC signaling servers, STUN/TURN/ICE, Redis TTL heartbeat pruning, IP token-bucket rate limiting, 500-peer concurrency benchmarks
+Protocol Reversing: Minecraft Java Edition wire format — VarInt encoding, zlib packet compression, handshake state machines, live packet sniffing
+AI & ML: RAG pipelines, MCP servers, CNN defect-detection ensembles, PyTorch, scikit-learn, vision model inference
+Spatial Parsing: 2D bounding-box coordinate clustering in PyMuPDF for LaTeX tabular PDFs (academic transcripts, resumes)
+Cloud & Edge: Cloudflare Workers, Cloudflare WAF bot mitigation, Cloudflare Pages, FastAPI, Gin, SSG compilers
+Notable Deployments: 2.3M+ Minecraft datapack downloads (Planet Minecraft); public WebRTC signaling API (PeerBasket)
 
 ================================================================================
-SECTION 2: FEATURED PROJECTS
+SECTION 2 — OPEN-SOURCE PROJECTS
 ================================================================================
 
 ${projectsFullSection}
 
 ================================================================================
-SECTION 3: COMPLETE TECHNICAL ARTICLES & DISPATCHES
+SECTION 3 — TECHNICAL ARTICLES (FULL TEXT)
 ================================================================================
 
 ${postsFullSection}

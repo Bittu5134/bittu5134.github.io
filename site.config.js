@@ -17,7 +17,7 @@ export default {
   author: {
     name: "Bittu",
     alternateName: "Bittu5134",
-    email: "contact@bittu.dev",
+    email: "hello@bittu.dev",
     url: "https://bittu.dev",
     image: "https://bittu.dev/images/avatar.webp",
     jobTitle: "Software Engineer",

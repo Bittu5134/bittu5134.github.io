@@ -1,5 +1,9 @@
 User-agent: *
 Allow: /
 
-# Canonical Sitemaps & LLM Context Feeds
+# AI Agent & LLM Context Feeds
+LLMs: https://bittu.dev/llms.txt
+LLMs-full: https://bittu.dev/llms-full.txt
+
+# Canonical Sitemaps
 Sitemap: https://bittu.dev/sitemap.xml
