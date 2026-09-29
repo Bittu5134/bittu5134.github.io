@@ -1,23 +1,40 @@
+import fs from "node:fs";
+import path from "node:path";
 import { setupMarkdown } from "./scripts/markdown-engine.js";
 import { generateMeta } from "./scripts/generate-meta.mjs";
 import getReadingTime from "reading-time";
 import pluginRss from "@11ty/eleventy-plugin-rss";
 import { minify } from "html-minifier-terser";
 
+function syncBlogsToSrc() {
+  const srcBlogs = path.resolve("src/blogs");
+  const rootBlogs = path.resolve("blogs");
+  if (fs.existsSync(rootBlogs)) {
+    fs.cpSync(rootBlogs, srcBlogs, { recursive: true });
+  }
+}
+
 export default async function (eleventyConfig) {
-  // 0. Official RSS Plugin
+  // Tell 11ty not to skip gitignored files in input dir (since src/blogs/ is gitignored)
+  eleventyConfig.setUseGitIgnore(false);
+
+  // 0. Initial sync of blogs to src/blogs for 11ty input
+  syncBlogsToSrc();
+
+  // 0.1 Official RSS Plugin
   eleventyConfig.addPlugin(pluginRss);
 
   // 1. Setup Markdown engine (Shiki SSG syntax highlighting, Mermaid diagrams, GitHub alerts, anchors)
   const md = await setupMarkdown();
   eleventyConfig.setLibrary("md", md);
 
-  // 2. Lifecycle hook: Sync sitemaps, robots, raw markdown, and metadata before each build
+  // 2. Lifecycle hook: Sync blogs, sitemaps, robots, raw markdown, and metadata before each build
   eleventyConfig.on("eleventy.before", async () => {
     try {
+      syncBlogsToSrc();
       await generateMeta();
     } catch (err) {
-      console.warn("[11ty.before] generateMeta warning:", err.message);
+      console.warn("[11ty.before] sync/generateMeta warning:", err.message);
     }
   });
 

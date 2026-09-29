@@ -17,6 +17,7 @@ dist-ssr
 docs
 *.local
 .cache
+src/blogs/
 
 # Editor directories and files
 .vscode/*
