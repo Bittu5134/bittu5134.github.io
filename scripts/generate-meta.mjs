@@ -160,9 +160,9 @@ ${urlsXml}
   const robotsContent = `User-agent: *
 Allow: /
 
-# AI Agent & LLM Context Feeds
-LLMs: ${SITE_URL}/llms.txt
-LLMs-full: ${SITE_URL}/llms-full.txt
+# AI Agent & LLM Context Feeds (commented: non-standard directives break Lighthouse SEO; discovered via <link rel="alternate"> in HTML <head>)
+# LLMs: ${SITE_URL}/llms.txt
+# LLMs-full: ${SITE_URL}/llms-full.txt
 
 # Canonical Sitemaps
 Sitemap: ${SITE_URL}/sitemap.xml

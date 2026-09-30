@@ -70,8 +70,9 @@
     {% include "components/seo-schema.njk" %}
 
     <!-- Preload Critical Local Fonts & Hero Avatar -->
-    <link rel="preload" href="/fonts/SpaceGrotesk-Variable.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/SpaceMono-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <!-- Space Mono Bold carries ~84% of hero text (font-bold/black/semibold all resolve to it,
+         since Space Mono only ships 400 + 700). Regular/Grotesk are left to font-display: swap. -->
+    <link rel="preload" href="/fonts/SpaceMono-Bold.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/images/avatar.avif" as="image" type="image/avif" />
 
     <!-- Theme Preference (Retro Light Theme) -->
@@ -104,6 +105,10 @@
 
     <!-- RSS -->
     <link rel="alternate" type="application/rss+xml" title="Bittu's Blog RSS Feed" href="https://bittu.dev/rss.xml" />
+
+    <!-- LLM / AI agent context feeds (replaces non-standard robots.txt directives) -->
+    <link rel="alternate" type="text/plain" title="LLM Context Index" href="https://bittu.dev/llms.txt" />
+    <link rel="alternate" type="text/plain" title="LLM Full Context" href="https://bittu.dev/llms-full.txt" />
   </head>
   <body id="top" class="bg-[#f6eedb] text-[#14161f] selection:bg-[#fde047] selection:text-black min-h-screen">
     {% if isBlogPage %}
