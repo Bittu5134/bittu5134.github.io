@@ -389,8 +389,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
       isSwitchingTrack = true;
       audio.pause();
-      audio.src = track.url;
-      audio.load();
+
+      // Only attach the source on an explicit play request. Setting audio.src +
+      // audio.load() here would fetch the whole first track (e.g. the ~110KB
+      // Miku .webm) during page load, even with preload="none" and no user gesture.
+      // Paused track switches only move the selection; togglePlay() attaches the
+      // source lazily when the user actually hits play.
+      if (autoplay) {
+        audio.src = track.url;
+        audio.load();
+      } else {
+        // Detach the old source so togglePlay() knows to load the new selection
+        // on the next play press. load() with an empty src is a no-op (no fetch).
+        audio.removeAttribute("src");
+        audio.load();
+      }
 
       if (trackCounter) {
         trackCounter.textContent = `${pad(currentTrackIndex + 1)}/${pad(TRACKS.length)}`;
@@ -436,7 +449,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Toggle Play/Pause
     function togglePlay() {
-      if (!audio.src || !audio.src.includes(TRACKS[currentTrackIndex].url)) {
+      if (!audio.getAttribute("src")) {
+        // No source attached yet (paused track selection) - load the current
+        // track and start it in one go.
         loadTrack(currentTrackIndex, true);
         return;
       }

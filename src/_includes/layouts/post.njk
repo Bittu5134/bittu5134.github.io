@@ -526,7 +526,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 {% endif %}
 
 <!-- Conditionally Load & Initialize Littlefoot Footnote Popovers -->
-{% if content and ('data-footnote-ref' in content or 'fnref' in content or 'footnote' in content) %}
+{% if content and ('data-footnote-ref' in content or 'class="footnotes' in content) %}
   <script type="module">
     import littlefoot from "/assets/js/littlefoot.js";
 
