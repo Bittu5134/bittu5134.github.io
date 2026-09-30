@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         let statsHtml = "";
         if (p.statsText) {
-          statsHtml = `${p.language ? '<span class="text-black/30">/</span>' : ''}<span class="text-[#d97706]">${p.statsText}</span>`;
+          statsHtml = `${p.language ? '<span class="text-black/30">/</span>' : ''}<span class="text-[#b45309]">${p.statsText}</span>`;
         }
 
         let tagsHtml = "";
