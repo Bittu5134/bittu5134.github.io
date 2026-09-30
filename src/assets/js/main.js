@@ -258,19 +258,26 @@ document.addEventListener("DOMContentLoaded", () => {
   /* -------------------------------------------------------------------------- */
   const clockEl = document.getElementById("hero-clock");
   if (clockEl) {
+    // Hoisted formatter: only hour:minute are displayed, so rebuilding an Intl
+    // formatter and touching the DOM every second was pure waste.
+    const istTimeFormat = new Intl.DateTimeFormat("en-US", {
+      timeZone: "Asia/Kolkata",
+      hour: "2-digit",
+      minute: "2-digit",
+      hourCycle: "h23",
+    });
+
     function updateClock() {
-      const now = new Date();
-      const timeStr = now.toLocaleTimeString("en-US", {
-        timeZone: "Asia/Kolkata",
-        hour: "2-digit",
-        minute: "2-digit",
-        // second: "2-digit",
-        hour12: false
-      });
-      clockEl.textContent = `${timeStr} IST`;
+      clockEl.textContent = `${istTimeFormat.format(new Date())} IST`;
     }
-    updateClock();
-    setInterval(updateClock, 1000);
+
+    // Align updates to the minute boundary instead of polling every second.
+    (function tickClock() {
+      updateClock();
+      const now = new Date();
+      const msToNextMinute = 60000 - (now.getSeconds() * 1000 + now.getMilliseconds());
+      setTimeout(tickClock, msToNextMinute + 20);
+    })();
   }
 
   /* -------------------------------------------------------------------------- */
@@ -618,91 +625,151 @@ document.addEventListener("DOMContentLoaded", () => {
         return shader;
       }
 
-      const vertexShader = createShader(gl, gl.VERTEX_SHADER, vsSource);
-      const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
+      // Program creation is wrapped in initWebGL() and invoked lazily from the
+      // IntersectionObserver below, so compile/link never blocks DOMContentLoaded.
+      let program = null;
+      let resolutionLocation = null;
+      let timeLocation = null;
+      let initialized = false;
+      let isVisible = false;
+      let animationFrameId = null;
+      let startTime = 0;
+      let cachedWidth = 0;
+      let cachedHeight = 0;
+      let needsResize = true;
 
-      if (vertexShader && fragmentShader) {
-        const program = gl.createProgram();
+      const prefersReducedMotion = !!(
+        window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      );
+
+      // Read layout on resize only. Calling getBoundingClientRect() inside
+      // render() forced a synchronous style/layout pass on every frame.
+      function measureCanvas() {
+        const rect = canvas.getBoundingClientRect();
+        const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+        cachedWidth = Math.max(1, Math.floor(rect.width * dpr));
+        cachedHeight = Math.max(1, Math.floor(rect.height * dpr));
+        needsResize = true;
+      }
+
+      function resizeCanvas() {
+        if (!needsResize) return;
+        if (canvas.width !== cachedWidth || canvas.height !== cachedHeight) {
+          canvas.width = cachedWidth;
+          canvas.height = cachedHeight;
+        }
+        gl.viewport(0, 0, canvas.width, canvas.height);
+        needsResize = false;
+      }
+
+      function render(now) {
+        animationFrameId = null;
+        if (!isVisible || !program) return;
+
+        resizeCanvas();
+
+        gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+        gl.uniform1f(timeLocation, (now - startTime) * 0.001);
+
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+        // Respect reduced-motion: draw one static frame, never a loop.
+        if (!prefersReducedMotion) {
+          animationFrameId = requestAnimationFrame(render);
+        }
+      }
+
+      function startRendering() {
+        if (!animationFrameId && isVisible && program) {
+          animationFrameId = requestAnimationFrame(render);
+        }
+      }
+
+      function stopRendering() {
+        if (animationFrameId) {
+          cancelAnimationFrame(animationFrameId);
+          animationFrameId = null;
+        }
+      }
+
+      function handleResize() {
+        measureCanvas();
+        startRendering();
+      }
+
+      function initWebGL() {
+        if (initialized) return;
+        initialized = true;
+
+        const vertexShader = createShader(gl, gl.VERTEX_SHADER, vsSource);
+        const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
+        if (!vertexShader || !fragmentShader) return;
+
+        program = gl.createProgram();
         gl.attachShader(program, vertexShader);
         gl.attachShader(program, fragmentShader);
         gl.linkProgram(program);
 
-        if (gl.getProgramParameter(program, gl.LINK_STATUS)) {
-          gl.useProgram(program);
-
-          const positionLocation = gl.getAttribLocation(program, "position");
-          const resolutionLocation = gl.getUniformLocation(program, "iResolution");
-          const timeLocation = gl.getUniformLocation(program, "iTime");
-
-          const positionBuffer = gl.createBuffer();
-          gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-          gl.bufferData(
-            gl.ARRAY_BUFFER,
-            new Float32Array([
-              -1.0, -1.0,
-               1.0, -1.0,
-              -1.0,  1.0,
-              -1.0,  1.0,
-               1.0, -1.0,
-               1.0,  1.0,
-            ]),
-            gl.STATIC_DRAW
-          );
-
-          gl.enableVertexAttribArray(positionLocation);
-          gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
-
-          let isVisible = false;
-          let startTime = performance.now();
-          let animationFrameId = null;
-
-          function resizeCanvas() {
-            const rect = canvas.getBoundingClientRect();
-            const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-            const displayWidth = Math.max(1, Math.floor(rect.width * dpr));
-            const displayHeight = Math.max(1, Math.floor(rect.height * dpr));
-
-            if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
-              canvas.width = displayWidth;
-              canvas.height = displayHeight;
-              gl.viewport(0, 0, displayWidth, displayHeight);
-            }
-          }
-
-          function render(now) {
-            if (!isVisible) return;
-
-            resizeCanvas();
-
-            gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
-            gl.uniform1f(timeLocation, (now - startTime) * 0.001);
-
-            gl.drawArrays(gl.TRIANGLES, 0, 6);
-
-            animationFrameId = requestAnimationFrame(render);
-          }
-
-          if ("IntersectionObserver" in window) {
-            const observer = new IntersectionObserver((entries) => {
-              entries.forEach((entry) => {
-                isVisible = entry.isIntersecting;
-                if (isVisible) {
-                  if (!animationFrameId) {
-                    animationFrameId = requestAnimationFrame(render);
-                  }
-                } else if (animationFrameId) {
-                  cancelAnimationFrame(animationFrameId);
-                  animationFrameId = null;
-                }
-              });
-            }, { threshold: 0.05 });
-
-            observer.observe(canvas);
-          } else {
-            isVisible = true;
-            requestAnimationFrame(render);
-          }
+        if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+          console.warn("Shader link error:", gl.getProgramInfoLog(program));
+          program = null;
+          return;
         }
+
+        gl.useProgram(program);
+
+        const positionLocation = gl.getAttribLocation(program, "position");
+        resolutionLocation = gl.getUniformLocation(program, "iResolution");
+        timeLocation = gl.getUniformLocation(program, "iTime");
+
+        const positionBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+        gl.bufferData(
+          gl.ARRAY_BUFFER,
+          new Float32Array([
+            -1.0, -1.0,
+             1.0, -1.0,
+            -1.0,  1.0,
+            -1.0,  1.0,
+             1.0, -1.0,
+             1.0,  1.0,
+          ]),
+          gl.STATIC_DRAW
+        );
+
+        gl.enableVertexAttribArray(positionLocation);
+        gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+
+        measureCanvas();
+        startTime = performance.now();
+
+        if ("ResizeObserver" in window) {
+          new ResizeObserver(handleResize).observe(canvas);
+        } else {
+          window.addEventListener("resize", handleResize, { passive: true });
+        }
+
+        startRendering();
+      }
+
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            isVisible = entry.isIntersecting;
+            if (isVisible) {
+              initWebGL();
+              startRendering();
+            } else {
+              stopRendering();
+            }
+          });
+        }, { threshold: 0.05 });
+
+        observer.observe(canvas);
+      } else {
+        isVisible = true;
+        initWebGL();
+        startRendering();
       }
     }
   }
