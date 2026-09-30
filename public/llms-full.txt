@@ -3,7 +3,7 @@
 
 Index: https://bittu.dev/llms.txt
 Canonical: https://bittu.dev
-Generated: 2026-09-29
+Generated: 2026-09-30
 
 ================================================================================
 SECTION 1 — IDENTITY & SKILLS
