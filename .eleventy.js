@@ -6,6 +6,13 @@ import getReadingTime from "reading-time";
 import pluginRss from "@11ty/eleventy-plugin-rss";
 import { minify } from "html-minifier-terser";
 
+// Shared terser options. Also read by the CLI for the standalone bundles via
+// terser.config.json, and passed to html-minifier-terser below so inline
+// <script> blocks are minified with the exact same rules.
+const terserOptions = JSON.parse(
+  fs.readFileSync(new URL("./terser.config.json", import.meta.url), "utf-8")
+);
+
 function syncBlogsToSrc() {
   const srcBlogs = path.resolve("src/blogs");
   const rootBlogs = path.resolve("blogs");
@@ -90,7 +97,7 @@ export default async function (eleventyConfig) {
           removeComments: true,
           conservativeCollapse: true,
           minifyCSS: true,
-          minifyJS: false, // preserve inline scripts with safe execution
+          minifyJS: terserOptions,
         });
       } catch (err) {
         console.warn("[htmlmin] Error minifying " + this.page.outputPath + ":", err.message);

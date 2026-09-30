@@ -1,0 +1,15 @@
+{
+  "ecma": 2020,
+  "compress": {
+    "passes": 2,
+    "drop_debugger": true,
+    "hoist_funs": true,
+    "hoist_vars": false
+  },
+  "mangle": {
+    "toplevel": true
+  },
+  "format": {
+    "comments": false
+  }
+}
