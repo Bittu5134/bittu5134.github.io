@@ -160,6 +160,12 @@ ${urlsXml}
   const robotsContent = `User-agent: *
 Allow: /
 
+# AI content usage policy (Content Signals / IETF AI-PREF, see https://contentsignals.org/).
+# search=yes  - allow search engine indexing
+# ai-input=yes - allow AI systems to ground answers in this content
+# ai-train=yes - allow this content to be used for model training
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+
 # AI Agent & LLM Context Feeds (commented: non-standard directives break Lighthouse SEO; discovered via <link rel="alternate"> in HTML <head>)
 # LLMs: ${SITE_URL}/llms.txt
 # LLMs-full: ${SITE_URL}/llms-full.txt
