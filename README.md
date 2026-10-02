@@ -24,7 +24,7 @@ GitHub Pages
 RSS      https://bittu.dev/rss.xml
 Email    hello@bittu.dev
 GitHub   https://github.com/Bittu5134
-X        https://x.com/404lostsquid
+X        https://x.com/LostSquidXD
 LinkedIn https://www.linkedin.com/in/bittu5134
 ```
 
