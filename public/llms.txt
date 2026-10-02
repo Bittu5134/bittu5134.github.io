@@ -2,7 +2,7 @@
 > Software engineer at IIT Kanpur specialising in low-level systems programming, WebRTC networking, protocol reverse-engineering, and AI tooling. This file is the canonical agent-readable index of all public work and technical writing at bittu.dev.
 
 Canonical site: https://bittu.dev
-Generated: 2026-09-30
+Generated: 2026-10-02
 
 ## Identity & Expertise
 - Full name: Bittu (handle: Bittu5134)
