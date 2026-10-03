@@ -4,6 +4,7 @@ import { setupMarkdown } from "./scripts/markdown-engine.js";
 import { generateMeta } from "./scripts/generate-meta.mjs";
 import getReadingTime from "reading-time";
 import pluginRss from "@11ty/eleventy-plugin-rss";
+import { formatBlogDate, parseBlogDate, toIsoBlogDate, toSortableTime } from "./scripts/parse-blog-date.js";
 import { minify } from "html-minifier-terser";
 
 // Shared terser options. Also read by the CLI for the standalone bundles via
@@ -41,6 +42,18 @@ export default async function (eleventyConfig) {
   // 0.1 Official RSS Plugin
   eleventyConfig.addPlugin(pluginRss);
 
+  // 0.2 Teach Eleventy to read our authored DD-MM-YYYY blog dates.
+  // Eleventy parses string `date` values with Luxon's ISO parser, which rejects
+  // "10-01-2026" as non-ISO. This hook runs first and returns a real Date, so the
+  // built-in path never sees the day-first string.
+  eleventyConfig.addDateParsing((dateStr) => {
+    // Eleventy only calls this hook for string dates, so anything reaching here
+    // that we do not recognise is left undefined to fall through to Luxon.
+    if (typeof dateStr !== "string") return undefined;
+    const parsed = parseBlogDate(dateStr);
+    return parsed || undefined;
+  });
+
   // 1. Setup Markdown engine (Shiki SSG syntax highlighting, Mermaid diagrams, GitHub alerts, anchors)
   const md = await setupMarkdown();
   eleventyConfig.setLibrary("md", md);
@@ -70,8 +83,10 @@ export default async function (eleventyConfig) {
   // 5. Reactive Blogs collection sorted chronologically descending
   eleventyConfig.addCollection("blogs", function (collectionApi) {
     return collectionApi.getFilteredByGlob(["./blogs/**/*.md", "./src/blogs/**/*.md"]).sort((a, b) => {
-      const dateA = new Date(a.data.date || a.date);
-      const dateB = new Date(b.data.date || b.date);
+      // `a.date` is already the mapped Date Eleventy built; the raw front matter
+      // string is the fallback for posts that bypass the date parsing hook.
+      const dateA = toSortableTime(a.data.date || a.date);
+      const dateB = toSortableTime(b.data.date || b.date);
       return dateB - dateA;
     });
   });
@@ -142,18 +157,16 @@ export default async function (eleventyConfig) {
   });
 
   // Date formatting helpers
+  // These accept the authored DD-MM-YYYY string form as well as ISO, and anchor
+  // to UTC so a build machine's timezone offset cannot shift the calendar day.
   eleventyConfig.addFilter("dateDisplay", function (value) {
     if (!value) return "";
-    const d = new Date(value);
-    return !isNaN(d.getTime())
-      ? d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })
-      : String(value);
+    return formatBlogDate(value);
   });
 
   eleventyConfig.addFilter("dateIso", function (value) {
     if (!value) return "";
-    const d = new Date(value);
-    return !isNaN(d.getTime()) ? d.toISOString().split("T")[0] : String(value);
+    return toIsoBlogDate(value);
   });
 
   // String uppercase filter

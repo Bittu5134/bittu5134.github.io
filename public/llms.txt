@@ -2,7 +2,7 @@
 > Software engineer at IIT Kanpur specialising in low-level systems programming, WebRTC networking, protocol reverse-engineering, and AI tooling. This file is the canonical agent-readable index of all public work and technical writing at bittu.dev.
 
 Canonical site: https://bittu.dev
-Generated: 2026-10-02
+Generated: 2026-10-03
 
 ## Identity & Expertise
 - Full name: Bittu (handle: Bittu5134)
@@ -24,10 +24,7 @@ Generated: 2026-10-02
 - [Resume-Model](https://iitk-resume.bittu.dev): A tool that parses academic PDFs by their layout geometry (since normal parsers choke on tables) and scores them. Built for IIT Kanpur's career office. Source: https://github.com/Bittu5134/IITK-Resume-Model
 
 ## Technical Writing
-- [Engineering Handbook: Full Pipeline Showcase](https://bittu.dev/blogs/engineering-handbook-and-syntax-showcase.md): The definitive reference and stress test for the unified remark+rehype pipeline: Shiki highlighting, Mermaid graphs, KaTeX math, GitHub callouts, GFM tables, task lists, footnotes, figure captions, code titles, and external links. [Engineering, Architecture, WebRTC, Go, Mermaid, Showcase] — 6 min read. Rendered HTML: https://bittu.dev/blog/engineering-handbook-and-syntax-showcase
-- [Scaling WebRTC Signaling in Go: Lessons from 500 Concurrent Peers](https://bittu.dev/blogs/scaling-webrtc-signaling-in-go.md): A deep dive into building PeerBasket low-latency signaling server in Go. How we achieved 41ms average latency and 0% packet loss across 500 concurrent peers with Redis TTL heartbeat pruning and IP token buckets. [Go, WebRTC, Redis, Networking] — 3 min read. Rendered HTML: https://bittu.dev/blog/scaling-webrtc-signaling-in-go
-- [Reverse Engineering the Modern Minecraft Network Protocol](https://bittu.dev/blogs/reverse-engineering-minecraft-protocol.md): Unpacking the binary wire format of Minecraft Java Edition. From variable-length integers (VarInt) and zlib packet compression to handshake state machines and live packet sniffing. [Minecraft, Reverse Engineering, Protocols, C++] — 3 min read. Rendered HTML: https://bittu.dev/blog/reverse-engineering-minecraft-protocol
-- [Coordinate Geometry in PyMuPDF: Extracting Unruly Academic LaTeX PDFs](https://bittu.dev/blogs/spatial-geometry-parsing-in-pymupdf.md): Why standard PDF parsers struggle with academic transcripts and resumes, and how we solved it for CDW IIT Kanpur using 2D spatial coordinate clustering and step-gradient scoring. [Python, PyMuPDF, Algorithms, AI] — 3 min read. Rendered HTML: https://bittu.dev/blog/spatial-geometry-parsing-in-pymupdf
+- [My First Blog ✨](https://bittu.dev/blogs/welcome-blog.md):  [Engineering, Architecture, WebRTC, Go, Mermaid, Showcase] — 6 min read. Rendered HTML: https://bittu.dev/blog/welcome-blog
 
 ## Full Single-File Context
 - [llms-full.txt](https://bittu.dev/llms-full.txt): Complete plain-text payload — full project descriptions, all blog post content verbatim, and author profile. Optimised for single-shot context injection into coding assistants and RAG pipelines.

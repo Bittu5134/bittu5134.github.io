@@ -4,6 +4,7 @@ import { execSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import getProjects from "../src/_data/projects.js";
 import getReadingTime from "reading-time";
+import { formatBlogDate, toIsoBlogDate } from "./parse-blog-date.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -84,7 +85,9 @@ function parseMarkdownFile(filepath) {
   return {
     slug: data.slug || fallbackSlug,
     title: data.title || fallbackSlug,
-    date: data.displayDate || (data.date ? new Date(data.date).toISOString().split("T")[0] : ""),
+    // Always derived from `date`; the old displayDate override is gone.
+    date: toIsoBlogDate(data.date),
+    displayDate: formatBlogDate(data.date),
     readTime,
     summary: data.summary || "",
     tags,

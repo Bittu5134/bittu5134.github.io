@@ -10,6 +10,22 @@
     <meta name="author" content="Bittu (Bittu5134)" />
     <link rel="canonical" href="https://bittu.dev{{ page.url }}" />
 
+    <!-- Preload the above-the-fold cover image: it is the LCP element on posts -->
+    {% if coverImage %}
+      {% set preloadCover = coverImage %}
+      {% if preloadCover.endsWith('.svg') %}
+        {% set preloadCover = preloadCover | replace('.svg', '.png') %}
+      {% endif %}
+      <link
+        rel="preload"
+        as="image"
+        href="{{ preloadCover if (preloadCover.startsWith('http://') or preloadCover.startsWith('https://')) else ('https://bittu.dev' + preloadCover) }}"
+        {% if coverImageWidth %}width="{{ coverImageWidth }}"{% endif %}
+        {% if coverImageHeight %}height="{{ coverImageHeight }}"{% endif %}
+        fetchpriority="high"
+      />
+    {% endif %}
+
     <!-- OpenGraph / Social Meta -->
     <meta property="og:site_name" content="{{ siteName if siteName else 'bittu.dev' }}" />
     <meta property="og:title" content="{{ title if title else 'Bittu | Software & CyberSec' }}" />

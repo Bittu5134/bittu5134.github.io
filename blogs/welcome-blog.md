@@ -1,107 +1,17 @@
-# Bittu (Bittu5134) — Full Context Payload
-> Complete plain-text knowledge base for AI agents and coding assistants. Contains full author profile, all open-source project descriptions, and every technical blog post verbatim. Optimised for single-shot ingestion.
-
-Index: https://bittu.dev/llms.txt
-Canonical: https://bittu.dev
-Generated: 2026-10-03
-
-================================================================================
-SECTION 1 — IDENTITY & SKILLS
-================================================================================
-
-Name: Bittu
-Handle: Bittu5134
-Email: hello@bittu.dev
-Website: https://bittu.dev
-GitHub: https://github.com/Bittu5134
-LinkedIn: https://www.linkedin.com/in/bittu5134
-X / Twitter: https://x.com/404lostsquid
-Patreon: https://www.patreon.com/lazybittu
-
-Education: B.Tech Cybersecurity & Computing — Indian Institute of Technology Kanpur (expected 2030)
-
-Languages: Go, Python, C, C++, TypeScript, JavaScript
-Systems: Linux POSIX daemons, raw TCP/UDP sockets, /proc lineage tracing, SHA-256 GUIDs, memory-mapped I/O, zero-allocation Go event loops
-Networking: WebRTC signaling servers, STUN/TURN/ICE, Redis TTL heartbeat pruning, IP token-bucket rate limiting, 500-peer concurrency benchmarks
-Protocol Reversing: Minecraft Java Edition wire format — VarInt encoding, zlib packet compression, handshake state machines, live packet sniffing
-AI & ML: RAG pipelines, MCP servers, CNN defect-detection ensembles, PyTorch, scikit-learn, vision model inference
-Spatial Parsing: 2D bounding-box coordinate clustering in PyMuPDF for LaTeX tabular PDFs (academic transcripts, resumes)
-Cloud & Edge: Cloudflare Workers, Cloudflare WAF bot mitigation, Cloudflare Pages, FastAPI, Gin, SSG compilers
-Notable Deployments: 2.3M+ Minecraft datapack downloads (Planet Minecraft); public WebRTC signaling API (PeerBasket)
-
-================================================================================
-SECTION 2 — OPEN-SOURCE PROJECTS
-================================================================================
-
-### 1. ORV-Reader
-Live: https://orv.pages.dev | Source: https://github.com/Bittu5134/ORV-Reader
-Description: A web-publishing platform that compiles Markdown into fast static pages and EPUBs. Built to be clean and lightweight way to read stuff on slow connections.
-Category: WEB / CLOUD
-Language: Python
-Topics: cloudflare-pages, custom-ssg, epub, orv, pandoc
-
-### 2. PeerBasket
-Live: https://peerbasket.bittu.dev | Source: https://github.com/Bittu5134/PeerBasket
-Description: A hassle-free, lobby-based PeerJS discovery server written in Go  that handles peer discovery for real-time p2p interactions and multiplayer sessions.
-Category: SYSTEMS / P2P
-Language: Go
-Topics: gin, go, p2p, peerjs, redis
-
-### 3. GH-Follow-Tracker
-Live: https://follow.lazybittu.workers.dev/ | Source: https://github.com/Bittu5134/GH-Follow-Tracker
-Description: A little service on Cloudflare Workers that tracks GitHub followers and generates live SVG badges, with Discord/Slack alerts when things change.
-Category: SERVERLESS / MONITORING
-Language: TypeScript
-Topics: automation, cloudflare-workers, github-actions, javascript, webhooks
-
-### 4. LOTM-Reader
-Live: https://beyonder.pages.dev | Source: https://github.com/Bittu5134/LOTM-Reader
-Description: A community driven webnovel reader built with Svelte, with offline caching and a tons of optimizations.  Built to be faster and cleaner than what was out there.
-Category: WEB / OPTIMIZATION
-Language: Svelte
-Topics: epub, giscus, lotm, pandoc, svelte
-
-### 5. NetShip
-Source: https://github.com/Bittu5134/NetShip
-Description: A host telemetry agent in Go that watches socket activity and maps out process trees. Built it to understand how endpoint detection tools actually work under the hood.
-Category: SYSTEMS / EDR
-Language: Go
-Topics: edr, go, gopsutil, telemetry, webui
-
-### 6. Sharelock
-Source: https://github.com/Bittu5134/Sharelock
-Description: A retrieval system that lets you just ask questions about IIT Kanpur's academic policy manual instead of reading the whole thing. Built as a RAG pipeline with an MCP server.
-Category: AI / RAG
-Language: Python
-Topics: hackathon, mcp-server, rag, rag-chatbot, typescript
-
-### 7. InfraPulse
-Live: https://infrapulse.bittu.dev | Source: https://github.com/Bittu5134/InfraPulse
-Description: A defect-detection tool that flags and prioritizes infrastructure issues from photos using a small vision-model ensemble. Built for a campus hackathon.
-Category: AI / COMPUTER VISION
-Language: Python
-Topics: convulational-neural-network, ensemble-model, machine-learning, pytorch, sobel-edge-detector
-
-### 8. Resume-Model
-Live: https://iitk-resume.bittu.dev | Source: https://github.com/Bittu5134/IITK-Resume-Model
-Description: A tool that parses academic PDFs by their layout geometry (since normal parsers choke on tables) and scores them. Built for IIT Kanpur's career office.
-Category: PARSER / GEOMETRY
-Language: Python
-Topics: fastapi, nlp, pymupdf, python, scikit-learn
-
-================================================================================
-SECTION 3 — TECHNICAL ARTICLES (FULL TEXT)
-================================================================================
-
 ---
-Title: My First Blog ✨
-Date: 2026-01-10
-Read Time: 6 min read
-Tags: Engineering, Architecture, WebRTC, Go, Mermaid, Showcase
-Canonical URL: https://bittu.dev/blog/welcome-blog
-Raw Markdown: https://bittu.dev/blogs/welcome-blog.md
-Cover Image: https://bittu.dev/blogs/assets/welcome-blog/cover.png
-Summary: 
+slug: welcome-blog
+title: "My First Blog ✨"
+coverImage: "/blogs/assets/welcome-blog/cover.png"
+coverAlt: "Cover for My First Blog"
+date: "10-01-2026"
+# summary: ""
+tags:
+  - Engineering
+  - Architecture
+  - WebRTC
+  - Go
+  - Mermaid
+  - Showcase
 ---
 
 ## 1. The Architecture of Our Blog Pipeline
