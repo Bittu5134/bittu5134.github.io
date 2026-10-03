@@ -104,35 +104,6 @@ Cover Image: https://bittu.dev/blogs/assets/welcome-blog/cover.webp
 Summary: 
 ---
 
-# HI!
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## 1. The Architecture of Our Blog Pipeline
 
 Welcome to the engineering test dispatch for **bittu.dev**. This post acts as a live specification test harness for every frontend formatting feature supported across the unified remark + rehype pipeline.
