@@ -95,14 +95,43 @@ SECTION 3 — TECHNICAL ARTICLES (FULL TEXT)
 
 ---
 Title: My First Blog ✨
-Date: 2026-01-10
+Date: 2026-10-01
 Read Time: 6 min read
-Tags: Engineering, Architecture, WebRTC, Go, Mermaid, Showcase
-Canonical URL: https://bittu.dev/blog/welcome-blog
-Raw Markdown: https://bittu.dev/blogs/welcome-blog.md
-Cover Image: https://bittu.dev/blogs/assets/welcome-blog/cover.png
+Tags: Showcase, Markdown, Amature, Student
+Canonical URL: https://bittu.dev/blog/my-first-blog
+Raw Markdown: https://bittu.dev/blogs/my-first-blog.md
+Cover Image: https://bittu.dev/blogs/assets/welcome-blog/cover.webp
 Summary: 
 ---
+
+# HI!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## 1. The Architecture of Our Blog Pipeline
 

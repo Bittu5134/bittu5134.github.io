@@ -1,18 +1,45 @@
 ---
-slug: welcome-blog
+slug: my-first-blog
 title: "My First Blog ✨"
-coverImage: "/blogs/assets/welcome-blog/cover.png"
+coverImage: "/blogs/assets/welcome-blog/cover.webp"
 coverAlt: "Cover for My First Blog"
-date: "10-01-2026"
+date: "1-10-2026"
 # summary: ""
 tags:
-  - Engineering
-  - Architecture
-  - WebRTC
-  - Go
-  - Mermaid
   - Showcase
+  - Markdown
+  - Amature
+  - Student
 ---
+
+# HI!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## 1. The Architecture of Our Blog Pipeline
 
