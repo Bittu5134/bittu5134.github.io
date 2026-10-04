@@ -17,7 +17,7 @@ const terserOptions = JSON.parse(
 function syncBlogsToSrc() {
   const srcBlogs = path.resolve("src/blogs");
   const rootBlogs = path.resolve("blogs");
-  // If it's a symlink or points to same real path, no copying needed
+  // Already the same directory (symlinked, as in local dev).
   if (fs.existsSync(srcBlogs)) {
     try {
       if (fs.realpathSync(srcBlogs) === fs.realpathSync(rootBlogs)) {
@@ -27,8 +27,18 @@ function syncBlogsToSrc() {
       // proceed
     }
   }
+
+  // src/blogs is gitignored, so CI has no symlink and Eleventy's input dir must be
+  // materialised. A plain copy is NOT equivalent: blogs/blogs.11tydata.js imports
+  // ../scripts/parse-blog-date.js, which resolves to <src>/scripts/ from the copy but
+  // <repo>/scripts/ from the real file — so the copy fatals with ERR_MODULE_NOT_FOUND.
+  // Symlinking keeps the copy's own relative imports rooted at the repo, matching local
+  // dev exactly.
   if (fs.existsSync(rootBlogs)) {
-    fs.cpSync(rootBlogs, srcBlogs, { recursive: true });
+    if (fs.existsSync(srcBlogs) || fs.lstatSync(srcBlogs, { throwIfNoEntry: false })) {
+      fs.rmSync(srcBlogs, { recursive: true, force: true });
+    }
+    fs.symlinkSync(path.relative(path.dirname(srcBlogs), rootBlogs), srcBlogs, "junction");
   }
 }
 
