@@ -194,21 +194,62 @@
 
 /* Standard Editorial Blockquotes (NOT alert callouts) */
 .prose-retro blockquote:not(.github-alert) {
+  position: relative;
   border-left: 4px solid #000000;
-  padding: 0.875rem 1.25rem;
-  margin: 2rem 0;
+  padding: 1.125rem 1.5rem 1.125rem 2rem;
+  margin: 2.25rem 0;
   background-color: #f4ebd0;
   border-radius: 0;
   color: #000000;
   font-family: 'Space Grotesk', sans-serif;
-  font-style: normal;
-  font-weight: 500;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+
+/* Stylized retro quote mark watermark */
+.prose-retro blockquote:not(.github-alert)::before {
+  content: "“";
+  position: absolute;
+  top: -0.25rem;
+  left: 0.5rem;
+  font-family: 'Space Mono', monospace, serif;
+  font-size: 2.75rem;
+  line-height: 1;
+  color: #000000;
+  opacity: 0.25;
+  pointer-events: none;
 }
 
 .prose-retro blockquote:not(.github-alert) p {
-  margin-bottom: 0;
+  margin-bottom: 0.5rem;
   color: inherit;
   font-family: inherit;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.prose-retro blockquote:not(.github-alert) p:last-child {
+  margin-bottom: 0;
+}
+
+/* Citation / author attribution via <footer> or <cite> or trailing em dash */
+.prose-retro blockquote:not(.github-alert) > footer,
+.prose-retro blockquote:not(.github-alert) > cite {
+  display: block;
+  margin-top: 0.75rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8125rem;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #000000;
+}
+
+/* Only the outermost attribution element gets the dash; a nested <cite> stays inline
+   beside it, so the dash and author share one line and never render twice. */
+.prose-retro blockquote:not(.github-alert) > footer::before,
+.prose-retro blockquote:not(.github-alert) > cite::before {
+  content: "— ";
 }
 
 /* Inline Code */
