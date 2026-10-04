@@ -284,7 +284,9 @@
             const title = (card.getAttribute("data-title") || "").toLowerCase();
             const summary = (card.getAttribute("data-summary") || "").toLowerCase();
             const rawTags = (card.getAttribute("data-tags") || "").toLowerCase().replace(/\|\|\|/g, " ");
-            const localMatch = rawTokens.every((t) => title.includes(t) || summary.includes(t) || rawTags.includes(t));
+            const hiddenTags = (card.getAttribute("data-hidden-tags") || "").toLowerCase().replace(/\|\|\|/g, " ");
+            const searchableText = `${title} ${summary} ${rawTags} ${hiddenTags}`;
+            const localMatch = rawTokens.every((t) => searchableText.includes(t));
             const queryMatches = Boolean(pfMatch || localMatch);
             const snippetEl = card.querySelector(".blog-match-snippet");
 

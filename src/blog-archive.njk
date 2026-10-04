@@ -128,6 +128,7 @@ isBlogPage: true
           data-title="{{ (post.data.title or '') | lower }}"
           data-summary="{{ (post.data.summary or '') | lower }}"
           data-tags="{{ (post.data.tags or []) | join('|||') | lower }}"
+          data-hidden-tags="{{ (post.data.hiddenTags or post.data.seoTags or []) | join('|||') | lower if (post.data.hiddenTags or post.data.seoTags) else '' }}"
           data-date="{{ (post.data.date or post.date) | dateIso }}"
           data-readtime="{{ post.data.readTime or '3 min read' }}"
         >

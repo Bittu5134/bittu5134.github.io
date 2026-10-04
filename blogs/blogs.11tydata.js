@@ -91,8 +91,31 @@ export default {
       return "";
     },
     keywords: (data) => {
-      const tags = (data.tags || []).filter((t) => t && t !== "posts");
-      return tags.join(", ");
+      const visibleTags = (data.tags || []).filter((t) => t && t !== "posts");
+      const hidden = Array.isArray(data.hiddenTags)
+        ? data.hiddenTags.filter(Boolean)
+        : typeof data.hiddenTags === "string"
+        ? data.hiddenTags.split(",").map((t) => t.trim()).filter(Boolean)
+        : Array.isArray(data.seoTags)
+        ? data.seoTags.filter(Boolean)
+        : typeof data.seoTags === "string"
+        ? data.seoTags.split(",").map((t) => t.trim()).filter(Boolean)
+        : [];
+      const combined = Array.from(new Set([...visibleTags, ...hidden]));
+      return combined.join(", ");
+    },
+    allSeoTags: (data) => {
+      const visibleTags = (data.tags || []).filter((t) => t && t !== "posts");
+      const hidden = Array.isArray(data.hiddenTags)
+        ? data.hiddenTags.filter(Boolean)
+        : typeof data.hiddenTags === "string"
+        ? data.hiddenTags.split(",").map((t) => t.trim()).filter(Boolean)
+        : Array.isArray(data.seoTags)
+        ? data.seoTags.filter(Boolean)
+        : typeof data.seoTags === "string"
+        ? data.seoTags.split(",").map((t) => t.trim()).filter(Boolean)
+        : [];
+      return Array.from(new Set([...visibleTags, ...hidden]));
     },
   },
 };

@@ -74,12 +74,16 @@
 
     <!-- Article Metadata -->
     {% if date %}<meta property="article:published_time" content="{{ date | dateIso }}" />{% endif %}
-    {% if tags %}
-      {% for tag in tags %}
+    {% set seoTagList = allSeoTags if allSeoTags else (tags | filterTags) %}
+    {% if seoTagList %}
+      {% for tag in seoTagList %}
         {% if tag != "posts" and tag != "all" %}
           <meta property="article:tag" content="{{ tag }}" />
         {% endif %}
       {% endfor %}
+    {% endif %}
+    {% if keywords %}
+      <meta name="keywords" content="{{ keywords }}" />
     {% endif %}
 
     <!-- JSON-LD Structured Data -->

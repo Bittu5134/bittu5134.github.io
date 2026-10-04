@@ -1,6 +1,6 @@
 {# Comprehensive Schema.org JSON-LD Structured Data #}
 {% if (layout == "layouts/post.njk" or date) and page.url != "/blog/" and page.url != "/blog/index.html" %}
-{% set cleanTags = tags | filterTags %}
+{% set cleanTags = allSeoTags if allSeoTags else (tags | filterTags) %}
 {% set primarySection = (cleanTags[0] if cleanTags.length else "Engineering") %}
 {% set techDependencies = (cleanTags | join(", ") if cleanTags.length else "Software Systems") %}
 <script type="application/ld+json">
