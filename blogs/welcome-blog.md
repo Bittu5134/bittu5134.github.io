@@ -2,20 +2,12 @@
 slug: my-first-blog
 title: "My First Blog ✨"
 coverImage: "/blogs/assets/welcome-blog/cover.webp"
-# ogImage: "/blogs/assets/welcome-blog/og.webp"   # social card, defaults to coverImage
-#   A .svg here is served as .png automatically.
-# ogImageWidth: 1200                             # set with ogImageHeight, or 1200x630 is assumed
+# ogImageWidth: 1200                            
 # ogImageHeight: 630
 coverAlt: "Cover for My First Blog"
-# alt: "Fallback alt text"                       # only if coverAlt is omitted; coverAlt wins
-#   Omit coverImage to get a deterministic Unsplash abstract cover instead.
-date: "4-10-2026"                                 # DD-MM-YYYY, parsed day-first
-# updated: "5-10-2026"                            # sets dateModified for schema.org
-# dateModified: "5-10-2026"                       # alias of `updated`, checked second
-#   Either may also be ISO (2026-10-05). displayDate is not settable; it is always
-#   derived from `date`.
+date: "4-10-2026"                                
+# updated: "5-10-2026"                           
 # summary: "One-line blurb."
-description: "Fallback blurb, used only when `summary` is absent"
 tags:
   - Showcase
   - Markdown
@@ -25,17 +17,8 @@ hiddenTags:
   - IIT Kanpur
   - CyberSec
   - Personal Blog
-# seoTags:                     # alias of `hiddenTags` — keywords only, never displayed
+# seoTags:        
 #   - Example
-# permalink: "/blog/my-first-blog/index.html"   # overrides the default pattern
-# layout: "layouts/post.njk"                    # override only for a custom variant
-# ogType: article                              # post.njk already sets this
-# siteName: bittu.dev                         # og:site_name
-
-# keywords is not settable: blogs.11tydata.js always rebuilds it from the tags
-# above, so a value here would be silently ignored.
-# Same for author (it lives in site.config.js). excerpt, draft, noindex,
-# redirect_from and featured are not supported at all.
 ---
 
 
