@@ -2,6 +2,7 @@ import { unified } from "unified";
 import remarkParse from "remark-parse";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
+import remarkSmartypants from "remark-smartypants";
 import remarkGithubAlerts from "remark-github-alerts";
 import remarkFlexibleCodeTitles from "remark-flexible-code-titles";
 import remarkRehype from "remark-rehype";
@@ -20,6 +21,7 @@ import {
   rehypeCodeBlockWrapper,
   rehypeGithubAlertsTransformer,
   rehypeTableWrapper,
+  rehypeBlockquoteAttribution,
   rehypeBlogRelativeImages,
 } from "./markdown/ast-plugins.js";
 
@@ -31,6 +33,7 @@ export async function buildProcessor() {
     .use(remarkParse)
     .use(remarkGfm)
     .use(remarkMath)
+    .use(remarkSmartypants, { dashes: "oldschool" }) // Typographic quotes (“”), apostrophes (’), dashes (–, —), ellipses (…)
     .use(remarkGithubAlerts)                 // GitHub alerts syntax > [!NOTE]
     .use(remarkFlexibleCodeTitles, { container: false }) // lang:title.ext syntax without wrapping container
     // ── Bridge (MDAST → HAST) ──────────────────────────────
@@ -60,6 +63,7 @@ export async function buildProcessor() {
     })
     .use(rehypeCodeBlockWrapper)             // wrap shiki <pre> in .code-block-wrapper
     .use(rehypeGithubAlertsTransformer)      // convert alert blockquotes → styled divs
+    .use(rehypeBlockquoteAttribution)        // semantic <footer><cite> for quote author attribution
     .use(rehypeTableWrapper)                 // wrap <table> in .table-responsive-wrapper
     .use(rehypeBlogRelativeImages)           // rewrite relative blog image links (./assets/...) to /blogs/...
     .use(rehypeKatex)                        // render math nodes → KaTeX HTML

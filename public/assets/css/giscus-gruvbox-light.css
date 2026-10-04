@@ -1,113 +1,414 @@
 /*! MIT License
- * Modified from Pavel Pertsev's Gruvbox theme, licensed under the MIT License
- * https://github.com/morhetz/gruvbox
- */
-
-/*! MIT License
- * Copyright (c) 2018 GitHub Inc.
- * https://github.com/primer/primitives/blob/main/LICENSE
+ * Gruvbox Light Minimal Parchment Theme for Giscus
+ * Based on Pavel Pertsev's Gruvbox Light palette, adapted to harmoniously fit
+ * the parchment background of bittu.dev blog posts (#faf3e0 / #f4ebd0).
+ *
+ * Designed to look calm, minimal, and cohesive:
+ * - Subtle, muted warm borders (no harsh, thick black outlines)
+ * - Muted warm tones (#3c3836 fg, #ebdbb2 subtle borders, #faf3e0 canvas)
+ * - Clean, non-distracting reaction buttons where emoji are clearly legible
+ *   without dark olive or loud green overlays.
  */
 
 main {
-  /* Syntax Highlighting (Gruvbox Light) */
-  --color-prettylights-syntax-comment: #928374; /* fg4 */
-  --color-prettylights-syntax-constant: #458588; /* blue */
-  --color-prettylights-syntax-entity: #b16286; /* purple */
-  --color-prettylights-syntax-storage-modifier-import: #665c54; /* fg2 */
-  --color-prettylights-syntax-entity-tag: #98971a; /* green */
-  --color-prettylights-syntax-keyword: #cc241d; /* red */
-  --color-prettylights-syntax-string: #689d6a; /* aqua */
-  --color-prettylights-syntax-variable: #d65d0e; /* orange */
-  --color-prettylights-syntax-brackethighlighter-unmatched: #cc241d; /* red */
-  --color-prettylights-syntax-invalid-illegal-text: #3c3836; /* fg0 */
-  --color-prettylights-syntax-invalid-illegal-bg: #9d0006; /* dark red */
-  --color-prettylights-syntax-carriage-return-text: #3c3836; /* fg0 */
-  --color-prettylights-syntax-carriage-return-bg: #9d0006; /* dark red */
-  --color-prettylights-syntax-string-regexp: #689d6a; /* aqua */
-  --color-prettylights-syntax-markup-list: #d79921; /* yellow */
-  --color-prettylights-syntax-markup-heading: #458588; /* blue */
-  --color-prettylights-syntax-markup-italic: #665c54; /* fg2 */
-  --color-prettylights-syntax-markup-bold: #665c54; /* fg2 */
-  --color-prettylights-syntax-markup-deleted-text: #cc241d; /* red */
-  --color-prettylights-syntax-markup-deleted-bg: #9d0006; /* dark red */
-  --color-prettylights-syntax-markup-inserted-text: #98971a; /* green */
-  --color-prettylights-syntax-markup-inserted-bg: #79740e; /* dark green */
-  --color-prettylights-syntax-markup-changed-text: #d79921; /* yellow */
-  --color-prettylights-syntax-markup-changed-bg: #b57614; /* dark yellow */
-  --color-prettylights-syntax-markup-ignored-text: #665c54; /* fg2 */
-  --color-prettylights-syntax-markup-ignored-bg: #458588; /* blue */
-  --color-prettylights-syntax-meta-diff-range: #b16286; /* purple */
-  --color-prettylights-syntax-brackethighlighter-angle: #928374; /* fg4 */
-  --color-prettylights-syntax-sublimelinter-gutter-mark: #a89984; /* bg4 */
-  --color-prettylights-syntax-constant-other-reference-link: #458588; /* blue */
+  /* Syntax Highlighting (Gruvbox Light Classic) */
+  --color-prettylights-syntax-comment: #928374;
+  --color-prettylights-syntax-constant: #458588;
+  --color-prettylights-syntax-entity: #b16286;
+  --color-prettylights-syntax-storage-modifier-import: #665c54;
+  --color-prettylights-syntax-entity-tag: #98971a;
+  --color-prettylights-syntax-keyword: #cc241d;
+  --color-prettylights-syntax-string: #79740e;
+  --color-prettylights-syntax-variable: #d65d0e;
+  --color-prettylights-syntax-brackethighlighter-unmatched: #cc241d;
+  --color-prettylights-syntax-invalid-illegal-text: #3c3836;
+  --color-prettylights-syntax-invalid-illegal-bg: #cc241d26;
+  --color-prettylights-syntax-carriage-return-text: #3c3836;
+  --color-prettylights-syntax-carriage-return-bg: #cc241d26;
+  --color-prettylights-syntax-string-regexp: #79740e;
+  --color-prettylights-syntax-markup-list: #d79921;
+  --color-prettylights-syntax-markup-heading: #458588;
+  --color-prettylights-syntax-markup-italic: #665c54;
+  --color-prettylights-syntax-markup-bold: #3c3836;
+  --color-prettylights-syntax-markup-deleted-text: #cc241d;
+  --color-prettylights-syntax-markup-deleted-bg: #cc241d1a;
+  --color-prettylights-syntax-markup-inserted-text: #79740e;
+  --color-prettylights-syntax-markup-inserted-bg: #98971a1a;
+  --color-prettylights-syntax-markup-changed-text: #d79921;
+  --color-prettylights-syntax-markup-changed-bg: #d799211a;
+  --color-prettylights-syntax-markup-ignored-text: #928374;
+  --color-prettylights-syntax-markup-ignored-bg: #4585881a;
+  --color-prettylights-syntax-meta-diff-range: #b16286;
+  --color-prettylights-syntax-brackethighlighter-angle: #928374;
+  --color-prettylights-syntax-sublimelinter-gutter-mark: #a89984;
+  --color-prettylights-syntax-constant-other-reference-link: #458588;
 
-  /* Buttons */
-  --color-btn-text: #000000; /* Pure Ink Black */
-  --color-btn-bg: #f4ebd0; /* bg1 warm */
-  --color-btn-border: #000000;
-  --color-btn-shadow: 0 0 transparent;
-  --color-btn-inset-shadow: 0 0 transparent;
-  --color-btn-hover-bg: #fde047; /* Gruvbox Yellow hover */
-  --color-btn-hover-border: #000000;
-  --color-btn-active-bg: #86efac; /* Mint active */
-  --color-btn-active-border: #000000;
-  --color-btn-selected-bg: #fde047;
+  /* Typography & Foreground (Soft Gruvbox ink) */
+  --color-fg-default: #3c3836;
+  --color-fg-muted: #665c54;
+  --color-fg-subtle: #7c6f64;
 
-  /* Primary Action Button ("Sign in with GitHub" / "Comment") */
-  --color-btn-primary-text: #000000;
-  --color-btn-primary-bg: #86efac; /* Mint Green */
-  --color-btn-primary-border: #000000;
-  --color-btn-primary-shadow: 0 0 transparent;
-  --color-btn-primary-inset-shadow: 0 0 transparent;
-  --color-btn-primary-hover-bg: #4ade80;
-  --color-btn-primary-hover-border: #000000;
-  --color-btn-primary-selected-bg: #22c55e;
-  --color-btn-primary-selected-shadow: 0 0 transparent;
-  --color-btn-primary-disabled-text: #665c54;
-  --color-btn-primary-disabled-bg: #ebdbb2;
-  --color-btn-primary-disabled-border: #000000;
-
-  --color-action-list-item-default-hover-bg: #fde047;
-  --color-segmented-control-bg: #f4ebd0;
-  --color-segmented-control-button-bg: #faf3e0;
-  --color-segmented-control-button-selected-border: #000000;
-
-  /* Canvas & Foreground */
-  --color-fg-default: #000000; /* High contrast black */
-  --color-fg-muted: #3c3836;   /* Gruvbox fg0 */
-  --color-fg-subtle: #665c54;  /* Gruvbox fg2 */
-
-  --color-canvas-default: #faf3e0; /* Warm Parchment */
-  --color-canvas-overlay: #f4ebd0; /* Secondary Surface */
-  --color-canvas-inset: #f6eedb;   /* Inset Textarea */
+  /* Surfaces & Parchment Backgrounds */
+  --color-canvas-default: #faf3e0;
+  --color-canvas-overlay: #f4ebd0;
+  --color-canvas-inset: #fffdf9;
   --color-canvas-subtle: #f4ebd0;
 
-  --color-border-default: #000000; /* Solid Black Borders */
-  --color-border-muted: #3c3836;
-  --color-neutral-muted: #ebdbb2;
+  /* Borders: soft warm Gruvbox sand/beige (clean & minimal, no harsh black) */
+  --color-border-default: #d5c4a1;
+  --color-border-muted: #e0d5be;
+  --color-neutral-muted: #92837426;
 
-  /* Accents */
-  --color-accent-fg: #af3a03;      /* Gruvbox Deep Orange */
-  --color-accent-emphasis: #000000;
-  --color-accent-muted: #fde047;
-  --color-accent-subtle: #fef3c7;
+  /* Standard Buttons */
+  --color-btn-text: #3c3836;
+  --color-btn-bg: #f4ebd0;
+  --color-btn-border: #d5c4a1;
+  --color-btn-shadow: 0 0 transparent;
+  --color-btn-inset-shadow: 0 0 transparent;
+  --color-btn-hover-bg: #ebdcb9;
+  --color-btn-hover-border: #bdae93;
+  --color-btn-active-bg: #dfceaa;
+  --color-btn-active-border: #a89984;
+  --color-btn-selected-bg: #ebdcb9;
+
+  /* Primary Action Button (Warm Gruvbox sand/amber accent, calm and readable) */
+  --color-btn-primary-text: #282828;
+  --color-btn-primary-bg: #ebdcb9;
+  --color-btn-primary-border: #bdae93;
+  --color-btn-primary-shadow: 0 0 transparent;
+  --color-btn-primary-inset-shadow: 0 0 transparent;
+  --color-btn-primary-hover-bg: #dfceaa;
+  --color-btn-primary-hover-border: #a89984;
+  --color-btn-primary-selected-bg: #d5c4a1;
+  --color-btn-primary-selected-shadow: 0 0 transparent;
+  --color-btn-primary-disabled-text: #928374;
+  --color-btn-primary-disabled-bg: #f4ebd0;
+  --color-btn-primary-disabled-border: #e0d5be;
+
+  /* Segmented Controls / Menus */
+  --color-action-list-item-default-hover-bg: #ebdcb9;
+  --color-segmented-control-bg: #f4ebd0;
+  --color-segmented-control-button-bg: #faf3e0;
+  --color-segmented-control-button-selected-border: #bdae93;
+
+  /* Accent & Links (Gruvbox warm teal/slate) */
+  --color-accent-fg: #076678;
+  --color-accent-emphasis: #458588;
+  --color-accent-muted: #45858833;
+  --color-accent-subtle: #ebdcb9;
+
+  /* Reaction Base Variables */
+  --color-scale-gray-7: #ebdcb9;
+  --color-scale-blue-8: #d5c4a1;
+  --color-social-reaction-bg-hover: #ebdcb9;
+  --color-social-reaction-bg-reacted-hover: #dfceaa;
+  --color-social-reaction-border: #bdae93;
 
   /* States */
   --color-success-fg: #79740e;
-  --color-attention-fg: #d79921;
-  --color-attention-muted: #fde047;
-  --color-attention-subtle: #fef3c7;
+  --color-attention-fg: #b57614;
+  --color-attention-muted: #d7992133;
+  --color-attention-subtle: #fbf1c7;
   --color-danger-fg: #cc241d;
-  --color-danger-muted: #fca5a5;
-  --color-danger-subtle: #fee2e2;
+  --color-danger-muted: #cc241d33;
+  --color-danger-subtle: #cc241d0d;
 
   --color-primer-shadow-inset: 0 0 transparent;
-  --color-scale-gray-7: #f4ebd0;
-  --color-scale-blue-8: #076678;
+}
 
-  /* Extensions */
-  --color-social-reaction-bg-hover: #fde047;
-  --color-social-reaction-bg-reacted-hover: #86efac;
+/* ==========================================================================
+   MINIMAL GRUVBOX LIGHT OVERRIDES
+   Ensures reactions and containers are clean, cohesive, and easy to read.
+   ========================================================================== */
+
+main {
+  font-family: inherit;
+  color: var(--color-fg-default);
+  background-color: transparent !important;
+}
+
+/* --------------------------------------------------------------------------
+   REACTION BUTTONS
+   Fixes the muddy olive/green image issue: reaction buttons now use warm
+   parchment tones (#faf3e0 / #ebdcb9) with subtle 1px borders so emojis are
+   crisp and naturally visible.
+   -------------------------------------------------------------------------- */
+
+main .gsc-social-reaction-summary-item {
+  background-color: #faf3e0 !important;
+  border: 1px solid #d5c4a1 !important;
+  color: #3c3836 !important;
+  transition: background-color 0.15s ease, border-color 0.15s ease !important;
+}
+
+main .gsc-social-reaction-summary-item:hover:enabled {
+  background-color: #ebdcb9 !important;
+  border-color: #bdae93 !important;
+  color: #282828 !important;
+}
+
+/* Reacted state: soft warm sand tone with clear border (no loud colors) */
+main .gsc-social-reaction-summary-item.has-reacted {
+  background-color: #ebdcb9 !important;
+  border: 1px solid #a89984 !important;
+  color: #282828 !important;
+}
+
+main .gsc-social-reaction-summary-item.has-reacted:hover:enabled {
+  background-color: #dfceaa !important;
+  border-color: #928374 !important;
+}
+
+main .gsc-social-reaction-summary-item-count {
+  color: #3c3836 !important;
+  font-weight: 600 !important;
+}
+
+/* Popover picker: calm parchment card with clean subtle border */
+main .gsc-reactions-popover {
+  background-color: #faf3e0 !important;
+  border: 1px solid #d5c4a1 !important;
+  color: #3c3836 !important;
+  box-shadow: 0 4px 12px rgba(60, 56, 54, 0.08) !important;
+}
+
+main .gsc-reactions-popover.open.bottom:before,
+main .gsc-reactions-popover.open.top:before {
+  border-bottom-color: #d5c4a1 !important;
+  border-top-color: #d5c4a1 !important;
+}
+
+main .gsc-reactions-popover.open.bottom:after,
+main .gsc-reactions-popover.open.top:after {
+  border-bottom-color: #faf3e0 !important;
+  border-top-color: #faf3e0 !important;
+}
+
+main .gsc-emoji-button {
+  background-color: transparent !important;
+  border: 1px solid transparent !important;
+  border-radius: 4px !important;
+  transition: background-color 0.15s ease !important;
+}
+
+main .gsc-emoji-button:hover:not(:disabled),
+main .gsc-emoji-button:focus:not(:disabled) {
+  background-color: #ebdcb9 !important;
+}
+
+main .gsc-emoji-button.has-reacted {
+  background-color: #ebdcb9 !important;
+  border: 1px solid #bdae93 !important;
+}
+
+/* --------------------------------------------------------------------------
+   COMMENT BOX & TEXTAREA
+   Clean, warm parchment, minimal subtle borders.
+   -------------------------------------------------------------------------- */
+
+main .gsc-comment-box {
+  background-color: #faf3e0 !important;
+  border: 1px solid #d5c4a1 !important;
+  border-radius: 4px !important;
+}
+
+main .gsc-comment-box-tabs {
+  background-color: #f4ebd0 !important;
+  border-bottom: 1px solid #d5c4a1 !important;
+}
+
+main .gsc-comment-box-tabs .btn {
+  color: #665c54 !important;
+}
+
+main .gsc-comment-box-tabs .btn:hover {
+  color: #3c3836 !important;
+  background-color: #ebdcb9 !important;
+}
+
+main .gsc-comment-box-tabs .BtnGroup-item--selected .btn,
+main .gsc-comment-box-tabs .btn[aria-selected="true"] {
+  color: #282828 !important;
+  background-color: #faf3e0 !important;
+  font-weight: 600 !important;
+}
+
+main .gsc-toolbar-item {
+  color: #665c54 !important;
+}
+
+main .gsc-toolbar-item:hover,
+main .gsc-toolbar-item:focus {
+  color: #282828 !important;
+  background-color: #ebdcb9 !important;
+}
+
+main .gsc-comment-box-textarea {
+  background-color: #fffdf9 !important;
+  color: #3c3836 !important;
+  border: 1px solid #d5c4a1 !important;
+  border-bottom-style: dashed !important;
+  font-size: 0.9375rem !important;
+}
+
+main .gsc-comment-box-textarea:focus {
+  outline: none !important;
+  border-color: #bdae93 !important;
+  background-color: #ffffff !important;
+  box-shadow: none !important;
+}
+
+main .gsc-comment-box-textarea-extras {
+  background-color: #f4ebd0 !important;
+  border: 1px solid #d5c4a1 !important;
+  border-top-width: 0 !important;
+}
+
+main .gsc-comment-box-preview {
+  background-color: #fffdf9 !important;
+  border: 1px solid #d5c4a1 !important;
+}
+
+/* --------------------------------------------------------------------------
+   COMMENT CARDS & TIMELINE
+   -------------------------------------------------------------------------- */
+
+main .gsc-comment {
+  background-color: #faf3e0 !important;
+  border: 1px solid #d5c4a1 !important;
+  border-radius: 4px !important;
+  margin-bottom: 1rem !important;
+}
+
+main .gsc-comment-header {
+  background-color: #f4ebd0 !important;
+  border-bottom: 1px solid #d5c4a1 !important;
+  color: #3c3836 !important;
+}
+
+main .gsc-comment-author a {
+  color: #3c3836 !important;
+  font-weight: 600 !important;
+}
+
+main .gsc-comment-author a:hover {
+  color: #076678 !important;
+  text-decoration: underline !important;
+}
+
+main .gsc-comment-content {
+  background-color: #fffdf9 !important;
+  color: #3c3836 !important;
+}
+
+main .gsc-replies {
+  background-color: #f4ebd0 !important;
+  border-top: 1px solid #d5c4a1 !important;
+}
+
+main .gsc-reply {
+  border-bottom: 1px solid #e0d5be !important;
+}
+
+main .gsc-reply:last-child {
+  border-bottom: none !important;
+}
+
+main .gsc-reply-box {
+  background-color: #faf3e0 !important;
+  border-top: 1px solid #d5c4a1 !important;
+}
+
+/* --------------------------------------------------------------------------
+   BUTTONS & LINKS
+   -------------------------------------------------------------------------- */
+
+main .btn {
+  border: 1px solid #d5c4a1 !important;
+  border-radius: 4px !important;
+  color: #3c3836 !important;
+  background-color: #f4ebd0 !important;
+  box-shadow: none !important;
+}
+
+main .btn:hover:not(:disabled) {
+  background-color: #ebdcb9 !important;
+  border-color: #bdae93 !important;
+}
+
+main .btn-primary {
+  background-color: #ebdcb9 !important;
+  border: 1px solid #bdae93 !important;
+  color: #282828 !important;
+  font-weight: 600 !important;
+}
+
+main .btn-primary:hover:not(:disabled) {
+  background-color: #dfceaa !important;
+  border-color: #a89984 !important;
+}
+
+main .btn-primary:active:not(:disabled) {
+  background-color: #d5c4a1 !important;
+}
+
+main .btn-primary:disabled {
+  background-color: #f4ebd0 !important;
+  border-color: #e0d5be !important;
+  color: #928374 !important;
+}
+
+main a {
+  color: #076678 !important;
+}
+
+main a:hover {
+  color: #044b58 !important;
+  text-decoration: underline !important;
+}
+
+/* Order picker (oldest/newest) */
+main .BtnGroup {
+  border: 1px solid #d5c4a1 !important;
+  background-color: #f4ebd0 !important;
+  border-radius: 4px !important;
+}
+
+main .BtnGroup-item .btn {
+  background-color: #f4ebd0 !important;
+  color: #665c54 !important;
+  border-right: 1px solid #d5c4a1 !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  border-left: none !important;
+}
+
+main .BtnGroup-item:last-child .btn {
+  border-right: none !important;
+}
+
+main .BtnGroup-item .btn:hover {
+  background-color: #ebdcb9 !important;
+  color: #3c3836 !important;
+}
+
+main .BtnGroup-item--selected .btn {
+  background-color: #ebdcb9 !important;
+  color: #282828 !important;
+  font-weight: 600 !important;
+}
+
+/* Pagination */
+main .gsc-pagination-button {
+  background-color: #f4ebd0 !important;
+  border: 1px solid #d5c4a1 !important;
+  border-radius: 4px !important;
+  color: #3c3836 !important;
+}
+
+main .gsc-pagination-button:hover {
+  background-color: #ebdcb9 !important;
+  border-color: #bdae93 !important;
 }
 
 main .pagination-loader-container {
@@ -116,25 +417,4 @@ main .pagination-loader-container {
 
 main .gsc-loading-image {
   background-image: url("https://github.githubassets.com/images/mona-loading-default.gif");
-}
-
-/* Neo-Brutalist Canvas Resets for Giscus Components */
-main .gsc-comment-box,
-main .gsc-timeline-item,
-main .gsc-comment {
-  border-radius: 0 !important;
-  box-shadow: none !important;
-}
-
-main .gsc-comment-header {
-  background-color: #f4ebd0 !important;
-  border-bottom: 2px solid #000000 !important;
-}
-
-main .gsc-comment-box-textarea {
-  background-color: #faf3e0 !important;
-  color: #000000 !important;
-  border: 2px solid #000000 !important;
-  border-radius: 0 !important;
-  font-family: 'Space Grotesk', sans-serif !important;
 }

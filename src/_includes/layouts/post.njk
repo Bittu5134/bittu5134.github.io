@@ -7,7 +7,7 @@ isBlogPage: true
 THESIS: A unified neo-brutalist dispatch sheet that shares the homepage's tactile retro-terminal world while offering a solid, distraction-free reading canvas.
 OWN-WORLD: Paper ground (#f6eedb, retro-dots-bg), crisp 2px black borders, solid #fffdf9 card body, signature yellow (#fde047), mint (#86efac), lavender (#c4b5fd), Space Grotesk & Space Mono typography.
 STORY: The reader arrives at an authentic engineering publication dispatch, absorbs complex architecture with clear wayfinding and tactile interactions, and navigates deeper into the blog.
-FIRST VIEWPORT: Reading progress strip along top edge, canonical site header, breadcrumb path, article card with tag pills, bold dispatch title, brief callout, and date/read-time metadata.
+FIRST VIEWPORT: Reading progress strip along top edge, canonical site header, breadcrumb path, article card led by a full-bleed cover image, then bold dispatch title, brief callout, tag pills, and date/read-time metadata.
 FORM: Neo-Brutalist Technical Blog Dispatch.
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
 -->
@@ -57,24 +57,23 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
       class="p-5 sm:p-8 md:p-12 bg-[#faf3e0] border-2 border-black"
       data-pagefind-body
     >
+      <!-- Cover Image (Full-Bleed Hero, edge-to-edge at the top of the card) -->
+      {% if coverImage %}
+        <div class="-mx-5 sm:-mx-8 md:-mx-12 -mt-5 sm:-mt-8 md:-mt-12 mb-8 border-b-2 border-black bg-[#faf3e0] overflow-hidden">
+          <img
+            src="{{ coverImage }}"
+            alt="{{ coverAlt if coverAlt else title }}"
+            class="w-full h-auto max-h-[460px] object-cover"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            data-pagefind-meta="image[src]"
+          />
+        </div>
+      {% endif %}
+
       <!-- Article Header -->
       <header class="mb-8 pb-6 border-b-2 border-black">
-        <!-- Tags Row -->
-        {% if tags %}
-          <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-3.5">
-            {% for tag in tags %}
-              {% if tag != "posts" %}
-                <a
-                  href="/blog/?tag={{ tag | urlencode }}"
-                  class="px-2.5 py-0.5 bg-[#f6eedb] border border-black font-mono text-[11px] sm:text-xs font-bold text-black hover:bg-[#fde047] transition-colors"
-                >
-                  #{{ tag | upper }}
-                </a>
-              {% endif %}
-            {% endfor %}
-          </div>
-        {% endif %}
-
         <!-- Title -->
         <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-mono font-black text-black tracking-tight leading-[1.15] mb-4">
           {{ title }}
@@ -87,6 +86,22 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
             data-pagefind-meta="summary"
           >
             {{ summary }}
+          </div>
+        {% endif %}
+
+        <!-- Tags Row -->
+        {% if tags %}
+          <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-5">
+            {% for tag in tags %}
+              {% if tag != "posts" %}
+                <a
+                  href="/blog/?tag={{ tag | urlencode }}"
+                  class="px-2.5 py-0.5 bg-[#f6eedb] border border-black font-mono text-[11px] sm:text-xs font-light text-black hover:bg-[#fde047] transition-colors tracking-wide"
+                >
+                  #{{ tag | upper }}
+                </a>
+              {% endif %}
+            {% endfor %}
           </div>
         {% endif %}
 
@@ -176,20 +191,6 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
           </div>
         </div>
       </header>
-
-      <!-- Optional Cover Image (Flat, High-Contrast Frame) -->
-      {% if coverImage %}
-        <div class="mb-8 border-2 border-black bg-[#faf3e0] overflow-hidden">
-          <img
-            src="{{ coverImage }}"
-            alt="{{ coverAlt if coverAlt else title }}"
-            class="w-full h-auto max-h-[460px] object-cover"
-            loading="lazy"
-            decoding="async"
-            data-pagefind-meta="image[src]"
-          />
-        </div>
-      {% endif %}
 
       <!-- Table of Contents (Flat, Warm Panel) -->
       {% if tocList and tocList.length > 2 %}

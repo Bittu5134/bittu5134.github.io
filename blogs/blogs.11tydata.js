@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import getReadingTime from "reading-time";
+import { formatBlogDate, parseBlogDate, toIsoBlogDate } from "../scripts/parse-blog-date.js";
 
 const UNSPLASH_ABSTRACT_COVERS = [
   "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&h=630&auto=format&fit=crop&q=80",
@@ -31,15 +32,15 @@ export default {
   permalink: "/blog/{{ slug or page.fileSlug }}/index.html",
   eleventyComputed: {
     slug: (data) => data.slug || data.page.fileSlug,
+    // Eleventy requires `date` to be a real Date, but the authored DD-MM-YYYY form
+    // arrives as a string. Coerce it here so every downstream consumer (sorting,
+    // <time datetime>, meta tags) sees a proper Date instead of raw text.
+    date: (data) => parseBlogDate(data.date),
+    // displayDate is no longer supported: the long form is always derived from
+    // `date` so a hand-written date can never disagree with the machine-readable one.
     displayDate: (data) => {
-      if (data.displayDate) return data.displayDate;
-      if (data.date) {
-        const d = new Date(data.date);
-        return !isNaN(d.getTime())
-          ? d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })
-          : String(data.date);
-      }
-      return "";
+      const parsed = formatBlogDate(data.date);
+      return parsed || "";
     },
     readTime: (data) => {
       if (data.page && data.page.inputPath) {
@@ -85,14 +86,36 @@ export default {
     dateModified: (data) => {
       const mod = data.updated || data.dateModified || data.date;
       if (mod) {
-        const d = new Date(mod);
-        return !isNaN(d.getTime()) ? d.toISOString().split("T")[0] : String(mod);
+        return toIsoBlogDate(mod);
       }
       return "";
     },
     keywords: (data) => {
-      const tags = (data.tags || []).filter((t) => t && t !== "posts");
-      return tags.join(", ");
+      const visibleTags = (data.tags || []).filter((t) => t && t !== "posts");
+      const hidden = Array.isArray(data.hiddenTags)
+        ? data.hiddenTags.filter(Boolean)
+        : typeof data.hiddenTags === "string"
+        ? data.hiddenTags.split(",").map((t) => t.trim()).filter(Boolean)
+        : Array.isArray(data.seoTags)
+        ? data.seoTags.filter(Boolean)
+        : typeof data.seoTags === "string"
+        ? data.seoTags.split(",").map((t) => t.trim()).filter(Boolean)
+        : [];
+      const combined = Array.from(new Set([...visibleTags, ...hidden]));
+      return combined.join(", ");
+    },
+    allSeoTags: (data) => {
+      const visibleTags = (data.tags || []).filter((t) => t && t !== "posts");
+      const hidden = Array.isArray(data.hiddenTags)
+        ? data.hiddenTags.filter(Boolean)
+        : typeof data.hiddenTags === "string"
+        ? data.hiddenTags.split(",").map((t) => t.trim()).filter(Boolean)
+        : Array.isArray(data.seoTags)
+        ? data.seoTags.filter(Boolean)
+        : typeof data.seoTags === "string"
+        ? data.seoTags.split(",").map((t) => t.trim()).filter(Boolean)
+        : [];
+      return Array.from(new Set([...visibleTags, ...hidden]));
     },
   },
 };

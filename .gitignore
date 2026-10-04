@@ -2,6 +2,7 @@
 .github/hooks
 .github/skills/
 .impeccable/
+.pi/
 # Logs
 logs
 *.log

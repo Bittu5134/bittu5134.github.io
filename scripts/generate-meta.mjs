@@ -4,6 +4,7 @@ import { execSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import getProjects from "../src/_data/projects.js";
 import getReadingTime from "reading-time";
+import { formatBlogDate, toIsoBlogDate } from "./parse-blog-date.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -77,6 +78,16 @@ function parseMarkdownFile(filepath) {
     tags = data.tags.split(",").map((t) => t.trim()).filter(Boolean);
   }
 
+  // Normalize hidden / SEO tags
+  let hiddenTags = [];
+  const rawHidden = data.hiddenTags || data.seoTags;
+  if (Array.isArray(rawHidden)) {
+    hiddenTags = rawHidden.filter(Boolean);
+  } else if (typeof rawHidden === "string") {
+    hiddenTags = rawHidden.split(",").map((t) => t.trim()).filter(Boolean);
+  }
+  const allSeoTags = Array.from(new Set([...tags.filter((t) => t !== "posts"), ...hiddenTags]));
+
   // Calculate readTime dynamically using industry standard reading-time
   const stats = getReadingTime(content);
   const readTime = stats.text;
@@ -84,10 +95,14 @@ function parseMarkdownFile(filepath) {
   return {
     slug: data.slug || fallbackSlug,
     title: data.title || fallbackSlug,
-    date: data.displayDate || (data.date ? new Date(data.date).toISOString().split("T")[0] : ""),
+    // Always derived from `date`; the old displayDate override is gone.
+    date: toIsoBlogDate(data.date),
+    displayDate: formatBlogDate(data.date),
     readTime,
     summary: data.summary || "",
     tags,
+    hiddenTags,
+    allSeoTags,
     coverImage: data.coverImage || getDeterministicAbstractCover(data.slug || fallbackSlug),
     coverAlt: data.coverAlt || (data.title ? `${data.title} abstract cover` : "Abstract cover"),
     content,
@@ -229,11 +244,13 @@ ${articlesList}
       const coverUrl = post.coverImage
         ? (post.coverImage.startsWith("http") ? post.coverImage : `${SITE_URL}${post.coverImage}`)
         : "None";
+      const tagsLine = post.tags.join(", ");
+      const seoTagsLine = post.allSeoTags && post.allSeoTags.length ? post.allSeoTags.join(", ") : tagsLine;
       return `---
 Title: ${post.title}
 Date: ${post.date}
 Read Time: ${post.readTime}
-Tags: ${post.tags.join(", ")}
+Tags: ${tagsLine}${post.hiddenTags && post.hiddenTags.length ? `\nKeywords: ${seoTagsLine}` : ""}
 Canonical URL: ${SITE_URL}/blog/${post.slug}
 Raw Markdown: ${SITE_URL}/blogs/${post.slug}.md
 Cover Image: ${coverUrl}

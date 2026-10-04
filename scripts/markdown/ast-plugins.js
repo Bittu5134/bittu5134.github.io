@@ -223,7 +223,102 @@ export function rehypeTableWrapper() {
 }
 
 /**
- * 5. rehypeBlogRelativeImages
+ * 5. rehypeBlockquoteAttribution
+ * Formats attribution lines inside editorial blockquotes:
+ * If the last paragraph begins with "-- " or "— ", wraps it in a <footer><cite> tag
+ * for clean, semantic typography.
+ */
+export function rehypeBlockquoteAttribution() {
+  return (tree) => {
+    visit(tree, "element", (node) => {
+      if (node.tagName !== "blockquote") return;
+      const classes = node.properties?.className || [];
+      if (classes.includes("github-alert") || classes.some((c) => String(c).includes("alert"))) return;
+
+      const pChildren = (node.children || []).filter((c) => c.type === "element" && c.tagName === "p");
+      if (pChildren.length === 0) return;
+
+      const lastP = pChildren[pChildren.length - 1];
+      const text = hastText(lastP).trim();
+
+      // Soft-break attribution: `> quote` newline `> — Author` becomes ONE <p>
+      // whose final text node holds "\n— Author". Split it out before the other paths.
+      const kids = lastP.children || [];
+      const tail = kids[kids.length - 1];
+      if (tail && tail.type === "text") {
+        const softMatch = tail.value.match(/\n[ \t]*(-{1,2}|—|–)[ \t]+(.+?)[ \t]*$/);
+        if (softMatch && tail.value.slice(0, softMatch.index).trim()) {
+          tail.value = tail.value.slice(0, softMatch.index).replace(/[ \t]+$/, "");
+          const pIndex = node.children.indexOf(lastP);
+          node.children.splice(pIndex + 1, 0, {
+            type: "element",
+            tagName: "footer",
+            properties: {},
+            children: [
+              {
+                type: "element",
+                tagName: "cite",
+                properties: {},
+                children: [{ type: "text", value: softMatch[2].trim() }],
+              },
+            ],
+          });
+          return;
+        }
+      }
+
+      // Check if last paragraph has an author attribution, e.g. "- Nobody", "-- Alan Turing", "— Linus Torvalds", or "– En-dash"
+      if (/^(\-\-?|—|–)\s+/.test(text)) {
+        const cleanAuthor = text.replace(/^(\-\-?|—|–)\s+/, "").trim();
+        const pIndex = node.children.indexOf(lastP);
+        if (pIndex !== -1) {
+          node.children[pIndex] = {
+            type: "element",
+            tagName: "footer",
+            properties: {},
+            children: [
+              {
+                type: "element",
+                tagName: "cite",
+                properties: {},
+                children: [{ type: "text", value: cleanAuthor }],
+              },
+            ],
+          };
+        }
+      } else {
+        // Also support single paragraph where author attribution follows <br>
+        // e.g. <p>Quote text<br>-- Author</p>
+        const brIdx = lastP.children?.findIndex((c) => c.type === "element" && c.tagName === "br");
+        if (brIdx !== -1 && brIdx < lastP.children.length - 1) {
+          const afterBrNodes = lastP.children.slice(brIdx + 1);
+          const afterText = afterBrNodes.map(hastText).join("").trim();
+          if (/^(\-\-?|—|–)\s+/.test(afterText)) {
+            const cleanAuthor = afterText.replace(/^(\-\-?|—|–)\s+/, "").trim();
+            lastP.children = lastP.children.slice(0, brIdx);
+            const pIndex = node.children.indexOf(lastP);
+            node.children.splice(pIndex + 1, 0, {
+              type: "element",
+              tagName: "footer",
+              properties: {},
+              children: [
+                {
+                  type: "element",
+                  tagName: "cite",
+                  properties: {},
+                  children: [{ type: "text", value: cleanAuthor }],
+                },
+              ],
+            });
+          }
+        }
+      }
+    });
+  };
+}
+
+/**
+ * 6. rehypeBlogRelativeImages
  * Rewrites relative image links (e.g. ./assets/foo.png or assets/foo.png)
  * to root-relative paths under /blogs/... so browsers can resolve them on /blog/<slug>/ pages.
  */
