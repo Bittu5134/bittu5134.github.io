@@ -48,16 +48,8 @@
     {% elif resolvedCover.endsWith('.jpg') or resolvedCover.endsWith('.jpeg') %}
       <meta property="og:image:type" content="image/jpeg" />
     {% endif %}
-    {% if ogImageWidth and ogImageHeight %}
-      {% set imgWidth = ogImageWidth %}
-      {% set imgHeight = ogImageHeight %}
-    {% elif 'og_banner' in resolvedCover %}
-      {% set imgWidth = 1400 %}
-      {% set imgHeight = 350 %}
-    {% else %}
-      {% set imgWidth = 1200 %}
-      {% set imgHeight = 630 %}
-    {% endif %}
+    {% set imgWidth = ogImageWidth if ogImageWidth else (1400 if 'og_banner' in resolvedCover else 1200) %}
+    {% set imgHeight = ogImageHeight if ogImageHeight else (350 if 'og_banner' in resolvedCover else 630) %}
     <meta property="og:image:width" content="{{ imgWidth }}" />
     <meta property="og:image:height" content="{{ imgHeight }}" />
     {% set resolvedAlt = coverAlt if coverAlt else (alt if alt else (title if title else 'Bittu | Software & CyberSec')) %}

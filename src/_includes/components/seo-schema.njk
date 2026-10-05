@@ -22,8 +22,8 @@
       "image": {
         "@type": "ImageObject",
         "url": {{ resolvedCover | json | safe }},
-        "width": 1200,
-        "height": 630
+        "width": {{ ogImageWidth if ogImageWidth else 1200 }},
+        "height": {{ ogImageHeight if ogImageHeight else 630 }}
       },
       "datePublished": {{ date | dateIso | json | safe }},
       "dateModified": {{ (dateModified if dateModified else (date | dateIso)) | json | safe }},
