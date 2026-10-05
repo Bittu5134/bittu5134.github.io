@@ -1195,5 +1195,258 @@
 }
 
 
+/* ============================================================
+   PRINT STYLES v2 — editorial publication report
+   B&W text/UI, images kept in full color (print-color-adjust).
+   Precise selectors only; screen layout untouched.
+   ============================================================ */
+@media print {
+  @page {
+    margin: 18mm 16mm;
+  }
 
+  /* --- 1. Hide screen-only chrome --- */
+  #reading-progress,
+  .site-breadcrumb,
+  .tag-row,
+  #share-article-btn,
+  #share-popover,
+  .screen-meta,
+  article > details,
+  #comments,
+  .post-nav,
+  .author-socials,
+  body > div > header,
+  body > div > footer {
+    display: none !important;
+  }
 
+  /* --- 2. Base: white report page --- */
+  html, body {
+    background: #ffffff !important;
+  }
+
+  body > div {
+    background: #ffffff !important;
+    color: #000000 !important;
+    min-height: auto !important;
+  }
+
+  main {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Ink economy everywhere... */
+  * {
+    print-color-adjust: economy;
+    -webkit-print-color-adjust: economy;
+  }
+
+  /* ...except images: cover, avatar, diagrams, inline art stay full-color */
+  img,
+  .mermaid-container svg,
+  .katex * {
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+
+  /* --- 3. Article card: plain report sheet --- */
+  article {
+    background: #ffffff !important;
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* --- 4. Masthead: site name | ENGINEERING DISPATCH | date --- */
+  .print-masthead {
+    font-family: "Space Mono", monospace;
+    font-size: 8.5pt;
+    letter-spacing: 0.12em;
+    color: #000000;
+    padding-bottom: 4px;
+    border-bottom: 2px solid #000000;
+    margin-bottom: 14pt;
+  }
+
+  .print-masthead-row {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .print-masthead-center {
+    display: none !important;
+  }
+
+  /* --- 5. Cover image: full color, uncropped, first-page hero --- */
+  .article-cover {
+    margin: 0 !important;
+    border: 0 !important;
+    background: #ffffff !important;
+    overflow: visible !important;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  .article-cover img {
+    max-height: none !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  /* --- 6. Article header: editorial title block --- */
+  article > header {
+    background: #ffffff !important;
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 14pt 0 10pt !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  article > header > h1 {
+    font-family: "Space Mono", monospace;
+    color: #000000 !important;
+    font-size: 20pt !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.01em;
+    margin: 0 0 10pt !important;
+    break-after: avoid;
+  }
+
+  /* Summary callout → editorial dek */
+  article > header > div[class*="bg-[#fef3c7]"] {
+    background: #ffffff !important;
+    border: 0 !important;
+    border-left: 3px solid #000000 !important;
+    padding: 0 0 0 12px !important;
+    margin: 0 0 10pt !important;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-style: italic;
+    font-size: 11.5pt !important;
+    line-height: 1.5 !important;
+    color: #000000 !important;
+  }
+
+  /* --- 7. Print byline: BY NAME (HANDLE) · DATE · READ TIME + double rule --- */
+  .print-byline {
+    font-family: "Space Mono", monospace;
+    font-size: 9pt;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    color: #000000 !important;
+    text-transform: uppercase;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #000000;
+    margin-bottom: 4pt;
+    position: relative;
+    break-before: avoid;
+    break-after: avoid;
+  }
+
+  /* the second, heavier rule of the double-rule signature */
+  .print-byline::after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -4px;
+    border-bottom: 3px solid #000000;
+  }
+
+  .print-byline + div {
+    margin-top: 14pt !important;
+  }
+
+  /* --- 8. Body prose: serif report text --- */
+  .prose-retro,
+  .prose-retro p,
+  .prose-retro li {
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: 11pt !important;
+    line-height: 1.55 !important;
+    color: #000000 !important;
+  }
+
+  .prose-retro h1, .prose-retro h2, .prose-retro h3, .prose-retro h4,
+  .prose-retro h5, .prose-retro h6 {
+    font-family: "Space Mono", monospace !important;
+    color: #000000 !important;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  .prose-retro a {
+    color: #000000 !important;
+    text-decoration: underline !important;
+  }
+
+  /* Flatten colored boxes inside prose (alerts, cards) */
+  .prose-retro [class*="bg-"] {
+    background: #ffffff !important;
+    border: 1px solid #000000 !important;
+  }
+
+  .prose-retro pre,
+  .prose-retro code,
+  .prose-retro table {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .prose-retro pre {
+    background: #f5f5f5 !important;
+    border: 1px solid #000000 !important;
+    font-size: 9.5pt !important;
+  }
+
+  /* --- 9. Author card: kept intact, report style --- */
+  article > footer {
+    margin-top: 22pt !important;
+    padding: 10pt 0 0 !important;
+    border: 0 !important;
+    border-top: 2px solid #000000 !important;
+    background: #ffffff !important;
+  }
+
+  .author-card {
+    background: #ffffff !important;
+    border: 0 !important;
+    padding: 0 !important;
+    display: block !important;
+  }
+
+  .author-card img {
+    width: 36pt !important;
+    height: 36pt !important;
+    border: 1px solid #000000 !important;
+  }
+
+  .author-card [class*="bg-"] {
+    background: #ffffff !important;
+    border: 0 !important;
+    padding: 0 !important;
+  }
+
+  .author-card a {
+    color: #000000 !important;
+    text-decoration: none !important;
+  }
+
+  /* --- 10. Page-break hygiene --- */
+  img, pre, blockquote, table, figure, .mermaid-container {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  article > header,
+  .print-byline {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
