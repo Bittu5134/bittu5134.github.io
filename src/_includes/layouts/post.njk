@@ -30,7 +30,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
   <!-- Main Content Area -->
   <main class="max-w-4xl mx-auto px-3 sm:px-6 py-5 sm:py-8 w-full flex-1">
     <!-- Breadcrumb Navigation Bar -->
-    <nav aria-label="Breadcrumb" class="mb-4 flex items-center justify-between gap-2 text-xs sm:text-sm font-mono">
+    <nav aria-label="Breadcrumb" class="site-breadcrumb mb-4 flex items-center justify-between gap-2 text-xs sm:text-sm font-mono">
       <div class="flex items-center gap-1.5 sm:gap-2 truncate text-black">
         <a href="/" class="hover:underline font-bold text-black shrink-0">~</a>
         <span class="text-black font-bold">/</span>
@@ -57,9 +57,17 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
       class="p-5 sm:p-8 md:p-12 bg-[#faf3e0] border-2 border-black"
       data-pagefind-body
     >
+      <!-- Print-Only Editorial Masthead (hidden on screen) -->
+      <div class="print-masthead hidden print:block" aria-hidden="true">
+        <div class="print-masthead-row">
+          <span>{{ site.name | upper }}</span>
+          <span>{{ (displayDate or date) | dateDisplay | upper }}</span>
+        </div>
+      </div>
+
       <!-- Cover Image (Full-Bleed Hero, edge-to-edge at the top of the card) -->
       {% if coverImage %}
-        <div class="-mx-5 sm:-mx-8 md:-mx-12 -mt-5 sm:-mt-8 md:-mt-12 mb-8 border-b-2 border-black bg-[#faf3e0] overflow-hidden">
+        <div class="article-cover -mx-5 sm:-mx-8 md:-mx-12 -mt-5 sm:-mt-8 md:-mt-12 mb-8 border-b-2 border-black bg-[#faf3e0] overflow-hidden">
           <img
             src="{{ coverImage }}"
             alt="{{ coverAlt if coverAlt else title }}"
@@ -91,7 +99,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 
         <!-- Tags Row -->
         {% if tags %}
-          <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-5">
+          <div class="tag-row flex flex-wrap items-center gap-1.5 sm:gap-2 mb-5">
             {% for tag in tags %}
               {% if tag != "posts" %}
                 <a
@@ -106,7 +114,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
         {% endif %}
 
         <!-- Metadata Row: Date, Read Time, Share Button -->
-        <div class="flex items-center justify-between flex-wrap gap-3 pt-2 font-mono text-xs sm:text-sm">
+        <div class="screen-meta flex items-center justify-between flex-wrap gap-3 pt-2 font-mono text-xs sm:text-sm">
           <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
             <span class="px-2.5 py-1 bg-[#86efac] border-2 border-black font-bold text-black shrink-0">
               <time datetime="{{ date | dateIso }}">{{ (displayDate or date) | dateDisplay | upper }}</time>
@@ -192,6 +200,13 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
         </div>
       </header>
 
+      <!-- Print-Only Editorial Byline (hidden on screen) -->
+      <div class="print-byline hidden print:block" aria-hidden="true">
+        BY {{ site.author.name | upper }}
+        &middot; {{ (displayDate or date) | dateDisplay | upper }}
+        &middot; {{ (content | readingTime) | upper }}
+      </div>
+
       <!-- Table of Contents (Flat, Warm Panel) -->
       {% if tocList and tocList.length > 2 %}
         <details class="mb-8 bg-[#f4ebd0] border-2 border-black p-4 sm:p-5 group">
@@ -223,7 +238,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
       <!-- Post Footer: Author Card + Navigation -->
       <footer class="mt-12 pt-8 border-t-2 border-black space-y-6">
         <!-- Author Profile Box (Flat, Slim) -->
-        <div class="py-2.5 px-4 sm:py-3 sm:px-5 bg-[#f4ebd0] border-2 border-black flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="author-card py-2.5 px-4 sm:py-3 sm:px-5 bg-[#f4ebd0] border-2 border-black flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div class="flex items-center gap-3">
             <a href="/" class="shrink-0" title="Go to Home">
               <img
@@ -235,7 +250,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
             </a>
             <div>
               <div class="font-mono text-sm sm:text-base font-bold text-black flex items-center gap-2">
-                <a href="/" class="hover:underline text-black">Bittu (Bittu5134)</a>
+                <a href="/" class="hover:underline text-black">Bittu</a>
                 <span class="px-1.5 py-0 leading-none inline-flex items-center h-4 bg-[#fde047] border border-black text-[9px] sm:text-[10px] font-mono font-bold uppercase">AUTHOR</span>
               </div>
               <div class="font-mono text-xs text-black font-medium">
@@ -243,7 +258,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
               </div>
             </div>
           </div>
-          <div class="flex items-center gap-2 font-mono text-xs font-bold shrink-0">
+          <div class="author-socials flex items-center gap-2 font-mono text-xs font-bold shrink-0">
             <a
               href="https://github.com/Bittu5134"
               target="_blank"
@@ -279,7 +294,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
         {% set olderPost = collections.blogs | getNextCollectionItem(page) %}
         {% set randomPost = collections.blogs | getRandomOtherPost(page.url, newerPost.url if newerPost else "", olderPost.url if olderPost else "") %}
         {% if newerPost or olderPost or randomPost %}
-          <div class="p-3.5 sm:p-4 bg-[#faf3e0] border-2 border-black space-y-2.5 font-mono text-xs sm:text-sm">
+          <div class="post-nav p-3.5 sm:p-4 bg-[#faf3e0] border-2 border-black space-y-2.5 font-mono text-xs sm:text-sm">
             {% if newerPost %}
               <div class="flex items-baseline justify-between gap-3 group">
                 <div class="flex items-baseline gap-2 min-w-0">
