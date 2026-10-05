@@ -24,7 +24,7 @@ Generated: 2026-10-05
 - [Resume-Model](https://iitk-resume.bittu.dev): A tool that parses academic PDFs by their layout geometry (since normal parsers choke on tables) and scores them. Built for IIT Kanpur's career office. Source: https://github.com/Bittu5134/IITK-Resume-Model
 
 ## Technical Writing
-- [My First Blog ✨](https://bittu.dev/blogs/my-first-blog.md): Why I finally started a personal blog, and where to find the small midnight projects I write up from now on. [Showcase, Markdown, Student] — 1 min read. Rendered HTML: https://bittu.dev/blog/my-first-blog
+- [My First Blog ✨](https://bittu.dev/blogs/my-first-blog.md):  [Showcase, Markdown, Student] — 1 min read. Rendered HTML: https://bittu.dev/blog/my-first-blog
 
 ## Full Single-File Context
 - [llms-full.txt](https://bittu.dev/llms-full.txt): Complete plain-text payload — full project descriptions, all blog post content verbatim, and author profile. Optimised for single-shot context injection into coding assistants and RAG pipelines.
