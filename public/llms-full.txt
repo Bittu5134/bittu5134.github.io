@@ -3,7 +3,7 @@
 
 Index: https://bittu.dev/llms.txt
 Canonical: https://bittu.dev
-Generated: 2026-10-04
+Generated: 2026-10-05
 
 ================================================================================
 SECTION 1 — IDENTITY & SKILLS
@@ -97,12 +97,12 @@ SECTION 3 — TECHNICAL ARTICLES (FULL TEXT)
 Title: My First Blog ✨
 Date: 2026-10-04
 Read Time: 1 min read
-Tags: Showcase, Markdown, Amateur, Student
-Keywords: Showcase, Markdown, Amateur, Student, IIT Kanpur, CyberSec, Personal Blog
+Tags: Showcase, Markdown, Student
+Keywords: Showcase, Markdown, Student, Blog Launch, Midnight Projects, Homelab, IIT Kanpur, IIT Kanpur '30, CyberSec, Software Engineering, Student Blog, Personal Blog, Tech Blog, Portfolio, Build In Public, Write In Public, Developer Journal, Web Development, Neo-Brutalism, Eleventy
 Canonical URL: https://bittu.dev/blog/my-first-blog
 Raw Markdown: https://bittu.dev/blogs/my-first-blog.md
-Cover Image: https://bittu.dev/blogs/assets/welcome-blog/cover.webp
-Summary: 
+Cover Image: https://bittu.dev/blogs/assets/my-first-blog/cover.webp
+Summary: Why I finally started a personal blog, and where to find the small midnight projects I write up from now on.
 ---
 
 Welcome to another obscure blog on the Internet!
