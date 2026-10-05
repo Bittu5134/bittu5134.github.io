@@ -1,24 +1,20 @@
 ---
 slug: my-first-blog
 title: "My First Blog ✨"
-coverImage: "/blogs/assets/welcome-blog/cover.webp"
-# ogImageWidth: 1200                            
-# ogImageHeight: 630
-coverAlt: "Cover for My First Blog"
-date: "4-10-2026"                                
-# updated: "5-10-2026"                           
-# summary: "One-line blurb."
+coverImage: "/blogs/assets/my-first-blog/cover.webp"
+# ogImageWidth & ogImageHeight are dynamically inferred from the image file
+coverAlt: "Retro terminal and cassette-tape collage in bold neo-brutalist colours"
+date: "4-10-2026"
+updated: "5-10-2026"
+summary: "Why I finally started a personal blog, and where to find the small midnight projects I write up from now on."
 tags:
   - Showcase
   - Markdown
-  - Amateur
   - Student
 hiddenTags:
-  - IIT Kanpur
-  - CyberSec
-  - Personal Blog
-# seoTags:        
-#   - Example
+  - Blog Launch
+  - Midnight Projects
+  - Homelab
 ---
 
 
