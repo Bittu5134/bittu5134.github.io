@@ -4,7 +4,8 @@ import { execSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import getProjects from "../src/_data/projects.js";
 import getReadingTime from "reading-time";
-import { formatBlogDate, toIsoBlogDate } from "./parse-blog-date.js";
+import { formatBlogDate, toIsoBlogDate, normalizeTagList, mergeTagLists } from "./parse-blog-date.js";
+import siteConfig from "../site.config.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -71,22 +72,16 @@ function parseMarkdownFile(filepath) {
   const content = parsed.content.trim();
 
   // Normalize tags: accept array or comma-separated string, exclude empty / "posts"
-  let tags = [];
-  if (Array.isArray(data.tags)) {
-    tags = data.tags.filter(Boolean);
-  } else if (typeof data.tags === "string") {
-    tags = data.tags.split(",").map((t) => t.trim()).filter(Boolean);
-  }
+  const tags = normalizeTagList(data.tags).filter((t) => t !== "posts");
 
-  // Normalize hidden / SEO tags
-  let hiddenTags = [];
-  const rawHidden = data.hiddenTags || data.seoTags;
-  if (Array.isArray(rawHidden)) {
-    hiddenTags = rawHidden.filter(Boolean);
-  } else if (typeof rawHidden === "string") {
-    hiddenTags = rawHidden.split(",").map((t) => t.trim()).filter(Boolean);
-  }
-  const allSeoTags = Array.from(new Set([...tags.filter((t) => t !== "posts"), ...hiddenTags]));
+  // Post-specific hidden tags (`hiddenTags`, with legacy `seoTags` alias fallback/combination)
+  const postHiddenTags = mergeTagLists(data.hiddenTags, data.seoTags);
+
+  // Universal tags configured globally in site.config.js
+  const universalTags = siteConfig?.seo?.defaultTags || [];
+
+  // Combined SEO keyword pool: visible tags + post hidden tags + universal site tags
+  const allSeoTags = mergeTagLists(tags, postHiddenTags, universalTags);
 
   // Calculate readTime dynamically using industry standard reading-time
   const stats = getReadingTime(content);
@@ -101,7 +96,7 @@ function parseMarkdownFile(filepath) {
     readTime,
     summary: data.summary || "",
     tags,
-    hiddenTags,
+    hiddenTags: postHiddenTags,
     allSeoTags,
     coverImage: data.coverImage || getDeterministicAbstractCover(data.slug || fallbackSlug),
     coverAlt: data.coverAlt || (data.title ? `${data.title} abstract cover` : "Abstract cover"),

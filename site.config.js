@@ -13,6 +13,29 @@ export default {
   url: "https://bittu.dev",
   feedUrl: "https://bittu.dev/rss.xml",
 
+  // ── Universal SEO & Blog Defaults ──────────────────────────────────
+  // These tags are automatically injected into EVERY blog post's metadata
+  // (meta keywords, article:tag, llms feeds, and JSON-LD structured data)
+  // alongside the post's own `tags` and post-specific `hiddenTags`.
+  seo: {
+    defaultTags: [
+      "IIT Kanpur",
+      "IIT Kanpur '30",
+      "CyberSec",
+      "Software Engineering",
+      "Student Blog",
+      "Personal Blog",
+      "Tech Blog",
+      "Portfolio",
+      "Build In Public",
+      "Write In Public",
+      "Developer Journal",
+      "Web Development",
+      "Neo-Brutalism",
+      "Eleventy",
+    ],
+  },
+
   // ── Author Profile & JSON-LD Schema ─────────────────────────────────
   author: {
     name: "Bittu",

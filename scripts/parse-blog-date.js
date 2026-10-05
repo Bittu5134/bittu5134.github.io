@@ -111,3 +111,71 @@ export function toSortableTime(value) {
   const parsed = parseBlogDate(value);
   return parsed ? parsed.getTime() : Number.NEGATIVE_INFINITY;
 }
+
+/**
+ * Normalise a single tag value into a trimmed, non-empty string, or null.
+ * Accepts strings or numbers; arrays and objects are not tag-shaped and yield null.
+ *
+ * @param {unknown} value
+ * @returns {string | null}
+ */
+export function normalizeTag(value) {
+  if (typeof value === "string") {
+    const trimmed = value.trim();
+    return trimmed ? trimmed : null;
+  }
+  if (typeof value === "number" && Number.isFinite(value)) return String(value);
+  return null;
+}
+
+/**
+ * Normalise one tag collection into a deduped list of non-empty strings.
+ * Accepts either an array of tags or a comma-separated string; anything else
+ * (undefined, null, a scalar) normalises to an empty list.
+ *
+ * `tags`, `hiddenTags`, and `seoTags` all funnel through here so every consumer —
+ * keywords meta, article:tag meta, Pagefind's data-hidden-tags attribute, and
+ * generate-meta.mjs — agrees on the final list without re-implementing the
+ * null-filtering and dedup logic.
+ *
+ * @param {unknown} value Array of tags, or a comma-separated string.
+ * @returns {string[]} Non-empty, deduped tag strings in author order.
+ */
+export function normalizeTagList(value) {
+  const raw = Array.isArray(value) ? value : typeof value === "string" ? value.split(",") : [];
+  const seen = new Set();
+  const result = [];
+  for (const entry of raw) {
+    const tag = normalizeTag(entry);
+    if (!tag) continue;
+    const key = tag.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    result.push(tag);
+  }
+  return result;
+}
+
+/**
+ * Merge tag collections into one deduped list, preserving author order.
+ *
+ * Used to fold `hiddenTags` and its `seoTags` alias into the single keyword /
+ * metadata list. The two fields are synonyms, so a post that sets both must not
+ * emit duplicate keywords or duplicate article:tag meta entries.
+ *
+ * @param {...unknown} lists Tag collections (arrays or comma-separated strings).
+ * @returns {string[]} Non-empty, deduped tag strings in author order.
+ */
+export function mergeTagLists(...lists) {
+  const merged = [];
+  const seen = new Set();
+  for (const list of lists) {
+    for (const tag of normalizeTagList(list)) {
+      const key = tag.toLowerCase();
+      if (seen.has(key)) continue;
+      seen.add(key);
+      merged.push(tag);
+    }
+  }
+  return merged;
+}

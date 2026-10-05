@@ -1,6 +1,8 @@
 import fs from "node:fs";
 import getReadingTime from "reading-time";
-import { formatBlogDate, parseBlogDate, toIsoBlogDate } from "../scripts/parse-blog-date.js";
+import { formatBlogDate, parseBlogDate, toIsoBlogDate, normalizeTagList, mergeTagLists } from "../scripts/parse-blog-date.js";
+import { measureImage } from "../scripts/image-dimensions.js";
+import siteConfig from "../site.config.js";
 
 const UNSPLASH_ABSTRACT_COVERS = [
   "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&h=630&auto=format&fit=crop&q=80",
@@ -70,6 +72,24 @@ export default {
       }
       return getDeterministicAbstractCover(data.slug || data.page?.fileSlug || data.title);
     },
+    // Inferred dynamically from the real image file when not explicitly declared in frontmatter.
+    // If the image is external (Unsplash) or unmeasurable, fall back to safe social standards.
+    ogImageWidth: (data) => {
+      if (data.ogImageWidth) return data.ogImageWidth;
+      const target = data.ogImage || data.coverImage;
+      const measured = measureImage(target);
+      if (measured) return measured.width;
+      if (target && target.includes("og_banner")) return 1400;
+      return 1200;
+    },
+    ogImageHeight: (data) => {
+      if (data.ogImageHeight) return data.ogImageHeight;
+      const target = data.ogImage || data.coverImage;
+      const measured = measureImage(target);
+      if (measured) return measured.height;
+      if (target && target.includes("og_banner")) return 350;
+      return 630;
+    },
     wordCount: (data) => {
       if (data.page && data.page.inputPath) {
         try {
@@ -90,32 +110,20 @@ export default {
       }
       return "";
     },
+    // Combines:
+    //   1. Author visible tags (`tags` minus internal "posts")
+    //   2. Post-specific `hiddenTags` (or its legacy alias `seoTags`)
+    //   3. Site-wide default tags from site.config.js (`seo.defaultTags`)
     keywords: (data) => {
       const visibleTags = (data.tags || []).filter((t) => t && t !== "posts");
-      const hidden = Array.isArray(data.hiddenTags)
-        ? data.hiddenTags.filter(Boolean)
-        : typeof data.hiddenTags === "string"
-        ? data.hiddenTags.split(",").map((t) => t.trim()).filter(Boolean)
-        : Array.isArray(data.seoTags)
-        ? data.seoTags.filter(Boolean)
-        : typeof data.seoTags === "string"
-        ? data.seoTags.split(",").map((t) => t.trim()).filter(Boolean)
-        : [];
-      const combined = Array.from(new Set([...visibleTags, ...hidden]));
+      const universalTags = siteConfig?.seo?.defaultTags || [];
+      const combined = mergeTagLists(visibleTags, data.hiddenTags, data.seoTags, universalTags);
       return combined.join(", ");
     },
     allSeoTags: (data) => {
       const visibleTags = (data.tags || []).filter((t) => t && t !== "posts");
-      const hidden = Array.isArray(data.hiddenTags)
-        ? data.hiddenTags.filter(Boolean)
-        : typeof data.hiddenTags === "string"
-        ? data.hiddenTags.split(",").map((t) => t.trim()).filter(Boolean)
-        : Array.isArray(data.seoTags)
-        ? data.seoTags.filter(Boolean)
-        : typeof data.seoTags === "string"
-        ? data.seoTags.split(",").map((t) => t.trim()).filter(Boolean)
-        : [];
-      return Array.from(new Set([...visibleTags, ...hidden]));
+      const universalTags = siteConfig?.seo?.defaultTags || [];
+      return mergeTagLists(visibleTags, data.hiddenTags, data.seoTags, universalTags);
     },
   },
 };
