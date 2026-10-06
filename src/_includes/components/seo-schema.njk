@@ -128,7 +128,8 @@
           "headline": {{ (post.data.title or "") | json | safe }},
           "description": {{ (post.data.summary or post.data.description or "") | json | safe }},
           "url": "https://bittu.dev{{ post.url }}",
-          "datePublished": {{ (post.data.date or post.date) | dateIso | json | safe }}
+          "datePublished": {{ (post.data.date or post.date) | dateIso | json | safe }},
+          "dateModified": {{ (post.data.dateModified if post.data.dateModified else ((post.data.date or post.date) | dateIso)) | json | safe }}
         }{% if not loop.last %},{% endif %}
         {% endfor %}
       ]

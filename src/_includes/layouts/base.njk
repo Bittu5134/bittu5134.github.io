@@ -66,6 +66,7 @@
 
     <!-- Article Metadata -->
     {% if date %}<meta property="article:published_time" content="{{ date | dateIso }}" />{% endif %}
+    {% if dateModified %}<meta property="article:modified_time" content="{{ dateModified }}" />{% endif %}
     {% set seoTagList = allSeoTags if allSeoTags else (tags | filterTags) %}
     {% if seoTagList %}
       {% for tag in seoTagList %}
