@@ -144,9 +144,9 @@ export async function generateMeta() {
 
   const urls = [
     { loc: `${SITE_URL}/`, changefreq: "weekly", priority: "1.0", lastmod: latestSiteMod },
-    { loc: `${SITE_URL}/blog`, changefreq: "weekly", priority: "0.8", lastmod: latestSiteMod },
+    { loc: `${SITE_URL}/blog/`, changefreq: "weekly", priority: "0.8", lastmod: latestSiteMod },
     ...blogFiles.map((post) => ({
-      loc: `${SITE_URL}/blog/${post.slug}`,
+      loc: `${SITE_URL}/blog/${post.slug}/`,
       changefreq: "monthly",
       priority: "0.7",
       lastmod: post.lastmod || latestSiteMod,
