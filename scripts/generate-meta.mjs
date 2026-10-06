@@ -87,12 +87,20 @@ function parseMarkdownFile(filepath) {
   const stats = getReadingTime(content);
   const readTime = stats.text;
 
+  const dateIso = toIsoBlogDate(data.date);
+  const rawUpdated = data.updated || data.dateModified;
+  const updatedIso = rawUpdated ? toIsoBlogDate(rawUpdated) : null;
+  const lastmod = updatedIso || dateIso;
+
   return {
     slug: data.slug || fallbackSlug,
     title: data.title || fallbackSlug,
     // Always derived from `date`; the old displayDate override is gone.
-    date: toIsoBlogDate(data.date),
+    date: dateIso,
     displayDate: formatBlogDate(data.date),
+    updated: updatedIso,
+    displayUpdated: rawUpdated ? formatBlogDate(rawUpdated) : null,
+    lastmod,
     readTime,
     summary: data.summary || "",
     tags,
@@ -128,24 +136,24 @@ export async function generateMeta() {
   // 2. RSS feed is generated declaratively via official @11ty/eleventy-plugin-rss in src/rss.njk
   // 3. Generate public/sitemap.xml
   const today = new Date().toISOString().split("T")[0];
+  const latestSiteMod = blogFiles.reduce((latest, post) => {
+    const postMod = post.lastmod || post.date;
+    if (!postMod) return latest;
+    return postMod > latest ? postMod : latest;
+  }, today);
+
   const urls = [
-    { loc: `${SITE_URL}/`, changefreq: "weekly", priority: "1.0", lastmod: today },
-    { loc: `${SITE_URL}/blog`, changefreq: "weekly", priority: "0.8", lastmod: today },
-    ...blogFiles.map((post) => {
-      const dateObj = new Date(post.date);
-      const lastmod = !isNaN(dateObj.getTime())
-        ? dateObj.toISOString().split("T")[0]
-        : today;
-      return {
-        loc: `${SITE_URL}/blog/${post.slug}`,
-        changefreq: "monthly",
-        priority: "0.7",
-        lastmod,
-      };
-    }),
-    { loc: `${SITE_URL}/llms.txt`, changefreq: "weekly", priority: "0.6", lastmod: today },
-    { loc: `${SITE_URL}/llms-full.txt`, changefreq: "weekly", priority: "0.6", lastmod: today },
-    { loc: `${SITE_URL}/rss.xml`, changefreq: "weekly", priority: "0.5", lastmod: today },
+    { loc: `${SITE_URL}/`, changefreq: "weekly", priority: "1.0", lastmod: latestSiteMod },
+    { loc: `${SITE_URL}/blog`, changefreq: "weekly", priority: "0.8", lastmod: latestSiteMod },
+    ...blogFiles.map((post) => ({
+      loc: `${SITE_URL}/blog/${post.slug}`,
+      changefreq: "monthly",
+      priority: "0.7",
+      lastmod: post.lastmod || latestSiteMod,
+    })),
+    { loc: `${SITE_URL}/llms.txt`, changefreq: "weekly", priority: "0.6", lastmod: latestSiteMod },
+    { loc: `${SITE_URL}/llms-full.txt`, changefreq: "weekly", priority: "0.6", lastmod: latestSiteMod },
+    { loc: `${SITE_URL}/rss.xml`, changefreq: "weekly", priority: "0.5", lastmod: latestSiteMod },
   ];
 
   const urlsXml = urls
@@ -189,7 +197,10 @@ Sitemap: ${SITE_URL}/sitemap.xml
   const articlesList = blogFiles
     .map((post) => {
       const tags = post.tags.length ? ` [${post.tags.join(", ")}]` : "";
-      return `- [${post.title}](${SITE_URL}/blogs/${post.slug}.md): ${post.summary}${tags} — ${post.readTime}. Rendered HTML: ${SITE_URL}/blog/${post.slug}`;
+      const dateInfo = post.updated && post.updated !== post.date
+        ? ` (${post.date}, updated ${post.updated})`
+        : ` (${post.date})`;
+      return `- [${post.title}](${SITE_URL}/blogs/${post.slug}.md)${dateInfo}: ${post.summary}${tags} — ${post.readTime}. Rendered HTML: ${SITE_URL}/blog/${post.slug}`;
     })
     .join("\n");
 
@@ -205,7 +216,6 @@ Sitemap: ${SITE_URL}/sitemap.xml
 > Software engineer at IIT Kanpur specialising in low-level systems programming, WebRTC networking, protocol reverse-engineering, and AI tooling. This file is the canonical agent-readable index of all public work and technical writing at bittu.dev.
 
 Canonical site: ${SITE_URL}
-Generated: ${today}
 
 ## Identity & Expertise
 - Full name: Bittu (handle: Bittu5134)
@@ -241,9 +251,10 @@ ${articlesList}
         : "None";
       const tagsLine = post.tags.join(", ");
       const seoTagsLine = post.allSeoTags && post.allSeoTags.length ? post.allSeoTags.join(", ") : tagsLine;
+      const updatedLine = post.updated && post.updated !== post.date ? `\nDate Modified: ${post.updated}` : "";
       return `---
 Title: ${post.title}
-Date: ${post.date}
+Date Published: ${post.date}${updatedLine}
 Read Time: ${post.readTime}
 Tags: ${tagsLine}${post.hiddenTags && post.hiddenTags.length ? `\nKeywords: ${seoTagsLine}` : ""}
 Canonical URL: ${SITE_URL}/blog/${post.slug}
@@ -274,7 +285,6 @@ Topics: ${(p.tags || []).join(", ")}`;
 
 Index: ${SITE_URL}/llms.txt
 Canonical: ${SITE_URL}
-Generated: ${today}
 
 ================================================================================
 SECTION 1 — IDENTITY & SKILLS
