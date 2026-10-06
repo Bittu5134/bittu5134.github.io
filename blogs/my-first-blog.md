@@ -5,7 +5,7 @@ coverImage: "/blogs/assets/my-first-blog/cover.webp"
 coverAlt: "Retro terminal and cassette-tape collage in bold neo-brutalist colours"
 date: "4-10-2026"
 updated: "5-10-2026"
-# summary: ""
+summary: "Your friendly, neighborhood Technomancer."
 tags:
   - Showcase
   - Markdown
