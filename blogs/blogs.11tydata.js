@@ -104,15 +104,13 @@ export default {
       return 0;
     },
     updated: (data) => {
-      const mod = data.updated || data.dateModified;
-      return mod ? parseBlogDate(mod) : null;
+      return data.updated ? parseBlogDate(data.updated) : null;
     },
     displayUpdated: (data) => {
-      const mod = data.updated || data.dateModified;
-      return mod ? formatBlogDate(mod) : "";
+      return data.updated ? formatBlogDate(data.updated) : "";
     },
     dateModified: (data) => {
-      const mod = data.updated || data.dateModified || data.date;
+      const mod = data.updated || data.date;
       if (mod) {
         return toIsoBlogDate(mod);
       }
