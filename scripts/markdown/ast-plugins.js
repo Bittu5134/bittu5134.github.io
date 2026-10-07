@@ -15,6 +15,38 @@ export function hastText(node) {
 }
 
 /**
+ * 1.5 remarkSmallText (Discord-style `-# small muted text`)
+ *
+ * Only at the start of a line, like `#` / `###`:
+ *
+ *   -# This whole line becomes small & muted
+ *
+ * Implemented by splicing raw <span class="md-small"> markers into the MDAST so that
+ * rehypeRaw merges them and any inline markdown in the span still renders.
+ */
+export function remarkSmallText() {
+  return (tree) => {
+    visit(tree, "paragraph", (node) => {
+      const kids = node.children || [];
+      if (!kids.length) return;
+
+      const first = kids[0];
+      if (first.type === "text") {
+        const head = first.value.match(/^[ \t]*-#[ \t]+/);
+        if (head) {
+          first.value = first.value.slice(head[0].length);
+          node.children = [
+            { type: "html", value: '<span class="md-small">' },
+            ...kids,
+            { type: "html", value: "</span>" },
+          ];
+        }
+      }
+    });
+  };
+}
+
+/**
  * 1. rehypeMermaidBlocks
  * Intercepts ```mermaid code fences BEFORE @shikijs/rehype touches them,
  * transforming them into <div class="mermaid-container"><pre class="mermaid">...
@@ -51,8 +83,10 @@ export function rehypeMermaidBlocks() {
 
 /**
  * 2. rehypeCodeBlockWrapper
- * Detects Shiki <pre> blocks, extracts title from adjacent remark-code-title if present,
- * and wraps in .code-block-wrapper with header, badge, and copy button.
+ * Detects Shiki <pre> blocks AND plain (no-language) <pre><code> fences, extracts title
+ * from adjacent remark-code-title if present, and wraps each block in .code-block-wrapper.
+ * Design: no header bar — a floating copy button in the top-right (revealed on hover)
+ * and a small muted lang/filename label in the bottom-right corner.
  */
 export function rehypeCodeBlockWrapper() {
   return (tree) => {
@@ -74,70 +108,99 @@ export function rehypeCodeBlockWrapper() {
     }
     unnestRoots(tree);
 
-    // 2. Wrap all Shiki pre blocks
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    const copyBtnSvg =
+      '<button class="code-copy-btn" data-code="${CODE}" aria-label="Copy code to clipboard" title="Copy code to clipboard">' +
+      // copy icon (shown by default)
+      '<svg class="icon-copy" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>' +
+      // check icon (shown after copy)
+      '<svg class="icon-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>' +
+      '</button>';
+
+    // 2. Wrap all code blocks (shiki-highlighted or plain)
     function wrapCodeBlocks(parent) {
       if (!parent || !Array.isArray(parent.children)) return;
       for (let i = 0; i < parent.children.length; i++) {
         const node = parent.children[i];
-        const isShikiPre =
-          node &&
-          node.type === "element" &&
-          node.tagName === "pre" &&
-          (node.properties?.className?.includes("shiki") ||
-            (typeof node.properties?.class === "string" && node.properties.class.includes("shiki")));
-
-        if (isShikiPre) {
-          let title = "";
-          let titleIndex = -1;
-
-          // Search backwards for an adjacent remark-code-title
-          for (let j = i - 1; j >= 0; j--) {
-            const prev = parent.children[j];
-            if (prev.type === "text" && !prev.value.trim()) continue;
-            if (
-              prev.type === "element" &&
-              (prev.properties?.className?.includes("remark-code-title") ||
-                (typeof prev.properties?.class === "string" &&
-                  prev.properties.class.includes("remark-code-title")))
-            ) {
-              title = hastText(prev).trim();
-              titleIndex = j;
-            }
-            break;
-          }
-
-          if (titleIndex !== -1) {
-            // Remove the title node and any intervening whitespace text nodes
-            parent.children.splice(titleIndex, i - titleIndex);
-            i = titleIndex; // adjust loop counter to current pre index
-          }
-
-          const rawLang = node.properties?.["data-lang"] || node.properties?.dataLang || "";
-          const lang = rawLang ? String(rawLang).toUpperCase() : "TEXT";
-          const displayLabel = title
-            ? `<span class="lang-tag">${lang}</span><span class="file-sep"> · </span><span class="code-filename">${title}</span>`
-            : `<span class="lang-tag">${lang}</span>`;
-
-          const codeNode = node.children?.find((c) => c.tagName === "code") || node.children?.[0];
-          const rawCode = hastText(codeNode || node);
-          const encodedCode = encodeURIComponent(rawCode);
-
-          parent.children[i] = {
-            type: "element",
-            tagName: "div",
-            properties: { className: ["code-block-wrapper"] },
-            children: [
-              {
-                type: "raw",
-                value: `<div class="code-header"><span class="lang-badge">${displayLabel}</span><button class="code-copy-btn" data-code="${encodedCode}" aria-label="Copy code to clipboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="copy-icon" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg><span class="copy-text">COPY</span></button></div><div class="code-content">`,
-              },
-              node,
-              { type: "raw", value: `</div>` },
-            ],
-          };
-        } else if (node.children) {
-          wrapCodeBlocks(node);
+        if (!node || node.type !== "element" || node.tagName !== "pre") {
+          if (node.children) wrapCodeBlocks(node);
+          continue;
         }
+
+        // Skip mermaid diagrams (pre.mermaid) — they are interactive diagrams, not code
+        if ((node.properties?.className || []).includes?.("mermaid") ||
+            (typeof node.properties?.class === "string" && node.properties.class.includes("mermaid"))) {
+          continue;
+        }
+
+        const codeNode = node.children?.find((c) => c.tagName === "code") || node.children?.[0];
+        const isShiki =
+          (node.properties?.className || []).includes?.("shiki") ||
+          (typeof node.properties?.class === "string" && node.properties.class.includes("shiki"));
+
+        // Only fenced code: shiki pre, or a bare `pre > code` (no-language fence / indented block)
+        if (!isShiki && !(codeNode && codeNode.tagName === "code")) continue;
+
+        let title = "";
+        let titleIndex = -1;
+
+        // Search backwards for an adjacent remark-code-title
+        for (let j = i - 1; j >= 0; j--) {
+          const prev = parent.children[j];
+          if (prev.type === "text" && !prev.value.trim()) continue;
+          if (
+            prev.type === "element" &&
+            (prev.properties?.className?.includes("remark-code-title") ||
+              (typeof prev.properties?.class === "string" &&
+                prev.properties.class.includes("remark-code-title")))
+          ) {
+            title = hastText(prev).trim();
+            titleIndex = j;
+          }
+          break;
+        }
+
+        if (titleIndex !== -1) {
+          // Remove the title node and any intervening whitespace text nodes
+          parent.children.splice(titleIndex, i - titleIndex);
+          i = titleIndex; // adjust loop counter to current pre index
+        }
+
+        const rawLang = isShiki ? node.properties?.["data-lang"] || node.properties?.dataLang || "" : "";
+        const lang = rawLang ? String(rawLang).toUpperCase() : "";
+
+        // Corner label: lang, or lang -title. Omitted entirely for unlabeled blocks.
+        let labelHtml = '';
+        if (title) {
+          labelHtml = `<span class="code-lang">${escapeHtml(lang || "TEXT")}</span><span class="code-sep">·</span><span class="code-filename">${escapeHtml(title)}</span>`;
+        } else if (lang) {
+          labelHtml = `<span class="code-lang">${escapeHtml(lang)}</span>`;
+        }
+
+        const rawCode = hastText(codeNode || node);
+        const encodedCode = encodeURIComponent(rawCode);
+
+        parent.children[i] = {
+          type: "element",
+          tagName: "div",
+          properties: { className: ["code-block-wrapper"] },
+          children: [
+            {
+              type: "raw",
+              value:
+                copyBtnSvg.replace("${CODE}", encodedCode) +
+                (labelHtml ? `<span class="code-meta">${labelHtml}</span>` : ""),
+            },
+            node,
+          ],
+        };
       }
     }
     wrapCodeBlocks(tree);

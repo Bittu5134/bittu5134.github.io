@@ -778,21 +778,15 @@ document.addEventListener("DOMContentLoaded", () => {
   /* 8. Code Block Copy Buttons (Shiki Code Fences)                             */
   /* -------------------------------------------------------------------------- */
   document.querySelectorAll(".code-copy-btn").forEach((btn) => {
+    let revertTimer = null;
     btn.addEventListener("click", () => {
       const rawCode = decodeURIComponent(btn.getAttribute("data-code") || "");
       navigator.clipboard
         .writeText(rawCode)
         .then(() => {
-          const copyText = btn.querySelector(".copy-text");
-          if (copyText) {
-            const original = copyText.textContent;
-            copyText.textContent = "COPIED!";
-            btn.classList.add("text-[#86efac]", "border-[#86efac]", "bg-[#1f2937]");
-            setTimeout(() => {
-              copyText.textContent = original;
-              btn.classList.remove("text-[#86efac]", "border-[#86efac]", "bg-[#1f2937]");
-            }, 2000);
-          }
+          btn.classList.add("copied");
+          clearTimeout(revertTimer);
+          revertTimer = setTimeout(() => btn.classList.remove("copied"), 2000);
         })
         .catch((err) => console.warn("Failed to copy code block:", err));
     });

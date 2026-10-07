@@ -17,6 +17,7 @@ import rehypeStringify from "rehype-stringify";
 
 // Custom AST processors modularized cleanly
 import {
+  remarkSmallText,
   rehypeMermaidBlocks,
   rehypeCodeBlockWrapper,
   rehypeGithubAlertsTransformer,
@@ -35,6 +36,7 @@ export async function buildProcessor() {
     .use(remarkMath)
     .use(remarkSmartypants, { dashes: "oldschool" }) // Typographic quotes (“”), apostrophes (’), dashes (–, —), ellipses (…)
     .use(remarkGithubAlerts)                 // GitHub alerts syntax > [!NOTE]
+    .use(remarkSmallText)                    // Discord-style -# small muted text
     .use(remarkFlexibleCodeTitles, { container: false }) // lang:title.ext syntax without wrapping container
     // ── Bridge (MDAST → HAST) ──────────────────────────────
     .use(remarkRehype, { allowDangerousHtml: true, clobberPrefix: "" })
