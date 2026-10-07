@@ -124,6 +124,25 @@ export default {
       blurb:
         "A tool that parses academic PDFs by their layout geometry (since normal parsers choke on tables) and scores them. Built for IIT Kanpur's career office.",
     },
+    "Rock-Paper-SSH": {
+      order: 9,
+      category: "SYSTEMS / SSH TUI",
+      filterCategory: "SYSTEMS",
+      badge: "SSH MULTIPLAYER",
+      statsText: "Wish + Bubble Tea TUI",
+      language: "Go",
+      githubUrl: "https://github.com/Bittu5134/Rock-Paper-SSH",
+      },
+    "Lore": {
+      order: 10,
+      category: "AI / DEVTOOLS",
+      filterCategory: "AI",
+      badge: "LOCAL ADR ENGINE",
+      statsText: "Cline Plugin + MCP Wiki Engine",
+      language: "TypeScript",
+      githubUrl: "https://github.com/Bittu5134/Lore",
+      tags: ["cline", "mcp", "typescript", "sqlite", "devtools"],
+      },
   },
 
   // ── Marquee Skills Ticker ───────────────────────────────────────────

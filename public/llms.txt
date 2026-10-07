@@ -21,9 +21,12 @@ Canonical site: https://bittu.dev
 - [Sharelock](https://github.com/Bittu5134/Sharelock): A retrieval system that lets you just ask questions about IIT Kanpur's academic policy manual instead of reading the whole thing. Built as a RAG pipeline with an MCP server.
 - [InfraPulse](https://infrapulse.bittu.dev): A defect-detection tool that flags and prioritizes infrastructure issues from photos using a small vision-model ensemble. Built for a campus hackathon. Source: https://github.com/Bittu5134/InfraPulse
 - [Resume-Model](https://iitk-resume.bittu.dev): A tool that parses academic PDFs by their layout geometry (since normal parsers choke on tables) and scores them. Built for IIT Kanpur's career office. Source: https://github.com/Bittu5134/IITK-Resume-Model
+- [Rock-Paper-SSH](https://github.com/Bittu5134/Rock-Paper-SSH): A PvE multiplayer TUI game, built in Go and streamed over SSH.
+- [Lore](https://github.com/Bittu5134/Lore): 
 
 ## Technical Writing
-- [My First Blog ✨](https://bittu.dev/blogs/my-first-blog.md) (2026-10-04, updated 2026-10-05): Your friendly, neighborhood Technomancer. [Showcase, Markdown, Student] — 1 min read. Rendered HTML: https://bittu.dev/blog/my-first-blog
+- [Yet Another Rock Paper Scissors Game!](https://bittu.dev/blogs/rock-paper-ssh.md) (2026-10-07): A PvE multiplayer TUI game, built in Go and streamed over SSH. [Terminal, SSH, GO, TUI, Project] — 2 min read. Rendered HTML: https://bittu.dev/blog/rock-paper-ssh
+- [My First Blog ✨](https://bittu.dev/blogs/my-first-blog.md) (2026-10-04, updated 2026-10-05): Your friendly, neighborhood Technomancer! [Showcase, Markdown, Student] — 1 min read. Rendered HTML: https://bittu.dev/blog/my-first-blog
 
 ## Full Single-File Context
 - [llms-full.txt](https://bittu.dev/llms-full.txt): Complete plain-text payload — full project descriptions, all blog post content verbatim, and author profile. Optimised for single-shot context injection into coding assistants and RAG pipelines.
