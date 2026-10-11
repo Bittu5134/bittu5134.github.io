@@ -3,6 +3,7 @@
  * (Unified / Remark / Rehype)
  */
 import { visit } from "unist-util-visit";
+import remarkSmartypants from "remark-smartypants";
 
 /**
  * Utility: Recursively extract plain text from a HAST node.
@@ -42,6 +43,162 @@ export function remarkSmallText() {
           ];
         }
       }
+    });
+  };
+}
+
+/**
+ * 1.6 remarkImageAttributes
+ *
+ * Size (and a few other) attributes for images, using markdown-it-attrs style syntax
+ * that follows the image:
+ *
+ *   ![alt](./img.png){width=400}
+ *   ![alt](./img.png){width=400 height=260}
+ *   ![alt](./img.png){width=50%}
+ *   ![alt](./img.png){width=400 .rounded}
+ *
+ * Integer sizes become real `width`/`height` attributes. Anything carrying a CSS unit
+ * (`50%`, `50vh`, `30rem`) becomes inline style instead, because HTML dimension
+ * attributes only accept integers — and `height` *always* needs inline style, since
+ * `.prose-figure img { height: auto }` outranks presentational hints. The stylesheet's
+ * `max-width: 100%` is left intact, so sized images still shrink on narrow screens.
+ *
+ * Scoping is deliberate: unlike remark-attr / remark-attributes, which rewrite `{...}`
+ * anywhere in a paragraph (and therefore eat prose such as "the set {1, 2, 3}"), this
+ * only consumes a `{...}` token that *immediately follows an image node* AND whose every
+ * key is recognised. Anything else is left in the document as literal text.
+ */
+const IMAGE_ATTR_KEYS = new Set(["width", "height", "loading", "class", "id", "style"]);
+const IMAGE_ATTR_BLOCK_RE = /^[ \t]*\{([^{}\n]*)\}[ \t]*/;
+// A bare pixel count -> a real width/height attribute.
+const PIXEL_RE = /^\d+$/;
+// An explicit CSS length -> inline style (vh/vw/%/rem/... are invalid as attributes).
+const CSS_LENGTH_RE = /^\d+(?:\.\d+)?(?:px|%|vh|vw|vmin|vmax|em|rem|ex|ch|cm|mm|in|pt|pc|q)$/i;
+
+/** Split on whitespace without breaking quoted values (e.g. style="width: 50%"). */
+function tokeniseAttrBody(body) {
+  const tokens = [];
+  let current = "";
+  let quote = null;
+  for (const char of body) {
+    if (quote) {
+      current += char;
+      if (char === quote) quote = null;
+      continue;
+    }
+    if (char === '"' || char === "'") {
+      quote = char;
+      current += char;
+      continue;
+    }
+    if (char === " " || char === "\t") {
+      if (current) tokens.push(current);
+      current = "";
+      continue;
+    }
+    current += char;
+  }
+  if (quote) return null; // unbalanced quote — not our syntax
+  if (current) tokens.push(current);
+  return tokens;
+}
+
+/**
+ * Parse an attribute body into HAST properties, or null when it is not fully valid
+ * (unknown key, malformed pair, ...). Returning null keeps the braces as literal text.
+ */
+function parseImageAttrs(body) {
+  const tokens = tokeniseAttrBody(body.trim());
+  if (!tokens || !tokens.length) return null;
+
+  const raw = {};
+  const classes = [];
+  for (const token of tokens) {
+    if (token.startsWith(".")) {
+      if (token.length < 2) return null;
+      classes.push(token.slice(1));
+      continue;
+    }
+    if (token.startsWith("#")) {
+      if (token.length < 2) return null;
+      raw.id = token.slice(1);
+      continue;
+    }
+    const pair = token.match(/^([a-zA-Z][a-zA-Z-]*)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s]+))$/);
+    if (!pair) return null;
+    const key = pair[1].toLowerCase();
+    if (!IMAGE_ATTR_KEYS.has(key)) return null;
+    const value = pair[2] ?? pair[3] ?? pair[4] ?? "";
+    if (key === "class") classes.push(...value.split(/\s+/).filter(Boolean));
+    else raw[key] = value;
+  }
+
+  const props = {};
+  const styleBits = [];
+  if (raw.style) styleBits.push(raw.style.replace(/;\s*$/, ""));
+
+  for (const dim of ["width", "height"]) {
+    const value = raw[dim];
+    if (value === undefined) continue;
+    const isPixels = PIXEL_RE.test(value);
+    if (!isPixels && !CSS_LENGTH_RE.test(value)) return null;
+    if (isPixels) props[dim] = value;
+    // `height: auto` in the stylesheet outranks the attribute, so height always needs
+    // inline style to apply; width only needs it when it carries a CSS unit.
+    if (dim === "height" || !isPixels) {
+      styleBits.push(`${dim}: ${isPixels ? `${value}px` : value}`);
+    }
+  }
+
+  if (raw.loading) props.loading = raw.loading;
+  if (raw.id) props.id = raw.id;
+  if (classes.length) props.className = classes;
+  if (styleBits.length) props.style = styleBits.join("; ");
+  return props;
+}
+
+export function remarkImageAttributes() {
+  return (tree) => {
+    visit(tree, "image", (node, index, parent) => {
+      if (!parent || index === undefined) return;
+      const next = parent.children[index + 1];
+      if (!next || next.type !== "text") return;
+
+      const match = next.value.match(IMAGE_ATTR_BLOCK_RE);
+      if (!match) return;
+
+      const props = parseImageAttrs(match[1]);
+      if (!props) return;
+
+      node.data = node.data || {};
+      node.data.hProperties = { ...(node.data.hProperties || {}), ...props };
+
+      next.value = next.value.slice(match[0].length);
+      if (!next.value) parent.children.splice(index + 1, 1);
+    });
+  };
+}
+
+/**
+ * 1.7 remarkImageAltTypography
+ *
+ * remark-smartypants only rewrites `text` nodes, so an image's `alt` — which
+ * rehype-figure copies verbatim into <figcaption> — keeps straight quotes and
+ * `--`/`---`. Run the exact same smartypants transform over alt strings so captions
+ * match the typography of the surrounding prose.
+ */
+export function remarkImageAltTypography(options) {
+  const transform = remarkSmartypants(options);
+  return (tree) => {
+    visit(tree, "image", (node) => {
+      if (typeof node.alt !== "string" || !node.alt) return;
+      const scratch = {
+        type: "root",
+        children: [{ type: "paragraph", children: [{ type: "text", value: node.alt }] }],
+      };
+      transform(scratch);
+      node.alt = scratch.children[0].children.map((child) => child.value ?? "").join("");
     });
   };
 }
