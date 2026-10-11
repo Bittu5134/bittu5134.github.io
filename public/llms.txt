@@ -13,18 +13,22 @@ Canonical site: https://bittu.dev
 - X / Twitter: https://x.com/404lostsquid
 
 ## Open-Source Projects
-- [ORV-Reader](https://orv.pages.dev): A web-publishing platform that compiles Markdown into fast static pages and EPUBs. Built to be clean and lightweight way to read stuff on slow connections. Source: https://github.com/Bittu5134/ORV-Reader
-- [PeerBasket](https://peerbasket.bittu.dev): A hassle-free, lobby-based PeerJS discovery server written in Go  that handles peer discovery for real-time p2p interactions and multiplayer sessions. Source: https://github.com/Bittu5134/PeerBasket
-- [GH-Follow-Tracker](https://follow.lazybittu.workers.dev/): A little service on Cloudflare Workers that tracks GitHub followers and generates live SVG badges, with Discord/Slack alerts when things change. Source: https://github.com/Bittu5134/GH-Follow-Tracker
-- [LOTM-Reader](https://beyonder.pages.dev): A community driven webnovel reader built with Svelte, with offline caching and a tons of optimizations.  Built to be faster and cleaner than what was out there. Source: https://github.com/Bittu5134/LOTM-Reader
-- [NetShip](https://github.com/Bittu5134/NetShip): A host telemetry agent in Go that watches socket activity and maps out process trees. Built it to understand how endpoint detection tools actually work under the hood.
-- [Sharelock](https://github.com/Bittu5134/Sharelock): A retrieval system that lets you just ask questions about IIT Kanpur's academic policy manual instead of reading the whole thing. Built as a RAG pipeline with an MCP server.
-- [InfraPulse](https://infrapulse.bittu.dev): A defect-detection tool that flags and prioritizes infrastructure issues from photos using a small vision-model ensemble. Built for a campus hackathon. Source: https://github.com/Bittu5134/InfraPulse
-- [Resume-Model](https://iitk-resume.bittu.dev): A tool that parses academic PDFs by their layout geometry (since normal parsers choke on tables) and scores them. Built for IIT Kanpur's career office. Source: https://github.com/Bittu5134/IITK-Resume-Model
 - [Rock-Paper-SSH](https://github.com/Bittu5134/Rock-Paper-SSH): A PvE multiplayer TUI game, built in Go and streamed over SSH.
-- [Lore](https://github.com/Bittu5134/Lore): 
+- [PeerBasket](https://peerbasket.bittu.dev): A hassle-free, lobby-based PeerJS discovery server written in Go  that handles peer discovery for real-time p2p interactions and multiplayer sessions. Source: https://github.com/Bittu5134/PeerBasket
+- [DumbCord](https://github.com/Bittu5134/DumbCord): A Discord bot that learns from messages and uses Markov-based methods to generate text replies and GIF responses.
+- [NetShip](https://github.com/Bittu5134/NetShip): A host telemetry agent in Go that watches socket activity and maps out process trees. Built it to understand how endpoint detection tools actually work under the hood.
+- [InfraPulse](https://infrapulse.bittu.dev): A defect-detection tool that flags and prioritizes infrastructure issues from photos using a small vision-model ensemble. Built for a campus hackathon. Source: https://github.com/Bittu5134/InfraPulse
+- [Sharelock](https://github.com/Bittu5134/Sharelock): A retrieval system that lets you just ask questions about IIT Kanpur's academic policy manual instead of reading the whole thing. Built as a RAG pipeline with an MCP server.
+- [Lore](https://github.com/Bittu5134/Lore): A local architectural knowledge engine — it captures the reasoning behind your code, whether that code was written by an AI agent or a human.
+- [GeoShuffle](https://geoshuffle.bittu.dev): A serverless multiplayer sliding-puzzle game that syncs game state over direct WebRTC DataChannels. No game servers, just peers — plus a Supabase leaderboard and Canvas scorecards. Source: https://github.com/Bittu5134/GeoShuffle
+- [ORV-Reader](https://orv.pages.dev): A web-publishing platform that compiles Markdown into fast static pages and EPUBs. Built to be clean and lightweight way to read stuff on slow connections. Source: https://github.com/Bittu5134/ORV-Reader
+- [LOTM-Reader](https://beyonder.pages.dev): A community driven webnovel reader built with Svelte, with offline caching and a tons of optimizations.  Built to be faster and cleaner than what was out there. Source: https://github.com/Bittu5134/LOTM-Reader
+- [ThumbScore](https://github.com/Bittu5134/ThumbScore): A browser extension that overlays real-time engagement and quality metrics straight onto YouTube thumbnails. Built with Mutation Observers so the page never stutters.
+- [Resume-Model](https://iitk-resume.bittu.dev): A tool that parses academic PDFs by their layout geometry (since normal parsers choke on tables) and scores them. Built for IIT Kanpur's career office. Source: https://github.com/Bittu5134/IITK-Resume-Model
+- [GH-Follow-Tracker](https://follow.lazybittu.workers.dev/): A little service on Cloudflare Workers that tracks GitHub followers and generates live SVG badges, with Discord/Slack alerts when things change. Source: https://github.com/Bittu5134/GH-Follow-Tracker
 
 ## Technical Writing
+- [A Very Dumb Markov Chatbot](https://bittu.dev/blogs/a-very-dumb-markov-chatbot.md) (2026-10-11): Coding a very dumb chatbot trained on Discord chats and watching the chaos ensue. [Discord, Chatbot, Python, Markov-Model, Project] — 3 min read. Rendered HTML: https://bittu.dev/blog/a-very-dumb-markov-chatbot
 - [Yet Another Rock Paper Scissors Game!](https://bittu.dev/blogs/rock-paper-ssh.md) (2026-10-07): A PvE multiplayer TUI game, built in Go and streamed over SSH. [Terminal, SSH, GO, TUI, Project] — 2 min read. Rendered HTML: https://bittu.dev/blog/rock-paper-ssh
 - [My First Blog ✨](https://bittu.dev/blogs/my-first-blog.md) (2026-10-04, updated 2026-10-05): Your friendly, neighborhood Technomancer! [Showcase, Markdown, Student] — 1 min read. Rendered HTML: https://bittu.dev/blog/my-first-blog
 
