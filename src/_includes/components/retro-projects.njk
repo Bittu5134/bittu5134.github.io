@@ -33,6 +33,7 @@
             data-category="{{ p.category }}"
             data-pinned="true"
             data-popularity="{{ (p.stars or 0) + (p.forks or 0) }}"
+            data-order="{{ p.order or 99 }}"
           >
             <!-- Solid Colour Bar -->
             <div class="hidden sm:block h-6 w-full border-b-[3px] border-black {{ p.headerBgClass }}"></div>
@@ -131,6 +132,7 @@
             "filterCategory": {{ p.filterCategory | dump | safe }},
             "category": {{ p.category | dump | safe }},
             "popularity": {{ (p.stars or 0) + (p.forks or 0) }},
+            "order": {{ p.order or 99 }},
             "stars": {{ p.stars or 0 }},
             "forks": {{ p.forks or 0 }},
             "language": {{ p.language | dump | safe }},

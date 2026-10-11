@@ -128,7 +128,8 @@ export async function generateMeta() {
   let projectsList = [];
   try {
     const projectData = typeof getProjects === "function" ? await getProjects() : getProjects;
-    projectsList = Array.isArray(projectData) ? projectData : (projectData?.projects || []);
+    projectsList = Array.isArray(projectData) ? [...projectData] : [...(projectData?.projects || [])];
+    projectsList.sort((a, b) => (a.order || 99) - (b.order || 99));
   } catch (e) {
     console.warn(`[generate-meta] Failed to load projects:`, e.message);
   }
@@ -204,10 +205,16 @@ Sitemap: ${SITE_URL}/sitemap.xml
     })
     .join("\n");
 
+  const getAbsoluteLiveUrl = (url) => {
+    if (!url) return null;
+    return url.startsWith("/") ? `${SITE_URL}${url}` : url;
+  };
+
   const projectsMarkdown = projectsList
     .map((p) => {
-      const url = p.liveUrl || p.githubUrl;
-      const extra = p.liveUrl ? ` Source: ${p.githubUrl}` : "";
+      const live = getAbsoluteLiveUrl(p.liveUrl);
+      const url = live || p.githubUrl;
+      const extra = live ? ` Source: ${p.githubUrl}` : "";
       return `- [${p.title}](${url}): ${p.description}${extra}`;
     })
     .join("\n");
@@ -269,7 +276,8 @@ ${post.content}`;
 
   const projectsFullSection = projectsList
     .map((p, i) => {
-      const urls = [p.liveUrl && `Live: ${p.liveUrl}`, p.githubUrl && `Source: ${p.githubUrl}`]
+      const live = getAbsoluteLiveUrl(p.liveUrl);
+      const urls = [live && `Live: ${live}`, p.githubUrl && `Source: ${p.githubUrl}`]
         .filter(Boolean).join(" | ");
       return `### ${i + 1}. ${p.title}
 ${urls}

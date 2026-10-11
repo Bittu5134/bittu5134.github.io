@@ -135,6 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
         card.setAttribute("data-category", p.category || "");
         card.setAttribute("data-pinned", "false");
         card.setAttribute("data-popularity", String(p.popularity || 0));
+        card.setAttribute("data-order", String(p.order || 99));
 
         let starsHtml = "";
         if (p.stars > 0) {
@@ -233,9 +234,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
 
-      // If category isn't PINNED, sort matching cards by popularity descending
+      // If category isn't PINNED, sort matching cards by curated fun/impressive order
       if (selectedFilter !== "PINNED") {
         matchingCards.sort((a, b) => {
+          const ordA = parseInt(a.getAttribute("data-order") || "99", 10);
+          const ordB = parseInt(b.getAttribute("data-order") || "99", 10);
+          if (ordA !== ordB) return ordA - ordB;
           const popA = parseInt(a.getAttribute("data-popularity") || "0", 10);
           const popB = parseInt(b.getAttribute("data-popularity") || "0", 10);
           return popB - popA;

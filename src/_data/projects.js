@@ -252,15 +252,17 @@ export default async function () {
       if (a.isPinned) return -1;
       if (b.isPinned) return 1;
 
-      // 2. Sort by popularity (stars + forks desc)
-      const aPopularity = (a.stars || 0) + (a.forks || 0);
-      const bPopularity = (b.stars || 0) + (b.forks || 0);
-      if (bPopularity !== aPopularity) {
-        return bPopularity - aPopularity;
+      // 2. Sort non-pinned items by curated order (most fun & impressive first)
+      const aOrder = typeof a.order === "number" ? a.order : 99;
+      const bOrder = typeof b.order === "number" ? b.order : 99;
+      if (aOrder !== bOrder) {
+        return aOrder - bOrder;
       }
 
-      // 3. Tie-breaker fallback to manual order
-      return (a.order || 99) - (b.order || 99);
+      // 3. Tie-breaker by popularity (stars + forks desc)
+      const aPopularity = (a.stars || 0) + (a.forks || 0);
+      const bPopularity = (b.stars || 0) + (b.forks || 0);
+      return bPopularity - aPopularity;
     });
 
   return {
