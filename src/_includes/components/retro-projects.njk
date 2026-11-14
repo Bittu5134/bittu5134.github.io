@@ -87,7 +87,6 @@
             "tags": {{ p.tags | dump | safe }},
             "liveUrl": {{ p.liveUrl | dump | safe }},
             "githubUrl": {{ p.githubUrl | dump | safe }},
-            "headerBgClass": {{ p.headerBgClass | dump | safe }}
           }{% if not loop.last %},{% endif %}
         {% endif %}
       {% endfor %}

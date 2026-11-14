@@ -15,95 +15,6 @@ const LANGUAGE_COLORS = {
   Shell: "#89e051",
 };
 
-// Curated distinct color families (Zero yellows, zero adjacent/confusable hues)
-const NEO_BRUTALIST_PALETTE = [
-  "bg-[#38bdf8]", // Sky Blue
-  "bg-[#fb923c]", // Peach Orange
-  "bg-[#f472b6]", // Bubblegum Pink
-  "bg-[#86efac]", // Mint Green
-  "bg-[#c4b5fd]", // Lavender Purple
-  "bg-[#f87171]", // Coral Red
-];
-
-function hashSeed(str) {
-  let hash = 2166136261;
-  for (let i = 0; i < str.length; i++) {
-    hash ^= str.charCodeAt(i);
-    hash = Math.imul(hash, 16777619);
-  }
-  return Math.abs(hash);
-}
-
-/**
- * Assigns deterministic seeded colors ensuring no color repeats WITHIN the same category.
- * Different categories can reuse colors. Any explicit `color` (or `headerBgClass`) in meta overrides.
- */
-function assignCategoryUniqueColors(metaMap, pinnedRepoNames) {
-  const assignedColors = {};
-
-  // 1. Manual overrides take absolute precedence
-  for (const [repoName, itemMeta] of Object.entries(metaMap)) {
-    if (itemMeta.color && itemMeta.color !== "random" && itemMeta.color !== "auto") {
-      assignedColors[repoName] = itemMeta.color;
-    } else if (itemMeta.headerBgClass && itemMeta.headerBgClass !== "random" && itemMeta.headerBgClass !== "auto") {
-      assignedColors[repoName] = itemMeta.headerBgClass;
-    }
-  }
-
-  // 2. Assign PINNED category first to guarantee uniqueness among the 4 pinned cards
-  const pinnedUsed = new Set();
-  for (const name of pinnedRepoNames) {
-    if (assignedColors[name]) {
-      pinnedUsed.add(assignedColors[name]);
-    }
-  }
-
-  for (const name of pinnedRepoNames) {
-    if (!assignedColors[name]) {
-      const seed = hashSeed(name);
-      let idx = seed % NEO_BRUTALIST_PALETTE.length;
-      let attempts = 0;
-      while (pinnedUsed.has(NEO_BRUTALIST_PALETTE[idx]) && attempts < NEO_BRUTALIST_PALETTE.length) {
-        idx = (idx + 1) % NEO_BRUTALIST_PALETTE.length;
-        attempts++;
-      }
-      const chosen = NEO_BRUTALIST_PALETTE[idx];
-      assignedColors[name] = chosen;
-      pinnedUsed.add(chosen);
-    }
-  }
-
-  // 3. For each domain category, ensure all cards in that category have unique colors
-  const categories = [...new Set(Object.values(metaMap).map((m) => m.filterCategory).filter(Boolean))];
-  for (const cat of categories) {
-    const catRepos = Object.keys(metaMap).filter((name) => metaMap[name].filterCategory === cat);
-    const catUsed = new Set();
-
-    for (const name of catRepos) {
-      if (assignedColors[name]) {
-        catUsed.add(assignedColors[name]);
-      }
-    }
-
-    for (const name of catRepos) {
-      if (!assignedColors[name]) {
-        const seed = hashSeed(name);
-        let idx = seed % NEO_BRUTALIST_PALETTE.length;
-        let attempts = 0;
-        while (catUsed.has(NEO_BRUTALIST_PALETTE[idx]) && attempts < NEO_BRUTALIST_PALETTE.length) {
-          idx = (idx + 1) % NEO_BRUTALIST_PALETTE.length;
-          attempts++;
-        }
-        const chosen = NEO_BRUTALIST_PALETTE[idx];
-        assignedColors[name] = chosen;
-        catUsed.add(chosen);
-      }
-    }
-  }
-
-  return assignedColors;
-}
-
 function formatRelativeTime(dateString) {
   if (!dateString) return null;
   const date = new Date(dateString);
@@ -204,14 +115,12 @@ export default async function () {
         category: "TOOLS / DEV",
         filterCategory: "TOOLS",
         badge: "PINNED",
-        headerBgClass: "bg-[#fffdf9]",
         blurb: "",
       };
     }
   }
 
   const repoMap = new Map(repos.map((r) => [r.name, r]));
-  const projectColors = assignCategoryUniqueColors(meta, pinnedRepoNames);
 
   const featured = Object.entries(meta)
     .map(([repoName, itemMeta]) => {
@@ -223,7 +132,6 @@ export default async function () {
       const languageColor = LANGUAGE_COLORS[language] || "#6e7681";
       const isPinned = pinnedRepoNames.includes(repoName);
       const pinnedIndex = pinnedRepoNames.indexOf(repoName);
-      const headerColor = itemMeta.color || itemMeta.headerBgClass || projectColors[repoName] || "bg-[#86efac]";
       const description = (r.description && r.description.trim()) || itemMeta.blurb || "";
 
       return {
@@ -241,7 +149,6 @@ export default async function () {
         isPinned,
         pinnedIndex: isPinned ? pinnedIndex : 99,
         ...itemMeta,
-        headerBgClass: headerColor,
       };
     })
     .sort((a, b) => {
