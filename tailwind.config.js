@@ -7,11 +7,11 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"National Park"', 'sans-serif'],
+        sans: ['"Space Mono"', 'monospace'],
         mono: ['"Space Mono"', 'monospace'],
         pixel: ['"Space Mono"', 'monospace'],
         display: ['Chewy', 'cursive'],
-        body: ['"National Park"', 'sans-serif'],
+        body: ['"Space Mono"', 'monospace'],
       },
       borderWidth: {
         '3': '3px',
