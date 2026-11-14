@@ -136,15 +136,6 @@ export default {
       badge: "OFFLINE PWA",
       statsText: "High-Performance Reader",
     },
-    "ThumbScore": {
-      order: 12,
-      category: "TOOLS / EXTENSION",
-      filterCategory: "BROWSER",
-      badge: "CHROME EXTENSION",
-      statsText: "DOM Mutation Metrics",
-      language: "JavaScript",
-      tags: ["browser-extension", "chrome-extension", "dom", "youtube"],
-    },
     "IITK-Resume-Model": {
       order: 4,
       title: "Resume-Model",
