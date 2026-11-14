@@ -624,8 +624,14 @@ document.addEventListener("DOMContentLoaded", () => {
           for (int i = 0; i < 12; i++) {
             float fi = float(i);
             float time = iTime * (fract(fi * 412.531 + 0.513) - 0.5) * 2.0;
+            // Two edge clusters: blobs hug the left/right screen edges and reach toward the centre
+            float side = (fi < 6.0) ? -1.0 : 1.0;
+            float gx = 3.35 + sin(time * 0.7 + fi * 1.7) * 0.8;   // 2.55 .. 4.15
+            float gy = sin(time * 0.9 + fi * 2.3) * 1.5;
+            float gz = cos(time * 0.6 + fi * 3.1) * 0.7;
+            vec3 c = vec3(side * gx, gy, gz);
             d = opSmoothUnion(
-              sdSphere(p + sin(time + fi * vec3(52.5126, 64.62744, 632.25)) * vec3(2.0, 2.0, 0.8), mix(0.5, 1.0, fract(fi * 412.531 + 0.5124))),
+              sdSphere(p - c, mix(0.5, 0.95, fract(fi * 412.531 + 0.5124))),
               d,
               0.4
             );
