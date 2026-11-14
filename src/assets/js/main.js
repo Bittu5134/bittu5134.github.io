@@ -210,7 +210,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (p.forks > 0) statsRow += `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 border-2 border-black bg-[#f6eedb] font-mono text-sm font-bold text-black" title="${p.forks} forks on GitHub"><svg class="w-3.5 h-3.5 text-black" aria-hidden="true"><use href="#icon-git-fork"/></svg>${esc(p.forks)}</span>`;
 
         let metaLine = [p.language, p.statsText].filter(Boolean).map(esc).join(" · ");
-        let tagsHtml = Array.isArray(p.tags) ? p.tags.map((t) => `<span>#${esc(String(t).toLowerCase())}</span>`).join("") : "";
+        
 
         let visitBtn = "";
         if (p.liveUrl) visitBtn = `<a href="${esc(p.liveUrl)}" target="_blank" rel="noopener noreferrer" class="btn-pill-sm bg-[#fde047] hover:bg-[#fbbf24]">Visit <svg class="w-3.5 h-3.5 text-black" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></a>`;
@@ -223,8 +223,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="flex items-center gap-1.5 shrink-0">${statsRow}</div>
           </div>
           ${metaLine ? `<p class="px-7 pt-2 font-mono text-sm font-bold text-black/65">${metaLine}</p>` : ""}
-          <p class="px-7 pt-4 pb-7 font-body text-base text-black/85 leading-relaxed flex-1">${esc(p.description)}</p>
-          <div class="flex flex-wrap items-center gap-1.5 px-7 pb-4 font-mono text-sm font-bold text-black/60">${tagsHtml}</div>
+          <p class="px-7 pt-4 pb-6 font-body text-base text-black/85 leading-relaxed flex-1">${esc(p.description)}</p>
           <div class="mt-auto flex items-center justify-end gap-2 border-t border-black/15 px-7 py-4">
             ${ghBtn}${visitBtn}
           </div>
