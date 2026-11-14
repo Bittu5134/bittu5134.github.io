@@ -157,7 +157,7 @@ export default {
     "GH-Follow-Tracker": {
       order: 16,
       category: "TOOLS / SERVERLESS",
-      filterCategory: "TOOLS",
+      filterCategory: "BOTS",
       badge: "CRON WORKER",
       statsText: "SVG Badges + Alerts",
     },
