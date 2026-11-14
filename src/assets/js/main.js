@@ -130,60 +130,40 @@ document.addEventListener("DOMContentLoaded", () => {
       const nonPinned = JSON.parse(dataEl.textContent || "[]");
       nonPinned.forEach((p) => {
         const card = document.createElement("div");
-        card.className = "project-card card-brutal flex flex-col justify-between overflow-hidden hidden";
+        card.className = "project-card group rounded-3xl border-[3px] border-black bg-[#fffdf9] shadow-brutal p-6 sm:p-7 flex flex-col gap-4 transition-transform hover:-translate-y-1 hidden";
         card.setAttribute("data-filter-category", p.filterCategory || "");
         card.setAttribute("data-category", p.category || "");
         card.setAttribute("data-pinned", "false");
         card.setAttribute("data-popularity", String(p.popularity || 0));
         card.setAttribute("data-order", String(p.order || 99));
 
-        let starsHtml = "";
-        if (p.stars > 0) {
-          starsHtml = `<span class="inline-flex items-center gap-1 font-mono text-xs font-bold text-black/80 bg-[#fffdf9] border border-black px-1.5 py-0.5" title="${p.stars} stargazers on GitHub"><svg class="w-3.5 h-3.5 text-[#f59e0b] fill-[#f59e0b] shrink-0" aria-hidden="true"><use href="#icon-star"/></svg><span>${p.stars}</span></span>`;
-        }
-        let forksHtml = "";
-        if (p.forks > 0) {
-          forksHtml = `<span class="inline-flex items-center gap-1 font-mono text-xs font-bold text-black/80 bg-[#fffdf9] border border-black px-1.5 py-0.5" title="${p.forks} forks on GitHub"><svg class="w-3.5 h-3.5 text-black/70 shrink-0" aria-hidden="true"><use href="#icon-git-fork"/></svg><span>${p.forks}</span></span>`;
-        }
+        const esc = (v) => String(v == null ? "" : v).replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 
-        let langHtml = "";
-        if (p.language) {
-          langHtml = `<span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full border border-black/40 shrink-0" style="background-color: ${p.languageColor || '#888'}"></span><span>${p.language}</span></span>`;
-        }
-        let statsHtml = "";
-        if (p.statsText) {
-          statsHtml = `${p.language ? '<span class="text-black/30">/</span>' : ''}<span class="text-[#b45309]">${p.statsText}</span>`;
-        }
+        let statsRow = "";
+        if (p.stars > 0) statsRow += `<span class="flex items-center gap-1" title="${p.stars} stars on GitHub"><svg class="w-3.5 h-3.5 text-[#f59e0b] fill-[#f59e0b]" aria-hidden="true"><use href="#icon-star"/></svg>${esc(p.stars)}</span>`;
+        if (p.forks > 0) statsRow += `<span class="flex items-center gap-1" title="${p.forks} forks on GitHub"><svg class="w-3.5 h-3.5 text-black/70" aria-hidden="true"><use href="#icon-git-fork"/></svg>${esc(p.forks)}</span>`;
 
-        let tagsHtml = "";
-        if (Array.isArray(p.tags)) {
-          tagsHtml = p.tags.map((t) => `<span class="tag-pill">#${String(t).toUpperCase()}</span>`).join("");
-        }
+        let metaLine = [p.language, p.statsText].filter(Boolean).map(esc).join(" · ");
+        let tagsHtml = Array.isArray(p.tags) ? p.tags.map((t) => `<span class="font-mono text-xs font-bold text-black/60">#${esc(String(t).toLowerCase())}</span>`).join("") : "";
 
         let visitBtn = "";
-        if (p.liveUrl) {
-          visitBtn = `<a href="${p.liveUrl}" target="_blank" rel="noopener noreferrer" class="btn-brutal-yellow px-3 sm:px-3.5 py-1.5 sm:py-2 text-xs"><span>VISIT</span><svg class="w-3.5 h-3.5 text-black shrink-0" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></a>`;
-        }
+        if (p.liveUrl) visitBtn = `<a href="${esc(p.liveUrl)}" target="_blank" rel="noopener noreferrer" class="btn-pill bg-[#fde047] !px-3.5 !py-1.5 !text-xs">Visit <svg class="w-3.5 h-3.5 text-black" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></a>`;
         let ghBtn = "";
-        if (p.githubUrl) {
-          ghBtn = `<a href="${p.githubUrl}" target="_blank" rel="noopener noreferrer" class="btn-brutal-white px-3 sm:px-3.5 py-1.5 sm:py-2 text-xs hover:bg-[#86efac]"><svg class="w-3.5 h-3.5 text-black shrink-0" aria-hidden="true"><use href="#icon-github"/></svg><span>GITHUB</span></a>`;
-        }
+        if (p.githubUrl) ghBtn = `<a href="${esc(p.githubUrl)}" target="_blank" rel="noopener noreferrer" class="btn-pill bg-[#fffdf9] hover:bg-[#86efac] !px-3.5 !py-1.5 !text-xs"><svg class="w-3.5 h-3.5 text-black" aria-hidden="true"><use href="#icon-github"/></svg> GitHub</a>`;
 
         card.innerHTML = `
-          <div class="hidden sm:block h-6 w-full border-b-[3px] border-black ${p.headerBgClass || 'bg-[#86efac]'}"></div>
-          <div class="p-5 sm:p-6 flex flex-col flex-1 justify-between">
-            <div>
-              <div class="flex items-start justify-between gap-2 mb-1">
-                <h3 class="text-xl sm:text-2xl font-black text-black">${p.title || ''}</h3>
-                <div class="flex items-center gap-1.5 shrink-0">${starsHtml}${forksHtml}</div>
-              </div>
-              <div class="flex flex-wrap items-center gap-x-2.5 gap-y-1 font-mono text-xs font-bold text-black/70 mb-3">${langHtml}${statsHtml}</div>
-              <p class="font-mono text-xs sm:text-sm text-black/80 leading-relaxed mb-4">${p.description || ''}</p>
-            </div>
-            <div>
-              <div class="flex flex-wrap gap-1.5 mb-4 sm:mb-5">${tagsHtml}</div>
-              <div class="flex flex-wrap items-center gap-2 sm:gap-3 pt-3 border-t-2 border-black/10">${visitBtn}${ghBtn}</div>
-            </div>
+          <div class="h-4 w-full rounded-t-[1.35rem] border-b-[3px] border-black ${esc(p.headerBgClass || "bg-[#86efac]")}"></div>
+          <div class="p-6 sm:p-7 flex flex-col gap-4 flex-1">
+          <div class="flex items-start justify-between gap-3">
+            <h3 class="font-display text-3xl text-black leading-tight">${esc(p.title)}</h3>
+            <div class="flex items-center gap-2 shrink-0 font-mono text-xs font-bold text-black/70">${statsRow}</div>
+          </div>
+          ${metaLine ? `<p class="font-mono text-xs font-bold text-black/65">${metaLine}</p>` : ""}
+          <p class="font-body text-base text-black/85 leading-relaxed flex-1">${esc(p.description)}</p>
+          <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
+            <div class="flex flex-wrap gap-1.5">${tagsHtml}</div>
+            <div class="flex items-center gap-2">${visitBtn}${ghBtn}</div>
+          </div>
           </div>
         `;
         projectsGrid.appendChild(card);
@@ -207,9 +187,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Update button styling
       filterButtons.forEach((b) => {
-        b.className = "project-filter-btn px-2.5 sm:px-3 py-1 sm:py-1.5 border-2 border-black transition-all cursor-pointer bg-[#fffdf9] hover:bg-[#f6eedb]";
+        b.className = "project-filter-btn px-3.5 py-1.5 rounded-full border-2 border-black font-mono text-xs font-bold transition-all cursor-pointer bg-[#fffdf9] hover:bg-[#fde047]";
       });
-      btn.className = "project-filter-btn px-2.5 sm:px-3 py-1 sm:py-1.5 border-2 border-black transition-all cursor-pointer bg-[#fde047] shadow-brutal-xs font-black -translate-y-0.5";
+      btn.className = "project-filter-btn px-3.5 py-1.5 rounded-full border-2 border-black font-mono text-xs font-bold transition-all cursor-pointer bg-[#fde047] shadow-brutal-xs";
 
       // Filter project cards
       const matchingCards = [];
