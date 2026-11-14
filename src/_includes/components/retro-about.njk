@@ -33,6 +33,19 @@
     </div>
 
     <ul class="flex flex-wrap gap-2 mt-10 w-full">
+      {% set aboutSkills = [
+        "MODEL CONTEXT PROTOCOL",
+        "YARA",
+        "POSTGRESQL",
+        "WEBSOCKETS",
+        "GITHUB ACTIONS",
+        "PROXMOX VE",
+        "CLOUDFLARE WAF & CDN",
+        "OPENCV"
+      ] %}
+      {% for tech in aboutSkills %}
+        <li class="px-2.5 py-1 bg-[#fffdf9] border-2 border-black font-mono text-sm font-bold text-black">{{ tech }}</li>
+      {% endfor %}
       {% set skillsList = site.skills or techStack %}
       {% for tech in skillsList %}
         <li class="px-2.5 py-1 bg-[#fffdf9] border-2 border-black font-mono text-sm font-bold text-black">{{ tech.name }}</li>
