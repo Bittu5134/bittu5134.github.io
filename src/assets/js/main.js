@@ -199,7 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Markup/classes mirror retro-projects.njk card for card.
         const card = document.createElement("article");
-        card.className = `project-card group relative border-[3px] border-black bg-[#fffdf9] shadow-brutal flex flex-col transition-transform hover:-translate-y-0.5 hover:rotate-0 ${tilt} hidden`;
+        card.className = `project-card group relative flex flex-col border-[3px] border-black bg-[#fffdf9] shadow-brutal transition-transform motion-reduce:transition-none motion-reduce:hover:transform-none hover:-translate-y-0.5 hover:rotate-0 ${tilt} hidden`;
         card.setAttribute("data-filter-category", p.filterCategory || "");
         card.setAttribute("data-category", p.category || "");
         card.setAttribute("data-pinned", "false");
@@ -208,29 +208,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let statsRow = "";
         if (p.stars > 0) statsRow += `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 border-2 border-black bg-[#fde047] font-mono text-sm font-bold text-black" title="${p.stars} stars on GitHub"><svg class="w-3.5 h-3.5 text-black fill-black" aria-hidden="true"><use href="#icon-star"/></svg>${esc(p.stars)}</span>`;
-        if (p.forks > 0) statsRow += `<span class="flex items-center gap-1" title="${p.forks} forks on GitHub"><svg class="w-3.5 h-3.5 text-black/70" aria-hidden="true"><use href="#icon-git-fork"/></svg>${esc(p.forks)}</span>`;
+        if (p.forks > 0) statsRow += `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 border-2 border-black bg-[#f6eedb] font-mono text-sm font-bold text-black" title="${p.forks} forks on GitHub"><svg class="w-3.5 h-3.5 text-black" aria-hidden="true"><use href="#icon-git-fork"/></svg>${esc(p.forks)}</span>`;
 
         let metaLine = [p.language, p.statsText].filter(Boolean).map(esc).join(" · ");
-        let tagsHtml = Array.isArray(p.tags) ? p.tags.map((t) => `<span class="font-mono text-sm font-bold text-black/60">#${esc(String(t).toLowerCase())}</span>`).join("") : "";
+        let tagsHtml = Array.isArray(p.tags) ? p.tags.map((t) => `<span>#${esc(String(t).toLowerCase())}</span>`).join("") : "";
 
         let visitBtn = "";
-        if (p.liveUrl) visitBtn = `<a href="${esc(p.liveUrl)}" target="_blank" rel="noopener noreferrer" class="btn-pill-sm bg-[#fde047]">Visit <svg class="w-3.5 h-3.5 text-black" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></a>`;
+        if (p.liveUrl) visitBtn = `<a href="${esc(p.liveUrl)}" target="_blank" rel="noopener noreferrer" class="btn-pill-sm bg-[#fde047] hover:bg-[#fbbf24]">Visit <svg class="w-3.5 h-3.5 text-black" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></a>`;
         let ghBtn = "";
-        if (p.githubUrl) ghBtn = `<a href="${esc(p.githubUrl)}" target="_blank" rel="noopener noreferrer" class="btn-pill-sm bg-[#fffdf9] hover:bg-[#86efac]"><svg class="w-3.5 h-3.5 text-black" aria-hidden="true"><use href="#icon-github"/></svg> GitHub</a>`;
+        if (p.githubUrl) ghBtn = `<a href="${esc(p.githubUrl)}" target="_blank" rel="noopener noreferrer" class="btn-pill-sm bg-transparent hover:bg-[#86efac]"><svg class="w-3.5 h-3.5 text-black" aria-hidden="true"><use href="#icon-github"/></svg> GitHub</a>`;
 
         card.innerHTML = `
-          <div class="h-4 w-full border-b-[3px] border-black ${esc(p.headerBgClass || "")}"></div>
-          <div class="p-6 sm:p-7 flex flex-col gap-4 flex-1">
-          <div class="flex items-start justify-between gap-3">
+          <p class="flex items-center gap-2 px-6 pt-5 font-mono text-xs font-bold uppercase tracking-[0.12em] text-black/70">
+            <span class="w-2.5 h-2.5 border-2 border-black ${esc(p.headerBgClass || "")}" aria-hidden="true"></span>${esc(p.category || "")}
+          </p>
+          <div class="px-6 pt-2 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
             <h3 class="font-display text-3xl sm:text-4xl text-black leading-tight">${esc(p.title)}</h3>
-            <div class="flex items-center gap-2 shrink-0 font-mono text-sm font-bold text-black/70">${statsRow}</div>
+            <div class="flex items-center gap-1.5 shrink-0">${statsRow}</div>
           </div>
-          ${metaLine ? `<p class="font-mono text-sm font-bold text-black/65">${metaLine}</p>` : ""}
-          <p class="font-body text-base text-black/85 leading-relaxed flex-1">${esc(p.description)}</p>
-          <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
-            <div class="flex flex-wrap gap-1.5">${tagsHtml}</div>
-            <div class="flex items-center gap-2">${visitBtn}${ghBtn}</div>
-          </div>
+          ${metaLine ? `<p class="px-6 pt-2 font-mono text-sm font-bold text-black/65">${metaLine}</p>` : ""}
+          <p class="px-6 pt-4 pb-6 font-body text-base text-black/85 leading-relaxed flex-1">${esc(p.description)}</p>
+          <div class="mt-auto flex flex-wrap items-center gap-2 border-t-2 border-black px-6 py-4">
+            <div class="flex flex-1 flex-wrap items-center gap-1.5 font-mono text-sm font-bold text-black/60">${tagsHtml}</div>
+            ${ghBtn}${visitBtn}
           </div>
         `;
         fragment.appendChild(card);
@@ -253,11 +253,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const allCards = document.querySelectorAll(".project-card");
 
-      // Update button styling
+      // Update button styling: chips are server-rendered with .filter-chip; only
+      // the active modifier toggles here so the class list can never drift.
       filterButtons.forEach((b) => {
-        b.className = "project-filter-btn px-4 py-2.5 border-2 border-black font-mono text-sm font-bold transition-all cursor-pointer bg-[#fffdf9] hover:bg-[#fde047]";
+        b.classList.remove("is-active");
+        b.classList.add("filter-chip");
       });
-      btn.className = "project-filter-btn px-4 py-2.5 border-2 border-black font-mono text-sm font-bold transition-all cursor-pointer bg-[#fde047] shadow-brutal-xs";
+      btn.classList.add("is-active");
 
       // Filter project cards
       const matchingCards = [];
