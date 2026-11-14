@@ -571,7 +571,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         void main() {
           vec2 uv = gl_FragCoord.xy / iResolution.xy;
-          vec3 rayOri = vec3((uv - 0.5) * vec2(iResolution.x / iResolution.y, 1.0) * 6.0, 3.0);
+          vec3 rayOri = vec3((uv - 0.5) * vec2(iResolution.x / iResolution.y, 1.0) * 4.2, 3.0);
           vec3 rayDir = vec3(0.0, 0.0, -1.0);
 
           float depth = 0.0;
@@ -591,7 +591,7 @@ document.addEventListener("DOMContentLoaded", () => {
             vec3 normal = calcNormal(p);
             float diffuse = clamp(dot(normal, vec3(0.5, 0.5, 1.0)), 0.0, 1.0);
             // Site palette: lit faces warm yellow, shaded faces amber
-            col = mix(vec3(0.98, 0.87, 0.42), vec3(0.87, 0.47, 0.16), 1.0 - diffuse);
+            col = mix(vec3(0.99, 0.84, 0.30), vec3(0.83, 0.40, 0.10), 1.0 - diffuse);
             // Depth fades to transparent (not black) so blobs melt into the paper
             fog = exp(-0.001 * depth * depth * depth);
           }
