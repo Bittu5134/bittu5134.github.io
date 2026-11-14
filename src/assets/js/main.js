@@ -199,7 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Markup/classes mirror retro-projects.njk card for card.
         const card = document.createElement("article");
-        card.className = `project-card group relative flex flex-col border-[3px] border-black bg-[#fffdf9] shadow-brutal transition-transform motion-reduce:transition-none motion-reduce:hover:transform-none hover:-translate-y-0.5 hover:rotate-0 ${tilt} hidden`;
+        card.className = `project-card group relative flex flex-col bg-[#f3e7cc] transition-colors hover:bg-[#fffdf9]/60 hidden`;
         card.setAttribute("data-filter-category", p.filterCategory || "");
         card.setAttribute("data-category", p.category || "");
         card.setAttribute("data-pinned", "false");

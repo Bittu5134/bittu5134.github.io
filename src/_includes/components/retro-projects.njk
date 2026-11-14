@@ -24,11 +24,11 @@
     </div>
 
     <!-- Pinned projects rendered server-side; the rest are injected on filter click -->
-    <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 md:pr-1 md:pb-1">
+    <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 gap-px bg-black/15 border border-black/15">
       {% for p in projects.projects %}
         {% if p.isPinned %}
           <article
-            class="project-card group relative flex flex-col border-[3px] border-black bg-[#fffdf9] shadow-brutal transition-transform motion-reduce:transition-none motion-reduce:hover:transform-none hover:-translate-y-0.5 hover:rotate-0 {{ 'rotate-[-0.6deg]' if loop.index is even else 'rotate-[0.6deg]' }}"
+            class="project-card group relative flex flex-col bg-[#f3e7cc] transition-colors hover:bg-[#fffdf9]/60"
             data-filter-category="{{ p.filterCategory }}"
             data-category="{{ p.category }}"
             data-pinned="true"
@@ -61,7 +61,7 @@
 
             <p class="px-6 pt-4 pb-6 font-body text-base text-black/85 leading-relaxed flex-1">{{ p.description }}</p>
 
-            <div class="mt-auto flex flex-wrap items-center gap-2 border-t-2 border-black px-6 py-4">
+            <div class="mt-auto flex flex-wrap items-center gap-2 border-t border-black/15 px-6 py-4">
               <div class="flex flex-1 flex-wrap items-center gap-1.5 font-mono text-sm font-bold text-black/60">
                 {% for tag in p.tags %}
                   <span>#{{ tag | lower }}</span>
