@@ -264,6 +264,25 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /* -------------------------------------------------------------------------- */
+  /* 3.4 Skills ticker eases to 25% speed on hover/focus */
+  const tickerBand = document.querySelector(".ticker-band");
+  if (tickerBand) {
+    let tickerRate = 1;
+    const applyTickerRate = () => {
+      document.getAnimations().forEach((anim) => {
+        if (anim.animationName === "ticker") anim.playbackRate = tickerRate;
+      });
+    };
+    const easeTicker = (target) => {
+      tickerRate = target;
+      applyTickerRate();
+    };
+    tickerBand.addEventListener("mouseenter", () => easeTicker(0.25));
+    tickerBand.addEventListener("mouseleave", () => easeTicker(1));
+    tickerBand.addEventListener("focusin", () => easeTicker(0.25));
+    tickerBand.addEventListener("focusout", () => easeTicker(1));
+  }
+
   /* 3.5 Live IST Clock                                                         */
   /* -------------------------------------------------------------------------- */
   const clockEl = document.getElementById("hero-clock");
