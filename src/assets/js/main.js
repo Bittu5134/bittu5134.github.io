@@ -207,7 +207,7 @@ document.addEventListener("DOMContentLoaded", () => {
         card.setAttribute("data-order", String(p.order || 99));
 
         let statsRow = "";
-        if (p.stars > 0) statsRow += `<span class="flex items-center gap-1" title="${p.stars} stars on GitHub"><svg class="w-3.5 h-3.5 text-[#f59e0b] fill-[#f59e0b]" aria-hidden="true"><use href="#icon-star"/></svg>${esc(p.stars)}</span>`;
+        if (p.stars > 0) statsRow += `<span class="inline-flex items-center gap-1.5 px-2 py-0.5 border-2 border-black bg-[#fde047] font-mono text-sm font-bold text-black" title="${p.stars} stars on GitHub"><svg class="w-3.5 h-3.5 text-black fill-black" aria-hidden="true"><use href="#icon-star"/></svg>${esc(p.stars)}</span>`;
         if (p.forks > 0) statsRow += `<span class="flex items-center gap-1" title="${p.forks} forks on GitHub"><svg class="w-3.5 h-3.5 text-black/70" aria-hidden="true"><use href="#icon-git-fork"/></svg>${esc(p.forks)}</span>`;
 
         let metaLine = [p.language, p.statsText].filter(Boolean).map(esc).join(" · ");

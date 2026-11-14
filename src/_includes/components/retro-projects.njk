@@ -36,12 +36,12 @@
             <div class="p-6 sm:p-7 flex flex-col gap-4 flex-1">
             <div class="flex items-start justify-between gap-3">
               <h3 class="font-display text-3xl text-black leading-tight">{{ p.title }}</h3>
-              <div class="flex items-center gap-2 shrink-0 font-mono text-sm font-bold text-black/70">
+              <div class="flex items-center gap-1.5 shrink-0">
                 {% if p.stars > 0 %}
-                  <span class="flex items-center gap-1" title="{{ p.stars }} stars on GitHub">{{ icons.star("w-3.5 h-3.5 text-[#f59e0b] fill-[#f59e0b]") }}{{ p.stars }}</span>
+                  <span class="inline-flex items-center gap-1.5 px-2 py-0.5 border-2 border-black bg-[#fde047] font-mono text-sm font-bold text-black" title="{{ p.stars }} stars on GitHub">{{ icons.star("w-3.5 h-3.5 text-black fill-black") }}{{ p.stars }}</span>
                 {% endif %}
                 {% if p.forks > 0 %}
-                  <span class="flex items-center gap-1" title="{{ p.forks }} forks on GitHub">{{ icons.gitFork("w-3.5 h-3.5 text-black/70") }}{{ p.forks }}</span>
+                  <span class="inline-flex items-center gap-1.5 px-2 py-0.5 border-2 border-black bg-[#fffdf9] font-mono text-sm font-bold text-black" title="{{ p.forks }} forks on GitHub">{{ icons.gitFork("w-3.5 h-3.5 text-black") }}{{ p.forks }}</span>
                 {% endif %}
               </div>
             </div>
