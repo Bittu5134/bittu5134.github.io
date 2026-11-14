@@ -101,6 +101,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Auto-minimize the tape deck if it overlaps interactive content (filters, stats)
+  const cassetteDeck = document.getElementById("cassette-expanded-deck");
+  const cassetteMinBtn = document.getElementById("cassette-minimized-btn");
+  const cassetteMinBtnEl = document.getElementById("cassette-minimize-btn");
+  function minimizeDeckIfOverlapping() {
+    if (!cassetteDeck || cassetteDeck.classList.contains("hidden")) return;
+    const dr = cassetteDeck.getBoundingClientRect();
+    const targets = document.querySelectorAll(".project-filter-btn, .project-card, a, button");
+    for (const el of targets) {
+      const r = el.getBoundingClientRect();
+      if (r.width && r.height && r.left < dr.right - 8 && r.right > dr.left + 8 && r.top < dr.bottom - 8 && r.bottom > dr.top + 8) {
+        cassetteMinBtnEl?.click();
+        return;
+      }
+    }
+  }
+  window.addEventListener("resize", minimizeDeckIfOverlapping, { passive: true });
+  cassetteMinBtn?.addEventListener("click", () => setTimeout(minimizeDeckIfOverlapping, 60));
+
   menuToggleBtn?.addEventListener("click", () => setMenuOpen(!isMenuOpen));
   drawerCloseBtn?.addEventListener("click", () => setMenuOpen(false));
   mobileBackdrop?.addEventListener("click", () => setMenuOpen(false));
@@ -112,6 +131,13 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("resize", () => {
     if (window.innerWidth >= 1024 && isMenuOpen) {
       setMenuOpen(false);
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && isMenuOpen) {
+      setMenuOpen(false);
+      menuToggleBtn?.focus();
     }
   });
 

@@ -254,7 +254,14 @@ img, svg, video {
   100% { transform: translateX(0) scaleX(1); }
 }
 .ticker-companion { animation: companion-walk 22s linear infinite; will-change: transform; }
-@media (prefers-reduced-motion: reduce) { .ticker-companion { animation: none; transform: translateX(2rem); } }
+@media (prefers-reduced-motion: reduce) {
+  .ticker-companion { animation: none; transform: translateX(2rem); }
+  #metaballs-canvas { display: none; }
+}
+
+/* Visible keyboard focus, on-brand ink */
+:focus-visible { outline: 3px solid #14161f; outline-offset: 2px; }
+button:focus-visible, a:focus-visible { outline: 3px solid #14161f; outline-offset: 2px; }
 
 /* Sticker-depth display headings */
 .heading-pop { text-shadow: 0.07em 0.07em 0 #fde047; }
