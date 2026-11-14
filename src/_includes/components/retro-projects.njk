@@ -25,7 +25,7 @@
       {% for p in projects.projects %}
         {% if p.isPinned %}
           <article
-            class="project-card group relative  border-[3px] border-black bg-[#fffdf9] shadow-brutal flex flex-col transition-transform hover:-translate-y-1 hover:rotate-0 {{ 'rotate-[-0.6deg]' if loop.index is even else 'rotate-[0.6deg]' }}"
+            class="project-card group relative  border-[3px] border-black bg-[#fffdf9] shadow-brutal flex flex-col transition-transform hover:-translate-y-0.5 hover:rotate-0 {{ 'rotate-[-0.6deg]' if loop.index is even else 'rotate-[0.6deg]' }}"
             data-filter-category="{{ p.filterCategory }}"
             data-category="{{ p.category }}"
             data-pinned="true"
@@ -104,9 +104,9 @@
     ]
     </script>
 
-    <a href="https://github.com/Bittu5134?tab=repositories" target="_blank" rel="noopener noreferrer" class="mt-12 flex items-center justify-between gap-4 border-2 border-black bg-[#fffdf9] px-4 py-3.5 font-mono text-sm sm:text-base font-bold text-black hover:bg-[#fde047] transition-colors">
+    <a href="https://github.com/Bittu5134?tab=repositories" target="_blank" rel="noopener noreferrer" class="mt-10 flex items-center justify-between gap-4 border-2 border-black bg-[#fffdf9] px-4 py-3.5 font-mono text-sm sm:text-base font-bold text-black hover:bg-[#fde047] transition-colors">
       <span>More tools, prototypes and scripts on <span class="underline underline-offset-4">GitHub</span></span>
-      {{ icons.arrowUpRight("w-4 h-4 text-black shrink-0") }}
+      {{ icons.arrowUpRight("w-3.5 h-3.5 text-black shrink-0") }}
     </a>
   </div>
 </section>

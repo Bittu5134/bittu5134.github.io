@@ -13,12 +13,12 @@
   "CLOUDFLARE WORKERS"
 ] %}
 
-<div class="ticker-band relative w-full my-6 z-20">
+<div class="ticker-band relative w-full z-20">
   <!-- chicken jockey rides the skills band (webp animates itself, stays fixed) -->
   <div style="top:-6.7rem" class="hidden sm:block absolute left-2 sm:left-10 w-24 sm:w-32 pointer-events-none z-10" aria-hidden="true">
     <img src="/images/chicken-jockey.webp" alt="" width="44" height="44" loading="lazy" class="w-full h-auto"/>
   </div>
-  <div class="w-full bg-[#fde047] border-y-2 border-black py-2.5 overflow-hidden select-none font-mono text-sm sm:text-sm font-bold shadow-brutal-bottom">
+  <div class="w-full bg-[#fde047] border-y-2 border-black py-2.5 overflow-hidden select-none font-mono text-xs sm:text-sm font-bold shadow-brutal-bottom">
     <div class="flex w-max animate-ticker whitespace-nowrap">
     {% for i in range(0, 2) %}
       {% for skill in tickerSkills %}

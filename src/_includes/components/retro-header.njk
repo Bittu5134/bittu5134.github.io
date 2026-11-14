@@ -1,7 +1,7 @@
 {% import "macros/icons.njk" as icons %}
 {% set isHomePage = (page.url == "/") %}
 
-<header class="sticky top-0 z-50 bg-[#f3e7cc] border-b border-black">
+<header class="sticky top-0 z-50 bg-[#f3e7cc] border-b border-black/15">
   <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
 
     <a href="/" class="flex items-center gap-2.5 font-display text-3xl text-black leading-none py-2" aria-label="Bittu home">
@@ -36,7 +36,7 @@
 <div id="mobile-backdrop" class="hidden fixed inset-0 top-16 bg-black/40 z-40 lg:hidden" aria-hidden="true"></div>
 
 <!-- Mobile drawer (toggled by main.js) -->
-<div id="mobile-drawer" class="hidden fixed top-16 left-0 right-0 z-50 lg:hidden bg-[#fffdf9] border-b-2 border-black rounded-b-3xl max-h-[calc(100vh-4rem)] overflow-y-auto">
+<div id="mobile-drawer" class="hidden fixed top-16 left-0 right-0 z-50 lg:hidden bg-[#fffdf9] border-b-2 border-black max-h-[calc(100vh-4rem)] overflow-y-auto">
   <nav class="p-4 flex flex-col gap-2 font-body text-base font-bold text-black" aria-label="Mobile">
     <a href="{{ '#projects' if isHomePage else '/#projects' }}" class="mobile-nav-link flex items-center justify-between px-4 py-3  hover:bg-[#fde047]">Projects <span aria-hidden="true">→</span></a>
     <a href="/blog/" class="mobile-nav-link flex items-center justify-between px-4 py-3  hover:bg-[#86efac]">Blog <span aria-hidden="true">→</span></a>
