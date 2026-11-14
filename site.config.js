@@ -76,8 +76,8 @@ export default {
     },
     "DumbCord": {
       order: 9,
-      category: "AI / MARKOV",
-      filterCategory: "AI",
+      category: "DISCORD / MARKOV CHAINS",
+      filterCategory: "TOOLS",
       badge: "MARKOV CHATBOT",
       statsText: "Markov Chain Discord Bot",
       tags: ["chatbot", "discord", "dumb", "markov-chain"],
@@ -172,8 +172,8 @@ export default {
     },
     "Awakener": {
       order: 12,
-      category: "AI / DISCORD BOTS",
-      filterCategory: "AI",
+      category: "DISCORD / BOT",
+      filterCategory: "TOOLS",
       badge: "CHANNEL REVIVER",
       statsText: "Crown-the-Lurkers Bot",
       liveUrl: "https://awakener.bittu.dev/",
