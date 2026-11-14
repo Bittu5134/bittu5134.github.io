@@ -8,7 +8,7 @@
   <button
     id="cassette-minimized-btn"
     aria-label="TAPE DECK — open cassette player"
-    class="px-3 sm:px-3.5 py-2 sm:py-2.5 bg-[#fde047] text-black font-mono text-xs sm:text-sm font-bold border-2 border-black shadow-brutal flex items-center gap-1.5 sm:gap-2 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer"
+    class="px-2.5 sm:px-3 py-1.5 sm:py-2 bg-[#fde047] text-black font-mono text-[11px] sm:text-sm font-bold border-2 border-black shadow-brutal flex items-center gap-1.5 sm:gap-2 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer"
   >
     <span class="cassette-disc-icon">{{ icons.disc3("w-4 h-4 text-black") }}</span>
     <span id="cassette-minimized-label">TAPE DECK</span>
@@ -48,34 +48,34 @@
       </div>
     </div>
 
-    <div class="p-3 bg-[#f3e7cc]">
+    <div class="p-3 bg-[#f6eedb]">
       <!-- Cassette Graphic with Spinning Wheels -->
-      <div class="bg-[#fffdf9] p-2.5 border-2 border-black mb-2.5 relative overflow-hidden">
+      <div class="bg-[#12151e] p-2.5 border-2 border-black mb-2.5 rounded-sm relative overflow-hidden">
         <div class="flex items-center justify-between px-4 py-2 bg-[#2a2f42] border border-[#475569] mb-1.5">
           <!-- Left Spool -->
           <div
             id="cassette-left-spool"
-            class="w-6 h-6 rounded-full border-2 border-dashed border-[#14161f] flex items-center justify-center"
+            class="w-6 h-6 rounded-full border-2 border-dashed border-[#fde047] flex items-center justify-center"
           >
-            <div class="w-2 h-2 bg-[#fde047]"></div>
+            <div class="w-2 h-2 rounded-full bg-[#fde047]"></div>
           </div>
 
           <!-- Tape Window -->
-          <div class="flex-1 mx-3 h-3 bg-[#f3e7cc] border-2 border-[#14161f] relative flex items-center justify-center">
-            <div class="w-3/4 h-1 bg-[#d97706]"></div>
+          <div class="flex-1 mx-3 h-3 bg-[#0f121d] border border-[#334155] relative flex items-center justify-center">
+            <div class="w-3/4 h-1 bg-[#d97706]/70"></div>
           </div>
 
           <!-- Right Spool -->
           <div
             id="cassette-right-spool"
-            class="w-6 h-6 rounded-full border-2 border-dashed border-[#14161f] flex items-center justify-center"
+            class="w-6 h-6 rounded-full border-2 border-dashed border-[#fde047] flex items-center justify-center"
           >
-            <div class="w-2 h-2 bg-[#fde047]"></div>
+            <div class="w-2 h-2 rounded-full bg-[#fde047]"></div>
           </div>
         </div>
 
         <!-- LCD Track Display -->
-        <div class="bg-[#14161f] px-2 py-1.5 border-2 border-black flex items-center justify-between overflow-hidden">
+        <div class="bg-[#000000] px-2 py-1 border border-[#334155] flex items-center justify-between overflow-hidden">
           <div class="overflow-hidden whitespace-nowrap flex-1 min-w-0 mr-2 relative">
             <div id="cassette-track-ticker" class="animate-cassette-ticker">
               <span id="cassette-track-display" class="cassette-track-display font-mono text-sm font-bold text-[#86efac] tracking-wider pr-8 inline-block">
