@@ -144,9 +144,20 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && isMenuOpen) {
+    if (e.key !== "Escape") return;
+    if (isMenuOpen) {
       setMenuOpen(false);
       menuToggleBtn?.focus();
+      return;
+    }
+    // Escape closes the cassette deck when it is open and focus is inside it.
+    // The minimize button owns the state transition + focus restore.
+    if (
+      cassetteDeck &&
+      !cassetteDeck.classList.contains("hidden") &&
+      cassetteDeck.contains(document.activeElement)
+    ) {
+      cassetteMinBtnEl?.click();
     }
   });
 
@@ -161,18 +172,39 @@ document.addEventListener("DOMContentLoaded", () => {
     if (nonPinnedRendered || !projectsGrid) return;
     const dataEl = document.getElementById("non-pinned-projects-data");
     if (!dataEl) return;
+
+    let nonPinned;
     try {
-      const nonPinned = JSON.parse(dataEl.textContent || "[]");
-      nonPinned.forEach((p) => {
-        const card = document.createElement("div");
-        card.className = "project-card group border-[3px] border-black bg-[#fffdf9] shadow-brutal flex flex-col transition-transform hover:-translate-y-1 hidden";
+      nonPinned = JSON.parse(dataEl.textContent || "[]");
+    } catch (e) {
+      console.warn("Failed to parse non-pinned projects data:", e);
+      return;
+    }
+    if (!Array.isArray(nonPinned) || nonPinned.length === 0) return;
+
+    const esc = (v) => String(v == null ? "" : v).replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+    // Build everything into a DocumentFragment and append once, so a mid-loop
+    // exception can never leave a half-rendered grid behind. The flag is set in
+    // a finally block so a failed pass is not retried (which would duplicate
+    // already-appended cards on the next filter click).
+    try {
+      const fragment = document.createDocumentFragment();
+      // 1-based position of this card in the full grid order, used for the
+      // alternating tilt exactly like the server template's loop.index.
+      const baseIndex = projectsGrid.children.length;
+
+      nonPinned.forEach((p, i) => {
+        const tilt = (baseIndex + i + 1) % 2 === 0 ? "rotate-[-0.6deg]" : "rotate-[0.6deg]";
+
+        // Markup/classes mirror retro-projects.njk card for card.
+        const card = document.createElement("article");
+        card.className = `project-card group relative border-[3px] border-black bg-[#fffdf9] shadow-brutal flex flex-col transition-transform hover:-translate-y-1 hover:rotate-0 ${tilt} hidden`;
         card.setAttribute("data-filter-category", p.filterCategory || "");
         card.setAttribute("data-category", p.category || "");
         card.setAttribute("data-pinned", "false");
         card.setAttribute("data-popularity", String(p.popularity || 0));
         card.setAttribute("data-order", String(p.order || 99));
-
-        const esc = (v) => String(v == null ? "" : v).replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 
         let statsRow = "";
         if (p.stars > 0) statsRow += `<span class="flex items-center gap-1" title="${p.stars} stars on GitHub"><svg class="w-3.5 h-3.5 text-[#f59e0b] fill-[#f59e0b]" aria-hidden="true"><use href="#icon-star"/></svg>${esc(p.stars)}</span>`;
@@ -187,7 +219,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (p.githubUrl) ghBtn = `<a href="${esc(p.githubUrl)}" target="_blank" rel="noopener noreferrer" class="btn-pill bg-[#fffdf9] hover:bg-[#86efac] !px-4 !py-2.5 !text-sm"><svg class="w-3.5 h-3.5 text-black" aria-hidden="true"><use href="#icon-github"/></svg> GitHub</a>`;
 
         card.innerHTML = `
-          <div class="h-4 w-full border-b-[3px] border-black ${esc(p.headerBgClass || "bg-[#86efac]")}"></div>
+          <div class="h-4 w-full border-b-[3px] border-black ${esc(p.headerBgClass || "")}"></div>
           <div class="p-6 sm:p-7 flex flex-col gap-4 flex-1">
           <div class="flex items-start justify-between gap-3">
             <h3 class="font-display text-3xl text-black leading-tight">${esc(p.title)}</h3>
@@ -201,11 +233,12 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
           </div>
         `;
-        projectsGrid.appendChild(card);
+        fragment.appendChild(card);
       });
+
+      projectsGrid.appendChild(fragment);
+    } finally {
       nonPinnedRendered = true;
-    } catch (e) {
-      console.warn("Failed to parse non-pinned projects data:", e);
     }
   }
 
@@ -274,28 +307,66 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* -------------------------------------------------------------------------- */
   /* 3.3 Nav scroll-spy: aria-current tracks the section in view */
-  const navLinks = document.querySelectorAll("header [data-nav]");
-  if (navLinks.length && "IntersectionObserver" in window) {
+  // Only in-page anchors (#section) are managed here. Links to real routes
+  // (e.g. "Blog" -> "/#blog" off the home page, or "/blog") keep whatever
+  // aria-current the server rendered for them.
+  const navLinks = Array.from(document.querySelectorAll("header [data-nav]"));
+  const sectionNavLinks = navLinks.filter((l) => (l.getAttribute("href") || "").startsWith("#"));
+  if (sectionNavLinks.length && "IntersectionObserver" in window) {
     const sectionFor = {};
-    navLinks.forEach((l) => {
+    sectionNavLinks.forEach((l) => {
       const sec = document.getElementById(l.dataset.nav);
       if (sec) sectionFor[sec.id] = l;
     });
+
     const setCurrent = (id) => {
-      navLinks.forEach((l) => {
-        if (l.dataset.nav === id) l.setAttribute("aria-current", "true");
+      sectionNavLinks.forEach((l) => {
+        if (id && l.dataset.nav === id) l.setAttribute("aria-current", "location");
         else l.removeAttribute("aria-current");
       });
     };
+
+    // Sections currently inside the spy band (viewport 40%-50%), so we can clear
+    // the marker when the reader lands between sections instead of keeping a
+    // stale one.
+    const intersecting = new Map();
     const spy = new IntersectionObserver((entries) => {
-      const visible = entries.filter((e) => e.isIntersecting)
-        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if (visible) setCurrent(visible.target.id);
+      entries.forEach((e) => {
+        if (e.isIntersecting) intersecting.set(e.target.id, e.intersectionRatio);
+        else intersecting.delete(e.target.id);
+      });
+      let best = null;
+      intersecting.forEach((ratio, id) => {
+        if (!best || ratio > best.ratio) best = { id, ratio };
+      });
+      setCurrent(best ? best.id : null);
     }, { rootMargin: "-40% 0px -50% 0px", threshold: [0, 0.25] });
+
     Object.keys(sectionFor).forEach((id) => {
       const sec = document.getElementById(id);
       if (sec) spy.observe(sec);
     });
+
+    // Initial state: the observer does not fire until layout/scroll settles, so
+    // resolve the section currently crossing the band right away.
+    const bandSection = () => {
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      const bandTop = vh * 0.4;
+      const bandBottom = vh * 0.5;
+      let bestId = null;
+      let bestTop = -Infinity;
+      Object.keys(sectionFor).forEach((id) => {
+        const sec = document.getElementById(id);
+        if (!sec) return;
+        const r = sec.getBoundingClientRect();
+        if (r.top <= bandBottom && r.bottom >= bandTop && r.top > bestTop) {
+          bestTop = r.top;
+          bestId = id;
+        }
+      });
+      return bestId;
+    };
+    setCurrent(bandSection());
   }
 
   /* 3.4 Skills ticker eases to 25% speed on hover/focus */
@@ -380,12 +451,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function setMinimizedState(minimized) {
       isMinimized = minimized;
+      const focusInsideDeck = expandedDeck.contains(document.activeElement);
       if (minimized) {
         minimizedBtn.classList.remove("hidden");
         expandedDeck.classList.add("hidden");
+        minimizedBtn.setAttribute("aria-expanded", "false");
+        // Hand focus back to the pill that re-opens the deck.
+        if (focusInsideDeck) minimizedBtn.focus({ preventScroll: true });
       } else {
-        minimizedBtn.classList.add("hidden");
         expandedDeck.classList.remove("hidden");
+        minimizedBtn.classList.add("hidden");
+        minimizedBtn.setAttribute("aria-expanded", "true");
+        // Only pull focus when the open was user-initiated (pill had focus), so
+        // the desktop initial render does not steal focus on page load.
+        if (document.activeElement === minimizedBtn) {
+          minimizeBtn?.focus({ preventScroll: true });
+        }
       }
     }
 

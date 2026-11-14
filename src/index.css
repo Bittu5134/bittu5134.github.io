@@ -54,15 +54,6 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-@font-face {
-  font-family: 'Space Grotesk';
-  font-style: normal;
-  font-weight: 300 700;
-  font-display: swap;
-  src: url('/fonts/SpaceGrotesk-Variable.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
 @tailwind components;
 @tailwind utilities;
 
@@ -70,47 +61,17 @@
   .card-brutal {
     @apply bg-[#fffdf9] border-[3px] border-black shadow-brutal hover:shadow-brutal-lg hover:-translate-y-0.5 transition-all;
   }
-  .card-header-bar {
-    @apply px-3 sm:px-4 py-2 border-b-[3px] border-black flex items-center justify-between select-none;
-  }
   .tag-pill {
     @apply px-2.5 py-0.5 bg-[#f6eedb] border border-black font-mono text-sm font-bold text-black uppercase;
   }
   .btn-brutal,
-  .btn-brutal-yellow,
-  .btn-brutal-white,
-  .btn-brutal-purple,
-  .btn-brutal-pink,
-  .btn-brutal-green {
+  .btn-brutal-yellow {
     @apply font-mono font-bold border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-1.5 cursor-pointer;
   }
   .btn-brutal-yellow { @apply bg-[#fde047] hover:bg-[#fb923c] text-black; }
-  .btn-brutal-white  { @apply bg-[#fffdf9] hover:bg-[#fde047] text-black; }
-  .btn-brutal-purple { @apply bg-[#fffdf9] hover:bg-[#c4b5fd] text-black; }
-  .btn-brutal-pink   { @apply bg-[#f472b6] hover:bg-[#fb7185] text-black; }
-  .btn-brutal-green  { @apply bg-[#86efac] hover:bg-[#22c55e] text-black; }
-
-  .nav-btn-desktop {
-    @apply cursor-pointer px-3 py-1 bg-[#fffdf9] border-2 border-black text-xs sm:text-sm font-black shadow-brutal-xs hover:bg-[#fde047] hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all tracking-tight flex items-center gap-1.5;
-  }
-  .nav-btn-mobile {
-    @apply w-full flex items-center justify-between px-3.5 py-2.5 bg-[#f6eedb] border-2 border-black font-mono text-sm font-bold shadow-brutal-xs hover:bg-[#fde047] active:translate-x-1 active:translate-y-0.5 transition-all cursor-pointer;
-  }
-
-  .profile-link {
-    @apply flex items-center justify-between p-2.5 bg-[#f6eedb] border border-black font-mono text-xs sm:text-sm font-bold text-black transition-colors;
-  }
-
-  .btn-hero-brutal {
-    @apply cursor-pointer px-4 sm:px-5 py-2.5 sm:py-3 text-black font-mono font-bold text-xs sm:text-sm border-[3px] border-black shadow-brutal hover:shadow-brutal-lg hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5 sm:gap-2;
-  }
 
   .btn-pill {
     @apply inline-flex items-center gap-2 px-5 py-2.5 border-2 border-black font-mono text-sm font-bold text-black shadow-brutal-xs hover:-translate-y-0.5 hover:shadow-brutal active:translate-y-0.5 active:shadow-none transition-all cursor-pointer;
-  }
-
-  .tech-badge {
-    @apply px-3 sm:px-3.5 py-1.5 sm:py-2 border-2 border-black font-mono text-xs sm:text-sm font-bold shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5 select-none cursor-default;
   }
 }
 
@@ -180,12 +141,6 @@ img, svg, video {
   background-size: 20px 20px;
 }
 
-.retro-dots-dark {
-  background-color: #0b0f17;
-  background-image: radial-gradient(rgba(148, 163, 184, 0.12) 1.25px, transparent 1.25px);
-  background-size: 22px 22px;
-}
-
 /* Selection style */
 ::selection {
   background-color: #fde047;
@@ -247,17 +202,7 @@ img, svg, video {
   mask-image: linear-gradient(to bottom, black 72%, transparent 98%);
 }
 
-/* Pixel companion walking the ticker band */
-@keyframes companion-walk {
-  0%   { transform: translateX(0) scaleX(1); }
-  49%  { transform: translateX(calc(100vw - 3rem)) scaleX(1); }
-  50%  { transform: translateX(calc(100vw - 3rem)) scaleX(-1); }
-  99%  { transform: translateX(0) scaleX(-1); }
-  100% { transform: translateX(0) scaleX(1); }
-}
-.ticker-companion { animation: companion-walk 22s linear infinite; will-change: transform; }
 @media (prefers-reduced-motion: reduce) {
-  .ticker-companion { animation: none; transform: translateX(2rem); }
   #metaballs-canvas { display: none; }
 }
 
