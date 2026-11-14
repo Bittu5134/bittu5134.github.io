@@ -10,7 +10,7 @@ export default {
         sans: ['"Nunito"', 'sans-serif'],
         mono: ['"Space Mono"', 'monospace'],
         pixel: ['"Space Mono"', 'monospace'],
-        display: ['Chewy', 'cursive'],
+        display: ['"Playpen Sans"', 'Chewy', 'cursive'],
         body: ['"Nunito"', 'sans-serif'],
       },
       borderWidth: {

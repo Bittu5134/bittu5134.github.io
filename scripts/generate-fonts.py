@@ -33,6 +33,8 @@ FONT_TARGETS = [
     ("Nunito-400.woff2", "Nunito-Regular.woff2", False),
     ("Nunito-700.woff2", "Nunito-Bold.woff2", False),
     ("Nunito-800.woff2", "Nunito-ExtraBold.woff2", False),
+    ("PlaypenSans-700.woff2", "PlaypenSans-Bold.woff2", False),
+    ("PlaypenSans-800.woff2", "PlaypenSans-ExtraBold.woff2", False),
 ]
 
 
