@@ -274,7 +274,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid #14161f; outline-offs
   font-weight: 800;
 }
 
-.heading-pop { text-shadow: 0.07em 0.07em 0 #fde047; }
+.heading-pop { text-shadow: 0.07em 0.07em 0 #b45309; }
 
 /* Soft blur for the WebGL blob canvas (replaces per-pixel AA) */
 .hero-canvas-blur { filter: blur(3px); }
