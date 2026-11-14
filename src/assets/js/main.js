@@ -417,7 +417,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // idle bob synced to its own gif cadence
       const bob = Math.sin(ghastlingT) * 4;
       // face the cursor: flip horizontally when drifting to the left of it
-      const facing = pos.x + ghastlingOffset.x < target.x - 6 ? 1 : -1;
+      const facing = pos.x + ghastlingOffset.x < target.x - 6 ? -1 : 1;
       ghastling.style.transform = "translate(" + gx + "px," + (gy + bob) + "px) scaleX(" + facing + ")";
       ghastlingRaf = requestAnimationFrame(ghastlingTick);
     };
