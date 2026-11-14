@@ -548,7 +548,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         float map(vec3 p) {
           float d = 2.0;
-          for (int i = 0; i < 16; i++) {
+          for (int i = 0; i < 12; i++) {
             float fi = float(i);
             float time = iTime * (fract(fi * 412.531 + 0.513) - 0.5) * 2.0;
             d = opSmoothUnion(
@@ -577,7 +577,7 @@ document.addEventListener("DOMContentLoaded", () => {
           float depth = 0.0;
           vec3 p = rayOri;
 
-          for (int i = 0; i < 64; i++) {
+          for (int i = 0; i < 48; i++) {
             p = rayOri + rayDir * depth;
             float dist = map(p);
             depth += dist;
@@ -636,8 +636,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // render() forced a synchronous style/layout pass on every frame.
       function measureCanvas() {
         const rect = canvas.getBoundingClientRect();
-        const dprCap = Math.min(1, 1600 / Math.max(1, rect.width));
-        const dpr = Math.min(window.devicePixelRatio || 1, 1.5) * dprCap;
+        const dpr = Math.min(window.devicePixelRatio || 1, 1.5, 1280 / Math.max(1, rect.width));
         cachedWidth = Math.max(1, Math.floor(rect.width * dpr));
         cachedHeight = Math.max(1, Math.floor(rect.height * dpr));
         needsResize = true;
@@ -657,7 +656,7 @@ document.addEventListener("DOMContentLoaded", () => {
         animationFrameId = null;
         if (!isVisible || !program) return;
         now = now || performance.now();
-        if (now - (lastDrawTime || 0) < 33) {
+        if (now - (lastDrawTime || 0) < 40) {
           animationFrameId = requestAnimationFrame(render);
           return;
         }
