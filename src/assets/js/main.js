@@ -218,16 +218,13 @@ document.addEventListener("DOMContentLoaded", () => {
         if (p.githubUrl) ghBtn = `<a href="${esc(p.githubUrl)}" target="_blank" rel="noopener noreferrer" class="btn-pill-sm bg-transparent hover:bg-[#86efac]"><svg class="w-3.5 h-3.5 text-black" aria-hidden="true"><use href="#icon-github"/></svg> GitHub</a>`;
 
         card.innerHTML = `
-          <p class="flex items-center gap-2 px-6 pt-5 font-mono text-xs font-bold uppercase tracking-[0.12em] text-black/70">
-            <span class="w-2.5 h-2.5 border-2 border-black ${esc(p.headerBgClass || "")}" aria-hidden="true"></span>${esc(p.category || "")}
-          </p>
-          <div class="px-6 pt-2 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
+          <div class="px-6 pt-5 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
             <h3 class="font-display text-3xl sm:text-4xl text-black leading-tight">${esc(p.title)}</h3>
             <div class="flex items-center gap-1.5 shrink-0">${statsRow}</div>
           </div>
           ${metaLine ? `<p class="px-6 pt-2 font-mono text-sm font-bold text-black/65">${metaLine}</p>` : ""}
-          <p class="px-6 pt-4 pb-6 font-body text-base text-black/85 leading-relaxed flex-1">${esc(p.description)}</p>
-          <div class="mt-auto flex flex-wrap items-center gap-2 border-t-2 border-black px-6 py-4">
+          <p class="px-6 pt-4 pb-5 font-body text-base text-black/85 leading-relaxed flex-1">${esc(p.description)}</p>
+          <div class="mt-auto flex flex-wrap items-center gap-2 border-t border-black/15 px-6 py-5">
             <div class="flex flex-1 flex-wrap items-center gap-1.5 font-mono text-sm font-bold text-black/60">${tagsHtml}</div>
             ${ghBtn}${visitBtn}
           </div>
@@ -252,13 +249,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const allCards = document.querySelectorAll(".project-card");
 
-      // Update button styling: chips are server-rendered with .filter-chip; only
-      // the active modifier toggles here so the class list can never drift.
+      // Update button styling: mirror the server-rendered chip classes exactly.
       filterButtons.forEach((b) => {
-        b.classList.remove("is-active");
-        b.classList.add("filter-chip");
+        b.className = "project-filter-btn px-4 py-2.5 border-2 border-black font-mono text-sm font-bold transition-all cursor-pointer bg-[#fffdf9] hover:bg-[#fde047]";
+        b.setAttribute("aria-pressed", "false");
       });
-      btn.classList.add("is-active");
+      btn.className = "project-filter-btn px-4 py-2.5 border-2 border-black font-mono text-sm font-bold transition-all cursor-pointer bg-[#fde047] shadow-brutal-xs";
+      btn.setAttribute("aria-pressed", "true");
 
       // Filter project cards
       const matchingCards = [];

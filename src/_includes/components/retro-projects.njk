@@ -11,11 +11,11 @@
       </div>
 
       <!-- Filter chips: same hooks the filter script reads -->
-      <div id="project-filters" class="inline-flex flex-wrap gap-1 border-2 border-black bg-[#fffdf9] p-1">
+      <div id="project-filters" class="flex flex-wrap gap-2">
         {% for cat in projects.categories %}
           <button
             data-filter="{{ cat }}"
-            class="project-filter-btn filter-chip {{ 'is-active' if loop.first }}"
+            class="project-filter-btn px-4 py-2.5 border-2 border-black font-mono text-sm font-bold transition-all cursor-pointer {{ 'bg-[#fde047] shadow-brutal-xs' if loop.first else 'bg-[#fffdf9] hover:bg-[#fde047]' }}"
           >
             {{ cat | lower }}
           </button>
@@ -35,10 +35,6 @@
             data-popularity="{{ (p.stars or 0) + (p.forks or 0) }}"
             data-order="{{ p.order or 99 }}"
           >
-            <p class="flex items-center gap-2 px-6 pt-5 font-mono text-xs font-bold uppercase tracking-[0.12em] text-black/70">
-              <span class="w-2.5 h-2.5 border-2 border-black {{ p.headerBgClass }}" aria-hidden="true"></span>{{ p.category }}
-            </p>
-
             <div class="px-6 pt-2 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
               <h3 class="font-display text-3xl sm:text-4xl text-black leading-tight">{{ p.title }}</h3>
               <div class="flex items-center gap-1.5 shrink-0">
@@ -59,9 +55,9 @@
               </p>
             {% endif %}
 
-            <p class="px-6 pt-4 pb-6 font-body text-base text-black/85 leading-relaxed flex-1">{{ p.description }}</p>
+            <p class="px-6 pt-4 pb-5 font-body text-base text-black/85 leading-relaxed flex-1">{{ p.description }}</p>
 
-            <div class="mt-auto flex flex-wrap items-center gap-2 border-t border-black/15 px-6 py-4">
+            <div class="mt-auto flex flex-wrap items-center gap-2 border-t border-black/15 px-6 py-5">
               <div class="flex flex-1 flex-wrap items-center gap-1.5 font-mono text-sm font-bold text-black/60">
                 {% for tag in p.tags %}
                   <span>#{{ tag | lower }}</span>
@@ -110,7 +106,7 @@
       <span class="hidden sm:block absolute right-8 w-16 pointer-events-none z-10" style="bottom:100%" aria-hidden="true">
         <img src="/images/Armadillo_Running_Animation.gif" alt="" width="78" height="56" loading="lazy" class="w-full h-auto">
       </span>
-      <span>More tools, prototypes and scripts on <span class="underline underline-offset-4">GitHub</span></span>
+      <span>More tools, projects and scripts on <span class="underline underline-offset-4">GitHub</span></span>
       {{ icons.arrowUpRight("w-3.5 h-3.5 text-black shrink-0") }}
     </a>
   </div>

@@ -78,9 +78,6 @@
     @apply inline-flex items-center gap-2 px-4 py-2 border-2 border-black font-mono text-sm font-bold text-black shadow-none transition-colors cursor-pointer;
   }
 
-  .filter-chip { @apply px-3 py-2 font-mono text-sm font-bold text-black transition-colors cursor-pointer; }
-  .filter-chip.is-active { @apply bg-[#fde047] shadow-brutal-xs; }
-  .filter-chip:not(.is-active):hover { @apply bg-[#fde047]/60; }
 }
 
 /* Minimal Vanilla Reset */
