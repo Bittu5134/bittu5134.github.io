@@ -64,10 +64,10 @@
               </div>
               <div class="flex items-center gap-2">
                 {% if p.liveUrl %}
-                  <a href="{{ p.liveUrl }}" target="_blank" rel="noopener noreferrer" class="btn-pill bg-[#fde047] !px-4 !py-2.5 !text-sm">Visit {{ icons.arrowUpRight("w-3.5 h-3.5 text-black") }}</a>
+                  <a href="{{ p.liveUrl }}" target="_blank" rel="noopener noreferrer" class="btn-pill shadow-none hover:shadow-none active:shadow-none !translate-y-0 bg-[#fde047] !px-4 !py-2.5 !text-sm">Visit {{ icons.arrowUpRight("w-3.5 h-3.5 text-black") }}</a>
                 {% endif %}
                 {% if p.githubUrl %}
-                  <a href="{{ p.githubUrl }}" target="_blank" rel="noopener noreferrer" class="btn-pill bg-[#fffdf9] hover:bg-[#86efac] !px-4 !py-2.5 !text-sm">{{ icons.github("w-3.5 h-3.5 text-black") }} GitHub</a>
+                  <a href="{{ p.githubUrl }}" target="_blank" rel="noopener noreferrer" class="btn-pill shadow-none hover:shadow-none active:shadow-none !translate-y-0 bg-[#fffdf9] hover:bg-[#86efac] !px-4 !py-2.5 !text-sm">{{ icons.github("w-3.5 h-3.5 text-black") }} GitHub</a>
                 {% endif %}
               </div>
             </div>
@@ -104,7 +104,7 @@
     ]
     </script>
 
-    <a href="https://github.com/Bittu5134?tab=repositories" target="_blank" rel="noopener noreferrer" class="mt-12 flex items-center justify-between gap-4 border-2 border-black bg-[#fffdf9] shadow-brutal-xs px-4 py-3.5 font-mono text-sm sm:text-base font-bold text-black hover:bg-[#fde047] transition-colors">
+    <a href="https://github.com/Bittu5134?tab=repositories" target="_blank" rel="noopener noreferrer" class="mt-12 flex items-center justify-between gap-4 border-2 border-black bg-[#fffdf9] px-4 py-3.5 font-mono text-sm sm:text-base font-bold text-black hover:bg-[#fde047] transition-colors">
       <span>More tools, prototypes and scripts on <span class="underline underline-offset-4">GitHub</span></span>
       {{ icons.arrowUpRight("w-4 h-4 text-black shrink-0") }}
     </a>

@@ -214,9 +214,9 @@ document.addEventListener("DOMContentLoaded", () => {
         let tagsHtml = Array.isArray(p.tags) ? p.tags.map((t) => `<span class="font-mono text-sm font-bold text-black/60">#${esc(String(t).toLowerCase())}</span>`).join("") : "";
 
         let visitBtn = "";
-        if (p.liveUrl) visitBtn = `<a href="${esc(p.liveUrl)}" target="_blank" rel="noopener noreferrer" class="btn-pill bg-[#fde047] !px-4 !py-2.5 !text-sm">Visit <svg class="w-3.5 h-3.5 text-black" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></a>`;
+        if (p.liveUrl) visitBtn = `<a href="${esc(p.liveUrl)}" target="_blank" rel="noopener noreferrer" class="btn-pill shadow-none hover:shadow-none active:shadow-none !translate-y-0 bg-[#fde047] !px-4 !py-2.5 !text-sm">Visit <svg class="w-3.5 h-3.5 text-black" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></a>`;
         let ghBtn = "";
-        if (p.githubUrl) ghBtn = `<a href="${esc(p.githubUrl)}" target="_blank" rel="noopener noreferrer" class="btn-pill bg-[#fffdf9] hover:bg-[#86efac] !px-4 !py-2.5 !text-sm"><svg class="w-3.5 h-3.5 text-black" aria-hidden="true"><use href="#icon-github"/></svg> GitHub</a>`;
+        if (p.githubUrl) ghBtn = `<a href="${esc(p.githubUrl)}" target="_blank" rel="noopener noreferrer" class="btn-pill shadow-none hover:shadow-none active:shadow-none !translate-y-0 bg-[#fffdf9] hover:bg-[#86efac] !px-4 !py-2.5 !text-sm"><svg class="w-3.5 h-3.5 text-black" aria-hidden="true"><use href="#icon-github"/></svg> GitHub</a>`;
 
         card.innerHTML = `
           <div class="h-4 w-full border-b-[3px] border-black ${esc(p.headerBgClass || "")}"></div>
