@@ -42,4 +42,9 @@ permalink: "/index.html"
   <!-- Lo-Fi Cassette Player -->
   {% include "components/retro-cassette-player.njk" %}
 
+  <!-- Ghastling companion: slowly drifts toward the mouse cursor (JS in main.js) -->
+  <div id="ghastling-companion" class="hidden sm:block fixed top-0 left-0 w-16 pointer-events-none z-30" aria-hidden="true">
+    <img src="/images/ghastling.gif" alt="" width="78" height="86" loading="lazy" class="w-full h-auto"/>
+  </div>
+
 </div>

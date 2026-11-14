@@ -389,6 +389,49 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* -------------------------------------------------------------------------- */
+  /* 3.4 Ghastling companion — drifts slowly toward the mouse cursor         */
+  /* ------------------------------------------------------------------------ */
+  const ghastling = document.getElementById("ghastling-companion");
+  if (ghastling && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const ghastlingSpeed = 0.035;      // lerp factor — lower = lazier follow
+    const ghastlingOffset = { x: 28, y: -96 }; // hover up-right of the cursor
+    let target = { x: innerWidth * 0.7, y: innerHeight * 0.5 };
+    let pos = { x: innerWidth * 0.7, y: innerHeight * 0.5 };
+    let ghastlingRaf = null;
+    let ghastlingT = 0;
+
+    window.addEventListener("mousemove", (e) => {
+      target.x = e.clientX + ghastlingOffset.x;
+      target.y = e.clientY + ghastlingOffset.y;
+    }, { passive: true });
+
+    const ghastlingTick = () => {
+      ghastlingT += 0.05;
+      pos.x += (target.x - pos.x) * ghastlingSpeed;
+      pos.y += (target.y - pos.y) * ghastlingSpeed;
+      // keep the little guy on screen
+      const gw = ghastling.offsetWidth || 64;
+      const gh = ghastling.offsetHeight || 86;
+      const gx = Math.min(Math.max(pos.x, gw * -0.25), innerWidth - gw * 0.75);
+      const gy = Math.min(Math.max(pos.y, 8), innerHeight - gh - 8);
+      // idle bob synced to its own gif cadence
+      const bob = Math.sin(ghastlingT) * 4;
+      ghastling.style.transform = "translate(" + gx + "px," + (gy + bob) + "px)";
+      ghastlingRaf = requestAnimationFrame(ghastlingTick);
+    };
+    ghastlingRaf = requestAnimationFrame(ghastlingTick);
+
+    // park the loop when the tab is hidden
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        cancelAnimationFrame(ghastlingRaf);
+        ghastlingRaf = null;
+      } else if (ghastlingRaf === null) {
+        ghastlingRaf = requestAnimationFrame(ghastlingTick);
+      }
+    });
+  }
+
   /* 4. Lo-Fi Cassette Player                                                   */
   /* -------------------------------------------------------------------------- */
   const TRACKS = [
