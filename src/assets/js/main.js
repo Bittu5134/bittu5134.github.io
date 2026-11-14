@@ -627,13 +627,18 @@ document.addEventListener("DOMContentLoaded", () => {
             float time = iTime * (fract(fi * 412.531 + 0.513) - 0.5) * 2.0;
             // Two edge clusters: blobs hug the screen edges and reach toward the centre,
             // scaled with the real half-width so they sit at the edges at any aspect.
+            // Lava-lamp motion: per-blob drift speed + decorrelated phases so they
+            // wander, split and merge on their own schedules instead of clumping.
+            float fr = fract(fi * 412.531 + 0.5124);   // stable per-blob random
+            float sp = 0.4 + fr * 0.7;                 // drift speed 0.4 .. 1.1
+            float t1 = time * sp + fi * 7.31;
             float side = (fi < 6.0) ? -1.0 : 1.0;
-            float gx = X * (0.78 + sin(time * 0.7 + fi * 1.7) * 0.14);   // 0.64X .. 0.92X
-            float gy = sin(time * 0.9 + fi * 2.3) * 1.5;
-            float gz = cos(time * 0.6 + fi * 3.1) * 0.7;
+            float gx = X * (0.62 + sin(t1) * 0.16);    // 0.46X .. 0.78X
+            float gy = sin(t1 * 0.83 + fi * 2.3) * (0.9 + fr * 1.3);
+            float gz = cos(t1 * 0.61 + fi * 3.1) * 0.7;
             vec3 c = vec3(side * gx, gy, gz);
             d = opSmoothUnion(
-              sdSphere(p - c, X * mix(0.045, 0.085, fract(fi * 412.531 + 0.5124))),
+              sdSphere(p - c, X * mix(0.05, 0.1, fr)),
               d,
               0.4
             );
