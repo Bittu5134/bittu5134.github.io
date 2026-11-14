@@ -317,32 +317,6 @@ document.addEventListener("DOMContentLoaded", () => {
     tickerBand.addEventListener("focusout", () => easeTicker(1));
   }
 
-  /* 3.5 Live IST Clock                                                         */
-  /* -------------------------------------------------------------------------- */
-  const clockEl = document.getElementById("hero-clock");
-  if (clockEl) {
-    // Hoisted formatter: only hour:minute are displayed, so rebuilding an Intl
-    // formatter and touching the DOM every second was pure waste.
-    const istTimeFormat = new Intl.DateTimeFormat("en-US", {
-      timeZone: "Asia/Kolkata",
-      hour: "2-digit",
-      minute: "2-digit",
-      hourCycle: "h23",
-    });
-
-    function updateClock() {
-      clockEl.textContent = `${istTimeFormat.format(new Date())} IST`;
-    }
-
-    // Align updates to the minute boundary instead of polling every second.
-    (function tickClock() {
-      updateClock();
-      const now = new Date();
-      const msToNextMinute = 60000 - (now.getSeconds() * 1000 + now.getMilliseconds());
-      setTimeout(tickClock, msToNextMinute + 20);
-    })();
-  }
-
   /* -------------------------------------------------------------------------- */
   /* 4. Lo-Fi Cassette Player                                                   */
   /* -------------------------------------------------------------------------- */
@@ -951,7 +925,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.documentElement.setAttribute("data-theme", "light");
       document.documentElement.classList.remove("dark");
       const metaTheme = document.querySelector('meta[name="theme-color"]');
-      if (metaTheme) metaTheme.setAttribute("content", "#f6eedb");
+      if (metaTheme) metaTheme.setAttribute("content", "#f3e7cc");
       return;
     }
 
@@ -964,7 +938,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateThemeColorMeta(theme) {
       const meta = document.querySelector('meta[name="theme-color"]');
       if (meta) {
-        meta.setAttribute("content", theme === "dark" ? "#0d1117" : "#f6eedb");
+        meta.setAttribute("content", theme === "dark" ? "#0d1117" : "#f3e7cc");
       }
     }
 
