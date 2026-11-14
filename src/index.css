@@ -258,3 +258,6 @@ img, svg, video {
 
 /* Sticker-depth display headings */
 .heading-pop { text-shadow: 0.07em 0.07em 0 #fde047; }
+
+/* Soft blur for the WebGL blob canvas (replaces per-pixel AA) */
+.hero-canvas-blur { filter: blur(3px); }
