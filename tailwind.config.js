@@ -7,11 +7,11 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"Nunito"', 'sans-serif'],
+        sans: ['"Playpen Sans"', 'cursive'],
         mono: ['"Space Mono"', 'monospace'],
         pixel: ['"Space Mono"', 'monospace'],
-        display: ['"Playpen Sans"', 'Chewy', 'cursive'],
-        body: ['"Nunito"', 'sans-serif'],
+        display: ['Chewy', 'cursive'],
+        body: ['"Playpen Sans"', 'cursive'],
       },
       borderWidth: {
         '3': '3px',

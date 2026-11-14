@@ -30,9 +30,7 @@ FONT_TARGETS = [
     ("Chewy-Regular.woff2", "Chewy-Regular.woff2", False),
     ("NationalPark-Regular.woff2", "NationalPark-Regular.woff2", False),
     ("NationalPark-Bold.woff2", "NationalPark-Bold.woff2", False),
-    ("Nunito-400.woff2", "Nunito-Regular.woff2", False),
-    ("Nunito-700.woff2", "Nunito-Bold.woff2", False),
-    ("Nunito-800.woff2", "Nunito-ExtraBold.woff2", False),
+    ("PlaypenSans-400.woff2", "PlaypenSans-Regular.woff2", False),
     ("PlaypenSans-700.woff2", "PlaypenSans-Bold.woff2", False),
     ("PlaypenSans-800.woff2", "PlaypenSans-ExtraBold.woff2", False),
 ]
