@@ -237,6 +237,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // On load: render all non-pinned cards and default to the ALL view so the
+  // whole catalogue is visible without a click.
+  renderNonPinnedCards();
+  const allChip = [...filterButtons].find((b) => b.getAttribute("data-filter") === "ALL");
+  if (allChip && !allChip.classList.contains("is-active")) {
+    allChip.click();
+  }
+
   filterButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
       const selectedFilter = btn.getAttribute("data-filter");
@@ -266,10 +274,9 @@ document.addEventListener("DOMContentLoaded", () => {
         let matches = false;
         if (selectedFilter === "PINNED") {
           matches = isPinned;
-        } else if (selectedFilter === "ALL") {
-          matches = true;
         } else {
-          matches = filterCat === selectedFilter || fullCat.includes(selectedFilter);
+          // ALL and category views include every project (pinned first via sort)
+          matches = selectedFilter === "ALL" ? true : (filterCat === selectedFilter || fullCat.includes(selectedFilter));
         }
 
         if (matches) {
@@ -291,13 +298,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       }
 
-      // Show top 4, hide the rest
-      matchingCards.forEach((card, index) => {
-        if (index < 4) {
-          card.classList.remove("hidden");
-        } else {
-          card.classList.add("hidden");
-        }
+      // Reorder the DOM to the curated sequence, then show every match
+      const grid = document.getElementById("projects-grid");
+      if (grid) {
+        matchingCards.forEach((card) => grid.appendChild(card));
+      }
+      matchingCards.forEach((card) => {
+        card.classList.remove("hidden");
       });
     });
   });
