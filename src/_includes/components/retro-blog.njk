@@ -11,8 +11,7 @@
       </div>
     </div>
 
-    <div class="border-[3px] border-black bg-[#fffdf9]">
-      <div class="divide-y divide-black">
+    <div class="divide-y divide-black">
       {% set chipColors = ['bg-[#86efac]', 'bg-[#c4b5fd]', 'bg-[#38bdf8]'] %}
       {% for post in collections.blogs.slice(0, 3) %}
         {% set chip = chipColors[loop.index0 % 3] %}
@@ -39,8 +38,7 @@
           </span>
         </article>
       {% endfor %}
-      </div>
-      <div class="flex justify-end border-t border-black px-5 py-4 sm:px-8">
+      <div class="flex justify-end pt-5">
         <a href="/blog/" class="inline-flex items-center gap-1.5 px-4 py-2.5 border-2 border-black font-mono text-sm font-bold text-black bg-[#fde047] transition-colors">
           All articles ({{ collections.blogs.length }}) {{ icons.arrowRight("w-4 h-4 text-black") }}
         </a>
