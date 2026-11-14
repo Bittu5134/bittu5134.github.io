@@ -195,7 +195,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const baseIndex = projectsGrid.children.length;
 
       nonPinned.forEach((p, i) => {
-        const tilt = (baseIndex + i + 1) % 2 === 0 ? "rotate-[-0.6deg]" : "rotate-[0.6deg]";
 
         // Markup/classes mirror retro-projects.njk card for card.
         const card = document.createElement("article");
