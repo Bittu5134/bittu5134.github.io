@@ -42,6 +42,36 @@ function syncBlogsToSrc() {
   }
 }
 
+async function fetchGhchart() {
+  // Keep the contribution chart local: no runtime dependency on ghchart.rshah.org.
+  // Fault-tolerant by design — a network hiccup must never break the build.
+  const dest = path.resolve("public/images/ghchart.svg");
+  const url = "https://ghchart.rshah.org/16a34a/Bittu5134";
+  const MAX_AGE_MS = 24 * 60 * 60 * 1000;
+
+  try {
+    // Avoid refetching on every watch rebuild once we have a recent copy.
+    if (fs.existsSync(dest) && Date.now() - fs.statSync(dest).mtimeMs < MAX_AGE_MS) {
+      return;
+    }
+    fs.mkdirSync(path.dirname(dest), { recursive: true });
+    const res = await fetch(url, {
+      headers: { "user-agent": "bittu5134-site-build" },
+      signal: AbortSignal.timeout(15000),
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const svg = await res.text();
+    if (!svg.trimStart().startsWith("<svg") && !svg.includes("<svg")) {
+      throw new Error("response did not look like SVG");
+    }
+    fs.writeFileSync(dest, svg);
+    console.log(`[ghchart] fetched contribution chart (${svg.length} bytes)`);
+  } catch (err) {
+    // Keep whatever copy already exists; the build continues either way.
+    console.warn(`[ghchart] fetch failed, keeping existing chart if any: ${err.message}`);
+  }
+}
+
 export default async function (eleventyConfig) {
   // Tell 11ty not to skip gitignored files in input dir (since src/blogs/ is gitignored)
   eleventyConfig.setUseGitIgnore(false);
@@ -73,6 +103,7 @@ export default async function (eleventyConfig) {
     try {
       syncBlogsToSrc();
       await generateMeta();
+      await fetchGhchart();
     } catch (err) {
       console.warn("[11ty.before] sync/generateMeta warning:", err.message);
     }
@@ -84,6 +115,7 @@ export default async function (eleventyConfig) {
     eleventyConfig.watchIgnores.add("public/sitemap.xml");
     eleventyConfig.watchIgnores.add("public/robots.txt");
     eleventyConfig.watchIgnores.add("public/llms*.txt");
+    eleventyConfig.watchIgnores.add("public/images/ghchart.svg");
   }
 
   // 4. Watch for blog content and styles
