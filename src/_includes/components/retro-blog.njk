@@ -14,7 +14,11 @@
       </div>
     </div>
 
-    <div class="divide-y divide-black/15 border-y-2 border-black">
+    <div class="relative divide-y divide-black/15 border-y-2 border-black">
+      {# crab waves from the top frame of the blog list #}
+      <span class="hidden sm:block absolute left-10 w-14 pointer-events-none z-10" style="bottom:100%" aria-hidden="true">
+        <img src="/images/crab.webp" alt="" width="112" height="92" loading="lazy" class="w-full h-auto"/>
+      </span>
       {% set chipColors = ['bg-[#86efac]', 'bg-[#c4b5fd]', 'bg-[#38bdf8]'] %}
       {% for post in collections.blogs.slice(0, 3) %}
         {% set chip = chipColors[loop.index0 % 3] %}
