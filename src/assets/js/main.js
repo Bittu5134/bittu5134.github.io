@@ -120,6 +120,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   window.addEventListener("resize", minimizeDeckIfOverlapping, { passive: true });
   window.addEventListener("load", minimizeDeckIfOverlapping);
+  let deckScrollPending = false;
+  window.addEventListener("scroll", () => {
+    if (deckScrollPending) return;
+    deckScrollPending = true;
+    requestAnimationFrame(() => { deckScrollPending = false; minimizeDeckIfOverlapping(); });
+  }, { passive: true });
   setTimeout(minimizeDeckIfOverlapping, 400);
   cassetteMinBtn?.addEventListener("click", () => setTimeout(minimizeDeckIfOverlapping, 60));
 

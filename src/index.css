@@ -276,6 +276,11 @@ button:focus-visible, a:focus-visible { outline: 3px solid #14161f; outline-offs
    elements and inner props · 1px rgba(0,0,0,.15) = separators only. Nothing else. */
 
 /* Sticker-depth display headings */
+/* display voice: always the heavy cut of Playpen */
+.font-display {
+  font-weight: 800;
+}
+
 .heading-pop { text-shadow: 0.07em 0.07em 0 #fde047; }
 
 /* Soft blur for the WebGL blob canvas (replaces per-pixel AA) */
