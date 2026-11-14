@@ -118,6 +118,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
   window.addEventListener("resize", minimizeDeckIfOverlapping, { passive: true });
+  window.addEventListener("load", minimizeDeckIfOverlapping);
+  setTimeout(minimizeDeckIfOverlapping, 400);
   cassetteMinBtn?.addEventListener("click", () => setTimeout(minimizeDeckIfOverlapping, 60));
 
   menuToggleBtn?.addEventListener("click", () => setMenuOpen(!isMenuOpen));
