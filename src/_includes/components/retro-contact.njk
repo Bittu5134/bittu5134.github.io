@@ -4,8 +4,12 @@
   <div class="max-w-4xl mx-auto">
     <h2 class="heading-pop font-display text-5xl sm:text-6xl text-black leading-none mb-8">Contact</h2>
 
-    <div class="flex flex-col gap-3">
-      <div class="group flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 bg-[#fde047] border-2 border-black shadow-brutal-xs px-4 py-3.5 hover:-translate-y-0.5 transition-transform">
+    <div class="relative flex flex-col gap-3">
+      <!-- drops avatar perched on the email card (like the jockey on the ticker) -->
+      <div style="top:-5.6rem" class="hidden sm:block absolute left-6 sm:left-14 w-20 sm:w-24 pointer-events-none z-10" aria-hidden="true">
+        <img src="/images/about-avatar.png" alt="" width="512" height="512" loading="lazy" class="w-full h-auto"/>
+      </div>
+      <div class="group relative flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 bg-[#fde047] border-2 border-black shadow-brutal-xs px-4 py-3.5 hover:-translate-y-0.5 transition-transform">
         <a href="mailto:hello@bittu.dev" class="flex items-center gap-3">
           {{ icons.mail("w-5 h-5 text-black shrink-0") }}
           <span><span class="block font-body text-sm font-bold uppercase tracking-wide text-black/70">Email</span>
