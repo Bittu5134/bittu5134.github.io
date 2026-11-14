@@ -257,7 +257,7 @@ document.addEventListener("DOMContentLoaded", () => {
       filterButtons.forEach((b) => {
         b.className = "project-filter-btn px-4 py-2.5 border-2 border-black font-mono text-sm font-bold transition-all cursor-pointer bg-[#fffdf9] hover:bg-[#fde047]";
       });
-      btn.className = "project-filter-btn px-4 py-2.5 border-2 border-black font-mono text-sm font-bold transition-all cursor-pointer bg-[#fde047] shadow-brutal-xs";
+      btn.className = "project-filter-btn px-4 py-2.5 border-2 border-black font-mono text-sm font-bold transition-all cursor-pointer bg-[#fde047]";
 
       // Filter project cards
       const matchingCards = [];

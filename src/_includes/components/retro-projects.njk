@@ -12,7 +12,7 @@
         {% for cat in projects.categories %}
           <button
             data-filter="{{ cat }}"
-            class="project-filter-btn px-4 py-2.5 border-2 border-black font-mono text-sm font-bold transition-all cursor-pointer {{ 'bg-[#fde047] shadow-brutal-xs' if loop.first else 'bg-[#fffdf9] hover:bg-[#fde047]' }}"
+            class="project-filter-btn px-4 py-2.5 border-2 border-black font-mono text-sm font-bold transition-all cursor-pointer {{ 'bg-[#fde047]' if loop.first else 'bg-[#fffdf9] hover:bg-[#fde047]' }}"
           >
             {{ cat | lower }}
           </button>
