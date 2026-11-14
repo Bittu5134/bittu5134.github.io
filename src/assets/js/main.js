@@ -621,17 +621,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
         float map(vec3 p) {
           float d = 2.0;
+          float X = (iResolution.x / iResolution.y) * 3.0; // half-width of the visible field
           for (int i = 0; i < 12; i++) {
             float fi = float(i);
             float time = iTime * (fract(fi * 412.531 + 0.513) - 0.5) * 2.0;
-            // Two edge clusters: blobs hug the left/right screen edges and reach toward the centre
+            // Two edge clusters: blobs hug the screen edges and reach toward the centre,
+            // scaled with the real half-width so they sit at the edges at any aspect.
             float side = (fi < 6.0) ? -1.0 : 1.0;
-            float gx = 3.35 + sin(time * 0.7 + fi * 1.7) * 0.8;   // 2.55 .. 4.15
+            float gx = X * (0.78 + sin(time * 0.7 + fi * 1.7) * 0.14);   // 0.64X .. 0.92X
             float gy = sin(time * 0.9 + fi * 2.3) * 1.5;
             float gz = cos(time * 0.6 + fi * 3.1) * 0.7;
             vec3 c = vec3(side * gx, gy, gz);
             d = opSmoothUnion(
-              sdSphere(p - c, mix(0.5, 0.95, fract(fi * 412.531 + 0.5124))),
+              sdSphere(p - c, X * mix(0.045, 0.085, fract(fi * 412.531 + 0.5124))),
               d,
               0.4
             );
