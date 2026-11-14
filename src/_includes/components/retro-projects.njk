@@ -86,7 +86,7 @@
             "description": {{ p.description | dump | safe }},
             "tags": {{ p.tags | dump | safe }},
             "liveUrl": {{ p.liveUrl | dump | safe }},
-            "githubUrl": {{ p.githubUrl | dump | safe }},
+            "githubUrl": {{ p.githubUrl | dump | safe }}
           }{% if not loop.last %},{% endif %}
         {% endif %}
       {% endfor %}

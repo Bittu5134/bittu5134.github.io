@@ -237,14 +237,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // On load: render all non-pinned cards and default to the ALL view so the
-  // whole catalogue is visible without a click.
-  renderNonPinnedCards();
-  const allChip = [...filterButtons].find((b) => b.getAttribute("data-filter") === "ALL");
-  if (allChip && !allChip.classList.contains("is-active")) {
-    allChip.click();
-  }
-
   filterButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
       const selectedFilter = btn.getAttribute("data-filter");
@@ -308,6 +300,13 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   });
+  // On load: render all non-pinned cards and default to the ALL view so the
+  // whole catalogue is visible without a click.
+  renderNonPinnedCards();
+  const allChip = [...filterButtons].find((b) => b.getAttribute("data-filter") === "ALL");
+  if (allChip && !allChip.classList.contains("is-active")) {
+    allChip.click();
+  }
 
   /* -------------------------------------------------------------------------- */
   /* 3.3 Nav scroll-spy: aria-current tracks the section in view */
