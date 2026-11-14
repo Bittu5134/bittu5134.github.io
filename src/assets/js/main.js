@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const nonPinned = JSON.parse(dataEl.textContent || "[]");
       nonPinned.forEach((p) => {
         const card = document.createElement("div");
-        card.className = "project-card group border-[3px] border-black bg-[#fffdf9] shadow-brutal p-6 sm:p-7 flex flex-col gap-4 transition-transform hover:-translate-y-1 hidden";
+        card.className = "project-card group border-[3px] border-black bg-[#fffdf9] shadow-brutal flex flex-col transition-transform hover:-translate-y-1 hidden";
         card.setAttribute("data-filter-category", p.filterCategory || "");
         card.setAttribute("data-category", p.category || "");
         card.setAttribute("data-pinned", "false");
