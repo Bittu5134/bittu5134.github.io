@@ -393,7 +393,7 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ------------------------------------------------------------------------ */
   const ghastling = document.getElementById("ghastling-companion");
   if (ghastling && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    const ghastlingSpeed = 0.035;      // lerp factor — lower = lazier follow
+    const ghastlingSpeed = 0.012;      // lerp factor — lower = lazier follow
     const ghastlingOffset = { x: 28, y: -96 }; // hover up-right of the cursor
     let target = { x: innerWidth * 0.7, y: innerHeight * 0.5 };
     let pos = { x: innerWidth * 0.7, y: innerHeight * 0.5 };
