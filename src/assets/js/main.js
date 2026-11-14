@@ -224,7 +224,7 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
           ${metaLine ? `<p class="px-7 pt-2 font-mono text-sm font-bold text-black/65">${metaLine}</p>` : ""}
           <p class="px-7 pt-4 pb-6 font-body text-base text-black/85 leading-relaxed flex-1">${esc(p.description)}</p>
-          <div class="mt-auto flex items-center justify-end gap-2 border-t border-black/15 px-7 py-4">
+          <div class="mt-auto flex items-center justify-end gap-2 px-7 py-4">
             ${ghBtn}${visitBtn}
           </div>
         `;
