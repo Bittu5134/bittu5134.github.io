@@ -10,6 +10,8 @@ export default {
         sans: ['"Space Grotesk"', 'sans-serif'],
         mono: ['"Space Mono"', 'monospace'],
         pixel: ['"Space Mono"', 'monospace'],
+        display: ['Chewy', 'cursive'],
+        body: ['"National Park"', 'sans-serif'],
       },
       borderWidth: {
         '3': '3px',

@@ -27,6 +27,9 @@ FONT_TARGETS = [
     ("SpaceMono-Regular.woff2", "SpaceMono-Regular.woff2", False),
     ("SpaceMono-Bold.woff2", "SpaceMono-Bold.woff2", False),
     ("SpaceMono-Italic.woff2", "SpaceMono-Italic.woff2", True),
+    ("Chewy-Regular.woff2", "Chewy-Regular.woff2", False),
+    ("NationalPark-Regular.woff2", "NationalPark-Regular.woff2", False),
+    ("NationalPark-Bold.woff2", "NationalPark-Bold.woff2", False),
 ]
 
 
