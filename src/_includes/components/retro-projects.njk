@@ -35,13 +35,13 @@
             <div class="h-4 w-full  border-b-[3px] border-black {{ p.headerBgClass }}"></div>
             <div class="p-6 sm:p-7 flex flex-col gap-4 flex-1">
             <div class="flex items-start justify-between gap-3">
-              <h3 class="font-display text-3xl text-black leading-tight">{{ p.title }}</h3>
+              <h3 class="font-display text-3xl sm:text-4xl text-black leading-tight">{{ p.title }}</h3>
               <div class="flex items-center gap-1.5 shrink-0">
                 {% if p.stars > 0 %}
-                  <span class="inline-flex items-center gap-1.5 px-2 py-0.5 border-2 border-black bg-[#fde047] font-mono text-sm font-bold text-black" title="{{ p.stars }} stars on GitHub">{{ icons.star("w-3.5 h-3.5 text-black fill-black") }}{{ p.stars }}</span>
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 border-2 border-black bg-[#fde047] font-mono text-sm font-bold text-black" title="{{ p.stars }} stars on GitHub">{{ icons.star("w-3.5 h-3.5 text-black fill-black") }}{{ p.stars }}</span>
                 {% endif %}
                 {% if p.forks > 0 %}
-                  <span class="inline-flex items-center gap-1.5 px-2 py-0.5 border-2 border-black bg-[#fffdf9] font-mono text-sm font-bold text-black" title="{{ p.forks }} forks on GitHub">{{ icons.gitFork("w-3.5 h-3.5 text-black") }}{{ p.forks }}</span>
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 border-2 border-black bg-[#fffdf9] font-mono text-sm font-bold text-black" title="{{ p.forks }} forks on GitHub">{{ icons.gitFork("w-3.5 h-3.5 text-black") }}{{ p.forks }}</span>
                 {% endif %}
               </div>
             </div>
@@ -64,10 +64,10 @@
               </div>
               <div class="flex items-center gap-2">
                 {% if p.liveUrl %}
-                  <a href="{{ p.liveUrl }}" target="_blank" rel="noopener noreferrer" class="btn-pill shadow-none hover:shadow-none active:shadow-none !translate-y-0 bg-[#fde047] !px-4 !py-2.5 !text-sm">Visit {{ icons.arrowUpRight("w-3.5 h-3.5 text-black") }}</a>
+                  <a href="{{ p.liveUrl }}" target="_blank" rel="noopener noreferrer" class="btn-pill-sm bg-[#fde047]">Visit {{ icons.arrowUpRight("w-3.5 h-3.5 text-black") }}</a>
                 {% endif %}
                 {% if p.githubUrl %}
-                  <a href="{{ p.githubUrl }}" target="_blank" rel="noopener noreferrer" class="btn-pill shadow-none hover:shadow-none active:shadow-none !translate-y-0 bg-[#fffdf9] hover:bg-[#86efac] !px-4 !py-2.5 !text-sm">{{ icons.github("w-3.5 h-3.5 text-black") }} GitHub</a>
+                  <a href="{{ p.githubUrl }}" target="_blank" rel="noopener noreferrer" class="btn-pill-sm bg-[#fffdf9] hover:bg-[#86efac]">{{ icons.github("w-3.5 h-3.5 text-black") }} GitHub</a>
                 {% endif %}
               </div>
             </div>
