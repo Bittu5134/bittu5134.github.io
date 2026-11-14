@@ -267,6 +267,31 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /* -------------------------------------------------------------------------- */
+  /* 3.3 Nav scroll-spy: aria-current tracks the section in view */
+  const navLinks = document.querySelectorAll("header [data-nav]");
+  if (navLinks.length && "IntersectionObserver" in window) {
+    const sectionFor = {};
+    navLinks.forEach((l) => {
+      const sec = document.getElementById(l.dataset.nav);
+      if (sec) sectionFor[sec.id] = l;
+    });
+    const setCurrent = (id) => {
+      navLinks.forEach((l) => {
+        if (l.dataset.nav === id) l.setAttribute("aria-current", "true");
+        else l.removeAttribute("aria-current");
+      });
+    };
+    const spy = new IntersectionObserver((entries) => {
+      const visible = entries.filter((e) => e.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (visible) setCurrent(visible.target.id);
+    }, { rootMargin: "-40% 0px -50% 0px", threshold: [0, 0.25] });
+    Object.keys(sectionFor).forEach((id) => {
+      const sec = document.getElementById(id);
+      if (sec) spy.observe(sec);
+    });
+  }
+
   /* 3.4 Skills ticker eases to 25% speed on hover/focus */
   const tickerBand = document.querySelector(".ticker-band");
   if (tickerBand) {

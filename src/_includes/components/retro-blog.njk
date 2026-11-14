@@ -12,7 +12,7 @@
       </div>
     </div>
 
-    <div class="divide-y-2 divide-black/15 border-y-2 border-black/15">
+    <div class="divide-y border-y border-black">
       {% set chipColors = ['bg-[#fde047]', 'bg-[#86efac]', 'bg-[#c4b5fd]', 'bg-[#38bdf8]'] %}
       {% for post in collections.blogs.slice(0, 3) %}
         {% set chip = chipColors[loop.index0 % 4] %}
