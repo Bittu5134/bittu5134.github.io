@@ -32,7 +32,7 @@
             data-popularity="{{ (p.stars or 0) + (p.forks or 0) }}"
             data-order="{{ p.order or 99 }}"
           >
-            <div class="px-6 pt-2 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
+            <div class="px-7 pt-5 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
               <h3 class="font-display text-3xl sm:text-4xl text-black leading-tight">{{ p.title }}</h3>
               <div class="flex items-center gap-1.5 shrink-0">
                 {% if p.stars > 0 %}
@@ -45,16 +45,16 @@
             </div>
 
             {% if p.language or p.statsText %}
-              <p class="px-6 pt-2 font-mono text-sm font-bold text-black/65">
+              <p class="px-7 pt-2 font-mono text-sm font-bold text-black/65">
                 {% if p.language %}{{ p.language }}{% endif %}
                 {% if p.language and p.statsText %} · {% endif %}
                 {% if p.statsText %}{{ p.statsText }}{% endif %}
               </p>
             {% endif %}
 
-            <p class="px-6 pt-4 pb-5 font-body text-base text-black/85 leading-relaxed flex-1">{{ p.description }}</p>
+            <p class="px-7 pt-4 pb-7 font-body text-base text-black/85 leading-relaxed flex-1">{{ p.description }}</p>
 
-            <div class="mt-auto flex flex-wrap items-center gap-2 border-t border-black/15 px-6 py-5">
+            <div class="mt-auto flex flex-wrap items-center gap-2 border-t border-black/15 px-7 py-5">
               <div class="flex flex-1 flex-wrap items-center gap-1.5 font-mono text-sm font-bold text-black/60">
                 {% for tag in p.tags %}
                   <span>#{{ tag | lower }}</span>
