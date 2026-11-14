@@ -18,7 +18,7 @@
         {% set chip = chipColors[loop.index0 % 4] %}
         <article class="group py-6 sm:py-8 grid grid-cols-1 sm:grid-cols-[10rem_1fr] gap-3 sm:gap-8">
           <div class="self-start justify-self-start px-3.5 py-2 border-2 border-black shadow-brutal-xs {{ chip }}">
-            <p class="font-mono text-sm font-bold uppercase tracking-wide text-black">{{ post.data.displayDate or post.data.date }}</p>
+            <p class="font-mono text-sm font-bold uppercase tracking-wide text-black">{{ post.data.displayDate or (post.data.date | dateDisplay) }}</p>
             <p class="font-body text-xs font-bold text-black/70">{{ post.data.readTime or '5 min read' }}</p>
           </div>
           <div>
