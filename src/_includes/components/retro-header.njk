@@ -18,12 +18,12 @@
     </nav>
 
     <div class="flex items-center gap-3">
-      <a href="https://github.com/Bittu5134" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile (@Bittu5134)" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#fffdf9] border-2 border-black font-body text-base font-bold text-black hover:bg-[#fde047] transition-colors">
+      <a href="https://github.com/Bittu5134" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile (@Bittu5134)" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 bg-[#fffdf9] border-2 border-black font-body text-base font-bold text-black hover:bg-[#fde047] transition-colors">
         {{ icons.github("w-5 h-5 text-black shrink-0") }} GitHub
       </a>
 
       <!-- Mobile menu toggle (wired up by main.js) -->
-      <button id="menu-toggle-btn" class="lg:hidden inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#fde047] border-2 border-black font-body text-base font-bold text-black" aria-label="Toggle navigation menu" aria-expanded="false">
+      <button id="menu-toggle-btn" class="lg:hidden inline-flex items-center gap-2 px-4 py-2 bg-[#fde047] border-2 border-black font-body text-base font-bold text-black" aria-label="Toggle navigation menu" aria-expanded="false">
         <span id="menu-icon-open">{{ icons.menu("w-5 h-5 text-black shrink-0") }}</span>
         <span id="menu-icon-close" class="hidden">{{ icons.x("w-5 h-5 text-black shrink-0") }}</span>
         <span id="menu-text">Menu</span>
@@ -42,7 +42,7 @@
     <a href="{{ '#blog' if isHomePage else '/blog' }}" class="mobile-nav-link flex items-center justify-between px-4 py-3  hover:bg-[#86efac]">Blog <span aria-hidden="true">→</span></a>
     <a href="{{ '#about' if isHomePage else '/#about' }}" class="mobile-nav-link flex items-center justify-between px-4 py-3  hover:bg-[#c4b5fd]">About <span aria-hidden="true">→</span></a>
     <a href="{{ '#contact' if isHomePage else '/#contact' }}" class="mobile-nav-link flex items-center justify-between px-4 py-3  hover:bg-[#38bdf8]">Contact <span aria-hidden="true">→</span></a>
-    <a href="https://github.com/Bittu5134" target="_blank" rel="noopener noreferrer" class="mt-2 flex items-center justify-center gap-2 px-4 py-3 rounded-full bg-[#fffdf9] border-2 border-black">
+    <a href="https://github.com/Bittu5134" target="_blank" rel="noopener noreferrer" class="mt-2 flex items-center justify-center gap-2 px-4 py-3 bg-[#fffdf9] border-2 border-black">
       {{ icons.github("w-5 h-5 text-black shrink-0") }} GitHub
     </a>
   </nav>

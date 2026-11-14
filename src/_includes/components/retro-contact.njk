@@ -4,7 +4,7 @@
   <div class="max-w-4xl mx-auto">
     <h2 class="heading-pop font-display text-5xl sm:text-6xl text-black leading-none mb-8">Contact</h2>
 
-    <div class="rounded-none border-[3px] border-black bg-[#fffdf9] shadow-brutal p-5 sm:p-6 flex flex-col gap-3">
+    <div class="flex flex-col gap-3">
       <div class="group flex items-center justify-between gap-4 bg-[#fde047] border-2 border-black shadow-brutal-xs px-4 py-3.5 hover:-translate-y-0.5 transition-transform">
         <a href="mailto:hello@bittu.dev" class="flex items-center gap-3">
           {{ icons.mail("w-5 h-5 text-black shrink-0") }}
@@ -12,8 +12,8 @@
           <span class="font-mono text-base font-bold text-black">hello@bittu.dev</span></span>
         </a>
         <span class="flex items-center gap-2">
-          <a href="mailto:hello@bittu.dev" class="inline-flex items-center gap-1.5 whitespace-nowrap bg-[#fffdf9] border-2 border-black px-3 py-1.5 font-body text-sm font-bold hover:bg-[#f3e7cc]">Mail {{ icons.arrowUpRight("w-3.5 h-3.5") }}</a>
-          <button id="copy-email-contact" type="button" class="inline-flex items-center gap-1.5 whitespace-nowrap bg-[#fffdf9] border-2 border-black px-3 py-1.5 font-body text-sm font-bold hover:bg-[#fde047]">
+          <a href="mailto:hello@bittu.dev" class="inline-flex items-center gap-1.5 whitespace-nowrap bg-transparent border-2 border-black px-3.5 py-2.5 font-body text-sm font-bold text-black hover:bg-[#fffdf9]">Mail {{ icons.arrowUpRight("w-3.5 h-3.5") }}</a>
+          <button id="copy-email-contact" type="button" class="inline-flex items-center gap-1.5 whitespace-nowrap bg-transparent border-2 border-black px-3.5 py-2.5 font-body text-sm font-bold text-black hover:bg-[#fffdf9]">
             <span class="email-default inline-flex whitespace-nowrap items-center gap-1.5">{{ icons.copy("w-3.5 h-3.5") }} Copy</span>
             <span class="email-copied hidden inline-flex whitespace-nowrap items-center gap-1.5">{{ icons.check("w-3.5 h-3.5") }} Copied</span>
           </button>

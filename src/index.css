@@ -104,7 +104,7 @@
   }
 
   .btn-pill {
-    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-full border-2 border-black font-mono text-sm font-bold text-black shadow-brutal-xs hover:-translate-y-0.5 hover:shadow-brutal active:translate-y-0.5 active:shadow-none transition-all cursor-pointer;
+    @apply inline-flex items-center gap-2 px-5 py-2.5 border-2 border-black font-mono text-sm font-bold text-black shadow-brutal-xs hover:-translate-y-0.5 hover:shadow-brutal active:translate-y-0.5 active:shadow-none transition-all cursor-pointer;
   }
 
   .tech-badge {

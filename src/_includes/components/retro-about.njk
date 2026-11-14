@@ -2,7 +2,7 @@
   <div class="max-w-3xl mx-auto">
     <h2 class="heading-pop font-display text-5xl sm:text-6xl text-black leading-none">About</h2>
 
-    <div class="font-body text-lg sm:text-xl text-black/90 leading-relaxed space-y-5 mt-8">
+    <div class="border-2 border-dashed border-black/50 p-5 sm:p-7 font-body text-lg sm:text-xl text-black/90 leading-relaxed space-y-5 mt-8">
       <p>
         I'm Bittu, an 18-year-old software engineer and cybersecurity student at
         <a href="https://iitk.ac.in" target="_blank" rel="noopener noreferrer" class="font-bold underline underline-offset-4 hover:text-[#b45309]">IIT Kanpur '30</a>.
@@ -30,7 +30,7 @@
     <ul class="flex flex-wrap gap-2 mt-10">
       {% set skillsList = site.skills or techStack %}
       {% for tech in skillsList %}
-        <li class="px-3 py-1.5 rounded-full bg-[#fffdf9] border-2 border-black font-mono text-sm font-bold text-black">{{ tech.name }}</li>
+        <li class="px-3 py-1.5 bg-[#fffdf9] border-2 border-black font-mono text-sm font-bold text-black">{{ tech.name }}</li>
       {% endfor %}
     </ul>
   </div>
