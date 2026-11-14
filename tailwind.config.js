@@ -10,7 +10,7 @@ export default {
         sans: ['"Playpen Sans"', 'cursive'],
         mono: ['"Space Mono"', 'monospace'],
         pixel: ['"Space Mono"', 'monospace'],
-        display: ['Chewy', 'cursive'],
+        display: ['"Playpen Sans"', 'cursive'],
         body: ['"Playpen Sans"', 'cursive'],
       },
       borderWidth: {
