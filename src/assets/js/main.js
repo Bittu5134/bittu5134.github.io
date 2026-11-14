@@ -295,8 +295,14 @@ document.addEventListener("DOMContentLoaded", () => {
       if (grid) {
         matchingCards.forEach((card) => grid.appendChild(card));
       }
-      matchingCards.forEach((card) => {
-        card.classList.remove("hidden");
+      // Category views cap at the top 6; PINNED shows everything (it only has 4)
+      const cap = selectedFilter === "PINNED" ? Infinity : 6;
+      matchingCards.forEach((card, index) => {
+        if (index < cap) {
+          card.classList.remove("hidden");
+        } else {
+          card.classList.add("hidden");
+        }
       });
     });
   });

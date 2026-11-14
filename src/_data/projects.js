@@ -173,7 +173,7 @@ export default async function () {
     });
 
   return {
-    categories: ["ALL", "PINNED", "SYSTEMS", "AI", "WEB", "TOOLS"],
+    categories: ["PINNED", "READERS", "SYSTEMS", "AI", "WEB", "BOTS", "BROWSER", "CAMPUS"],
     projects: featured,
     totalReposCount,
   };
