@@ -174,6 +174,14 @@ export default async function (eleventyConfig) {
     return formatBlogDate(value);
   });
 
+  eleventyConfig.addFilter("dateShort", function (value) {
+    if (!value) return "";
+    const parsed = parseBlogDate(value);
+    if (!parsed) return String(value);
+    const MONTHS_SHORT = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    return `${MONTHS_SHORT[parsed.getUTCMonth()]} ${parsed.getUTCDate()}, ${parsed.getUTCFullYear()}`;
+  });
+
   eleventyConfig.addFilter("dateIso", function (value) {
     if (!value) return "";
     return toIsoBlogDate(value);
