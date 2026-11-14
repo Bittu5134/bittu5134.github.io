@@ -4,7 +4,7 @@
   <div class="max-w-5xl mx-auto">
     <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-5 mb-10">
       <div>
-    <h2 class="font-display text-5xl sm:text-6xl text-black leading-none">Projects</h2>
+    <h2 class="heading-pop font-display text-5xl sm:text-6xl text-black leading-none">Projects</h2>
       </div>
 
       <!-- Filter pills: same hooks the filter script reads -->
@@ -12,7 +12,7 @@
         {% for cat in projects.categories %}
           <button
             data-filter="{{ cat }}"
-            class="project-filter-btn px-3.5 py-1.5 rounded-full border-2 border-black font-mono text-xs font-bold transition-all cursor-pointer {{ 'bg-[#fde047] shadow-brutal-xs' if loop.first else 'bg-[#fffdf9] hover:bg-[#fde047]' }}"
+            class="project-filter-btn px-3.5 py-1.5 rounded-full border-2 border-black font-mono text-sm font-bold transition-all cursor-pointer {{ 'bg-[#fde047] shadow-brutal-xs' if loop.first else 'bg-[#fffdf9] hover:bg-[#fde047]' }}"
           >
             {{ cat | lower }}
           </button>
@@ -25,18 +25,18 @@
       {% for p in projects.projects %}
         {% if p.isPinned %}
           <article
-            class="project-card group relative rounded-3xl border-[3px] border-black bg-[#fffdf9] shadow-brutal flex flex-col transition-transform hover:-translate-y-1 hover:rotate-0 {{ 'rotate-[-0.6deg]' if loop.index is even else 'rotate-[0.6deg]' }}"
+            class="project-card group relative  border-[3px] border-black bg-[#fffdf9] shadow-brutal flex flex-col transition-transform hover:-translate-y-1 hover:rotate-0 {{ 'rotate-[-0.6deg]' if loop.index is even else 'rotate-[0.6deg]' }}"
             data-filter-category="{{ p.filterCategory }}"
             data-category="{{ p.category }}"
             data-pinned="true"
             data-popularity="{{ (p.stars or 0) + (p.forks or 0) }}"
             data-order="{{ p.order or 99 }}"
           >
-            <div class="h-4 w-full rounded-t-[1.35rem] border-b-[3px] border-black {{ p.headerBgClass }}"></div>
+            <div class="h-4 w-full  border-b-[3px] border-black {{ p.headerBgClass }}"></div>
             <div class="p-6 sm:p-7 flex flex-col gap-4 flex-1">
             <div class="flex items-start justify-between gap-3">
               <h3 class="font-display text-3xl text-black leading-tight">{{ p.title }}</h3>
-              <div class="flex items-center gap-2 shrink-0 font-mono text-xs font-bold text-black/70">
+              <div class="flex items-center gap-2 shrink-0 font-mono text-sm font-bold text-black/70">
                 {% if p.stars > 0 %}
                   <span class="flex items-center gap-1" title="{{ p.stars }} stars on GitHub">{{ icons.star("w-3.5 h-3.5 text-[#f59e0b] fill-[#f59e0b]") }}{{ p.stars }}</span>
                 {% endif %}
@@ -47,7 +47,7 @@
             </div>
 
             {% if p.language or p.statsText %}
-              <p class="font-mono text-xs font-bold text-black/65">
+              <p class="font-mono text-sm font-bold text-black/65">
                 {% if p.language %}{{ p.language }}{% endif %}
                 {% if p.language and p.statsText %} · {% endif %}
                 {% if p.statsText %}{{ p.statsText }}{% endif %}
@@ -59,15 +59,15 @@
             <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
               <div class="flex flex-wrap gap-1.5">
                 {% for tag in p.tags %}
-                  <span class="font-mono text-xs font-bold text-black/60">#{{ tag | lower }}</span>
+                  <span class="font-mono text-sm font-bold text-black/60">#{{ tag | lower }}</span>
                 {% endfor %}
               </div>
               <div class="flex items-center gap-2">
                 {% if p.liveUrl %}
-                  <a href="{{ p.liveUrl }}" target="_blank" rel="noopener noreferrer" class="btn-pill bg-[#fde047] !px-3.5 !py-1.5 !text-xs">Visit {{ icons.arrowUpRight("w-3.5 h-3.5 text-black") }}</a>
+                  <a href="{{ p.liveUrl }}" target="_blank" rel="noopener noreferrer" class="btn-pill bg-[#fde047] !px-3.5 !py-1.5 !text-sm">Visit {{ icons.arrowUpRight("w-3.5 h-3.5 text-black") }}</a>
                 {% endif %}
                 {% if p.githubUrl %}
-                  <a href="{{ p.githubUrl }}" target="_blank" rel="noopener noreferrer" class="btn-pill bg-[#fffdf9] hover:bg-[#86efac] !px-3.5 !py-1.5 !text-xs">{{ icons.github("w-3.5 h-3.5 text-black") }} GitHub</a>
+                  <a href="{{ p.githubUrl }}" target="_blank" rel="noopener noreferrer" class="btn-pill bg-[#fffdf9] hover:bg-[#86efac] !px-3.5 !py-1.5 !text-sm">{{ icons.github("w-3.5 h-3.5 text-black") }} GitHub</a>
                 {% endif %}
               </div>
             </div>

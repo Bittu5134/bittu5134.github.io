@@ -130,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const nonPinned = JSON.parse(dataEl.textContent || "[]");
       nonPinned.forEach((p) => {
         const card = document.createElement("div");
-        card.className = "project-card group rounded-3xl border-[3px] border-black bg-[#fffdf9] shadow-brutal p-6 sm:p-7 flex flex-col gap-4 transition-transform hover:-translate-y-1 hidden";
+        card.className = "project-card group border-[3px] border-black bg-[#fffdf9] shadow-brutal p-6 sm:p-7 flex flex-col gap-4 transition-transform hover:-translate-y-1 hidden";
         card.setAttribute("data-filter-category", p.filterCategory || "");
         card.setAttribute("data-category", p.category || "");
         card.setAttribute("data-pinned", "false");
@@ -144,21 +144,21 @@ document.addEventListener("DOMContentLoaded", () => {
         if (p.forks > 0) statsRow += `<span class="flex items-center gap-1" title="${p.forks} forks on GitHub"><svg class="w-3.5 h-3.5 text-black/70" aria-hidden="true"><use href="#icon-git-fork"/></svg>${esc(p.forks)}</span>`;
 
         let metaLine = [p.language, p.statsText].filter(Boolean).map(esc).join(" · ");
-        let tagsHtml = Array.isArray(p.tags) ? p.tags.map((t) => `<span class="font-mono text-xs font-bold text-black/60">#${esc(String(t).toLowerCase())}</span>`).join("") : "";
+        let tagsHtml = Array.isArray(p.tags) ? p.tags.map((t) => `<span class="font-mono text-sm font-bold text-black/60">#${esc(String(t).toLowerCase())}</span>`).join("") : "";
 
         let visitBtn = "";
-        if (p.liveUrl) visitBtn = `<a href="${esc(p.liveUrl)}" target="_blank" rel="noopener noreferrer" class="btn-pill bg-[#fde047] !px-3.5 !py-1.5 !text-xs">Visit <svg class="w-3.5 h-3.5 text-black" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></a>`;
+        if (p.liveUrl) visitBtn = `<a href="${esc(p.liveUrl)}" target="_blank" rel="noopener noreferrer" class="btn-pill bg-[#fde047] !px-3.5 !py-1.5 !text-sm">Visit <svg class="w-3.5 h-3.5 text-black" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></a>`;
         let ghBtn = "";
-        if (p.githubUrl) ghBtn = `<a href="${esc(p.githubUrl)}" target="_blank" rel="noopener noreferrer" class="btn-pill bg-[#fffdf9] hover:bg-[#86efac] !px-3.5 !py-1.5 !text-xs"><svg class="w-3.5 h-3.5 text-black" aria-hidden="true"><use href="#icon-github"/></svg> GitHub</a>`;
+        if (p.githubUrl) ghBtn = `<a href="${esc(p.githubUrl)}" target="_blank" rel="noopener noreferrer" class="btn-pill bg-[#fffdf9] hover:bg-[#86efac] !px-3.5 !py-1.5 !text-sm"><svg class="w-3.5 h-3.5 text-black" aria-hidden="true"><use href="#icon-github"/></svg> GitHub</a>`;
 
         card.innerHTML = `
-          <div class="h-4 w-full rounded-t-[1.35rem] border-b-[3px] border-black ${esc(p.headerBgClass || "bg-[#86efac]")}"></div>
+          <div class="h-4 w-full border-b-[3px] border-black ${esc(p.headerBgClass || "bg-[#86efac]")}"></div>
           <div class="p-6 sm:p-7 flex flex-col gap-4 flex-1">
           <div class="flex items-start justify-between gap-3">
             <h3 class="font-display text-3xl text-black leading-tight">${esc(p.title)}</h3>
-            <div class="flex items-center gap-2 shrink-0 font-mono text-xs font-bold text-black/70">${statsRow}</div>
+            <div class="flex items-center gap-2 shrink-0 font-mono text-sm font-bold text-black/70">${statsRow}</div>
           </div>
-          ${metaLine ? `<p class="font-mono text-xs font-bold text-black/65">${metaLine}</p>` : ""}
+          ${metaLine ? `<p class="font-mono text-sm font-bold text-black/65">${metaLine}</p>` : ""}
           <p class="font-body text-base text-black/85 leading-relaxed flex-1">${esc(p.description)}</p>
           <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
             <div class="flex flex-wrap gap-1.5">${tagsHtml}</div>
@@ -187,9 +187,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Update button styling
       filterButtons.forEach((b) => {
-        b.className = "project-filter-btn px-3.5 py-1.5 rounded-full border-2 border-black font-mono text-xs font-bold transition-all cursor-pointer bg-[#fffdf9] hover:bg-[#fde047]";
+        b.className = "project-filter-btn px-3.5 py-1.5 rounded-full border-2 border-black font-mono text-sm font-bold transition-all cursor-pointer bg-[#fffdf9] hover:bg-[#fde047]";
       });
-      btn.className = "project-filter-btn px-3.5 py-1.5 rounded-full border-2 border-black font-mono text-xs font-bold transition-all cursor-pointer bg-[#fde047] shadow-brutal-xs";
+      btn.className = "project-filter-btn px-3.5 py-1.5 rounded-full border-2 border-black font-mono text-sm font-bold transition-all cursor-pointer bg-[#fde047] shadow-brutal-xs";
 
       // Filter project cards
       const matchingCards = [];
@@ -585,15 +585,20 @@ document.addEventListener("DOMContentLoaded", () => {
           }
 
           vec3 col = vec3(0.0);
+          float fog = 0.0;
 
           if (depth < 6.0) {
             vec3 normal = calcNormal(p);
             float diffuse = clamp(dot(normal, vec3(0.5, 0.5, 1.0)), 0.0, 1.0);
-            col = diffuse * (cos(vec3(1.0, 2.0, 3.0) + p.z * 0.5) * 0.5 + 0.5);
-            col = mix(col, vec3(0.0), 1.0 - exp(-0.001 * depth * depth * depth));
+            // Site palette: lit faces warm yellow, shaded faces amber
+            col = mix(vec3(0.98, 0.87, 0.42), vec3(0.87, 0.47, 0.16), 1.0 - diffuse);
+            // Depth fades to transparent (not black) so blobs melt into the paper
+            fog = exp(-0.001 * depth * depth * depth);
           }
 
-          gl_FragColor = vec4(col, 1.0);
+          float edge = 1.0 - smoothstep(5.7, 6.0, depth);
+          float hit = edge * fog;
+          gl_FragColor = vec4(col * hit, hit);
         }
       `;
 
@@ -616,6 +621,7 @@ document.addEventListener("DOMContentLoaded", () => {
       let timeLocation = null;
       let initialized = false;
       let isVisible = false;
+      let lastDrawTime = 0;
       let animationFrameId = null;
       let startTime = 0;
       let cachedWidth = 0;
@@ -630,7 +636,8 @@ document.addEventListener("DOMContentLoaded", () => {
       // render() forced a synchronous style/layout pass on every frame.
       function measureCanvas() {
         const rect = canvas.getBoundingClientRect();
-        const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+        const dprCap = Math.min(1, 1600 / Math.max(1, rect.width));
+        const dpr = Math.min(window.devicePixelRatio || 1, 1.5) * dprCap;
         cachedWidth = Math.max(1, Math.floor(rect.width * dpr));
         cachedHeight = Math.max(1, Math.floor(rect.height * dpr));
         needsResize = true;
@@ -649,6 +656,12 @@ document.addEventListener("DOMContentLoaded", () => {
       function render(now) {
         animationFrameId = null;
         if (!isVisible || !program) return;
+        now = now || performance.now();
+        if (now - (lastDrawTime || 0) < 33) {
+          animationFrameId = requestAnimationFrame(render);
+          return;
+        }
+        lastDrawTime = now;
 
         resizeCanvas();
 
@@ -678,7 +691,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       function handleResize() {
         measureCanvas();
-        startRendering();
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          render();
+        } else {
+          startRendering();
+        }
       }
 
       function initWebGL() {
@@ -735,6 +752,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         startRendering();
       }
+
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) stopRendering();
+        else if (isVisible) startRendering();
+      });
 
       if ("IntersectionObserver" in window) {
         const observer = new IntersectionObserver((entries) => {

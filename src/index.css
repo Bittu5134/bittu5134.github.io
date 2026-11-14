@@ -237,3 +237,24 @@ img, svg, video {
   }
 }
 
+
+/* Fade the WebGL canvas out at the bottom so blobs melt into the paper
+   instead of being sliced by the next section */
+.hero-canvas-mask {
+  -webkit-mask-image: linear-gradient(to bottom, black 72%, transparent 98%);
+  mask-image: linear-gradient(to bottom, black 72%, transparent 98%);
+}
+
+/* Pixel companion walking the ticker band */
+@keyframes companion-walk {
+  0%   { left: 0; transform: scaleX(1); }
+  49%  { left: calc(100% - 1.75rem); transform: scaleX(1); }
+  50%  { left: calc(100% - 1.75rem); transform: scaleX(-1); }
+  99%  { left: 0; transform: scaleX(-1); }
+  100% { left: 0; transform: scaleX(1); }
+}
+.ticker-companion { animation: companion-walk 22s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .ticker-companion { animation: none; left: 2rem; } }
+
+/* Sticker-depth display headings */
+.heading-pop { text-shadow: 0.07em 0.07em 0 #fde047; }

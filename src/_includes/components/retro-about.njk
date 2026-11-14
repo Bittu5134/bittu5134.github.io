@@ -1,6 +1,6 @@
 <section id="about" class="py-14 sm:py-20 px-4 sm:px-6 scroll-mt-20">
   <div class="max-w-3xl mx-auto">
-    <h2 class="font-display text-5xl sm:text-6xl text-black leading-none">About</h2>
+    <h2 class="heading-pop font-display text-5xl sm:text-6xl text-black leading-none">About</h2>
 
     <div class="font-body text-lg sm:text-xl text-black/90 leading-relaxed space-y-5 mt-8">
       <p>
@@ -20,10 +20,17 @@
       </p>
     </div>
 
+    <div class="mt-10 rounded-none border-[3px] border-black bg-[#fffdf9] shadow-brutal p-4">
+      <p class="font-body text-sm font-bold uppercase tracking-wide text-black/70 mb-2">Contribution graph</p>
+      <a href="https://github.com/Bittu5134" target="_blank" rel="noopener noreferrer">
+        <img src="https://ghchart.rshah.org/16a34a/Bittu5134" alt="Bittu's GitHub contribution graph for the last year" width="728" height="128" loading="lazy" class="w-full h-auto"/>
+      </a>
+    </div>
+
     <ul class="flex flex-wrap gap-2 mt-10">
       {% set skillsList = site.skills or techStack %}
       {% for tech in skillsList %}
-        <li class="px-3 py-1.5 rounded-full bg-[#fffdf9] border-2 border-black font-mono text-xs font-bold text-black">{{ tech.name }}</li>
+        <li class="px-3 py-1.5 rounded-full bg-[#fffdf9] border-2 border-black font-mono text-sm font-bold text-black">{{ tech.name }}</li>
       {% endfor %}
     </ul>
   </div>

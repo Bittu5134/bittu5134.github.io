@@ -4,7 +4,7 @@
   <div class="max-w-5xl mx-auto">
     <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-5 mb-10">
       <div>
-    <h2 class="font-display text-5xl sm:text-6xl text-black leading-none">Blog</h2>
+    <h2 class="heading-pop font-display text-5xl sm:text-6xl text-black leading-none">Blog</h2>
       </div>
       <div class="flex items-center gap-3">
         <a href="/blog" class="btn-pill bg-[#fde047]">All articles ({{ collections.blogs.length }})</a>
@@ -15,7 +15,7 @@
     <div class="divide-y-2 divide-black/15 border-y-2 border-black/15">
       {% for post in collections.blogs.slice(0, 3) %}
         <article class="group py-6 sm:py-8 grid grid-cols-1 sm:grid-cols-[9rem_1fr] gap-2 sm:gap-8">
-          <p class="font-mono text-xs font-bold uppercase tracking-wide text-black/65 pt-1">
+          <p class="font-mono text-sm font-bold uppercase tracking-wide text-black/65 pt-1">
             {{ post.data.displayDate or post.data.date }}
             <span class="block mt-1 normal-case tracking-normal">{{ post.data.readTime or '5 min read' }}</span>
           </p>
@@ -28,7 +28,7 @@
             {% for tag in post.data.tags %}
               {% if tag != "posts" %}{% set validTags = (validTags.push(tag), validTags) %}{% endif %}
             {% endfor %}
-            <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mt-3 font-mono text-xs font-bold text-black/60">
+            <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mt-3 font-mono text-sm font-bold text-black/60">
               {% for tag in validTags.slice(0, 4) %}<span>#{{ tag | lower }}</span>{% endfor %}
             </div>
             <a href="{{ post.url }}" class="inline-flex items-center gap-1.5 mt-4 font-mono text-sm font-bold text-black underline underline-offset-4 hover:text-[#b45309]">

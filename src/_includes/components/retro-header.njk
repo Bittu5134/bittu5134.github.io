@@ -38,10 +38,10 @@
 <!-- Mobile drawer (toggled by main.js) -->
 <div id="mobile-drawer" class="hidden fixed top-16 left-0 right-0 z-50 lg:hidden bg-[#fffdf9] border-b-2 border-black rounded-b-3xl max-h-[calc(100vh-4rem)] overflow-y-auto">
   <nav class="p-4 flex flex-col gap-2 font-body text-lg font-bold text-black" aria-label="Mobile">
-    <a href="{{ '#projects' if isHomePage else '/#projects' }}" class="mobile-nav-link flex items-center justify-between px-4 py-3 rounded-2xl hover:bg-[#fde047]">Projects <span aria-hidden="true">→</span></a>
-    <a href="{{ '#blog' if isHomePage else '/blog' }}" class="mobile-nav-link flex items-center justify-between px-4 py-3 rounded-2xl hover:bg-[#86efac]">Blog <span aria-hidden="true">→</span></a>
-    <a href="{{ '#about' if isHomePage else '/#about' }}" class="mobile-nav-link flex items-center justify-between px-4 py-3 rounded-2xl hover:bg-[#c4b5fd]">About <span aria-hidden="true">→</span></a>
-    <a href="{{ '#contact' if isHomePage else '/#contact' }}" class="mobile-nav-link flex items-center justify-between px-4 py-3 rounded-2xl hover:bg-[#38bdf8]">Contact <span aria-hidden="true">→</span></a>
+    <a href="{{ '#projects' if isHomePage else '/#projects' }}" class="mobile-nav-link flex items-center justify-between px-4 py-3  hover:bg-[#fde047]">Projects <span aria-hidden="true">→</span></a>
+    <a href="{{ '#blog' if isHomePage else '/blog' }}" class="mobile-nav-link flex items-center justify-between px-4 py-3  hover:bg-[#86efac]">Blog <span aria-hidden="true">→</span></a>
+    <a href="{{ '#about' if isHomePage else '/#about' }}" class="mobile-nav-link flex items-center justify-between px-4 py-3  hover:bg-[#c4b5fd]">About <span aria-hidden="true">→</span></a>
+    <a href="{{ '#contact' if isHomePage else '/#contact' }}" class="mobile-nav-link flex items-center justify-between px-4 py-3  hover:bg-[#38bdf8]">Contact <span aria-hidden="true">→</span></a>
     <a href="https://github.com/Bittu5134" target="_blank" rel="noopener noreferrer" class="mt-2 flex items-center justify-center gap-2 px-4 py-3 rounded-full bg-[#fffdf9] border-2 border-black">
       {{ icons.github("w-5 h-5 text-black shrink-0") }} GitHub
     </a>
