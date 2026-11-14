@@ -61,7 +61,7 @@ Language: Go
 Topics: edr, go, gopsutil, telemetry, webui
 
 ### 5. InfraPulse
-Live: https://infrapulse.bittu.dev | Source: https://github.com/Bittu5134/InfraPulse
+Source: https://github.com/Bittu5134/InfraPulse
 Description: A defect-detection tool that flags and prioritizes infrastructure issues from photos using a small vision-model ensemble. Built for a campus hackathon.
 Category: AI / COMPUTER VISION
 Language: Python
@@ -83,7 +83,7 @@ Topics: cline, mcp, typescript, sqlite, devtools
 
 ### 8. GeoShuffle
 Live: https://geoshuffle.bittu.dev | Source: https://github.com/Bittu5134/GeoShuffle
-Description: A serverless multiplayer sliding-puzzle game that syncs game state over direct WebRTC DataChannels. No game servers, just peers — plus a Supabase leaderboard and Canvas scorecards.
+Description: A sliding puzzle of satellite imagery with P2P multiplayer.
 Category: WEB / WEBRTC GAME
 Language: JavaScript
 Topics: game, multiplayer, p2p, webrtc
@@ -104,7 +104,7 @@ Topics: epub, giscus, lotm, pandoc, svelte
 
 ### 11. ThumbScore
 Source: https://github.com/Bittu5134/ThumbScore
-Description: A browser extension that overlays real-time engagement and quality metrics straight onto YouTube thumbnails. Built with Mutation Observers so the page never stutters.
+Description: 
 Category: TOOLS / EXTENSION
 Language: JavaScript
 Topics: browser-extension, chrome-extension, dom, youtube

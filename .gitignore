@@ -20,6 +20,8 @@ docs
 .cache
 src/blogs
 src/blogs/
+.wakatime-project
+public/fonts/*
 
 # Editor directories and files
 .vscode/*
