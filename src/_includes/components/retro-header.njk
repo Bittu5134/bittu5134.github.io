@@ -11,10 +11,10 @@
 
     <!-- Desktop nav: plain text links, one accent underline on hover -->
     <nav class="hidden lg:flex items-center gap-8 font-body text-lg font-extrabold text-black" aria-label="Main">
-      <a href="{{ '#projects' if isHomePage else '/#projects' }}" class="relative py-3 after:absolute after:inset-x-0 after:-bottom-0.5 after:h-[3px] after:bg-[#fde047] after:scale-x-0 hover:after:scale-x-100 after:transition-transform">Projects</a>
-      <a href="{{ '#blog' if isHomePage else '/blog' }}" class="relative py-3 after:absolute after:inset-x-0 after:-bottom-0.5 after:h-[3px] after:bg-[#86efac] after:scale-x-0 hover:after:scale-x-100 after:transition-transform {{ 'after:scale-x-100' if page.url and page.url.startsWith('/blog') else '' }}">Blog</a>
-      <a href="{{ '#about' if isHomePage else '/#about' }}" class="relative py-3 after:absolute after:inset-x-0 after:-bottom-0.5 after:h-[3px] after:bg-[#c4b5fd] after:scale-x-0 hover:after:scale-x-100 after:transition-transform">About</a>
-      <a href="{{ '#contact' if isHomePage else '/#contact' }}" class="relative py-3 after:absolute after:inset-x-0 after:-bottom-0.5 after:h-[3px] after:bg-[#38bdf8] after:scale-x-0 hover:after:scale-x-100 after:transition-transform">Contact</a>
+      <a href="{{ '#projects' if isHomePage else '/#projects' }}" class="relative py-3 leading-none after:absolute after:inset-x-0 after:-bottom-0.5 after:h-[3px] after:bg-[#fde047] after:scale-x-0 hover:after:scale-x-100 after:transition-transform">Projects</a>
+      <a href="{{ '#blog' if isHomePage else '/blog' }}" {{ 'aria-current="page"' if page.url and page.url.startsWith('/blog') else '' }} class="relative py-3 leading-none after:absolute after:inset-x-0 after:-bottom-0.5 after:h-[3px] after:bg-[#86efac] after:scale-x-0 hover:after:scale-x-100 after:transition-transform {{ 'after:scale-x-100' if page.url and page.url.startsWith('/blog') else '' }}">Blog</a>
+      <a href="{{ '#about' if isHomePage else '/#about' }}" class="relative py-3 leading-none after:absolute after:inset-x-0 after:-bottom-0.5 after:h-[3px] after:bg-[#c4b5fd] after:scale-x-0 hover:after:scale-x-100 after:transition-transform">About</a>
+      <a href="{{ '#contact' if isHomePage else '/#contact' }}" class="relative py-3 leading-none after:absolute after:inset-x-0 after:-bottom-0.5 after:h-[3px] after:bg-[#38bdf8] after:scale-x-0 hover:after:scale-x-100 after:transition-transform">Contact</a>
     </nav>
 
     <div class="flex items-center gap-3">

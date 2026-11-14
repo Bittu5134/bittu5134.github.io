@@ -263,6 +263,9 @@ img, svg, video {
 :focus-visible { outline: 3px solid #14161f; outline-offset: 2px; }
 button:focus-visible, a:focus-visible { outline: 3px solid #14161f; outline-offset: 2px; }
 
+/* Border rule: 3px ink = section containers (cards/panels) · 2px ink = interactive
+   elements and inner props · 1px rgba(0,0,0,.15) = separators only. Nothing else. */
+
 /* Sticker-depth display headings */
 .heading-pop { text-shadow: 0.07em 0.07em 0 #fde047; }
 

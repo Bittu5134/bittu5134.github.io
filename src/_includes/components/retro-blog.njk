@@ -17,8 +17,9 @@
       {% for post in collections.blogs.slice(0, 3) %}
         {% set chip = chipColors[loop.index0 % 4] %}
         <article class="group py-6 sm:py-8">
-          <p class="font-mono text-sm font-bold">
+          <p class="font-mono text-sm font-bold flex items-center gap-3">
             <span class="inline-block px-2.5 py-1 border-2 border-black shadow-brutal-xs {{ chip }} text-black">{{ post.data.date | dateShort }}</span>
+            <span class="text-black/65">{{ post.data.readTime or '5 min read' }}</span>
           </p>
           <h3 class="font-display text-3xl sm:text-4xl text-black leading-tight mt-3">
             <a href="{{ post.url }}" class="group-hover:text-[#b45309] transition-colors">{{ post.data.title }}</a>
@@ -31,11 +32,10 @@
           <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mt-3 font-mono text-sm font-bold text-black/60">
             {% for tag in validTags.slice(0, 4) %}<span>#{{ tag | lower }}</span>{% endfor %}
           </div>
-          <div class="mt-4 flex items-center gap-3">
+          <div class="mt-4">
             <a href="{{ post.url }}" class="inline-flex items-center gap-1.5 px-3.5 py-2.5 border-2 border-black font-mono text-sm font-bold text-black bg-[#fffdf9] group-hover:bg-[#fde047] transition-colors">
               Read article {{ icons.arrowUpRight("w-3.5 h-3.5") }}
             </a>
-            <span class="font-mono text-sm font-bold text-black/60">{{ post.data.readTime or '5 min read' }}</span>
           </div>
         </article>
       {% endfor %}
