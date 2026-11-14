@@ -626,9 +626,9 @@ document.addEventListener("DOMContentLoaded", () => {
             float time = iTime * (fract(fi * 412.531 + 0.513) - 0.5) * 2.0;
             vec3 c = p + sin(time + fi * vec3(52.5126, 64.62744, 632.25)) * vec3(2.0, 2.0, 0.8);
             // Two clusters hugging the sides — the centre column stays clear for text
-            c.x += (c.x < 0.0 ? -1.6 : 1.6);
+            c.x += (c.x < 0.0 ? -1.3 : 1.3);
             d = opSmoothUnion(
-              sdSphere(c, mix(0.5, 1.0, fract(fi * 412.531 + 0.5124))),
+              sdSphere(c, mix(0.65, 1.2, fract(fi * 412.531 + 0.5124))),
               d,
               0.4
             );
@@ -667,7 +667,7 @@ document.addEventListener("DOMContentLoaded", () => {
             vec3 normal = calcNormal(p);
             float diffuse = clamp(dot(normal, vec3(0.5, 0.5, 1.0)), 0.0, 1.0);
             // Site palette: lit faces warm yellow, shaded faces amber
-            col = mix(vec3(0.99, 0.84, 0.30), vec3(0.83, 0.40, 0.10), 1.0 - diffuse);
+            col = mix(vec3(0.99, 0.82, 0.24), vec3(0.80, 0.36, 0.07), 1.0 - diffuse);
             // Depth fades to transparent (not black) so blobs melt into the paper
             fog = exp(-0.001 * depth * depth * depth);
           }
