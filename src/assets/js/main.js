@@ -571,7 +571,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         void main() {
           vec2 uv = gl_FragCoord.xy / iResolution.xy;
-          vec3 rayOri = vec3((uv - 0.5) * vec2(iResolution.x / iResolution.y, 1.0) * 4.2, 3.0);
+          vec3 rayOri = vec3((uv - 0.5) * vec2(iResolution.x / iResolution.y, 1.0) * 6.0, 3.0);
           vec3 rayDir = vec3(0.0, 0.0, -1.0);
 
           float depth = 0.0;
