@@ -487,7 +487,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let isPlaying = false;
     let currentTrackIndex = 0;
     let volume = 1.0;
-    let isMinimized = window.innerWidth < 768;
+    let isMinimized = true; // deck always starts minimized, on every screen size
     let isSwitchingTrack = false;
 
     function pad(n) {
