@@ -1,7 +1,7 @@
 {% import "macros/icons.njk" as icons %}
 
 <section id="blog" class="py-14 sm:py-20 px-4 sm:px-6 scroll-mt-20">
-  <div class="max-w-5xl mx-auto">
+  <div class="max-w-4xl mx-auto">
     <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-5 mb-10">
       <div>
     <h2 class="heading-pop font-display text-5xl sm:text-6xl text-black leading-none">Blog</h2>
@@ -16,7 +16,7 @@
       {% set chipColors = ['bg-[#fde047]', 'bg-[#86efac]', 'bg-[#c4b5fd]', 'bg-[#38bdf8]'] %}
       {% for post in collections.blogs.slice(0, 3) %}
         {% set chip = chipColors[loop.index0 % 4] %}
-        <article class="group py-6 sm:py-8 grid grid-cols-1 sm:grid-cols-[10rem_1fr] gap-3 sm:gap-8">
+        <article class="group py-6 sm:py-8 grid grid-cols-1 sm:grid-cols-[10rem_1fr_auto] gap-3 sm:gap-8 sm:items-end">
           <div class="self-start justify-self-start px-3.5 py-2 border-2 border-black shadow-brutal-xs {{ chip }}">
             <p class="font-mono text-sm font-bold uppercase tracking-wide text-black">{{ post.data.displayDate or (post.data.date | dateDisplay) }}</p>
             <p class="font-body text-xs font-bold text-black/70">{{ post.data.readTime or '5 min read' }}</p>
@@ -33,10 +33,10 @@
             <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mt-3 font-mono text-sm font-bold text-black/60">
               {% for tag in validTags.slice(0, 4) %}<span>#{{ tag | lower }}</span>{% endfor %}
             </div>
-            <a href="{{ post.url }}" class="inline-flex items-center gap-1.5 mt-4 px-3 py-1.5 border-2 border-black font-mono text-sm font-bold text-black bg-[#fffdf9] group-hover:bg-[#fde047] transition-colors">
-              Read article {{ icons.arrowUpRight("w-3.5 h-3.5") }}
-            </a>
           </div>
+          <a href="{{ post.url }}" class="justify-self-start sm:justify-self-end inline-flex items-center gap-1.5 px-3 py-1.5 border-2 border-black font-mono text-sm font-bold text-black bg-[#fffdf9] group-hover:bg-[#fde047] transition-colors">
+            Read article {{ icons.arrowUpRight("w-3.5 h-3.5") }}
+          </a>
         </article>
       {% endfor %}
     </div>
