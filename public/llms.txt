@@ -22,13 +22,17 @@ Canonical site: https://bittu.dev
 - [InfraPulse](https://github.com/Bittu5134/InfraPulse): A defect-detection tool that flags and prioritizes infrastructure issues from photos using a small vision-model ensemble. Built for a campus hackathon.
 - [Lore](https://github.com/Bittu5134/Lore): A local architectural knowledge engine — it captures the reasoning behind your code, whether that code was written by an AI agent or a human.
 - [DumbCord](https://github.com/Bittu5134/DumbCord): A Discord bot that learns from messages and uses Markov-based methods to generate text replies and GIF responses.
+- [Starbie](https://github.com/Bittu5134/Starbie): A tiny motion-controlled digital pet, basically a desktop Tamagotchi. Totally not a Starboy.
 - [GeoShuffle](https://geoshuffle.bittu.dev): A sliding puzzle of satellite imagery with P2P multiplayer. Source: https://github.com/Bittu5134/GeoShuffle
+- [TungstenCarbidePack](https://github.com/Bittu5134/TungstenCarbidePack): A Minecraft resource pack that reimagines Netherite through scientifically plausible metallurgy — tungsten carbide, real materials science, the whole bit. Built off a jeweller's YouTube analysis of the crafting recipe.
 - [RatioYT](http://ratioyt.bittu.dev/): A lightweight browser extension & userscript that rates YouTube videos and filters videos with low ratings. Source: https://github.com/Bittu5134/RatioYT
+- [BiteCart](https://github.com/Bittu5134/BiteCart): A mess extras counter system that digitizes the paper notebook ledger — append-only, reversible, audit-logged. Built for campus mess counters, with a kiosk, admin dashboard and thermal printer support.
 - [Awakener](https://awakener.bittu.dev/): A chat-reviving Discord bot that crowns whoever wakes a silent channel. Reward the people who keep your community active. Source: https://github.com/Bittu5134/Awakener
+- [JEE-Vibe](https://github.com/Bittu5134/JEE-Vibe): A sentiment analysis pipeline that scrapes JEE discussions off Reddit and figures out what the internet actually feels about the exam cycle. Built with PRAW, VADER and a lot of word clouds.
 - [SkyBlock-Sniper](https://github.com/Bittu5134/SkyBlock-Sniper): Fastest and most efficient Skyblock Bin Sniping Script.
 - [Resume-Model](https://iitk-resume.bittu.dev): A tool that parses academic PDFs by their layout geometry (since normal parsers choke on tables) and scores them. Built for IIT Kanpur's career office. Source: https://github.com/Bittu5134/IITK-Resume-Model
-- [ThumbScore](https://github.com/Bittu5134/ThumbScore): 
 - [GH-Follow-Tracker](https://follow.lazybittu.workers.dev/): A little service on Cloudflare Workers that tracks GitHub followers and generates live SVG badges, with Discord/Slack alerts when things change. Source: https://github.com/Bittu5134/GH-Follow-Tracker
+- [ThumbScore](https://github.com/Bittu5134/ThumbScore): 
 
 ## Technical Writing
 - [A Very Dumb Markov Chatbot](https://bittu.dev/blogs/a-very-dumb-markov-chatbot.md) (2026-10-11): Coding a very dumb chatbot trained on Discord chats and watching the chaos ensue. [Discord, Chatbot, Python, Markov-Model, Project] — 3 min read. Rendered HTML: https://bittu.dev/blog/a-very-dumb-markov-chatbot

@@ -64,14 +64,14 @@ Topics: bubbletea, golang, lipgloss, ssh, terminal
 Source: https://github.com/Bittu5134/NetShip
 Description: A host telemetry agent in Go that watches socket activity and maps out process trees. Built it to understand how endpoint detection tools actually work under the hood.
 Category: SYSTEMS / EDR
-Language: JavaScript
+Language: Go
 Topics: edr, go, gopsutil, telemetry, webui
 
 ### 6. Sharelock
 Source: https://github.com/Bittu5134/Sharelock
 Description: A retrieval system that lets you just ask questions about IIT Kanpur's academic policy manual instead of reading the whole thing. Built as a RAG pipeline with an MCP server.
 Category: AI / RAG
-Language: JavaScript
+Language: Python
 Topics: hackathon, mcp-server, rag, rag-chatbot, typescript
 
 ### 7. InfraPulse
@@ -95,54 +95,82 @@ Category: AI / MARKOV
 Language: Python
 Topics: chatbot, discord, dumb, markov-chain
 
-### 10. GeoShuffle
+### 10. Starbie
+Source: https://github.com/Bittu5134/Starbie
+Description: A tiny motion-controlled digital pet, basically a desktop Tamagotchi. Totally not a Starboy.
+Category: DESKTOP / MOTION PET
+Language: C++
+Topics: 
+
+### 11. GeoShuffle
 Live: https://geoshuffle.bittu.dev | Source: https://github.com/Bittu5134/GeoShuffle
 Description: A sliding puzzle of satellite imagery with P2P multiplayer.
 Category: WEB / WEBRTC GAME
 Language: JavaScript
 Topics: game, multiplayer, p2p, webrtc
 
-### 11. RatioYT
+### 12. TungstenCarbidePack
+Source: https://github.com/Bittu5134/TungstenCarbidePack
+Description: A Minecraft resource pack that reimagines Netherite through scientifically plausible metallurgy — tungsten carbide, real materials science, the whole bit. Built off a jeweller's YouTube analysis of the crafting recipe.
+Category: MINECRAFT / METALLURGY
+Language: (see repo)
+Topics: minecraft, minecraft-resource-pack, netherite, textures
+
+### 13. RatioYT
 Live: http://ratioyt.bittu.dev/ | Source: https://github.com/Bittu5134/RatioYT
 Description: A lightweight browser extension & userscript that rates YouTube videos and filters videos with low ratings.
 Category: TOOLS / YT EXTENSION
 Language: JavaScript
 Topics: browser-extension, chrome-extension, dom, javascript, manifest-v3
 
-### 12. Awakener
+### 14. BiteCart
+Source: https://github.com/Bittu5134/BiteCart
+Description: A mess extras counter system that digitizes the paper notebook ledger — append-only, reversible, audit-logged. Built for campus mess counters, with a kiosk, admin dashboard and thermal printer support.
+Category: WEB / LEDGER
+Language: JavaScript
+Topics: audit-logging, campus, express, ledger, nodejs
+
+### 15. Awakener
 Live: https://awakener.bittu.dev/ | Source: https://github.com/Bittu5134/Awakener
 Description: A chat-reviving Discord bot that crowns whoever wakes a silent channel. Reward the people who keep your community active.
 Category: AI / DISCORD BOTS
 Language: Python
 Topics: community, discord, leaderboard, python, sqlite
 
-### 13. SkyBlock-Sniper
+### 16. JEE-Vibe
+Source: https://github.com/Bittu5134/JEE-Vibe
+Description: A sentiment analysis pipeline that scrapes JEE discussions off Reddit and figures out what the internet actually feels about the exam cycle. Built with PRAW, VADER and a lot of word clouds.
+Category: AI / SENTIMENT
+Language: Python
+Topics: data-analysis, nlp, praw, python, reddit
+
+### 17. SkyBlock-Sniper
 Source: https://github.com/Bittu5134/SkyBlock-Sniper
 Description: Fastest and most efficient Skyblock Bin Sniping Script.
 Category: MINECRAFT / AUTOMATION
 Language: Python
 Topics: hypixel, hypixel-api, hypixel-skyblock, minecraft, python
 
-### 14. Resume-Model
+### 18. Resume-Model
 Live: https://iitk-resume.bittu.dev | Source: https://github.com/Bittu5134/IITK-Resume-Model
 Description: A tool that parses academic PDFs by their layout geometry (since normal parsers choke on tables) and scores them. Built for IIT Kanpur's career office.
 Category: TOOLS / PARSER
 Language: Python
 Topics: fastapi, nlp, pymupdf, python, scikit-learn
 
-### 15. ThumbScore
+### 19. GH-Follow-Tracker
+Live: https://follow.lazybittu.workers.dev/ | Source: https://github.com/Bittu5134/GH-Follow-Tracker
+Description: A little service on Cloudflare Workers that tracks GitHub followers and generates live SVG badges, with Discord/Slack alerts when things change.
+Category: TOOLS / SERVERLESS
+Language: TypeScript
+Topics: automation, cloudflare-workers, github-actions, javascript, webhooks
+
+### 20. ThumbScore
 Source: https://github.com/Bittu5134/ThumbScore
 Description: 
 Category: TOOLS / EXTENSION
 Language: JavaScript
 Topics: browser-extension, chrome-extension, dom, youtube
-
-### 16. GH-Follow-Tracker
-Live: https://follow.lazybittu.workers.dev/ | Source: https://github.com/Bittu5134/GH-Follow-Tracker
-Description: A little service on Cloudflare Workers that tracks GitHub followers and generates live SVG badges, with Discord/Slack alerts when things change.
-Category: TOOLS / SERVERLESS
-Language: JavaScript
-Topics: automation, cloudflare-workers, github-actions, javascript, webhooks
 
 ================================================================================
 SECTION 3 — TECHNICAL ARTICLES (FULL TEXT)
