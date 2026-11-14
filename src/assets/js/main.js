@@ -596,7 +596,7 @@ document.addEventListener("DOMContentLoaded", () => {
             fog = exp(-0.001 * depth * depth * depth);
           }
 
-          float edge = 1.0 - smoothstep(5.7, 6.0, depth);
+          float edge = 1.0 - step(6.0, depth);
           float hit = edge * fog;
           gl_FragColor = vec4(col * hit, hit);
         }
