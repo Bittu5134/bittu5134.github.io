@@ -624,8 +624,11 @@ document.addEventListener("DOMContentLoaded", () => {
           for (int i = 0; i < 12; i++) {
             float fi = float(i);
             float time = iTime * (fract(fi * 412.531 + 0.513) - 0.5) * 2.0;
+            vec3 c = p + sin(time + fi * vec3(52.5126, 64.62744, 632.25)) * vec3(2.0, 2.0, 0.8);
+            // Two clusters hugging the sides — the centre column stays clear for text
+            c.x += (c.x < 0.0 ? -1.6 : 1.6);
             d = opSmoothUnion(
-              sdSphere(p + sin(time + fi * vec3(52.5126, 64.62744, 632.25)) * vec3(2.0, 2.0, 0.8), mix(0.5, 1.0, fract(fi * 412.531 + 0.5124))),
+              sdSphere(c, mix(0.5, 1.0, fract(fi * 412.531 + 0.5124))),
               d,
               0.4
             );
