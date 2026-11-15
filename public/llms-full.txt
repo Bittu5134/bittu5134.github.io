@@ -39,138 +39,103 @@ Category: WEB / PUBLISHING
 Language: Python
 Topics: cloudflare-pages, custom-ssg, epub, orv, pandoc
 
-### 2. LOTM-Reader
-Live: https://beyonder.pages.dev | Source: https://github.com/Bittu5134/LOTM-Reader
-Description: A community driven webnovel reader built with Svelte, with offline caching and a tons of optimizations.  Built to be faster and cleaner than what was out there.
-Category: WEB / OPTIMIZATION
-Language: Svelte
-Topics: epub, giscus, lotm, pandoc, svelte
-
-### 3. PeerBasket
-Live: https://peerbasket.bittu.dev | Source: https://github.com/Bittu5134/PeerBasket
-Description: A hassle-free, lobby-based PeerJS discovery server written in Go  that handles peer discovery for real-time p2p interactions and multiplayer sessions.
-Category: SYSTEMS / P2P
-Language: Go
-Topics: gin, go, p2p, peerjs, redis
-
-### 4. Rock-Paper-SSH
-Source: https://github.com/Bittu5134/Rock-Paper-SSH
-Description: A PvE multiplayer TUI game, built in Go and streamed over SSH.
-Category: SYSTEMS / SSH TUI
-Language: Go
-Topics: bubbletea, golang, lipgloss, ssh, terminal
-
-### 5. NetShip
-Source: https://github.com/Bittu5134/NetShip
-Description: A host telemetry agent in Go that watches socket activity and maps out process trees. Built it to understand how endpoint detection tools actually work under the hood.
-Category: SYSTEMS / EDR
-Language: Go
-Topics: edr, go, gopsutil, telemetry, webui
-
-### 6. Sharelock
-Source: https://github.com/Bittu5134/Sharelock
-Description: A retrieval system that lets you just ask questions about IIT Kanpur's academic policy manual instead of reading the whole thing. Built as a RAG pipeline with an MCP server.
-Category: AI / RAG
-Language: Python
-Topics: hackathon, mcp-server, rag, rag-chatbot, typescript
-
-### 7. InfraPulse
-Source: https://github.com/Bittu5134/InfraPulse
-Description: A defect-detection tool that flags and prioritizes infrastructure issues from photos using a small vision-model ensemble. Built for a campus hackathon.
-Category: AI / MACHINE VISION
-Language: Python
-Topics: convulational-neural-network, ensemble-model, machine-learning, pytorch, sobel-edge-detector
-
-### 8. Lore
-Source: https://github.com/Bittu5134/Lore
-Description: A local architectural knowledge engine — it captures the reasoning behind your code, whether that code was written by an AI agent or a human.
-Category: AI / DEVTOOLS
-Language: TypeScript
-Topics: cline, mcp, typescript, sqlite, devtools
-
-### 9. DumbCord
-Source: https://github.com/Bittu5134/DumbCord
-Description: A Discord bot that learns from messages and uses Markov-based methods to generate text replies and GIF responses.
-Category: AI / MARKOV
-Language: Python
-Topics: chatbot, discord, dumb, markov-chain
-
-### 10. Starbie
-Source: https://github.com/Bittu5134/Starbie
-Description: A tiny motion-controlled digital pet, basically a desktop Tamagotchi. Totally not a Starboy.
-Category: DESKTOP / MOTION PET
-Language: C++
-Topics: 
-
-### 11. GeoShuffle
+### 2. GeoShuffle
 Live: https://geoshuffle.bittu.dev | Source: https://github.com/Bittu5134/GeoShuffle
 Description: A sliding puzzle of satellite imagery with P2P multiplayer.
 Category: WEB / WEBRTC GAME
 Language: JavaScript
 Topics: game, multiplayer, p2p, webrtc
 
-### 12. TungstenCarbidePack
-Source: https://github.com/Bittu5134/TungstenCarbidePack
-Description: A Minecraft resource pack that reimagines Netherite through scientifically plausible metallurgy — tungsten carbide, real materials science, the whole bit. Built off a jeweller's YouTube analysis of the crafting recipe.
-Category: MINECRAFT / METALLURGY
-Language: (see repo)
-Topics: minecraft, minecraft-resource-pack, netherite, textures
+### 3. LOTM-Reader
+Live: https://beyonder.pages.dev | Source: https://github.com/Bittu5134/LOTM-Reader
+Description: A community driven webnovel reader built with Svelte, with offline caching and a tons of optimizations.  Built to be faster and cleaner than what was out there.
+Category: WEB / OPTIMIZATION
+Language: Svelte
+Topics: epub, giscus, lotm, pandoc, svelte
 
-### 13. RatioYT
+### 4. RatioYT
 Live: http://ratioyt.bittu.dev/ | Source: https://github.com/Bittu5134/RatioYT
 Description: A lightweight browser extension & userscript that rates YouTube videos and filters videos with low ratings.
 Category: TOOLS / YT EXTENSION
 Language: JavaScript
 Topics: browser-extension, chrome-extension, dom, javascript, manifest-v3
 
-### 14. BiteCart
-Source: https://github.com/Bittu5134/BiteCart
-Description: A mess extras counter system that digitizes the paper notebook ledger — append-only, reversible, audit-logged. Built for campus mess counters, with a kiosk, admin dashboard and thermal printer support.
-Category: WEB / LEDGER
-Language: JavaScript
-Topics: audit-logging, campus, express, ledger, nodejs
+### 5. PeerBasket
+Live: https://peerbasket.bittu.dev | Source: https://github.com/Bittu5134/PeerBasket
+Description: A hassle-free, lobby-based PeerJS discovery server written in Go  that handles peer discovery for real-time p2p interactions and multiplayer sessions.
+Category: SYSTEMS / P2P
+Language: Go
+Topics: gin, go, p2p, peerjs, redis
 
-### 15. Awakener
+### 6. Awakener
 Live: https://awakener.bittu.dev/ | Source: https://github.com/Bittu5134/Awakener
 Description: A chat-reviving Discord bot that crowns whoever wakes a silent channel. Reward the people who keep your community active.
-Category: AI / DISCORD BOTS
+Category: DISCORD / BOT
 Language: Python
 Topics: community, discord, leaderboard, python, sqlite
 
-### 16. JEE-Vibe
-Source: https://github.com/Bittu5134/JEE-Vibe
-Description: A sentiment analysis pipeline that scrapes JEE discussions off Reddit and figures out what the internet actually feels about the exam cycle. Built with PRAW, VADER and a lot of word clouds.
-Category: AI / SENTIMENT
-Language: Python
-Topics: data-analysis, nlp, praw, python, reddit
-
-### 17. SkyBlock-Sniper
-Source: https://github.com/Bittu5134/SkyBlock-Sniper
-Description: Fastest and most efficient Skyblock Bin Sniping Script.
-Category: MINECRAFT / AUTOMATION
-Language: Python
-Topics: hypixel, hypixel-api, hypixel-skyblock, minecraft, python
-
-### 18. Resume-Model
+### 7. Resume-Model
 Live: https://iitk-resume.bittu.dev | Source: https://github.com/Bittu5134/IITK-Resume-Model
 Description: A tool that parses academic PDFs by their layout geometry (since normal parsers choke on tables) and scores them. Built for IIT Kanpur's career office.
 Category: TOOLS / PARSER
 Language: Python
 Topics: fastapi, nlp, pymupdf, python, scikit-learn
 
-### 19. GH-Follow-Tracker
+### 8. NetShip
+Source: https://github.com/Bittu5134/NetShip
+Description: A host telemetry agent in Go that watches socket activity and maps out process trees. Built it to understand how endpoint detection tools actually work under the hood.
+Category: SYSTEMS / EDR
+Language: JavaScript
+Topics: edr, go, gopsutil, telemetry, webui
+
+### 9. Sharelock
+Source: https://github.com/Bittu5134/Sharelock
+Description: A retrieval system that lets you just ask questions about IIT Kanpur's academic policy manual instead of reading the whole thing. Built as a RAG pipeline with an MCP server.
+Category: AI / RAG
+Language: JavaScript
+Topics: hackathon, mcp-server, rag, rag-chatbot, typescript
+
+### 10. Rock-Paper-SSH
+Source: https://github.com/Bittu5134/Rock-Paper-SSH
+Description: A PvE multiplayer TUI game, built in Go and streamed over SSH.
+Category: SYSTEMS / SSH TUI
+Language: Go
+Topics: bubbletea, golang, lipgloss, ssh, terminal
+
+### 11. InfraPulse
+Source: https://github.com/Bittu5134/InfraPulse
+Description: A defect-detection tool that flags and prioritizes infrastructure issues from photos using a small vision-model ensemble. Built for a campus hackathon.
+Category: AI / MACHINE VISION
+Language: Python
+Topics: convulational-neural-network, ensemble-model, machine-learning, pytorch, sobel-edge-detector
+
+### 12. Lore
+Source: https://github.com/Bittu5134/Lore
+Description: A local architectural knowledge engine — it captures the reasoning behind your code, whether that code was written by an AI agent or a human.
+Category: AI / DEVTOOLS
+Language: TypeScript
+Topics: cline, mcp, typescript, sqlite, devtools
+
+### 13. SkyBlock-Sniper
+Source: https://github.com/Bittu5134/SkyBlock-Sniper
+Description: Fastest and most efficient Skyblock Bin Sniping Script.
+Category: MINECRAFT / AUTOMATION
+Language: Python
+Topics: hypixel, hypixel-api, hypixel-skyblock, minecraft, python
+
+### 14. DumbCord
+Source: https://github.com/Bittu5134/DumbCord
+Description: A Discord bot that learns from messages and uses Markov-based methods to generate text replies and GIF responses.
+Category: DISCORD / MARKOV CHAINS
+Language: Python
+Topics: chatbot, discord, dumb, markov-chain
+
+### 15. GH-Follow-Tracker
 Live: https://follow.lazybittu.workers.dev/ | Source: https://github.com/Bittu5134/GH-Follow-Tracker
 Description: A little service on Cloudflare Workers that tracks GitHub followers and generates live SVG badges, with Discord/Slack alerts when things change.
 Category: TOOLS / SERVERLESS
-Language: TypeScript
-Topics: automation, cloudflare-workers, github-actions, javascript, webhooks
-
-### 20. ThumbScore
-Source: https://github.com/Bittu5134/ThumbScore
-Description: 
-Category: TOOLS / EXTENSION
 Language: JavaScript
-Topics: browser-extension, chrome-extension, dom, youtube
+Topics: automation, cloudflare-workers, github-actions, javascript, webhooks
 
 ================================================================================
 SECTION 3 — TECHNICAL ARTICLES (FULL TEXT)
