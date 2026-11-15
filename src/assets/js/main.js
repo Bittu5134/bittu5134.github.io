@@ -331,29 +331,33 @@ document.addEventListener("DOMContentLoaded", () => {
     "Unavailable_on_Preview.png", "Under_Construction_Art_Cropped.png", "Easy.png", "Hard.png", "Normal.png", "Peaceful.png"
   ].map((f) => "/images/ore-ui/" + f);
 
-  const oreShuffle = [...ORE_IMAGES].sort(() => Math.random() - 0.5);
-  let oreIdx = 0;
-
-  document.querySelectorAll(".project-card").forEach((card) => {
-    if (Math.random() >= 0.5) return;
-    const file = oreShuffle[oreIdx++ % oreShuffle.length];
-    const wrap = document.createElement("span");
-    wrap.className = "hidden sm:block absolute pointer-events-none z-10 select-none";
-    wrap.style.left = "0";
-    wrap.style.bottom = "0";
-    const img = document.createElement("img");
-    img.alt = "";
-    img.loading = "lazy";
-    img.className = "w-full h-auto";
-    img.src = file;
-    wrap.appendChild(img);
-    // display width: proportional to the sprite's native size, capped
-    img.addEventListener("load", () => {
-      wrap.style.width = Math.min(140, Math.round(img.naturalWidth * 0.62)) + "px";
+  const oreApply = () => {
+    const deck = [...ORE_IMAGES].sort(() => Math.random() - 0.5);
+    let idx = 0;
+    document.querySelectorAll(".project-card").forEach((card) => {
+      card.querySelectorAll(".ore-sprite").forEach((el) => el.remove());
+      if (Math.random() >= 0.5) return;
+      const file = deck[idx++ % deck.length];
+      const wrap = document.createElement("span");
+      wrap.className = "ore-sprite hidden sm:block absolute pointer-events-none z-10 select-none";
+      wrap.style.left = "0";
+      wrap.style.bottom = "0";
+      const img = document.createElement("img");
+      img.alt = "";
+      img.loading = "lazy";
+      img.className = "w-full h-auto";
+      img.src = file;
+      wrap.appendChild(img);
+      img.addEventListener("load", () => {
+        wrap.style.width = Math.min(140, Math.round(img.naturalWidth * 0.62)) + "px";
+      });
+      img.style.imageRendering = "pixelated";
+      card.appendChild(wrap);
     });
-    // pixel-art upscales stay crisp
-    img.style.imageRendering = "pixelated";
-    card.appendChild(wrap);
+  };
+  oreApply();
+  filterButtons.forEach((btn) => {
+    btn.addEventListener("click", () => setTimeout(oreApply, 0));
   });
 
   /* -------------------------------------------------------------------------- */
