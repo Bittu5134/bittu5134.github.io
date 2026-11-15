@@ -349,7 +349,7 @@ document.addEventListener("DOMContentLoaded", () => {
       img.src = file;
       wrap.appendChild(img);
       img.addEventListener("load", () => {
-        wrap.style.width = Math.min(140, Math.round(img.naturalWidth * 0.62)) + "px";
+        wrap.style.width = Math.min(176, Math.round(img.naturalWidth * 0.78)) + "px";
       });
       img.style.imageRendering = "pixelated";
       card.appendChild(wrap);
