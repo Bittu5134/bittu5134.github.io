@@ -349,8 +349,10 @@ document.addEventListener("DOMContentLoaded", () => {
     wrap.appendChild(img);
     // display width: proportional to the sprite's native size, capped
     img.addEventListener("load", () => {
-      wrap.style.width = Math.min(110, Math.round(img.naturalWidth * 0.45)) + "px";
+      wrap.style.width = Math.min(140, Math.round(img.naturalWidth * 0.62)) + "px";
     });
+    // pixel-art upscales stay crisp
+    img.style.imageRendering = "pixelated";
     card.appendChild(wrap);
   });
 
