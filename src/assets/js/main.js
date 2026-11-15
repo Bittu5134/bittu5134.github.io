@@ -314,6 +314,47 @@ document.addEventListener("DOMContentLoaded", () => {
     allChip.click();
   }
 
+  /* 3.3 Ore UI easter eggs — every project card has a 50% chance of
+     spanning a random Ore-UI sprite across its bottom-left corner        */
+  /* ------------------------------------------------------------------------ */
+  const ORE_IMAGES = [
+    "All_Achievements_Unlocked.png", "Blocked_Adding_Friends.png", "Client_Mismatch.png", "Connection_Error.png",
+    "Easy_and_Safe.png", "Empty_Wishlist_Wide_Heart.png", "Generic_Error.png", "Inbox_No_Feedback.png",
+    "Inbox_No_Invites.png", "Inbox_No_News.png", "Inbox_No_Realms_News.png", "Marketplace_Error.png",
+    "Members_Empty.png", "Members_Play_Free.png", "No_Achievements_In_Progress.png", "No_Content_Art.png",
+    "No_Followers.png", "No_Premium_Subscription.png", "No_Projects_Yet_Art.png", "No_Showcaseable.png",
+    "No_Worlds_Yet_Art.png", "Online_Safety_Adult.png", "Online_Safety_Child.png", "Parties_Empty.png",
+    "Parties_Multiplayer_Disabled.png", "Permissions_Missing.png", "Realms_Missing.png", "Sentiment_Question_Submitted.png",
+    "Server_Editor_Projects_Empty.png", "Sign_In_Prompts_Achievements.png", "Sign_In_Prompts_Character_Creator.png",
+    "Sign_In_Prompts_Friends.png", "Sign_In_Prompts_Launch.png", "Sign_In_Prompts_Save_Purchases.png",
+    "Sign_In_Prompts_Servers.png", "Survival.png", "Survival_Tutorial.png", "Tutorial_End.png",
+    "Unavailable_on_Preview.png", "Under_Construction_Art_Cropped.png", "Easy.png", "Hard.png", "Normal.png", "Peaceful.png"
+  ].map((f) => "/images/ore-ui/" + f);
+
+  const oreShuffle = [...ORE_IMAGES].sort(() => Math.random() - 0.5);
+  let oreIdx = 0;
+
+  document.querySelectorAll(".project-card").forEach((card) => {
+    if (Math.random() >= 0.5) return;
+    const file = oreShuffle[oreIdx++ % oreShuffle.length];
+    const wrap = document.createElement("span");
+    wrap.className = "hidden sm:block absolute pointer-events-none z-10 select-none";
+    wrap.style.left = "1.25rem";
+    wrap.style.top = "100%";
+    wrap.style.transform = "translateY(-45%) rotate(" + (Math.random() * 5 - 2.5).toFixed(2) + "deg)";
+    const img = document.createElement("img");
+    img.alt = "";
+    img.loading = "lazy";
+    img.className = "w-full h-auto";
+    img.src = file;
+    wrap.appendChild(img);
+    // display width: proportional to the sprite's native size, capped
+    img.addEventListener("load", () => {
+      wrap.style.width = Math.min(110, Math.round(img.naturalWidth * 0.45)) + "px";
+    });
+    card.appendChild(wrap);
+  });
+
   /* -------------------------------------------------------------------------- */
   /* 3.3 Nav scroll-spy: aria-current tracks the section in view */
   // Only in-page anchors (#section) are managed here. Links to real routes
