@@ -31,11 +31,11 @@ All of this code is split between two files, `bot.py` and `scraper.py`: the scra
 
 ```mermaid
 flowchart LR
-  A["Discord history"] -->|scraper.py| B["messages.jsonl"]
+  A(["Discord history"]) -->|scraper.py| B[("messages.jsonl")]
   B --> C["bot.py"]
   C --> D["Markov chain"]
-  C --> E["Media index"]
-  F["Incoming message"] --> G{"Media match?"}
+  C --> E[("Media index")]
+  F(["Incoming message"]) --> G{"Media match?"}
   G -- "yes" --> H["Send media"]
   G -- "no" --> I["Generate text"]
 ```

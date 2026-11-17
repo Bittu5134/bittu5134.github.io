@@ -4,46 +4,45 @@ ogType: article
 isBlogPage: true
 ---
 <!--
-THESIS: A unified neo-brutalist dispatch sheet that shares the homepage's tactile retro-terminal world while offering a solid, distraction-free reading canvas.
-OWN-WORLD: Paper ground (#f6eedb, retro-dots-bg), crisp 2px black borders, solid #fffdf9 card body, signature yellow (#fde047), mint (#86efac), lavender (#c4b5fd), Space Grotesk & Space Mono typography.
-STORY: The reader arrives at an authentic engineering publication dispatch, absorbs complex architecture with clear wayfinding and tactile interactions, and navigates deeper into the blog.
-FIRST VIEWPORT: Reading progress strip along top edge, canonical site header, breadcrumb path, article card led by a full-bleed cover image, then bold dispatch title, brief callout, tag pills, and date/read-time metadata.
-FORM: Neo-Brutalist Technical Blog Dispatch.
-FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+THESIS: The article view of the rewritten retro site. Same design system as the
+homepage and /blog archive: flat #f3e7cc canvas, Playpen Sans display headings,
+Space Mono metadata with rotating chip colors (#86efac / #c4b5fd / #38bdf8),
+solid black tag chips, yellow (#fde047) action pills, orange (#fb923c) RSS,
+amber (#b45309) dek accent — full-width text, no card, no border box.
 -->
 
 {% import "macros/icons.njk" as icons %}
 {% set tocList = content | toc %}
 
-<!-- Top Reading Progress Indicator (Neo-Brutalist Yellow / Black) -->
+<!-- Top Reading Progress Indicator -->
 <div
   id="reading-progress"
-  class="fixed top-0 left-0 h-[3px] bg-[#fde047] z-50 border-b border-black transition-all duration-75"
+  class="fixed top-0 left-0 h-[3px] bg-[#fde047] z-50 transition-all duration-75"
   style="width: 0%"
   aria-hidden="true"
 ></div>
 
-<div class="min-h-screen bg-[#f6eedb] retro-dots-bg text-[#14161f] font-sans selection:bg-[#fde047] selection:text-black flex flex-col justify-between">
+<div class="min-h-screen bg-[#f3e7cc] text-[#14161f] font-body selection:bg-[#fde047] selection:text-black flex flex-col justify-between">
   <!-- Consistent Site Header -->
   {% include "components/retro-header.njk" %}
 
-  <!-- Main Content Area -->
-  <main class="max-w-4xl mx-auto px-3 sm:px-6 py-5 sm:py-8 w-full flex-1">
-    <!-- Breadcrumb Navigation Bar -->
-    <nav aria-label="Breadcrumb" class="site-breadcrumb mb-4 flex items-center justify-between gap-2 text-xs sm:text-sm font-mono">
-      <div class="flex items-center gap-1.5 sm:gap-2 truncate text-black">
-        <a href="/" class="hover:underline font-bold text-black shrink-0">~</a>
-        <span class="text-black font-bold">/</span>
-        <a href="/blog" class="hover:underline font-bold text-black shrink-0">blogs</a>
-        <span class="text-black font-bold">/</span>
-        <span class="text-black font-bold truncate">{{ slug or (title | truncate(32)) }}</span>
+  <!-- Main Content Area: same width as homepage + /blog archive -->
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-14 w-full flex-1">
+    <!-- Breadcrumb Navigation -->
+    <nav aria-label="Breadcrumb" class="site-breadcrumb mb-8 flex items-center justify-between gap-2 text-xs sm:text-sm font-mono font-bold">
+      <div class="flex items-center gap-1.5 sm:gap-2 truncate text-black/60">
+        <a href="/" class="hover:underline text-black shrink-0">~</a>
+        <span class="text-black/40">/</span>
+        <a href="/blog" class="hover:underline text-black shrink-0">blogs</a>
+        <span class="text-black/40">/</span>
+        <span class="truncate text-black">{{ slug or (title | truncate(32)) }}</span>
       </div>
 
       <a
         href="/rss.xml"
         target="_blank"
         rel="noopener noreferrer"
-        class="shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#fb923c] border-2 border-black text-xs font-bold text-black hover:bg-[#f97316] transition-colors"
+        class="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#fb923c] border-2 border-black text-xs font-bold text-black hover:bg-[#f97316] transition-colors"
         title="Subscribe via RSS"
       >
         {{ icons.rss("w-3.5 h-3.5 text-black") }}
@@ -51,10 +50,10 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
       </a>
     </nav>
 
-    <!-- The Article Card: Flat, Warm Parchment Sheet -->
+    <!-- Article: text directly on the canvas -->
     <article
       id="article-top"
-      class="p-5 sm:p-8 md:p-12 bg-[#faf3e0] border-2 border-black"
+      class="w-full"
       data-pagefind-body
     >
       <!-- Print-Only Editorial Masthead (hidden on screen) -->
@@ -65,73 +64,68 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
         </div>
       </div>
 
-      <!-- Cover Image (Full-Bleed Hero, edge-to-edge at the top of the card) -->
+      <!-- Cover Image (full-width, flat brutalist frame) -->
       {% if coverImage %}
-        <div class="article-cover -mx-5 sm:-mx-8 md:-mx-12 -mt-5 sm:-mt-8 md:-mt-12 mb-8 border-b-2 border-black bg-[#faf3e0] overflow-hidden">
-          <img
-            src="{{ coverImage }}"
-            alt="{{ coverAlt if coverAlt else title }}"
-            class="w-full h-auto max-h-[460px] object-cover"
-            loading="eager"
-            fetchpriority="high"
-            decoding="async"
-            data-pagefind-meta="image[src]"
-          />
-        </div>
+        <img
+          src="{{ coverImage }}"
+          alt="{{ coverAlt if coverAlt else title }}"
+          class="w-full h-auto border-2 border-black mb-10"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+          data-pagefind-meta="image[src]"
+        />
       {% endif %}
 
       <!-- Article Header -->
-      <header class="mb-8 pb-6 border-b-2 border-black">
+      <header class="mb-10 pb-8 border-b-2 border-black">
+        <!-- Metadata Row: colored date chip + mono separators -->
+        <p class="font-mono text-sm font-bold flex flex-wrap items-center gap-3 mb-5">
+          <span class="inline-block px-2.5 py-1 border-2 border-black bg-[#86efac] text-black shrink-0">
+            <time datetime="{{ date | dateIso }}">{{ (displayDate or date) | dateDisplay }}</time>
+          </span>
+          <span class="text-black/65">// {{ (content | readingTime) }}</span>
+          <span class="hidden sm:inline text-black/65">// BY <a href="/" class="hover:underline text-black">BITTU</a></span>
+        </p>
+
         <!-- Title -->
-        <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-mono font-black text-black tracking-tight leading-[1.15] mb-4">
+        <h1 class="font-display text-4xl sm:text-5xl md:text-6xl text-black leading-[1.05] tracking-tight mb-6">
           {{ title }}
         </h1>
 
-        <!-- Summary Callout -->
+        <!-- Summary Dek (homepage tagline style: amber display face) -->
         {% if summary %}
-          <div
-            class="p-3.5 sm:p-4 bg-[#fef3c7] border-2 border-black border-l-6 border-l-black font-mono text-xs sm:text-sm text-black mb-5 leading-relaxed font-medium"
+          <p
+            class="font-display text-lg sm:text-xl text-[#b45309] leading-snug mb-6"
             data-pagefind-meta="summary"
           >
             {{ summary }}
-          </div>
+          </p>
         {% endif %}
 
-        <!-- Tags Row -->
-        {% if tags %}
-          <div class="tag-row flex flex-wrap items-center gap-1.5 sm:gap-2 mb-5">
-            {% for tag in tags %}
-              {% if tag != "posts" %}
-                <a
-                  href="/blog/?tag={{ tag | urlencode }}"
-                  class="px-2.5 py-0.5 bg-[#f6eedb] border border-black font-mono text-[11px] sm:text-xs font-light text-black hover:bg-[#fde047] transition-colors tracking-wide"
-                >
-                  #{{ tag | upper }}
-                </a>
-              {% endif %}
-            {% endfor %}
-          </div>
-        {% endif %}
+        <!-- Tags + Share Button (yellow pill) on the right -->
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+          {% if tags %}
+            <div class="tag-row flex flex-wrap items-center gap-2">
+              {% for tag in tags %}
+                {% if tag != "posts" %}
+                  <a
+                    href="/blog/?tag={{ tag | urlencode }}"
+                    class="px-2.5 py-1 bg-transparent border-2 border-black font-mono text-xs font-bold text-black hover:bg-[#fef3c7] transition-colors"
+                  >
+                    #{{ tag | lower }}
+                  </a>
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% else %}
+            <span class="hidden sm:block" aria-hidden="true"></span>
+          {% endif %}
 
-        <!-- Metadata Row: Date, Read Time, Share Button -->
-        <div class="screen-meta flex items-center justify-between flex-wrap gap-3 pt-2 font-mono text-xs sm:text-sm">
-          <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
-            <span class="px-2.5 py-1 bg-[#86efac] border-2 border-black font-bold text-black shrink-0">
-              <time datetime="{{ date | dateIso }}">{{ (displayDate or date) | dateDisplay | upper }}</time>
-            </span>
-            <span class="font-bold text-black shrink-0">
-              // {{ (content | readingTime) | upper }}
-            </span>
-            <span class="hidden sm:inline font-bold text-black shrink-0">
-              // BY <a href="/" class="hover:underline text-black">BITTU</a>
-            </span>
-          </div>
-
-          <!-- Share Button & Popover (Flat, Never opens navigator on PC) -->
-          <div class="relative shrink-0">
+          <div class="screen-meta relative">
             <button
               id="share-article-btn"
-              class="bg-[#faf3e0] hover:bg-[#fde047] border-2 border-black px-3 py-1 text-xs font-bold text-black flex items-center gap-1.5 cursor-pointer select-none transition-colors"
+              class="bg-[#fde047] hover:bg-[#fbbf24] border-2 border-black px-3 py-1 text-xs font-bold text-black inline-flex items-center gap-1 cursor-pointer select-none transition-colors"
               data-title="{{ title }}"
               data-url="https://bittu.dev{{ page.url }}"
               aria-haspopup="true"
@@ -142,10 +136,10 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
               <span>SHARE</span>
             </button>
 
-            <!-- Share Popover Dropdown (Flat, High Contrast) -->
+            <!-- Share Popover Dropdown -->
             <div
               id="share-popover"
-              class="hidden absolute right-0 top-full mt-2 w-52 bg-[#faf3e0] border-2 border-black p-2 z-50 text-xs font-mono flex-col gap-1"
+              class="hidden absolute right-0 top-full mt-1.5 w-44 bg-[#fffdf9] border-2 border-black p-1 z-50 text-xs font-mono flex-col shadow-brutal-xs"
               role="menu"
               aria-label="Share options"
             >
@@ -153,7 +147,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
                 href="https://twitter.com/intent/tweet?text={{ title | urlencode }}&url={{ ('https://bittu.dev' + page.url) | urlencode }}"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="flex items-center gap-2 p-2 hover:bg-[#fde047] text-black font-bold transition-colors"
+                class="flex items-center gap-2 px-2 py-1.5 hover:bg-[#fde047] text-black font-bold transition-colors"
                 role="menuitem"
               >
                 {{ icons.twitter("w-3.5 h-3.5 text-black") }}
@@ -164,7 +158,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
                 href="https://www.linkedin.com/sharing/share-offsite/?url={{ ('https://bittu.dev' + page.url) | urlencode }}"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="flex items-center gap-2 p-2 hover:bg-[#38bdf8] text-black font-bold transition-colors"
+                class="flex items-center gap-2 px-2 py-1.5 hover:bg-[#38bdf8] text-black font-bold transition-colors"
                 role="menuitem"
               >
                 {{ icons.linkedin("w-3.5 h-3.5 text-black") }}
@@ -175,25 +169,20 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
                 href="https://reddit.com/submit?url={{ ('https://bittu.dev' + page.url) | urlencode }}&title={{ title | urlencode }}"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="flex items-center gap-2 p-2 hover:bg-[#fed7aa] text-black font-bold transition-colors"
+                class="flex items-center gap-2 px-2 py-1.5 hover:bg-[#fed7aa] text-black font-bold transition-colors"
                 role="menuitem"
               >
                 {{ icons.reddit("w-3.5 h-3.5 text-black") }}
                 <span>Share on Reddit</span>
               </a>
 
-              <div class="border-t border-black/20 my-1"></div>
-
               <button
                 id="popover-copy-link-btn"
-                class="w-full text-left flex items-center justify-between p-2 hover:bg-[#86efac] text-black font-bold transition-colors cursor-pointer"
+                class="w-full text-left flex items-center gap-2 px-2 py-1.5 hover:bg-[#86efac] text-black font-bold transition-colors cursor-pointer"
                 role="menuitem"
               >
-                <span class="flex items-center gap-2">
-                  {{ icons.copy("w-3.5 h-3.5 text-black") }}
-                  <span id="popover-copy-text">Copy link</span>
-                </span>
-                <span class="text-[10px] bg-black text-white px-1.5 py-0.5 font-mono">URL</span>
+                {{ icons.copy("w-3.5 h-3.5 text-black") }}
+                <span id="popover-copy-text">Copy link</span>
               </button>
             </div>
           </div>
@@ -207,21 +196,21 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
         &middot; {{ (content | readingTime) | upper }}
       </div>
 
-      <!-- Table of Contents (Flat, Warm Panel) -->
+      <!-- Table of Contents -->
       {% if tocList and tocList.length > 2 %}
-        <details class="mb-8 bg-[#f4ebd0] border-2 border-black p-4 sm:p-5 group">
+        <details class="mb-10 group border-2 border-black px-4 py-3.5 sm:px-5">
           <summary class="font-mono text-xs sm:text-sm font-black uppercase text-black cursor-pointer flex items-center justify-between select-none">
             <span class="flex items-center gap-2">
-              {{ icons.bookOpen("w-4 h-4 text-black") }}
+              {{ icons.bookOpen("w-4 h-4") }}
               <span>TABLE OF CONTENTS ({{ tocList.length }} SECTIONS)</span>
             </span>
             <span class="font-mono text-xs font-bold transition-transform group-open:rotate-180">▼</span>
           </summary>
-          <nav class="mt-3.5 pt-3 border-t-2 border-black space-y-1 text-xs sm:text-sm font-mono">
+          <nav class="mt-4 space-y-1 text-xs sm:text-sm font-mono">
             {% for item in tocList %}
               <a
                 href="#{{ item.id }}"
-                class="block py-1 text-black hover:text-black hover:bg-[#fde047] transition-colors {{ 'pl-4 text-black/85 font-medium' if item.level == 3 else 'font-bold text-black' }}"
+                class="block py-1 text-black/70 hover:text-black hover:bg-[#fde047] transition-colors {{ 'pl-4 font-medium' if item.level == 3 else 'font-bold text-black' }}"
               >
                 {{ item.title }}
               </a>
@@ -230,40 +219,26 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
         </details>
       {% endif %}
 
-      <!-- Markdown Article Content Body (Pure Ink Black Contrast) -->
+      <!-- Markdown Article Content Body (full reading width) -->
       <div class="prose prose-retro max-w-none text-black">
         {{ content | safe }}
       </div>
 
-      <!-- Post Footer: Author Card + Navigation -->
-      <footer class="mt-12 pt-8 border-t-2 border-black space-y-6">
-        <!-- Author Profile Box (Flat, Slim) -->
-        <div class="author-card py-2.5 px-4 sm:py-3 sm:px-5 bg-[#f4ebd0] border-2 border-black flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div class="flex items-center gap-3">
-            <a href="/" class="shrink-0" title="Go to Home">
-              <img
-                src="/assets/images/avatar.webp"
-                alt="Bittu avatar"
-                class="w-10 h-10 rounded-sm border-2 border-black object-cover"
-                loading="lazy"
-              />
-            </a>
-            <div>
-              <div class="font-mono text-sm sm:text-base font-bold text-black flex items-center gap-2">
-                <a href="/" class="hover:underline text-black">Bittu</a>
-                <span class="px-1.5 py-0 leading-none inline-flex items-center h-4 bg-[#fde047] border border-black text-[9px] sm:text-[10px] font-mono font-bold uppercase">AUTHOR</span>
-              </div>
-              <div class="font-mono text-xs text-black font-medium">
-                Software Engineer &amp; Cybersecurity student at IIT Kanpur.
-              </div>
-            </div>
+      <!-- Post Footer: Author Line + Navigation -->
+      <footer class="mt-16 pt-8 border-t-2 border-black space-y-8">
+        <!-- Author: plain text + compact social pills -->
+        <div class="author-card flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="font-body text-sm sm:text-base leading-relaxed flex items-center flex-wrap gap-x-2 gap-y-1">
+            <span class="font-display text-lg sm:text-xl font-bold text-black">Bittu</span>
+            <span class="font-bold text-[#b45309]" aria-hidden="true">//</span>
+            <span class="text-black/85">Software Engineer &amp; Cybersecurity student at IIT Kanpur.</span>
           </div>
           <div class="author-socials flex items-center gap-2 font-mono text-xs font-bold shrink-0">
             <a
               href="https://github.com/Bittu5134"
               target="_blank"
               rel="noopener noreferrer"
-              class="px-2.5 py-1 bg-[#faf3e0] border-2 border-black hover:bg-[#c4b5fd] transition-colors flex items-center gap-1 text-black"
+              class="px-2.5 py-1 bg-transparent border-2 border-black hover:bg-[#c4b5fd] transition-colors flex items-center gap-1 text-black"
             >
               {{ icons.github("w-3.5 h-3.5") }}
               <span>GITHUB</span>
@@ -272,7 +247,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
               href="https://www.linkedin.com/in/bittu5134"
               target="_blank"
               rel="noopener noreferrer"
-              class="px-2.5 py-1 bg-[#faf3e0] border-2 border-black hover:bg-[#38bdf8] transition-colors flex items-center gap-1 text-black"
+              class="px-2.5 py-1 bg-transparent border-2 border-black hover:bg-[#38bdf8] transition-colors flex items-center gap-1 text-black"
             >
               {{ icons.linkedin("w-3.5 h-3.5") }}
               <span>LINKEDIN</span>
@@ -281,7 +256,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
               href="/rss.xml"
               target="_blank"
               rel="noopener noreferrer"
-              class="px-2.5 py-1 bg-[#faf3e0] border-2 border-black hover:bg-[#fb923c] transition-colors flex items-center gap-1 text-black"
+              class="px-2.5 py-1 bg-transparent border-2 border-black hover:bg-[#fb923c] transition-colors flex items-center gap-1 text-black"
             >
               {{ icons.rss("w-3.5 h-3.5") }}
               <span>RSS</span>
@@ -289,101 +264,101 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
           </div>
         </div>
 
-        <!-- 1-Line Post Navigation (Flat, High Contrast) -->
+        <!-- Post Navigation: colored label chips (mint / lavender / sky) -->
         {% set newerPost = collections.blogs | getPreviousCollectionItem(page) %}
         {% set olderPost = collections.blogs | getNextCollectionItem(page) %}
         {% set randomPost = collections.blogs | getRandomOtherPost(page.url, newerPost.url if newerPost else "", olderPost.url if olderPost else "") %}
         {% if newerPost or olderPost or randomPost %}
-          <div class="post-nav p-3.5 sm:p-4 bg-[#faf3e0] border-2 border-black space-y-2.5 font-mono text-xs sm:text-sm">
+          <div class="post-nav border-y border-black/15 py-6 space-y-3 font-mono text-xs sm:text-sm">
             {% if newerPost %}
-              <div class="flex items-baseline justify-between gap-3 group">
-                <div class="flex items-baseline gap-2 min-w-0">
-                  <span class="text-black/70 font-black uppercase text-xs shrink-0">NEXT:</span>
+              <div class="flex items-baseline justify-between gap-3">
+                <div class="flex items-baseline gap-3 min-w-0">
+                  <span class="shrink-0 inline-block px-2 py-0.5 border-2 border-black bg-[#86efac] text-black font-black uppercase text-[10px]">Next</span>
                   <a
                     href="{{ newerPost.url }}"
-                    class="font-mono font-bold text-black hover:underline truncate"
+                    class="font-mono font-bold text-black hover:text-[#b45309] transition-colors truncate"
                   >
                     {{ newerPost.data.title }}
                   </a>
                 </div>
-                <time datetime="{{ newerPost.date | dateIso }}" class="text-xs text-black/80 font-medium shrink-0">
+                <time datetime="{{ newerPost.date | dateIso }}" class="text-xs text-black/60 font-medium shrink-0">
                   {{ (newerPost.data.displayDate or newerPost.date) | dateDisplay }}
                 </time>
               </div>
             {% endif %}
 
             {% if olderPost %}
-              <div class="flex items-baseline justify-between gap-3 group">
-                <div class="flex items-baseline gap-2 min-w-0">
-                  <span class="text-black/70 font-black uppercase text-xs shrink-0">PREV:</span>
+              <div class="flex items-baseline justify-between gap-3">
+                <div class="flex items-baseline gap-3 min-w-0">
+                  <span class="shrink-0 inline-block px-2 py-0.5 border-2 border-black bg-[#c4b5fd] text-black font-black uppercase text-[10px]">Prev</span>
                   <a
                     href="{{ olderPost.url }}"
-                    class="font-mono font-bold text-black hover:underline truncate"
+                    class="font-mono font-bold text-black hover:text-[#b45309] transition-colors truncate"
                   >
                     {{ olderPost.data.title }}
                   </a>
                 </div>
-                <time datetime="{{ olderPost.date | dateIso }}" class="text-xs text-black/80 font-medium shrink-0">
+                <time datetime="{{ olderPost.date | dateIso }}" class="text-xs text-black/60 font-medium shrink-0">
                   {{ (olderPost.data.displayDate or olderPost.date) | dateDisplay }}
                 </time>
               </div>
             {% endif %}
 
             {% if randomPost %}
-              <div class="flex items-baseline justify-between gap-3 group">
-                <div class="flex items-baseline gap-2 min-w-0">
-                  <span class="text-black/70 font-black uppercase text-xs shrink-0">RANDOM:</span>
+              <div class="flex items-baseline justify-between gap-3">
+                <div class="flex items-baseline gap-3 min-w-0">
+                  <span class="shrink-0 inline-block px-2 py-0.5 border-2 border-black bg-[#38bdf8] text-black font-black uppercase text-[10px]">Random</span>
                   <a
                     href="{{ randomPost.url }}"
-                    class="font-mono font-bold text-black hover:underline truncate"
+                    class="font-mono font-bold text-black hover:text-[#b45309] transition-colors truncate"
                   >
                     {{ randomPost.data.title }}
                   </a>
                 </div>
-                <time datetime="{{ randomPost.date | dateIso }}" class="text-xs text-black/80 font-medium shrink-0">
+                <time datetime="{{ randomPost.date | dateIso }}" class="text-xs text-black/60 font-medium shrink-0">
                   {{ (randomPost.data.displayDate or randomPost.date) | dateDisplay }}
                 </time>
               </div>
             {% endif %}
+          </div>
 
-            <div class="pt-2 border-t-2 border-black/15 flex items-center justify-between">
-              <a
-                href="/blog"
-                class="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-black hover:underline transition-colors group"
-              >
-                <span>← SEE ALL BLOGS</span>
-              </a>
-              <a
-                href="#article-top"
-                class="text-xs font-mono font-bold text-black hover:underline transition-colors"
-              >
-                ▲ TOP
-              </a>
-            </div>
+          <div class="flex items-center justify-between">
+            <a
+              href="/blog"
+              class="inline-flex items-center gap-1.5 px-4 py-2 border-2 border-black bg-transparent font-mono text-xs sm:text-sm font-bold text-black hover:bg-[#fde047] transition-colors"
+            >
+              <span>← ALL BLOGS</span>
+            </a>
+            <a
+              href="#article-top"
+              class="inline-flex items-center gap-1.5 px-4 py-2 border-2 border-black bg-transparent font-mono text-xs sm:text-sm font-bold text-black hover:bg-[#86efac] transition-colors"
+            >
+              <span>▲ TOP</span>
+            </a>
           </div>
         {% endif %}
-      </footer>
 
-      <!-- Giscus Comments Section -->
-      <section class="mt-8" id="comments">
-        <div class="giscus-container min-h-[160px]">
-          <script src="https://giscus.app/client.js"
-            data-repo="Bittu5134/bittu5134.github.io"
-            data-repo-id="MDEwOlJlcG9zaXRvcnkzOTkzNDM2NDE="
-            data-category="Announcements"
-            data-category-id="DIC_kwDOF82AGc4DGpnm"
-            data-mapping="pathname"
-            data-strict="0"
-            data-reactions-enabled="1"
-            data-emit-metadata="0"
-            data-input-position="top"
-            data-theme="gruvbox_light"
-            data-lang="en"
-            crossorigin="anonymous"
-            async>
-          </script>
-        </div>
-      </section>
+        <!-- Giscus Comments Section -->
+        <section id="comments">
+          <div class="giscus-container min-h-[160px]">
+            <script src="https://giscus.app/client.js"
+              data-repo="Bittu5134/bittu5134.github.io"
+              data-repo-id="MDEwOlJlcG9zaXRvcnkzOTkzNDM2NDE="
+              data-category="Announcements"
+              data-category-id="DIC_kwDOF82AGc4DGpnm"
+              data-mapping="pathname"
+              data-strict="0"
+              data-reactions-enabled="1"
+              data-emit-metadata="0"
+              data-input-position="top"
+              data-theme="gruvbox_light"
+              data-lang="en"
+              crossorigin="anonymous"
+              async>
+            </script>
+          </div>
+        </section>
+      </footer>
     </article>
   </main>
 
@@ -477,23 +452,90 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
       return {
         startOnLoad: false,
         securityLevel: "loose",
-        theme: "neutral",
+        // "base" fully honours themeVariables — nodes render in the site's
+        // yellow / mint / lavender accents instead of neutral grayscale.
+        theme: "base",
         themeVariables: {
           primaryColor: "#fde047",
           primaryBorderColor: "#000000",
           primaryTextColor: "#000000",
-          lineColor: "#000000",
           secondaryColor: "#86efac",
-          tertiaryColor: "#f6eedb",
+          secondaryTextColor: "#000000",
+          secondaryBorderColor: "#000000",
+          tertiaryColor: "#c4b5fd",
+          tertiaryTextColor: "#000000",
+          tertiaryBorderColor: "#000000",
+          lineColor: "#14161f",
+          textColor: "#000000",
           background: "#fffdf9",
-          mainBkg: "#fffdf9",
+          mainBkg: "#fde047", /* node bodies paint from mainBkg in mermaid */
           nodeBorder: "#000000",
-          clusterBkg: "#fcf6e8",
+          clusterBkg: "#f3e7cc",
           clusterBorder: "#000000",
+          edgeLabelBackground: "#fffdf9",
+          noteBkgColor: "#fef3c7",
+          noteTextColor: "#000000",
+          noteBorderColor: "#000000",
+          actorBkg: "#fde047",
+          actorBorder: "#000000",
+          activationBkgColor: "#86efac",
           fontFamily: '"Space Grotesk", sans-serif',
           fontSize: "13px"
         }
       };
+    }
+
+    /* Colour nodes by their graph role — one consistent colour per role,
+       determined by parsing the diagram source for each node id:
+       id([...]) / id(["..."]) terminals -> mint, id{"..."} decisions -> sky,
+       id[("...")] data stores -> lavender, id["..."] processes -> yellow.
+       Shape geometry is the fallback for diagram types with opaque ids.
+       2px black strokes match the site's border system. */
+    const ROLE_COLORS = { terminal: "#86efac", decision: "#38bdf8", data: "#c4b5fd", process: "#fde047" };
+    function parseNodeRoles(code) {
+      const map = {};
+      const re = /(?:^|\n|\s|;)([A-Za-z0-9_]+)\s*(\(\[|\[\(|\{|\[|\()/g;
+      let m;
+      while ((m = re.exec(code)) !== null) {
+        const id = m[1];
+        const opener = m[2];
+        if (opener === "(") continue; // plain id("...") is still a process box
+        map[id] = opener === "{" ? ROLE_COLORS.decision
+          : opener === "[(" ? ROLE_COLORS.data
+          : opener === "([" ? ROLE_COLORS.terminal
+          : ROLE_COLORS.process;
+      }
+      return map;
+    }
+    function colorizeByRole(container, code) {
+      const svg = container.querySelector("svg");
+      if (!svg) return;
+      const roleMap = parseNodeRoles(code || "");
+      svg.querySelectorAll("g.node").forEach(node => {
+        const shape = node.querySelector("rect, polygon, circle, path");
+        if (!shape) return;
+        let fill = null;
+        const idMatch = node.id.match(/-(?:flowchart|flow|statediagram|state)-([A-Za-z0-9_]+)-\d+$/);
+        if (idMatch && roleMap[idMatch[1]]) {
+          fill = roleMap[idMatch[1]]; // role straight from the diagram source
+        } else {
+          // fallback: infer from shape geometry
+          const tag = shape.tagName.toLowerCase();
+          if (tag === "polygon") fill = ROLE_COLORS.decision;
+          else if (tag === "circle") fill = ROLE_COLORS.terminal;
+          else if (tag === "path") {
+            const d = shape.getAttribute("d") || "";
+            fill = /C|Q/.test(d) ? ROLE_COLORS.terminal : ROLE_COLORS.process;
+          } else {
+            const rx = parseFloat(shape.getAttribute("rx") || "0");
+            const h = parseFloat(shape.getAttribute("height") || "0");
+            fill = (h && rx >= h / 2) ? ROLE_COLORS.terminal : ROLE_COLORS.process;
+          }
+        }
+        shape.style.fill = fill;
+        shape.style.stroke = "#000000";
+        shape.style.strokeWidth = "2px";
+      });
     }
 
     function decodeEntities(encodedString) {
@@ -524,6 +566,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
           const uniqueId = "mermaid-svg-" + idx + "-" + Math.random().toString(36).substring(2, 8);
           const { svg } = await mermaid.render(uniqueId, code);
           container.innerHTML = svg;
+          colorizeByRole(container, code);
         } catch (err) {
           console.warn("Mermaid render error for diagram " + idx + ":", err);
           if (!container.querySelector("pre")) {
