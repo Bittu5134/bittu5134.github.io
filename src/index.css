@@ -125,6 +125,15 @@ img, svg, video {
   max-width: 100%;
 }
 
+/* Project category chips: the filter controller only flips aria-pressed. */
+.project-filter-btn[aria-pressed="true"] {
+  background-color: #fde047;
+  box-shadow: 2px 2px 0px 0px #000000;
+}
+.project-filter-btn[aria-pressed="true"]:hover {
+  background-color: #fde047;
+}
+
 /* Retro graph paper / dot grid background */
 .retro-dots-bg {
   background-color: #f6eedb;

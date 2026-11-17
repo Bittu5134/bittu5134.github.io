@@ -18,19 +18,10 @@
    template this file sees). Re-running @tailwind utilities here duplicated
    ~14 KB of identical rules on every blog page. */
 
-/* Blog Archive: Tag Filter Chips + Project Filter Chips ─────────── */
+/* Blog Archive: Tag Filter Chips ───────────────────────────── */
 /* Flat dashed chips; the search controller only toggles .active and font
    weight, so selection is shown with a plain fill (no lift, no shadow). */
 .blog-tag-filter-btn.active {
-  background-color: #fde047;
-}
-
-/* Project category chips: the filter controller only flips aria-pressed. */
-.project-filter-btn[aria-pressed="true"] {
-  background-color: #fde047;
-  box-shadow: 2px 2px 0px 0px #000000;
-}
-.project-filter-btn[aria-pressed="true"]:hover {
   background-color: #fde047;
 }
 
