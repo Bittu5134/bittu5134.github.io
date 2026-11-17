@@ -13,8 +13,10 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-@tailwind components;
-@tailwind utilities;
+/* Tailwind directives removed: this file is always loaded AFTER index.css,
+   whose utility set is a strict superset (same content globs include every
+   template this file sees). Re-running @tailwind utilities here duplicated
+   ~14 KB of identical rules on every blog page. */
 
 /* ─── Blog Markdown Prose (Readability-First Architecture) ───── */
 .prose-retro {
@@ -546,18 +548,6 @@
   margin-bottom: 0.5rem;
 }
 
-.github-alert-body {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.9375rem;
-  line-height: 1.75;
-  color: #000000;
-  font-weight: 500;
-}
-
-.github-alert-body p:last-child {
-  margin-bottom: 0;
-}
-
 /* ─── Mermaid Diagram Container (Flat Parchment) ─────────────── */
 .prose-retro .mermaid-container {
   margin: 2rem 0;
@@ -585,20 +575,6 @@
 }
 
 /* ─── KaTeX Math ────────────────────────────────────────────── */
-.prose-retro .math-inline {
-  display: inline;
-  font-size: 1em;
-}
-
-.prose-retro .math-display {
-  overflow-x: auto;
-  padding: 1.5rem 0;
-  text-align: center;
-  display: block;
-  margin: 2rem 0;
-  font-size: 1.0625rem;
-}
-
 /* ─── Tables (Flat High-Contrast) ─────────────── */
 .table-responsive-wrapper {
   width: 100%;
@@ -671,86 +647,11 @@
   display: none !important;
 }
 
-.prose-retro .footnotes ol {
-  list-style-type: decimal;
-  margin-left: 1.25rem;
-  margin-bottom: 0;
-  padding-left: 0.25rem;
-}
-
-.prose-retro .footnotes li {
-  margin-bottom: 0.625rem;
-  line-height: 1.65;
-  font-size: 0.875rem;
-}
-
-.prose-retro .footnotes li::marker {
-  font-family: 'Space Mono', monospace;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: #9ca3af;
-}
-
-.prose-retro .footnotes li p {
-  display: inline;
-  margin: 0 !important;
-}
-
-.prose-retro .data-footnote-backref {
-  display: inline-block;
-  padding: 0.15rem 0.35rem;
-  margin-left: 0.35rem;
-  text-decoration: none;
-  font-family: 'Space Mono', monospace;
-  font-weight: 700;
-  color: #d97706;
-  border-radius: 3px;
-  background-color: rgba(217, 119, 6, 0.1);
-  font-size: 0.8125rem;
-  vertical-align: baseline;
-  transition: all 0.15s ease;
-}
-
-.prose-retro .data-footnote-backref:hover {
-  background-color: #d97706;
-  color: #ffffff;
-}
 
 /* ─── Table of Contents (Desktop Sidebar Active State) ──────── */
-.toc-nav-link {
-  color: rgba(20, 22, 31, 0.7);
-  border-left: 2px solid transparent;
-}
-
-.toc-nav-link:hover {
-  color: #000000;
-  background-color: rgba(0, 0, 0, 0.03);
-}
-
-.toc-nav-link.active {
-  color: #b45309;
-  border-left-color: #d97706;
-  background-color: rgba(217, 119, 6, 0.06);
-  font-weight: 700;
-}
-
 /* ─── Cassette LCD Marquee ─────────────────────────────────── */
-@keyframes cassetteTicker {
-  0%   { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
-}
-
-.animate-cassette-ticker {
-  display: inline-flex;
-  width: max-content;
-  animation: cassetteTicker 12s linear infinite;
-  will-change: transform;
-}
-.animate-cassette-ticker:hover { animation-play-state: paused; }
-
 @media (prefers-reduced-motion: reduce) {
-  .animate-cassette-ticker,
-  .animate-ticker,
+    .animate-ticker,
   .animate-tickerFast,
   .animate-spinSlow,
   .animate-wiggle,
@@ -820,8 +721,8 @@
 }
 
 /* Prose links (Catppuccin Sapphire / Blue with Lavender hover) */
-[data-theme="dark"] .prose-retro a:not(.header-anchor):not(.toc-nav-link):not(.data-footnote-backref),
-.dark .prose-retro a:not(.header-anchor):not(.toc-nav-link):not(.data-footnote-backref) {
+[data-theme="dark"] .prose-retro a:not(.header-anchor),
+.dark .prose-retro a:not(.header-anchor) {
   color: #89b4fa !important;
   text-decoration: underline !important;
   text-decoration-color: #585b70 !important;
@@ -829,8 +730,8 @@
   transition: all 0.15s ease;
 }
 
-[data-theme="dark"] .prose-retro a:not(.header-anchor):not(.toc-nav-link):not(.data-footnote-backref):hover,
-.dark .prose-retro a:not(.header-anchor):not(.toc-nav-link):not(.data-footnote-backref):hover {
+[data-theme="dark"] .prose-retro a:not(.header-anchor):hover,
+.dark .prose-retro a:not(.header-anchor):hover {
   color: #b4befe !important;
   text-decoration-color: #89b4fa !important;
   background-color: transparent !important;
@@ -998,72 +899,6 @@
 [data-theme="dark"] .prose-retro .github-alert-caution .github-alert-title,
 .dark .prose-retro .github-alert-caution .github-alert-title {
   color: #f38ba8 !important;
-}
-
-[data-theme="dark"] .prose-retro .github-alert-body,
-[data-theme="dark"] .prose-retro .github-alert-body p,
-.dark .prose-retro .github-alert-body,
-.dark .prose-retro .github-alert-body p {
-  color: #cdd6f4 !important;
-  font-size: 1rem;
-}
-[data-theme="dark"] .prose-retro .github-alert-body code,
-.dark .prose-retro .github-alert-body code {
-  background-color: #313244 !important;
-  border-color: #45475a !important;
-  color: #f5c2e7 !important;
-}
-
-/* Footnotes section in dark mode */
-[data-theme="dark"] .prose-retro .footnotes,
-.dark .prose-retro .footnotes {
-  margin-top: 3.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid #313244 !important;
-  font-size: 0.875rem;
-  color: #a6adc8 !important;
-}
-
-[data-theme="dark"] .prose-retro .footnotes #footnote-label,
-[data-theme="dark"] .prose-retro .footnotes h2,
-.dark .prose-retro .footnotes #footnote-label,
-.dark .prose-retro .footnotes h2 {
-  color: #cdd6f4 !important;
-}
-
-[data-theme="dark"] .prose-retro .footnotes ol,
-.dark .prose-retro .footnotes ol {
-  list-style-type: decimal;
-  margin-left: 1.25rem;
-}
-
-[data-theme="dark"] .prose-retro .footnotes li,
-.dark .prose-retro .footnotes li {
-  margin-bottom: 0.625rem;
-  line-height: 1.65;
-  color: #a6adc8 !important;
-}
-
-[data-theme="dark"] .prose-retro .footnotes li::marker,
-.dark .prose-retro .footnotes li::marker {
-  color: #7f849c !important;
-}
-
-[data-theme="dark"] .prose-retro .data-footnote-backref,
-.dark .prose-retro .data-footnote-backref {
-  display: inline-block;
-  margin-left: 0.35rem;
-  color: #89b4fa !important;
-  text-decoration: none !important;
-  background-color: transparent !important;
-  padding: 0;
-  vertical-align: baseline;
-}
-
-[data-theme="dark"] .prose-retro .data-footnote-backref:hover,
-.dark .prose-retro .data-footnote-backref:hover {
-  color: #b4befe !important;
-  text-decoration: underline !important;
 }
 
 /* Mermaid diagrams in dark mode */

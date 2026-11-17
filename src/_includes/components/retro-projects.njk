@@ -3,7 +3,7 @@
 <section id="projects" class="relative py-14 sm:py-20 px-4 sm:px-6 scroll-mt-20">
   <!-- Amethyst crystal cluster, pinned to the screen's left edge (decorative).
        Block size matches the top-right vines: 2 cols x 32px = 64px wide. -->
-  <img src="/assets/images/scenes/geode.png" alt="" width="80" height="144" aria-hidden="true"
+  <img src="/assets/images/scenes/geode.png" alt="" width="80" height="144" aria-hidden="true" loading="lazy" decoding="async"
        class="hidden xl:block absolute left-0 top-[45%] -translate-y-1/2 w-60 pointer-events-none select-none -z-10"
        style="image-rendering:pixelated;height:auto"/>
   <div class="max-w-5xl mx-auto">
@@ -72,31 +72,7 @@
       {% endfor %}
     </div>
 
-    <!-- Non-pinned projects: embedded as JSON, rendered client-side on filter click -->
-    <script id="non-pinned-projects-data" type="application/json">
-    [
-      {% for p in projects.projects %}
-        {% if not p.isPinned %}
-          {
-            "title": {{ p.title | dump | safe }},
-            "filterCategory": {{ p.filterCategory | dump | safe }},
-            "category": {{ p.category | dump | safe }},
-            "popularity": {{ (p.stars or 0) + (p.forks or 0) }},
-            "order": {{ p.order or 99 }},
-            "stars": {{ p.stars or 0 }},
-            "forks": {{ p.forks or 0 }},
-            "language": {{ p.language | dump | safe }},
-            "languageColor": {{ p.languageColor | dump | safe }},
-            "statsText": {{ p.statsText | dump | safe }},
-            "description": {{ p.description | dump | safe }},
-            "tags": {{ p.tags | dump | safe }},
-            "liveUrl": {{ p.liveUrl | dump | safe }},
-            "githubUrl": {{ p.githubUrl | dump | safe }}
-          }{% if not loop.last %},{% endif %}
-        {% endif %}
-      {% endfor %}
-    ]
-    </script>
+    <!-- Non-pinned projects: fetched from /assets/data/non-pinned-projects.json on first filter click -->
 
     <a href="https://github.com/Bittu5134?tab=repositories" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between gap-4 border-2 border-black bg-transparent px-4 py-2.5 font-mono text-sm font-bold text-black hover:bg-[#fde047] transition-colors">
       <span>More tools, projects and scripts on <span class="underline underline-offset-4">GitHub</span></span>

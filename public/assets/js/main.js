@@ -170,26 +170,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderNonPinnedCards() {
     if (nonPinnedRendered || !projectsGrid) return;
-    const dataEl = document.getElementById("non-pinned-projects-data");
-    if (!dataEl) return;
 
-    let nonPinned;
-    try {
-      nonPinned = JSON.parse(dataEl.textContent || "[]");
-    } catch (e) {
-      console.warn("Failed to parse non-pinned projects data:", e);
-      return;
-    }
-    if (!Array.isArray(nonPinned) || nonPinned.length === 0) return;
+    // Non-pinned project data ships as a separate cacheable JSON file instead
+    // of an inline <script> blob, so it no longer weighs down every page view.
+    // Fetched once, on the first non-PINNED filter click.
+    fetch("/assets/data/non-pinned-projects.json")
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then((nonPinned) => {
+        if (!Array.isArray(nonPinned) || nonPinned.length === 0) return;
 
     const esc = (v) => String(v == null ? "" : v).replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 
     // Build everything into a DocumentFragment and append once, so a mid-loop
-    // exception can never leave a half-rendered grid behind. The flag is set in
-    // a finally block so a failed pass is not retried (which would duplicate
+    // exception can never leave a half-rendered grid behind. The flag is set
+    // in .finally so a failed pass is not retried (which would duplicate
     // already-appended cards on the next filter click).
-    try {
-      const fragment = document.createDocumentFragment();
+    const fragment = document.createDocumentFragment();
       // 1-based position of this card in the full grid order, used for the
       // alternating tilt exactly like the server template's loop.index.
       const baseIndex = projectsGrid.children.length;
@@ -206,16 +205,16 @@ document.addEventListener("DOMContentLoaded", () => {
         card.setAttribute("data-order", String(p.order || 99));
 
         let statsRow = "";
-        if (p.stars > 0) statsRow += `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 border-2 border-black bg-[#fde047] font-mono text-sm font-bold text-black" title="${p.stars} stars on GitHub"><svg class="w-3.5 h-3.5 text-black fill-black" aria-hidden="true"><use href="#icon-star"/></svg>${esc(p.stars)}</span>`;
-        if (p.forks > 0) statsRow += `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 border-2 border-black bg-[#f6eedb] font-mono text-sm font-bold text-black" title="${p.forks} forks on GitHub"><svg class="w-3.5 h-3.5 text-black" aria-hidden="true"><use href="#icon-git-fork"/></svg>${esc(p.forks)}</span>`;
+        if (p.stars > 0) statsRow += `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 border-2 border-black bg-[#fde047] font-mono text-sm font-bold text-black" title="${p.stars} stars on GitHub"><svg class="w-3.5 h-3.5 text-black fill-black" aria-hidden="true"><use href="/assets/icons/sprite.svg#icon-star"/></svg>${esc(p.stars)}</span>`;
+        if (p.forks > 0) statsRow += `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 border-2 border-black bg-[#f6eedb] font-mono text-sm font-bold text-black" title="${p.forks} forks on GitHub"><svg class="w-3.5 h-3.5 text-black" aria-hidden="true"><use href="/assets/icons/sprite.svg#icon-git-fork"/></svg>${esc(p.forks)}</span>`;
 
         let metaLine = [p.language, p.statsText].filter(Boolean).map(esc).join(" · ");
         
 
         let visitBtn = "";
-        if (p.liveUrl) visitBtn = `<a href="${esc(p.liveUrl)}" target="_blank" rel="noopener noreferrer" class="btn-pill-sm bg-[#fde047] hover:bg-[#fbbf24]">Visit <svg class="w-3.5 h-3.5 text-black" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></a>`;
+        if (p.liveUrl) visitBtn = `<a href="${esc(p.liveUrl)}" target="_blank" rel="noopener noreferrer" class="btn-pill-sm bg-[#fde047] hover:bg-[#fbbf24]">Visit <svg class="w-3.5 h-3.5 text-black" aria-hidden="true"><use href="/assets/icons/sprite.svg#icon-arrow-up-right"/></svg></a>`;
         let ghBtn = "";
-        if (p.githubUrl) ghBtn = `<a href="${esc(p.githubUrl)}" target="_blank" rel="noopener noreferrer" class="btn-pill-sm bg-transparent hover:bg-[#86efac]"><svg class="w-3.5 h-3.5 text-black" aria-hidden="true"><use href="#icon-github"/></svg> GitHub</a>`;
+        if (p.githubUrl) ghBtn = `<a href="${esc(p.githubUrl)}" target="_blank" rel="noopener noreferrer" class="btn-pill-sm bg-transparent hover:bg-[#86efac]"><svg class="w-3.5 h-3.5 text-black" aria-hidden="true"><use href="/assets/icons/sprite.svg#icon-github"/></svg> GitHub</a>`;
 
         card.innerHTML = `
           <div class="px-7 pt-5 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
@@ -232,9 +231,15 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       projectsGrid.appendChild(fragment);
-    } finally {
+    })
+    .catch((e) => {
+      console.warn("Failed to load non-pinned projects data:", e);
+    })
+    .finally(() => {
+      // Set in a finally-style tail so a failed pass is not retried (which
+      // would duplicate already-appended cards on the next filter click).
       nonPinnedRendered = true;
-    }
+    });
   }
 
   filterButtons.forEach((btn) => {
@@ -1050,35 +1055,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* -------------------------------------------------------------------------- */
-  /* 10. Table of Contents Scroll-Spy                                           */
+  /* 10. Table of Contents Scroll-Spy — removed: post.njk renders TOC links
+     with utility classes only, so .toc-nav-link matched nothing.             */
   /* -------------------------------------------------------------------------- */
-  const tocLinks = document.querySelectorAll(".toc-nav-link");
-  if (tocLinks.length > 0) {
-    const headingIds = Array.from(tocLinks).map((link) => link.getAttribute("data-target"));
-    const headings = headingIds.map((id) => document.getElementById(id)).filter(Boolean);
-
-    if ("IntersectionObserver" in window && headings.length > 0) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const id = entry.target.getAttribute("id");
-              tocLinks.forEach((link) => {
-                if (link.getAttribute("data-target") === id) {
-                  link.classList.add("active");
-                } else {
-                  link.classList.remove("active");
-                }
-              });
-            }
-          });
-        },
-        { rootMargin: "0px 0px -70% 0px", threshold: 0 }
-      );
-
-      headings.forEach((heading) => observer.observe(heading));
-    }
-  }
 
   /* -------------------------------------------------------------------------- */
   /* 11. Blog Search & Filtering handled exclusively by pagefind-search.js     */

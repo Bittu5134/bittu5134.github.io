@@ -162,6 +162,10 @@ const techMappings = {
   cloudflare: "node_modules/simple-icons/icons/cloudflare.svg",
 };
 
+// NOTE: tech icons are no longer added to the sprite. The About section renders
+// skills as text pills (retro-about.njk), so `icon-tech-*` symbols were dead
+// weight in every page's HTML.
+
 const updatedTechStack = [];
 for (const [techKey, srcPath] of Object.entries(techMappings)) {
   const raw = readNode(srcPath);
@@ -205,29 +209,37 @@ export default ${JSON.stringify(updatedTechStack, null, 2)};
 `;
 fs.writeFileSync(path.join(rootDir, "src/_data/techStack.js"), techStackJsContent, "utf-8");
 
-// 4. Assemble optimized global inlined sprite for instantaneous zero-RTT rendering
-const spriteOutput = `<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="hidden" style="display:none">\n${spriteSymbols.join("\n")}\n</svg>\n`;
-fs.writeFileSync(path.join(rootDir, "src/_includes/components/icons-sprite.njk"), spriteOutput, "utf-8");
+// 4. Assemble the external sprite (public/assets/icons/sprite.svg).
+// Previously the sprite was inlined into every page's HTML (~30-34 KB each).
+// It is now an external file so browsers download and cache it once across
+// all pages. Templates reference it via <use href="/assets/icons/sprite.svg#id">.
+// To keep the file lean we only ship symbols actually referenced anywhere.
+const usedIdSources = [];
+for (const dir of ["src", "blogs"]) {
+  usedIdSources.push(path.join(rootDir, dir));
+}
+for (const jsDir of ["public/assets/js", "scripts/markdown"]) {
+  usedIdSources.push(path.join(rootDir, jsDir));
+}
 
-// Also create a lean homepage-only sprite by filtering to used icons
-const homepageUsedIcons = new Set([
-  "icon-terminal", "icon-pickaxe", "icon-arrow-down", "icon-arrow-left", "icon-arrow-right", "icon-arrow-up-right",
-  "icon-check", "icon-disc-3", "icon-disc3", "icon-play", "icon-pause", "icon-skip-back", "icon-skip-forward",
-  "icon-volume-2", "icon-minus", "icon-external-link", "icon-menu", "icon-x", "icon-folder",
-  "icon-file-text", "icon-user", "icon-mail", "icon-rss", "icon-book-open", "icon-graduation-cap",
-  "icon-trophy", "icon-zap", "icon-copy", "icon-bug", "icon-star", "icon-git-fork", "icon-code",
-  "icon-minecraft-live", "icon-grad-spark",
-  "icon-github", "icon-twitter", "icon-discord", "icon-patreon", "icon-reddit", "icon-linkedin",
-  "icon-pixel-monster", "icon-planet-minecraft", "icon-tech-go", "icon-tech-python", "icon-tech-cplusplus",
-  "icon-tech-typescript", "icon-tech-linux", "icon-tech-webrtc", "icon-tech-docker", "icon-tech-redis",
-  "icon-tech-fastapi", "icon-tech-cloudflare"
-]);
+const usedIds = new Set(["icon-disc3"]); // legacy alias kept for safety
+const collectUsedIds = (dir) => {
+  if (!fs.existsSync(dir)) return;
+  for (const entry of fs.readdirSync(dir, { recursive: true, withFileTypes: true })) {
+    if (!entry.isFile() || /\.(njk|md|js|mjs|html|css)$/.test(entry.name) === false) continue;
+    const full = path.join(entry.parentPath ?? entry.path, entry.name);
+    const text = fs.readFileSync(full, "utf-8");
+    for (const m of text.matchAll(/#(icon-[a-z0-9-]+)/g)) usedIds.add(m[1]);
+  }
+};
+usedIdSources.forEach(collectUsedIds);
 
-const homeSymbols = spriteSymbols.filter(s => {
+const outputSymbols = spriteSymbols.filter((s) => {
   const m = s.match(/id="([^"]+)"/);
-  return m && homepageUsedIcons.has(m[1]);
+  return m && usedIds.has(m[1]);
 });
-const homeSpriteOutput = `<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="hidden" style="display:none">\n${homeSymbols.join("\n")}\n</svg>\n`;
-fs.writeFileSync(path.join(rootDir, "src/_includes/components/icons-sprite-home.njk"), homeSpriteOutput, "utf-8");
 
-console.log(`[sync-icons] Done! Synchronized ${spriteSymbols.length} official icons into public/assets/icons/ and icons-sprite.njk.`);
+const spriteOutput = `<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">\n${outputSymbols.join("\n")}\n</svg>\n`;
+fs.writeFileSync(path.join(rootDir, "public/assets/icons/sprite.svg"), spriteOutput, "utf-8");
+
+console.log(`[sync-icons] Done! ${outputSymbols.length} used icons -> public/assets/icons/ + external sprite.svg (${(spriteOutput.length / 1024).toFixed(1)} KB).`);

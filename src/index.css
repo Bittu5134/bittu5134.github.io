@@ -45,15 +45,6 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-@font-face {
-  font-family: 'Space Mono';
-  font-style: italic;
-  font-weight: 400;
-  font-display: swap;
-  src: url('/assets/fonts/SpaceMono-Italic.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
 @tailwind components;
 @tailwind utilities;
 
@@ -207,17 +198,6 @@ img, svg, video {
 }
 
 
-/* Fade the WebGL canvas out at the bottom so blobs melt into the paper
-   instead of being sliced by the next section */
-.hero-canvas-mask {
-  -webkit-mask-image: linear-gradient(to bottom, black 72%, transparent 98%);
-  mask-image: linear-gradient(to bottom, black 72%, transparent 98%);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  #metaballs-canvas { display: none; }
-}
-
 /* Visible keyboard focus, on-brand ink */
 :focus-visible { outline: 3px solid #14161f; outline-offset: 2px; }
 button:focus-visible, a:focus-visible { outline: 3px solid #14161f; outline-offset: 2px; }
@@ -232,6 +212,3 @@ button:focus-visible, a:focus-visible { outline: 3px solid #14161f; outline-offs
 }
 
 .heading-pop { text-shadow: 0.07em 0.07em 0 #b45309; }
-
-/* Soft blur for the WebGL blob canvas (replaces per-pixel AA) */
-.hero-canvas-blur { filter: blur(3px); }
