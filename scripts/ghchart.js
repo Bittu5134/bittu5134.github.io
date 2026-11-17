@@ -1,11 +1,11 @@
 // Compacts the ghchart SVG: turns the per-day <rect> grid into one dashed
 // stroke per contiguous colour run, drops labels/margins and data-* attrs.
 const PALETTE = {
-  0: "#e6e6e6",
-  1: "#52d383",
-  2: "#3bbd6f",
-  3: "#279a55",
-  4: "#0f7034",
+  0: "#d4d4d4",
+  1: "#3bbd70",
+  2: "#2aa25c",
+  3: "#1b8447",
+  4: "#0a5f2e",
 };
 
 export function compactGhChart(svg) {
