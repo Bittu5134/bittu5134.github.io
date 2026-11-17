@@ -2,115 +2,115 @@
  {
   "r": 1,
   "c": 3,
-  "sheet": "sv7-nether_portal.png",
+  "sheet": "nether-portal-frames.png",
   "frames": 32
  },
  {
   "r": 1,
   "c": 4,
-  "sheet": "sv7-nether_portal.png",
+  "sheet": "nether-portal-frames.png",
   "frames": 32
  },
  {
   "r": 2,
   "c": 3,
-  "sheet": "sv7-nether_portal.png",
+  "sheet": "nether-portal-frames.png",
   "frames": 32
  },
  {
   "r": 2,
   "c": 4,
-  "sheet": "sv7-nether_portal.png",
+  "sheet": "nether-portal-frames.png",
   "frames": 32
  },
  {
   "r": 3,
   "c": 3,
-  "sheet": "sv7-nether_portal.png",
+  "sheet": "nether-portal-frames.png",
   "frames": 32
  },
  {
   "r": 3,
   "c": 4,
-  "sheet": "sv7-nether_portal.png",
+  "sheet": "nether-portal-frames.png",
   "frames": 32
  },
  {
   "r": 9,
   "c": 6,
-  "sheet": "sv7-lava_flow.png",
+  "sheet": "lava-flow-frames.png",
   "frames": 16
  },
  {
   "r": 10,
   "c": 6,
-  "sheet": "sv7-lava_flow.png",
+  "sheet": "lava-flow-frames.png",
   "frames": 16
  },
  {
   "r": 11,
   "c": 6,
-  "sheet": "sv7-lava_flow.png",
+  "sheet": "lava-flow-frames.png",
   "frames": 16
  },
  {
   "r": 12,
   "c": 6,
-  "sheet": "sv7-lava_flow.png",
+  "sheet": "lava-flow-frames.png",
   "frames": 16
  },
  {
   "r": 13,
   "c": 6,
-  "sheet": "sv7-lava_flow.png",
+  "sheet": "lava-flow-frames.png",
   "frames": 16
  },
  {
   "r": 14,
   "c": 6,
-  "sheet": "sv7-lava_flow.png",
+  "sheet": "lava-flow-frames.png",
   "frames": 16
  },
  {
   "r": 15,
   "c": 6,
-  "sheet": "sv7-lava_flow.png",
+  "sheet": "lava-flow-frames.png",
   "frames": 16
  },
  {
   "r": 16,
   "c": 6,
-  "sheet": "sv7-lava_flow.png",
+  "sheet": "lava-flow-frames.png",
   "frames": 16
  },
  {
   "r": 17,
   "c": 6,
-  "sheet": "sv7-lava_flow.png",
+  "sheet": "lava-flow-frames.png",
   "frames": 16
  },
  {
   "r": 18,
   "c": 6,
-  "sheet": "sv7-lava_flow.png",
+  "sheet": "lava-flow-frames.png",
   "frames": 16
  },
  {
   "r": 19,
   "c": 6,
-  "sheet": "sv7-lava_flow.png",
+  "sheet": "lava-flow-frames.png",
   "frames": 16
  },
  {
   "r": 20,
   "c": 6,
-  "sheet": "sv7-lava_flow.png",
+  "sheet": "lava-flow-frames.png",
   "frames": 16
  },
  {
   "r": 21,
   "c": 6,
-  "sheet": "sv7-lava_flow.png",
+  "sheet": "lava-flow-frames.png",
   "frames": 16
  }
 ]

@@ -35,7 +35,7 @@
     <meta property="og:url" content="https://bittu.dev{{ page.url }}" />
     {% set rawOg = ogImage if ogImage else coverImage %}
     {% if not rawOg %}
-      {% set rawOg = '/images/og_banner.webp' %}
+      {% set rawOg = '/assets/images/og-banner.webp' %}
     {% elif rawOg.endsWith('.svg') %}
       {% set rawOg = rawOg | replace('.svg', '.png') %}
     {% endif %}
@@ -49,8 +49,8 @@
     {% elif resolvedCover.endsWith('.jpg') or resolvedCover.endsWith('.jpeg') %}
       <meta property="og:image:type" content="image/jpeg" />
     {% endif %}
-    {% set imgWidth = ogImageWidth if ogImageWidth else (1400 if 'og_banner' in resolvedCover else 1200) %}
-    {% set imgHeight = ogImageHeight if ogImageHeight else (350 if 'og_banner' in resolvedCover else 630) %}
+    {% set imgWidth = ogImageWidth if ogImageWidth else (1400 if 'og-banner' in resolvedCover else 1200) %}
+    {% set imgHeight = ogImageHeight if ogImageHeight else (350 if 'og-banner' in resolvedCover else 630) %}
     <meta property="og:image:width" content="{{ imgWidth }}" />
     <meta property="og:image:height" content="{{ imgHeight }}" />
     {% set resolvedAlt = coverAlt if coverAlt else (alt if alt else (title if title else 'Bittu | Software & CyberSec')) %}
@@ -87,10 +87,10 @@
     <!-- Playpen Sans Regular + ExtraBold are the only above-the-fold faces;
          Space Mono (data accents) and the 700 cut are left to font-display: swap. -->
     {% if page.url == "/" %}
-    <link rel="preload" href="/images/avatar.avif" as="image" type="image/avif" />
-    <link rel="preload" href="/fonts/PlaypenSans-Regular.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/PlaypenSans-ExtraBold.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/PlaypenSans-Bold.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/images/avatar.avif" as="image" type="image/avif" />
+    <link rel="preload" href="/assets/fonts/PlaypenSans-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/PlaypenSans-ExtraBold.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/PlaypenSans-Bold.woff2" as="font" type="font/woff2" crossorigin />
     {% endif %}
 
     <!-- Theme Preference (Retro Light Theme) -->

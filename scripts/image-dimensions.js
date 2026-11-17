@@ -3,7 +3,7 @@
  *
  * OpenGraph/Twitter cards want og:image:width and og:image:height. Those numbers
  * used to be guessed in the templates — 1200x630 for anything, 1400x350 for any
- * cover containing "og_banner" in its path — which meant a post whose cover was
+ * cover containing "og-banner" in its path — which meant a post whose cover was
  * 1280x720 published a card claiming 1200x630, and the JSON-LD disagreed with the
  * OG tags on top of that. A wrong aspect ratio makes some social scrapers letterbox
  * or crop the card.
@@ -13,10 +13,10 @@
  * not worth the dependency, so this parses the handful of container headers that
  * actually appear in this repo: WebP, PNG, JPEG and GIF.
  *
- * Local site-root paths (/images/foo.webp) are resolved against public/, which is
- * the tree Eleventy passthrough-copies to dist/. Remote and data: URLs are never
- * probed — there is nothing local to read and the request would only slow the
- * build — so callers fall back to their own defaults.
+ * Local site-root paths (/assets/images/foo.webp) are resolved against the repo
+ * root, which is the same tree Eleventy passthrough-copies to dist/. Remote and
+ * data: URLs are never probed — there is nothing local to read and the request
+ * would only slow the build — so callers fall back to their own defaults.
  */
 
 import fs from "node:fs";
@@ -24,19 +24,16 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const PUBLIC_DIR = path.resolve(__dirname, "../public");
-// Public files that already live at a site-root path on dist/ (passthrough-copied).
-// Covers can therefore live either here or under blogs/ (which is passthrough-copied
-// to dist/blogs/ via the { "blogs": "blogs" } config), so probe both.
+// Site-root URLs map 1:1 onto repo paths: /assets/images/x -> <repo>/assets/images/x.
 const PROJECT_ROOT = path.resolve(__dirname, "..");
-const ASSET_ROOTS = [PUBLIC_DIR, PROJECT_ROOT];
+const ASSET_ROOTS = [PROJECT_ROOT];
 
 // WebP: a RIFF container whose "VP8 " / "VP8L" / "VP8X" chunk carries the size.
 // Lossless (VP8L) packs width-1 and height-1 into one little-endian 32-bit word.
 const WEBP_CHUNKS = new Set(["VP8 ", "VP8L", "VP8X"]);
 
 // Layout of a "VP8 " (lossy) frame payload, relative to the start of its chunk
-// header. Verified against public/images/og_banner.webp (1400x350):
+// header. Verified against assets/images/og-banner.webp (1400x350):
 //   +4  chunkSize (uint32 LE)
 //   +8  3-byte frame tag
 //   +11 3-byte start code 0x9d 0x01 0x2a
@@ -127,12 +124,11 @@ export function readImageDimensions(filePath) {
 }
 
 /**
- * Resolve a site-root image path (/images/foo.webp) to its file on disk.
- * Probes public/ first (assets passthrough-copied verbatim), then the repo root
- * (blogs/** passthrough-copied to dist/blogs/), since blog covers live under the latter.
- * Absolute filesystem paths are used as-is.
+ * Resolve a site-root image path (/assets/images/foo.webp) to its file on disk.
+ * Assets are passthrough-copied from the repo root, so a site-root URL is also
+ * a repo-relative path. Absolute filesystem paths are used as-is.
  */
-function resolvePublicPath(urlPath) {
+function resolveAssetPath(urlPath) {
   const relative = urlPath.replace(/^\/+/, "");
   for (const root of ASSET_ROOTS) {
     const candidate = path.resolve(root, relative);
@@ -150,13 +146,13 @@ function resolvePublicPath(urlPath) {
  * Only local site-root paths are probed: that is where this repo's covers live, and
  * it keeps remote and data: URLs from triggering network reads at build time.
  *
- * @param {string | undefined | null} imageUrl e.g. "/images/og_banner.webp" or "https://…"
+ * @param {string | undefined | null} imageUrl e.g. "/assets/images/og-banner.webp" or "https://…"
  * @returns {{width: number, height: number} | null} null when not measurable locally.
  */
 export function measureImage(imageUrl) {
   if (!imageUrl || typeof imageUrl !== "string") return null;
   if (!imageUrl.startsWith("/") || imageUrl.startsWith("//")) return null;
-  const resolved = resolvePublicPath(imageUrl.split(/[?#]/)[0]);
+  const resolved = resolveAssetPath(imageUrl.split(/[?#]/)[0]);
   if (!resolved) return null;
   return readImageDimensions(resolved);
 }

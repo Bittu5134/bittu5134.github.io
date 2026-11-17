@@ -540,7 +540,8 @@ export function rehypeBlockquoteAttribution() {
 /**
  * 6. rehypeBlogRelativeImages
  * Rewrites relative image links (e.g. ./assets/foo.png or assets/foo.png)
- * to root-relative paths under /blogs/... so browsers can resolve them on /blog/<slug>/ pages.
+ * to root-relative paths under /assets/images/blog/ so browsers can resolve
+ * them on /blog/<slug>/ pages while blog media stays in the shared asset tree.
  */
 export function rehypeBlogRelativeImages() {
   return (tree) => {
@@ -554,7 +555,7 @@ export function rehypeBlogRelativeImages() {
           !src.startsWith("data:")
         ) {
           src = src.replace(/^\.\//, "");
-          node.properties.src = `/blogs/${src}`;
+          node.properties.src = `/assets/images/blog/${src}`;
         }
       }
     });

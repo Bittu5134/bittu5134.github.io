@@ -79,7 +79,7 @@ export default {
       const target = data.ogImage || data.coverImage;
       const measured = measureImage(target);
       if (measured) return measured.width;
-      if (target && target.includes("og_banner")) return 1400;
+      if (target && target.includes("og-banner")) return 1400;
       return 1200;
     },
     ogImageHeight: (data) => {
@@ -87,7 +87,7 @@ export default {
       const target = data.ogImage || data.coverImage;
       const measured = measureImage(target);
       if (measured) return measured.height;
-      if (target && target.includes("og_banner")) return 350;
+      if (target && target.includes("og-banner")) return 350;
       return 630;
     },
     wordCount: (data) => {

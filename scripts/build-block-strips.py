@@ -7,8 +7,9 @@ no stretching, no tiling, no resplitting into repeat segments.
 Only fully-empty border columns are cropped so the art keeps its
 true proportions. Tweak SCALE / the grid later as needed.
 
-Writes public/assets/blocks/*.png                        (deployed)
-       temp/block-variants/lush-vines-preview.png
+Writes assets/images/blocks/*.png  (deployed)
+       temp/renders/<name>-preview.png
+
 
 '^'-like J cells mix cave_vines_plant_lit / cave_vines_plant 50/50 (seeded).
 
@@ -30,7 +31,7 @@ def latest_design():
     import re
     cands = sorted(VERSIONS.glob("v*.json"), key=lambda f: int(re.search(r"v(\d+)", f.name).group(1)))
     return cands[-1]
-OUT = ROOT / "public/assets/blocks"
+OUT = ROOT / "assets/images/blocks"
 PREVIEW = ROOT / "temp/renders"
 
 TILE = 16
@@ -83,6 +84,7 @@ def dark_deepslate():
 
 def render_design(design_path, rng, out_name):
     anim_cells = []  # [{r, c, sheet, frames}] for the site-side CSS ticker
+    sheet_textures = {}  # generated sheet filename -> Minecraft texture stem
     d = json.loads(design_path.read_text())
     legend = {}
     for ch, v in d["legend"].items():
@@ -146,8 +148,10 @@ def render_design(design_path, rng, out_name):
         if frames_by_name.get(name, 1) > 1:
             # animated flipbook: cutout — composite stays transparent here and the
             # site overlays this cell with the full sheet, animated by a ticker
+            sheet = f"{name.replace('_', '-')}-frames.png"
+            sheet_textures[sheet] = name
             anim_cells.append({"r": r, "c": c_orig - c0,
-                               "sheet": f"{Path(out_name).stem}-{name}.png", "frames": frames_by_name[name]})
+                               "sheet": sheet, "frames": frames_by_name[name]})
             return None
         t = load(name)
         # explicit rotations are keyed in ORIGINAL grid coords
@@ -178,18 +182,14 @@ def render_design(design_path, rng, out_name):
 
     # full flipbook sheets for animated cells + a manifest the site can wire up
     if anim_cells:
-        sheets = {}
-        for ac in anim_cells:
-            name = Path(ac["sheet"]).stem.replace(f"{Path(out_name).stem}-", "")
-            if name not in sheets:
-                img2 = Image.open(SRC / f"{name}.png" if (SRC / f"{name}.png").exists() else MC / f"{name}.png").convert("RGBA")
-                w, h = img2.size
-                frames = h // w
-                # normalize every sheet to 16px-wide frames (16 x frames*16);
-                # CSS scales the overlay up with pixelated rendering
-                img2 = img2.resize((TILE * SCALE, (TILE * SCALE) * frames), Image.NEAREST)
-                img2.save(OUT / ac["sheet"], optimize=True)
-                sheets[name] = True
+        for sheet_file, name in sheet_textures.items():
+            img2 = Image.open(SRC / f"{name}.png" if (SRC / f"{name}.png").exists() else MC / f"{name}.png").convert("RGBA")
+            w, h = img2.size
+            frames = h // w
+            # normalize every sheet to 16px-wide frames (16 x frames*16);
+            # CSS scales the overlay up with pixelated rendering
+            img2 = img2.resize((TILE * SCALE, (TILE * SCALE) * frames), Image.NEAREST)
+            img2.save(OUT / sheet_file, optimize=True)
         import json as _json
         (OUT / f"{Path(out_name).stem}-anim.json").write_text(_json.dumps(anim_cells, indent=1))
 
@@ -204,18 +204,22 @@ def main():
     PREVIEW.mkdir(parents=True, exist_ok=True)
     rng = random.Random(5)
     # latest vN.json is the main gutter art; every other design json (sv*, etc.)
-    # renders to its own <stem>.png as a standalone decoration
+    # renders to its friendly deployed name as a standalone decoration
     main_design = latest_design()
     render_design(main_design, rng, "lush-vines.png")
     # only designs referenced by the site are rendered/deployed
-    DEPLOYED = {"sv6", "sv7", "sv8"}
+    DEPLOYED = {
+        "sv6": "amethyst-geode",
+        "sv7": "nether-portal-scene",
+        "sv8": "cherry-blossom-tree",
+    }
     for extra in sorted(VERSIONS.glob("*.json")):
         if extra.name == main_design.name or extra.name.startswith("v"):
             continue
         if extra.stem not in DEPLOYED:
             print(f"skip {extra.name}: not deployed (edit DEPLOYED to add)")
             continue
-        render_design(extra, rng, f"{extra.stem}.png")
+        render_design(extra, rng, f"{DEPLOYED[extra.stem]}.png")
 
 if __name__ == "__main__":
     main()

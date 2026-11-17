@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 export default () => {
-  const dir = path.resolve("public/assets/blocks");
+  const dir = path.resolve("assets/images/blocks");
   const out = [];
   for (const f of fs.readdirSync(dir)) {
     if (!f.endsWith("-anim.json")) continue;

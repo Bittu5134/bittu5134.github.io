@@ -1,7 +1,7 @@
 ---
 slug: my-first-blog
 title: "My First Blog ✨"
-coverImage: "/blogs/assets/covers/my-first-blog.webp"
+coverImage: "/assets/images/blog/covers/my-first-blog.webp"
 coverAlt: "Hello!"
 date: "4-10-2026"
 updated: "5-10-2026"
@@ -33,4 +33,4 @@ Going forward, I will be posting all my random midnight projects here.
 
 I look forward to seeing you all around!
 
-![ ](./assets/gifs/jumping-yay.webp)
+![ ](/assets/images/blog/shared/jumping-yay.webp)

@@ -18,8 +18,8 @@ import tempfile
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC_DIR = os.path.join(PROJECT_ROOT, "src")
-MASTERS_DIR = os.path.join(PROJECT_ROOT, "scripts", "font-masters")
-OUTPUT_DIR = os.path.join(PROJECT_ROOT, "public", "fonts")
+MASTERS_DIR = os.path.join(PROJECT_ROOT, "fonts", "masters")
+OUTPUT_DIR = os.path.join(PROJECT_ROOT, "assets", "fonts")
 
 # Fonts to process: (Master filename, Output filename, Is Italic Only)
 FONT_TARGETS = [

@@ -42,7 +42,7 @@ export default {
     alternateName: "Bittu5134",
     email: "hello@bittu.dev",
     url: "https://bittu.dev",
-    image: "https://bittu.dev/images/avatar.webp",
+    image: "https://bittu.dev/assets/images/avatar.webp",
     jobTitle: "Software Engineer",
     twitter: "@404lostsquid",
     alumniOf: {

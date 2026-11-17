@@ -1,7 +1,7 @@
 ---
 slug: "a-very-dumb-markov-chatbot"
 title: "A Very Dumb Markov Chatbot"
-coverImage: "/blogs/assets/covers/a-very-dumb-markov-chatbot.png"
+coverImage: "/assets/images/blog/covers/a-very-dumb-markov-chatbot.png"
 coverAlt: "The DumbCord mascot: a Discord logo with a brown witch hat and anime eyes."
 date: "11-10-2026"
 summary: "Coding a very dumb chatbot trained on Discord chats and watching the chaos ensue."
@@ -17,7 +17,7 @@ I remember reading GeeksforGeeks pages on how to make a chatbot before the AI er
 
 To train the bot, I used chats from my [Discord server](https://bittu.dev/discord/). And, as you might expect from a Discord server, the chats were all over the place, so the bot came out completely unhinged.
 
-![I even gave it the ability to reply with GIFs](./assets/a-very-dumb-markov-chatbot/i_am_scared.png){style=max-height:50vh;}
+![I even gave it the ability to reply with GIFs](/assets/images/blog/a-very-dumb-markov-chatbot/i-am-scared.png){style=max-height:50vh;}
 
 ## How it works
 
@@ -63,7 +63,7 @@ Refer to the [Quickstart Guide](https://github.com/Bittu5134/DumbCord) for instr
 
 Here are some screenshots of people from the [Discord server](https://bittu.dev/discord/) interacting with the bot.
 
-![](./assets/a-very-dumb-markov-chatbot/showcase.webp)
+![](/assets/images/blog/a-very-dumb-markov-chatbot/showcase.webp)
 
 ## Food for Thought
 

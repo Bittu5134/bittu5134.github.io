@@ -328,18 +328,19 @@ document.addEventListener("DOMContentLoaded", () => {
      spanning a random Ore-UI sprite across its bottom-left corner        */
   /* ------------------------------------------------------------------------ */
   const ORE_IMAGES = [
-    "All_Achievements_Unlocked.png", "Blocked_Adding_Friends.png", "Client_Mismatch.png", "Connection_Error.png",
-    "Easy_and_Safe.png", "Empty_Wishlist_Wide_Heart.png", "Generic_Error.png", "Inbox_No_Feedback.png",
-    "Inbox_No_Invites.png", "Inbox_No_News.png", "Inbox_No_Realms_News.png", "Marketplace_Error.png",
-    "Members_Empty.png", "Members_Play_Free.png", "No_Achievements_In_Progress.png", "No_Content_Art.png",
-    "No_Followers.png", "No_Premium_Subscription.png", "No_Projects_Yet_Art.png", "No_Showcaseable.png",
-    "No_Worlds_Yet_Art.png", "Online_Safety_Adult.png", "Online_Safety_Child.png", "Parties_Empty.png",
-    "Parties_Multiplayer_Disabled.png", "Permissions_Missing.png", "Realms_Missing.png", "Sentiment_Question_Submitted.png",
-    "Server_Editor_Projects_Empty.png", "Sign_In_Prompts_Achievements.png", "Sign_In_Prompts_Character_Creator.png",
-    "Sign_In_Prompts_Friends.png", "Sign_In_Prompts_Launch.png", "Sign_In_Prompts_Save_Purchases.png",
-    "Sign_In_Prompts_Servers.png", "Survival.png", "Survival_Tutorial.png", "Tutorial_End.png",
-    "Unavailable_on_Preview.png", "Under_Construction_Art_Cropped.png", "Easy.png", "Hard.png", "Normal.png", "Peaceful.png"
-  ].map((f) => "/images/ore-ui/" + f);
+    "all-achievements-unlocked.png", "blocked-adding-friends.png", "client-mismatch.png", "connection-error.png",
+    "easy-and-safe.png", "empty.png", "empty-wishlist-wide-heart.png", "generic-error.png",
+    "inbox-no-feedback.png", "inbox-no-invites.png", "inbox-no-news.png", "inbox-no-realms-news.png",
+    "marketplace-error.png", "members-empty.png", "members-play-free.png", "mpp-banner-as-static.png",
+    "no-achievements-in-progress.png", "no-content-art.png", "no-followers.png", "no-premium-subscription.png",
+    "no-projects-yet-art.png", "no-showcaseable.png", "no-worlds-yet-art.png", "online-safety-adult.png",
+    "online-safety-child.png", "parties-empty.png", "parties-multiplayer-disabled.png", "permissions-missing.png",
+    "realms-missing.png", "sentiment-question-submitted.png", "server-editor-projects-empty.png",
+    "sign-in-prompts-achievements.png", "sign-in-prompts-character-creator.png", "sign-in-prompts-friends.png",
+    "sign-in-prompts-launch.png", "sign-in-prompts-save-purchases.png", "sign-in-prompts-servers.png",
+    "trial-mode-art.png", "trial-mode-modal-art.png", "tutorial-end.png", "unavailable-on-preview.png",
+    "under-construction-art-cropped.png"
+  ].map((f) => "/assets/images/minecraft-ui/" + f);
 
   const oreApply = () => {
     const deck = [...ORE_IMAGES].sort(() => Math.random() - 0.5);
