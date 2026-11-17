@@ -5,7 +5,9 @@ import { generateMeta } from "./scripts/generate-meta.mjs";
 import getReadingTime from "reading-time";
 import pluginRss from "@11ty/eleventy-plugin-rss";
 import { formatBlogDate, parseBlogDate, toIsoBlogDate, toSortableTime } from "./scripts/parse-blog-date.js";
+import { compactGhChart } from "./scripts/ghchart.js";
 import { minify } from "html-minifier-terser";
+import EleventyFetch from "@11ty/eleventy-fetch";
 
 // Shared terser options. Also read by the CLI for the standalone bundles via
 // terser.config.json, and passed to html-minifier-terser below so inline
@@ -47,25 +49,23 @@ async function fetchGhchart() {
   // Fault-tolerant by design — a network hiccup must never break the build.
   const dest = path.resolve("public/assets/images/ghchart.svg");
   const url = "https://ghchart.rshah.org/16a34a/Bittu5134";
-  const MAX_AGE_MS = 24 * 60 * 60 * 1000;
 
   try {
-    // Avoid refetching on every watch rebuild once we have a recent copy.
-    if (fs.existsSync(dest) && Date.now() - fs.statSync(dest).mtimeMs < MAX_AGE_MS) {
-      return;
-    }
-    fs.mkdirSync(path.dirname(dest), { recursive: true });
-    const res = await fetch(url, {
-      headers: { "user-agent": "bittu5134-site-build" },
-      signal: AbortSignal.timeout(15000),
+    // Same standard Eleventy cache as the GitHub API data (1 hour).
+    const svg = await EleventyFetch(url, {
+      duration: "1h",
+      type: "text",
+      fetchOptions: { headers: { "user-agent": "bittu5134-site-build" } },
     });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const svg = await res.text();
-    if (!svg.trimStart().startsWith("<svg") && !svg.includes("<svg")) {
+    if (!svg.includes("<svg")) {
       throw new Error("response did not look like SVG");
     }
-    fs.writeFileSync(dest, svg);
-    console.log(`[ghchart] fetched contribution chart (${svg.length} bytes)`);
+    // ghchart ships one <rect> per day plus labels; turn it into a compact
+    // dashed-stroke grid before writing, so the deployed file stays small.
+    const compact = compactGhChart(svg);
+    fs.mkdirSync(path.dirname(dest), { recursive: true });
+    fs.writeFileSync(dest, compact);
+    console.log(`[ghchart] contribution chart (${svg.length} -> ${compact.length} bytes)`);
   } catch (err) {
     // Keep whatever copy already exists; the build continues either way.
     console.warn(`[ghchart] fetch failed, keeping existing chart if any: ${err.message}`);
