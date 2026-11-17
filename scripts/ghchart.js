@@ -1,12 +1,13 @@
 // Compacts the ghchart SVG: turns the per-day <rect> grid into one dashed
 // stroke per contiguous colour run, drops labels/margins and data-* attrs.
 const PALETTE = {
-  0: "#d4d4d4",
   1: "#3bbd70",
   2: "#2aa25c",
   3: "#1b8447",
   4: "#0a5f2e",
 };
+// Blank cells are black at low opacity so they pick up the page background.
+const BLANK_OPACITY = 0.17;
 
 export function compactGhChart(svg) {
   const rects = [];
@@ -60,8 +61,10 @@ export function compactGhChart(svg) {
     '<g fill="none" stroke-width="10" stroke-dasharray="10 2">',
   ];
   for (const score of [...runs.keys()].sort()) {
+    const blank = score === "0" || !PALETTE[score];
+    const opacity = blank ? ` stroke-opacity="${BLANK_OPACITY}"` : "";
     parts.push(
-      `<path stroke="${PALETTE[score] ?? PALETTE[0]}" d="${runs.get(score).join("")}"/>`
+      `<path stroke="${blank ? "#000" : PALETTE[score]}"${opacity} d="${runs.get(score).join("")}"/>`
     );
   }
   parts.push("</g></svg>\n");
