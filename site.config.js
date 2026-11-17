@@ -197,19 +197,25 @@ export default {
   ],
 
   // ── Core Skills & Tech Stack Badges ─────────────────────────────────
-  // Displayed in the ~/about section.
-  // Each badge has a display name, brutalist background color class,
-  // and SVG sprite icon identifier (#icon-tech-*).
+  // Displayed in the ~/about section. Add, remove, or reorder here.
   skills: [
-    { name: "Go", bgClass: "bg-[#38bdf8]", iconId: "icon-tech-go" },
-    { name: "Python", bgClass: "bg-[#fde047]", iconId: "icon-tech-python" },
-    { name: "C / C++", bgClass: "bg-[#fb923c]", iconId: "icon-tech-cplusplus" },
-    { name: "TypeScript", bgClass: "bg-[#86efac]", iconId: "icon-tech-typescript" },
-    { name: "Linux & Sockets", bgClass: "bg-[#c4b5fd]", iconId: "icon-tech-linux" },
-    { name: "WebRTC", bgClass: "bg-[#f472b6]", iconId: "icon-tech-webrtc" },
-    { name: "Docker", bgClass: "bg-[#38bdf8]", iconId: "icon-tech-docker" },
-    { name: "Redis", bgClass: "bg-[#fde047]", iconId: "icon-tech-redis" },
-    { name: "FastAPI / Gin", bgClass: "bg-[#a7f3d0]", iconId: "icon-tech-fastapi" },
-    { name: "Cloudflare Workers", bgClass: "bg-[#fb923c]", iconId: "icon-tech-cloudflare" },
+    "Go",
+    "Python",
+    "C / C++",
+    "TypeScript",
+    "Linux & Sockets",
+    "WebRTC",
+    "Docker",
+    "Redis",
+    "FastAPI / Gin",
+    "Cloudflare Workers",
+    "Model Context Protocol",
+    "YARA",
+    "PostgreSQL",
+    "WebSockets",
+    "GitHub Actions",
+    "Proxmox VE",
+    "Cloudflare WAF & CDN",
+    "OpenCV",
   ],
 };

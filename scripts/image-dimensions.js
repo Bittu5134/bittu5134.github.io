@@ -113,7 +113,7 @@ const READERS = { webp: readWebp, png: readPng, gif: readGif, jpg: readJpeg, jpe
  * @param {string} filePath Absolute or repo-relative path to the image.
  * @returns {{width: number, height: number} | null} null when unreadable/unknown.
  */
-export function readImageDimensions(filePath) {
+function readImageDimensions(filePath) {
   const extension = path.extname(filePath).toLowerCase().replace(".", "");
   const reader = READERS[extension];
   if (!reader) return null;

@@ -8,7 +8,7 @@ import remarkSmartypants from "remark-smartypants";
 /**
  * Utility: Recursively extract plain text from a HAST node.
  */
-export function hastText(node) {
+function hastText(node) {
   if (!node) return "";
   if (node.type === "text") return node.value || "";
   if (Array.isArray(node.children)) return node.children.map(hastText).join("");
