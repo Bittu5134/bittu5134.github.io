@@ -42,5 +42,7 @@ public/llms-full.txt
 *.tsbuildinfo
 *.code-workspace
 
+__pycache__/
+
 # temp working dir (sprites, textures, experiments)
 temp/
