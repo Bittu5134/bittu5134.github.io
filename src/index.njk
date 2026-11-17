@@ -15,11 +15,11 @@ permalink: "/index.html"
    4x13-block design at native 16px tiles; aspect ratio preserved, no tiling. #}
 <div class="font-body relative">
   <!-- native 16px-art image; SCROLL KNOB: change width below (multiples of 64px look best) -->
-  <img src="/assets/images/scenes/lush-vines.png?v={{ buildStamp }}" alt="" width="64" height="208" aria-hidden="true"
+  <img src="/assets/images/scenes/vines.png?v={{ buildStamp }}" alt="" width="64" height="208" aria-hidden="true"
        class="hidden xl:block absolute top-0 right-0 pointer-events-none select-none -z-10"
        style="image-rendering:pixelated;width:250px;height:auto"/>
   <!-- Cherry tree + bee nest scene, bottom left corner (decorative) -->
-  <img src="/assets/images/scenes/cherry-blossom-tree.png?v={{ buildStamp }}" alt="" width="112" height="128" aria-hidden="true"
+  <img src="/assets/images/scenes/cherry-tree.png?v={{ buildStamp }}" alt="" width="112" height="128" aria-hidden="true"
        class="hidden xl:block absolute bottom-0 left-0 pointer-events-none select-none -z-10"
        style="image-rendering:pixelated;width:288px;height:auto"/>
 
@@ -53,10 +53,10 @@ permalink: "/index.html"
   <!-- Lo-Fi Cassette Player -->
   {% include "components/retro-cassette-player.njk" %}
 
-  <!-- Ghastling companion: slowly drifts toward the mouse cursor (JS in main.js) -->
-  <div id="ghastling-companion" class="hidden sm:block fixed top-0 left-0 w-16 pointer-events-none z-[9999]" aria-hidden="true">
-    {# swap back: <img src="/assets/images/entities/ghastling-ghost.webp" alt="" width="78" height="86" loading="lazy" class="w-full h-auto"/> #}
-    <img src="/assets/images/entities/ghastling.webp" alt="" width="58" height="50" loading="lazy" class="w-full h-auto"/>
+  <!-- Allay companion: slowly drifts toward the mouse cursor (JS in main.js) -->
+  <div id="allay-companion" class="hidden sm:block fixed top-0 left-0 w-16 pointer-events-none z-[9999]" aria-hidden="true">
+    {# swap back: <img src="/assets/images/entities/ghast.webp" alt="" width="78" height="86" loading="lazy" class="w-full h-auto"/> #}
+    <img src="/assets/images/entities/allay.webp" alt="" width="58" height="50" loading="lazy" class="w-full h-auto"/>
   </div>
 
 </div>

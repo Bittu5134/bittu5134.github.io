@@ -328,18 +328,17 @@ document.addEventListener("DOMContentLoaded", () => {
      spanning a random Ore-UI sprite across its bottom-left corner        */
   /* ------------------------------------------------------------------------ */
   const ORE_IMAGES = [
-    "all-achievements-unlocked.png", "blocked-adding-friends.png", "client-mismatch.png", "connection-error.png",
-    "easy-and-safe.png", "empty.png", "empty-wishlist-wide-heart.png", "generic-error.png",
-    "inbox-no-feedback.png", "inbox-no-invites.png", "inbox-no-news.png", "inbox-no-realms-news.png",
-    "marketplace-error.png", "members-empty.png", "members-play-free.png", "mpp-banner-as-static.png",
-    "no-achievements-in-progress.png", "no-content-art.png", "no-followers.png", "no-premium-subscription.png",
-    "no-projects-yet-art.png", "no-showcaseable.png", "no-worlds-yet-art.png", "online-safety-adult.png",
-    "online-safety-child.png", "parties-empty.png", "parties-multiplayer-disabled.png", "permissions-missing.png",
-    "realms-missing.png", "sentiment-question-submitted.png", "server-editor-projects-empty.png",
-    "sign-in-prompts-achievements.png", "sign-in-prompts-character-creator.png", "sign-in-prompts-friends.png",
-    "sign-in-prompts-launch.png", "sign-in-prompts-save-purchases.png", "sign-in-prompts-servers.png",
-    "trial-mode-art.png", "trial-mode-modal-art.png", "tutorial-end.png", "unavailable-on-preview.png",
-    "under-construction-art-cropped.png"
+    "adventure.png", "archer.png", "battle.png", "campfire.png",
+    "chest.png", "chicken-eggs.png", "chickens.png", "chorus-flower.png",
+    "command-block.png", "cow-rabbit.png", "crafting-room.png", "desert-house.png",
+    "dog-boat.png", "enderman.png", "fox.png", "group-pose.png",
+    "house.png", "jukebox.png", "king-pig.png", "librarian.png",
+    "lineup.png", "mob-encounter.png", "opening-chest.png", "painting.png",
+    "parrots.png", "pink-cow.png", "portal-meeting.png", "quartz-altar.png",
+    "rabbit-carrots.png", "snow-villager.png", "snowy-axolotl.png", "steve-chicken.png",
+    "sunset.png", "swamp.png", "turtle-trade.png", "turtles.png",
+    "underwater.png", "village-trade.png", "village.png", "villager-door.png",
+    "wooden-display.png", "zombies.png",
   ].map((f) => "/assets/images/mini_scene/" + f);
 
   const oreApply = () => {
@@ -435,47 +434,47 @@ document.addEventListener("DOMContentLoaded", () => {
     setCurrent(bandSection());
 }
   /* -------------------------------------------------------------------------- */
-  /* 3.4 Ghastling companion — drifts slowly toward the mouse cursor         */
+  /* 3.4 Allay companion — drifts slowly toward the mouse cursor         */
   /* ------------------------------------------------------------------------ */
-  const ghastling = document.getElementById("ghastling-companion");
-  if (ghastling && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    const ghastlingSpeed = 0.012;      // lerp factor — lower = lazier follow
-    const ghastlingOffset = { x: 28, y: -96 }; // hover up-right of the cursor
+  const allay = document.getElementById("allay-companion");
+  if (allay && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const allaySpeed = 0.012;      // lerp factor — lower = lazier follow
+    const allayOffset = { x: 28, y: -96 }; // hover up-right of the cursor
     let target = { x: innerWidth * 0.7, y: innerHeight * 0.5 };
     let pos = { x: innerWidth * 0.7, y: innerHeight * 0.5 };
-    let ghastlingRaf = null;
-    let ghastlingT = 0;
+    let allayRaf = null;
+    let allayT = 0;
 
     window.addEventListener("mousemove", (e) => {
-      target.x = e.clientX + ghastlingOffset.x;
-      target.y = e.clientY + ghastlingOffset.y;
+      target.x = e.clientX + allayOffset.x;
+      target.y = e.clientY + allayOffset.y;
     }, { passive: true });
 
-    const ghastlingTick = () => {
-      ghastlingT += 0.05;
-      pos.x += (target.x - pos.x) * ghastlingSpeed;
-      pos.y += (target.y - pos.y) * ghastlingSpeed;
+    const allayTick = () => {
+      allayT += 0.05;
+      pos.x += (target.x - pos.x) * allaySpeed;
+      pos.y += (target.y - pos.y) * allaySpeed;
       // keep the little guy on screen
-      const gw = ghastling.offsetWidth || 64;
-      const gh = ghastling.offsetHeight || 86;
+      const gw = allay.offsetWidth || 64;
+      const gh = allay.offsetHeight || 86;
       const gx = Math.min(Math.max(pos.x, gw * -0.25), innerWidth - gw * 0.75);
       const gy = Math.min(Math.max(pos.y, 8), innerHeight - gh - 8);
       // idle bob synced to its own gif cadence
-      const bob = Math.sin(ghastlingT) * 4;
+      const bob = Math.sin(allayT) * 4;
       // face the cursor: flip horizontally when drifting to the left of it
-      const facing = pos.x + ghastlingOffset.x < target.x - 6 ? -1 : 1;
-      ghastling.style.transform = "translate(" + gx + "px," + (gy + bob) + "px) scaleX(" + facing + ")";
-      ghastlingRaf = requestAnimationFrame(ghastlingTick);
+      const facing = pos.x + allayOffset.x < target.x - 6 ? -1 : 1;
+      allay.style.transform = "translate(" + gx + "px," + (gy + bob) + "px) scaleX(" + facing + ")";
+      allayRaf = requestAnimationFrame(allayTick);
     };
-    ghastlingRaf = requestAnimationFrame(ghastlingTick);
+    allayRaf = requestAnimationFrame(allayTick);
 
     // park the loop when the tab is hidden
     document.addEventListener("visibilitychange", () => {
       if (document.hidden) {
-        cancelAnimationFrame(ghastlingRaf);
-        ghastlingRaf = null;
-      } else if (ghastlingRaf === null) {
-        ghastlingRaf = requestAnimationFrame(ghastlingTick);
+        cancelAnimationFrame(allayRaf);
+        allayRaf = null;
+      } else if (allayRaf === null) {
+        allayRaf = requestAnimationFrame(allayTick);
       }
     });
   }

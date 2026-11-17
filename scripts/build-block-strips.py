@@ -69,6 +69,12 @@ CRYSTALS = {"amethyst_cluster", "small_amethyst_bud", "medium_amethyst_bud", "la
 BLOCKISH = {"amethyst_block", "budding_amethyst"}
 FILL_DARK = {}  # cached darkened deepslate texture
 
+# short, stable filenames for the animated flipbook sheets
+ANIM_SHEET_NAMES = {
+    "nether_portal": "portal-frames",
+    "lava_flow": "lava-frames",
+}
+
 def dark_deepslate():
     if "img" not in FILL_DARK:
         base = load("deepslate")
@@ -148,7 +154,7 @@ def render_design(design_path, rng, out_name):
         if frames_by_name.get(name, 1) > 1:
             # animated flipbook: cutout — composite stays transparent here and the
             # site overlays this cell with the full sheet, animated by a ticker
-            sheet = f"{name.replace('_', '-')}-frames.png"
+            sheet = f"{ANIM_SHEET_NAMES.get(name, name.replace('_', '-') + '-frames')}.png"
             sheet_textures[sheet] = name
             anim_cells.append({"r": r, "c": c_orig - c0,
                                "sheet": sheet, "frames": frames_by_name[name]})
@@ -206,12 +212,12 @@ def main():
     # latest vN.json is the main gutter art; every other design json (sv*, etc.)
     # renders to its friendly deployed name as a standalone decoration
     main_design = latest_design()
-    render_design(main_design, rng, "lush-vines.png")
+    render_design(main_design, rng, "vines.png")
     # only designs referenced by the site are rendered/deployed
     DEPLOYED = {
-        "sv6": "amethyst-geode",
-        "sv7": "nether-portal-scene",
-        "sv8": "cherry-blossom-tree",
+        "sv6": "geode",
+        "sv7": "portal",
+        "sv8": "cherry-tree",
     }
     for extra in sorted(VERSIONS.glob("*.json")):
         if extra.name == main_design.name or extra.name.startswith("v"):
