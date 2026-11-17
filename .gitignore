@@ -35,3 +35,6 @@ public/fonts/*
 *.sw?
 *.tsbuildinfo
 *.code-workspace
+
+# temp working dir (sprites, textures, experiments)
+temp/

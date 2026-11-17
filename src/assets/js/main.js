@@ -314,7 +314,17 @@ document.addEventListener("DOMContentLoaded", () => {
     allChip.click();
   }
 
-  /* 3.3 Ore UI easter eggs — every project card has a 50% chance of
+  /* 3.3 Animated block cells (nether portal, lava): flipbook ticker shifts
+     background-position in hard cell-height jumps, one frame per tick     */
+  setInterval(() => {
+    document.querySelectorAll(".block-anim").forEach((el) => {
+      const f = +el.dataset.frames || 1;
+      el._bf = ((el._bf || 0) + 1) % f;
+      el.style.backgroundPositionY = -((el._bf) * el.clientHeight) + "px";
+    });
+  }, 130);
+
+  /* 3.4 Ore UI easter eggs — every project card has a 50% chance of
      spanning a random Ore-UI sprite across its bottom-left corner        */
   /* ------------------------------------------------------------------------ */
   const ORE_IMAGES = [
@@ -422,27 +432,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return bestId;
     };
     setCurrent(bandSection());
-  }
-
-  /* 3.4 Skills ticker eases to 25% speed on hover/focus */
-  const tickerBand = document.querySelector(".ticker-band");
-  if (tickerBand) {
-    let tickerRate = 1;
-    const applyTickerRate = () => {
-      document.getAnimations().forEach((anim) => {
-        if (anim.animationName === "ticker") anim.playbackRate = tickerRate;
-      });
-    };
-    const easeTicker = (target) => {
-      tickerRate = target;
-      applyTickerRate();
-    };
-    tickerBand.addEventListener("mouseenter", () => easeTicker(0.25));
-    tickerBand.addEventListener("mouseleave", () => easeTicker(1));
-    tickerBand.addEventListener("focusin", () => easeTicker(0.25));
-    tickerBand.addEventListener("focusout", () => easeTicker(1));
-  }
-
+}
   /* -------------------------------------------------------------------------- */
   /* 3.4 Ghastling companion — drifts slowly toward the mouse cursor         */
   /* ------------------------------------------------------------------------ */

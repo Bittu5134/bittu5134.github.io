@@ -11,7 +11,18 @@ ogImageHeight: 350
 permalink: "/index.html"
 ---
 
-<div class="font-body">
+{# Right-gutter block art, rendered from the designer grid by scripts/build-block-strips.py.
+   Full 10x24-block design at 3x scale (480x1152); aspect ratio preserved, no tiling. #}
+<div class="font-body relative">
+  <!-- native 16px-art image; SCROLL KNOB: change width below (multiples of 64px look best) -->
+  <img src="/images/blocks/lush-vines.png?v={{ buildStamp }}" alt="" width="64" height="208" aria-hidden="true"
+       class="hidden xl:block absolute top-0 right-0 pointer-events-none select-none -z-10"
+       style="image-rendering:pixelated;width:250px;height:auto"/>
+  <!-- Cherry tree + bee nest scene, bottom left corner (decorative) -->
+  <img src="/images/blocks/sv8.png?v={{ buildStamp }}" alt="" width="112" height="128" aria-hidden="true"
+       class="hidden xl:block absolute bottom-0 left-0 pointer-events-none select-none -z-10"
+       style="image-rendering:pixelated;width:288px;height:auto"/>
+
   <!-- Top Header with Hamburger Navigation for Mobile -->
   {% include "components/retro-header.njk" %}
 

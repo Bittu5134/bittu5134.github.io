@@ -76,6 +76,9 @@ export default async function (eleventyConfig) {
   // Tell 11ty not to skip gitignored files in input dir (since src/blogs/ is gitignored)
   eleventyConfig.setUseGitIgnore(false);
 
+  // Build timestamp for cache-busting regenerated art (e.g. lush-vines.png?v=...)
+  eleventyConfig.addGlobalData("buildStamp", () => Date.now());
+
   // 0. Initial sync of blogs to src/blogs for 11ty input
   syncBlogsToSrc();
 
