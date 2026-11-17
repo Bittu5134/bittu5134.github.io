@@ -1,15 +1,13 @@
-// Compacts the ghchart SVG: turns the per-day <rect> grid into one dashed
-// stroke per contiguous colour run, drops labels/margins and data-* attrs.
-const PALETTE = {
+// Compacts the ghchart SVG into a solid heatmap: adjacent active days are
+// merged into 12px strokes and empty days are simply not drawn.
+const GREENS = {
   1: "#3bbd70",
   2: "#2aa25c",
   3: "#1b8447",
   4: "#0a5f2e",
 };
-// Blank cells are black at low opacity so they pick up the page background.
-const BLANK_OPACITY = 0.17;
 
-export function compactGhChart(svg) {
+function parseGrid(svg) {
   const rects = [];
   for (const m of svg.matchAll(/<rect\b([^>]*)\/?>/g)) {
     const attrs = m[1];
@@ -19,54 +17,68 @@ export function compactGhChart(svg) {
     if (score === undefined || !Number.isFinite(x) || !Number.isFinite(y)) continue;
     rects.push({ x, y, score });
   }
-  if (!rects.length) return svg;
+  return rects.length ? rects : null;
+}
 
-  const xs = rects.map((r) => r.x);
-  const ys = rects.map((r) => r.y);
-  const minX = Math.min(...xs);
-  const minY = Math.min(...ys);
-  const width = Math.max(...xs) - minX + 10;
-  const height = Math.max(...ys) - minY + 10;
-
+function buildRuns(rects) {
   const rows = new Map();
   for (const r of rects) {
     if (!rows.has(r.y)) rows.set(r.y, []);
     rows.get(r.y).push(r);
   }
 
-  const runs = new Map();
+  const runs = new Map(); // score -> [{ x, y, count }]
   for (const [y, cells] of rows) {
     cells.sort((a, b) => a.x - b.x);
     let start = cells[0].x;
     let prev = start;
+    let count = 1;
     let score = cells[0].score;
     for (let i = 1; i <= cells.length; i++) {
       const next = cells[i];
       if (next && next.x === prev + 12 && next.score === score) {
         prev = next.x;
+        count++;
         continue;
       }
-      const length = 10 + 12 * Math.round((prev - start) / 12);
       if (!runs.has(score)) runs.set(score, []);
-      runs.get(score).push(`M${start - minX} ${y - minY + 5}h${length}`);
+      runs.get(score).push({ x: start, y, count });
       if (next) {
         start = prev = next.x;
+        count = 1;
         score = next.score;
       }
     }
   }
+  return runs;
+}
+
+export function compactGhChart(svg) {
+  const rects = parseGrid(svg);
+  if (!rects) return null;
+
+  const xs = rects.map((r) => r.x);
+  const ys = rects.map((r) => r.y);
+  const minX = Math.min(...xs);
+  const minY = Math.min(...ys);
+  const width = Math.max(...xs) - minX + 12;
+  const height = Math.max(...ys) - minY + 12;
+  const runs = buildRuns(rects);
 
   const parts = [
-    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" shape-rendering="crispedges">`,
-    '<g fill="none" stroke-width="10" stroke-dasharray="10 2">',
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">`,
+    '<g fill="none" stroke-width="12">',
   ];
+
   for (const score of [...runs.keys()].sort()) {
-    const blank = score === "0" || !PALETTE[score];
-    const opacity = blank ? ` stroke-opacity="${BLANK_OPACITY}"` : "";
-    parts.push(
-      `<path stroke="${blank ? "#000" : PALETTE[score]}"${opacity} d="${runs.get(score).join("")}"/>`
-    );
+    if (score === "0") continue;
+    const d = runs
+      .get(score)
+      .map(({ x, y, count }) => `M${x - minX} ${y - minY + 6}h${12 * count}`)
+      .join("");
+    parts.push(`<path stroke="${GREENS[score] ?? GREENS[4]}" d="${d}"/>`);
   }
+
   parts.push("</g></svg>\n");
   return parts.join("");
 }

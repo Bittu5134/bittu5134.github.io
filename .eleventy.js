@@ -60,9 +60,10 @@ async function fetchGhchart() {
     if (!svg.includes("<svg")) {
       throw new Error("response did not look like SVG");
     }
-    // ghchart ships one <rect> per day plus labels; turn it into a compact
-    // dashed-stroke grid before writing, so the deployed file stays small.
+    // ghchart ships one <rect> per day plus labels; render only the active
+    // days as a solid heatmap.
     const compact = compactGhChart(svg);
+    if (!compact) throw new Error("could not parse the ghchart grid");
     fs.mkdirSync(path.dirname(dest), { recursive: true });
     fs.writeFileSync(dest, compact);
     console.log(`[ghchart] contribution chart (${svg.length} -> ${compact.length} bytes)`);
