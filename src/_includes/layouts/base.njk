@@ -89,6 +89,11 @@
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css" crossorigin="anonymous" />
     {% endif %}
 
+    <!-- Littlefoot footnotes (only when the post has footnote markup) -->
+    {% if isBlogPage and content and ('data-footnote-ref' in content or 'class="footnotes' in content) %}
+      <link rel="stylesheet" href="/assets/css/littlefoot.css" />
+    {% endif %}
+
 
     <link rel="alternate" type="application/rss+xml" title="{{ site.name }} — RSS Feed" href="{{ site.feedUrl }}" />
 

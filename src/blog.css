@@ -662,6 +662,107 @@
   font-style: italic;
 }
 
+/* Littlefoot Footnote Popovers & Buttons (Flat Retro Parchment) */
+.littlefoot {
+  --button-background-color: #fde047;
+  --button-text-color: #000000;
+  --button-active-background-color: #86efac;
+  --button-active-text-color: #000000;
+  --button-border-radius: 0;
+  --button-height: 1.25rem;
+  --button-padding: 0 0.4rem;
+  --button-transition: background-color 0.15s ease;
+  --popover-background-color: #fffdf9;
+  --popover-text-color: #000000;
+  --popover-border: 2px solid #000000;
+  --popover-border-radius: 0;
+  --popover-shadow: none;
+  --popover-horizontal-padding: 1.15rem;
+  --popover-vertical-padding: 0.85rem;
+  --popover-tooltip-size: 8px;
+  --popover-scroll-indicator-color: #000000;
+}
+
+.littlefoot__button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-family: 'Space Mono', monospace !important;
+  font-weight: 800 !important;
+  font-size: 0.7rem !important;
+  line-height: 1 !important;
+  color: #000000 !important;
+  background-color: #fde047 !important;
+  border: 1.5px solid #000000 !important;
+  box-shadow: none !important;
+  vertical-align: super !important;
+  position: relative !important;
+  top: -0.15em !important;
+  margin: 0 0.25rem !important;
+  padding: 0 0.35rem !important;
+  height: 1.15rem !important;
+  min-width: 1.15rem !important;
+  border-radius: 0 !important;
+  cursor: pointer !important;
+  transition: background-color 0.15s ease !important;
+}
+
+.littlefoot__button:hover {
+  background-color: #fbbf24 !important;
+  color: #000000 !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.littlefoot__button.is-active,
+.littlefoot__button:active {
+  background-color: #86efac !important;
+  color: #000000 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.littlefoot__button .littlefoot__number {
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+}
+
+.littlefoot__popover {
+  border: 2px solid #000000 !important;
+  background-color: #fffdf9 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  z-index: 100 !important;
+}
+
+.littlefoot__tooltip {
+  background-color: #fffdf9 !important;
+  border-color: #000000 !important;
+}
+
+.littlefoot__content {
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-size: 0.875rem !important;
+  line-height: 1.65 !important;
+  color: #000000 !important;
+}
+
+.littlefoot__content p {
+  margin: 0 !important;
+  color: #000000 !important;
+}
+
+.littlefoot__content a {
+  color: #000000 !important;
+  font-weight: 700 !important;
+  text-decoration: underline 2px #000000 !important;
+  text-underline-offset: 2px;
+}
+
+.littlefoot__content a:hover {
+  background-color: #fde047 !important;
+}
+
 /* ============================================================
    PRINT STYLES v2 — editorial publication report
    B&W text/UI, images kept in full color (print-color-adjust).

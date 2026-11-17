@@ -565,3 +565,29 @@ amber (#b45309) dek accent — full-width text, no card, no border box.
     }
   </script>
 {% endif %}
+
+<!-- Conditionally Load & Initialize Littlefoot Footnote Popovers -->
+{% if content and ('data-footnote-ref' in content or 'class="footnotes' in content) %}
+  <script type="module">
+    import littlefoot from "/assets/js/littlefoot.js";
+
+    function initLittlefoot() {
+      littlefoot({
+        activateDelay: 100,
+        dismissDelay: 100,
+        hoverDelay: 250,
+        allowMultiple: false,
+        activateOnHover: true,
+        dismissOnUnhover: false,
+        anchorPattern: /#(user-content-)?fn[:\-_\d]/gi,
+        buttonTemplate: '<button class="littlefoot__button" id="<% reference %>" aria-label="Footnote <% number %>" title="See Footnote <% number %>"><span class="littlefoot__number"><% number %></span></button>'
+      });
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initLittlefoot);
+    } else {
+      initLittlefoot();
+    }
+  </script>
+{% endif %}

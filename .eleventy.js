@@ -175,6 +175,8 @@ export default async function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "public": "." });
   eleventyConfig.addPassthroughCopy({ "public/.nojekyll": ".nojekyll" });
   eleventyConfig.addPassthroughCopy({ "blogs": "blogs" });
+  eleventyConfig.addPassthroughCopy({ "node_modules/littlefoot/dist/littlefoot.mjs": "assets/js/littlefoot.js" });
+  eleventyConfig.addPassthroughCopy({ "node_modules/littlefoot/dist/littlefoot.css": "assets/css/littlefoot.css" });
 
   // 8. Template Filters
   // Table of Contents generator from rendered HTML
