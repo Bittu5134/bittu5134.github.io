@@ -16,6 +16,7 @@ import matter from "gray-matter";
 import { fileURLToPath } from "node:url";
 import getProjects from "../src/_data/projects.js";
 import getReadingTime from "reading-time";
+import { getDeterministicAbstractCover } from "./abstract-cover.js";
 import { toIsoBlogDate, normalizeTagList, mergeTagLists } from "./parse-blog-date.js";
 import siteConfig from "../site.config.js";
 
@@ -63,7 +64,7 @@ function parseMarkdownFile(filepath) {
     tags,
     hiddenTags,
     allSeoTags,
-    coverImage: data.coverImage || null,
+    coverImage: data.coverImage || getDeterministicAbstractCover(slug),
     content: content.trim(),
   };
 }

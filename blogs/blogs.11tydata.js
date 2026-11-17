@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import getReadingTime from "reading-time";
+import { getDeterministicAbstractCover } from "../scripts/abstract-cover.js";
 import { formatBlogDate, parseBlogDate, toIsoBlogDate, normalizeTagList, mergeTagLists } from "../scripts/parse-blog-date.js";
 import { measureImage } from "../scripts/image-dimensions.js";
 import siteConfig from "../site.config.js";
@@ -42,6 +43,10 @@ export default {
     },
 
     coverAlt: (data) => data.coverAlt || (data.title ? `${data.title} abstract cover` : "Abstract cover"),
+
+    // Posts without an authored coverImage get a deterministic Unsplash
+    // abstract, keyed on the slug so the art is stable across builds.
+    coverImage: (data) => data.coverImage || getDeterministicAbstractCover(data.slug || data.page?.fileSlug || data.title),
 
     // Social cards want real pixel dimensions. Measured from the local file when
     // possible; cards that cannot be measured fall back to the standard size.
