@@ -36,6 +36,10 @@ npm run dev     # local dev
 npm run build   # production build -> dist/
 ```
 
+> Don't run `npm run dev` and `npm run build` at the same time: the dev
+> server's watcher rebuilds `dist/` on every `public/` write and will clobber
+> the production build's minified bundles mid-build.
+
 ## Project layout
 
 ```text

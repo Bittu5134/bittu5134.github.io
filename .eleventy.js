@@ -175,8 +175,6 @@ export default async function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "public": "." });
   eleventyConfig.addPassthroughCopy({ "public/.nojekyll": ".nojekyll" });
   eleventyConfig.addPassthroughCopy({ "blogs": "blogs" });
-  eleventyConfig.addPassthroughCopy({ "node_modules/littlefoot/dist/littlefoot.mjs": "assets/js/littlefoot.js" });
-  eleventyConfig.addPassthroughCopy({ "node_modules/littlefoot/dist/littlefoot.css": "assets/css/littlefoot.css" });
 
   // 8. Template Filters
   // Table of Contents generator from rendered HTML
@@ -235,15 +233,6 @@ export default async function (eleventyConfig) {
     return JSON.stringify(value);
   });
 
-  // Slug filter fallback
-  eleventyConfig.addFilter("slugifyText", function (value) {
-    return String(value)
-      .toLowerCase()
-      .replace(/[^\w\s-]/g, "")
-      .replace(/[\s_-]+/g, "-")
-      .replace(/^-+|-+$/g, "");
-  });
-
   // ISO 8601 duration filter for Schema.org timeRequired (e.g. "6 min read" -> "PT6M")
   eleventyConfig.addFilter("isoDuration", function (value) {
     if (!value) return "PT3M";
@@ -256,24 +245,6 @@ export default async function (eleventyConfig) {
   eleventyConfig.addFilter("filterTags", function (tags) {
     if (!Array.isArray(tags)) return [];
     return tags.filter((t) => t && t !== "posts");
-  });
-
-  // Filter to pick a blog post that is not current, not newer, and not older
-  eleventyConfig.addFilter("getRandomOtherPost", function (allPosts, currentUrl, newerUrl, olderUrl) {
-    if (!allPosts || !allPosts.length) return null;
-    const excluded = new Set([currentUrl, newerUrl, olderUrl].filter(Boolean));
-    const candidates = allPosts.filter((p) => !excluded.has(p.url));
-    if (candidates.length === 0) {
-      const fallback = allPosts.filter((p) => p.url !== currentUrl);
-      if (fallback.length === 0) return null;
-      return fallback[0];
-    }
-    // Stable pseudo-random pick based on currentUrl char codes
-    let hash = 0;
-    for (let i = 0; i < (currentUrl || "").length; i++) {
-      hash = (hash * 31 + currentUrl.charCodeAt(i)) >>> 0;
-    }
-    return candidates[hash % candidates.length];
   });
 
   return {
