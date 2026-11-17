@@ -7,9 +7,9 @@
   {% set netherPortalAnim = { cells: [] } %}
   {% for g in blockAnim %}{% if g.design == "nether-portal-scene" %}{% set netherPortalAnim = g %}{% endif %}{% endfor %}
   <div class="hidden xl:block absolute right-0 top-1/2 -translate-y-1/2 w-[288px] pointer-events-none select-none -z-10" aria-hidden="true">
-    <img src="/assets/images/blocks/nether-portal-scene.png" alt="" width="112" height="432" class="w-full h-auto" style="image-rendering:pixelated"/>
+    <img src="/assets/images/scenes/nether-portal-scene.png" alt="" width="112" height="432" class="w-full h-auto" style="image-rendering:pixelated"/>
     {% for cell in netherPortalAnim.cells %}
-    <div class="block-anim absolute" style="left:{{ cell.c * 100 / 7 }}%;top:{{ cell.r * 100 / 27 }}%;width:{{ 100 / 7 }}%;height:{{ 100 / 27 }}%;background-image:url('/assets/images/blocks/{{ cell.sheet }}');background-size:100% calc(var(--f) * 100%);--f:{{ cell.frames }};image-rendering:pixelated" data-frames="{{ cell.frames }}"></div>
+    <div class="block-anim absolute" style="left:{{ cell.c * 100 / 7 }}%;top:{{ cell.r * 100 / 27 }}%;width:{{ 100 / 7 }}%;height:{{ 100 / 27 }}%;background-image:url('/assets/images/scenes/{{ cell.sheet }}');background-size:100% calc(var(--f) * 100%);--f:{{ cell.frames }};image-rendering:pixelated" data-frames="{{ cell.frames }}"></div>
     {% endfor %}
   </div>
   <div class="max-w-5xl mx-auto">

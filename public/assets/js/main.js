@@ -340,7 +340,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "sign-in-prompts-launch.png", "sign-in-prompts-save-purchases.png", "sign-in-prompts-servers.png",
     "trial-mode-art.png", "trial-mode-modal-art.png", "tutorial-end.png", "unavailable-on-preview.png",
     "under-construction-art-cropped.png"
-  ].map((f) => "/assets/images/minecraft-ui/" + f);
+  ].map((f) => "/assets/images/mini_scene/" + f);
 
   const oreApply = () => {
     const deck = [...ORE_IMAGES].sort(() => Math.random() - 0.5);

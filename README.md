@@ -46,7 +46,7 @@ public/           Eleventy's passthrough root, copied verbatim to dist/
   assets/         Static files served from /assets/
     css/          Hand-written CSS (giscus theme)
     icons/        Generated UI / brand / tech SVG icons
-    images/       Site imagery (blocks/, decorations/, minecraft-ui/)
+    images/       Site imagery (scenes/, entities/, mini_scene/)
     js/           Client-side JavaScript bundles
     fonts/        Subsetted fonts (generated)
   CNAME, favicons, plus generated robots/sitemap/llms feeds
