@@ -49,18 +49,6 @@
 @tailwind utilities;
 
 @layer components {
-  .card-brutal {
-    @apply bg-[#fffdf9] border-[3px] border-black shadow-brutal hover:shadow-brutal-lg hover:-translate-y-0.5 transition-all;
-  }
-  .tag-pill {
-    @apply px-2.5 py-0.5 bg-[#f6eedb] border border-black font-mono text-sm font-bold text-black uppercase;
-  }
-  .btn-brutal,
-  .btn-brutal-yellow {
-    @apply font-mono font-bold border-2 border-black shadow-brutal-xs hover:shadow-brutal hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-1.5 cursor-pointer;
-  }
-  .btn-brutal-yellow { @apply bg-[#fde047] hover:bg-[#fb923c] text-black; }
-
   .btn-pill {
     @apply inline-flex items-center gap-2 px-5 py-2.5 border-2 border-black font-mono text-sm font-bold text-black shadow-brutal-xs hover:-translate-y-0.5 hover:shadow-brutal active:translate-y-0.5 active:shadow-none transition-all cursor-pointer;
   }

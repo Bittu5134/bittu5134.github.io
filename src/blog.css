@@ -18,10 +18,19 @@
    template this file sees). Re-running @tailwind utilities here duplicated
    ~14 KB of identical rules on every blog page. */
 
-/* ─── Blog Archive: Tag Filter Chips ────────────────────────── */
+/* Blog Archive: Tag Filter Chips + Project Filter Chips ─────────── */
 /* Flat dashed chips; the search controller only toggles .active and font
    weight, so selection is shown with a plain fill (no lift, no shadow). */
 .blog-tag-filter-btn.active {
+  background-color: #fde047;
+}
+
+/* Project category chips: the filter controller only flips aria-pressed. */
+.project-filter-btn[aria-pressed="true"] {
+  background-color: #fde047;
+  box-shadow: 2px 2px 0px 0px #000000;
+}
+.project-filter-btn[aria-pressed="true"]:hover {
   background-color: #fde047;
 }
 
@@ -296,15 +305,6 @@
 .prose-retro code:not(pre code)::before,
 .prose-retro code:not(pre code)::after {
   content: none;
-}
-
-/* Discord-style -# small muted text (start-of-line marker) */
-.prose-retro .md-small {
-  display: inline;
-  font-size: 0.75em;
-  line-height: 1.6;
-  color: #6b7280;
-  letter-spacing: 0.01em;
 }
 
 /* Links */
@@ -662,380 +662,6 @@
   font-style: italic;
 }
 
-/* ─── Footnotes ─────────────────────────────────────────────── */
-/* When Littlefoot popovers are active, hide the static bottom footnotes list */
-.prose-retro .footnotes {
-  display: none !important;
-}
-
-
-/* ─── Table of Contents (Desktop Sidebar Active State) ──────── */
-/* ─── Cassette LCD Marquee ─────────────────────────────────── */
-@media (prefers-reduced-motion: reduce) {
-    .animate-ticker,
-  .animate-tickerFast,
-  .animate-spinSlow,
-  .animate-wiggle,
-  .animate-bounceSubtle {
-    animation: none !important;
-    transform: none !important;
-  }
-}
-
-
-/* ─── Dark Theme System ([data-theme="dark"] / .dark) ───────── */
-/* Strictly scoped to individual blog post pages */
-[data-theme="dark"],
-.dark {
-  color-scheme: dark;
-}
-
-[data-theme="dark"] body,
-.dark body {
-  background-color: #1e1e2e !important;
-  color: #cdd6f4 !important;
-}
-
-[data-theme="dark"] .retro-dots-bg,
-.dark .retro-dots-bg {
-  background-color: #1e1e2e !important;
-  background-image: none !important;
-}
-
-/* Headings in article */
-[data-theme="dark"] .prose-retro h1,
-[data-theme="dark"] .prose-retro h2,
-[data-theme="dark"] .prose-retro h3,
-[data-theme="dark"] .prose-retro h4,
-[data-theme="dark"] .prose-retro h5,
-[data-theme="dark"] .prose-retro h6,
-.dark .prose-retro h1,
-.dark .prose-retro h2,
-.dark .prose-retro h3,
-.dark .prose-retro h4,
-.dark .prose-retro h5,
-.dark .prose-retro h6 {
-  color: #cdd6f4 !important;
-  font-family: 'Space Grotesk', sans-serif;
-}
-
-/* Body text, lists, bold */
-[data-theme="dark"] .prose-retro,
-[data-theme="dark"] .prose-retro p,
-[data-theme="dark"] .prose-retro li,
-.dark .prose-retro,
-.dark .prose-retro p,
-.dark .prose-retro li {
-  color: #cdd6f4 !important;
-}
-
-[data-theme="dark"] .prose-retro strong,
-.dark .prose-retro strong {
-  color: #ffffff !important;
-}
-
-[data-theme="dark"] .prose-retro hr,
-.dark .prose-retro hr {
-  border: 0 !important;
-  border-top: 1px solid #313244 !important;
-  margin: 3rem 0;
-}
-
-/* Prose links (Catppuccin Sapphire / Blue with Lavender hover) */
-[data-theme="dark"] .prose-retro a:not(.header-anchor),
-.dark .prose-retro a:not(.header-anchor) {
-  color: #89b4fa !important;
-  text-decoration: underline !important;
-  text-decoration-color: #585b70 !important;
-  text-underline-offset: 3px !important;
-  transition: all 0.15s ease;
-}
-
-[data-theme="dark"] .prose-retro a:not(.header-anchor):hover,
-.dark .prose-retro a:not(.header-anchor):hover {
-  color: #b4befe !important;
-  text-decoration-color: #89b4fa !important;
-  background-color: transparent !important;
-}
-
-/* Heading permalinks */
-[data-theme="dark"] .prose-retro .header-anchor,
-.dark .prose-retro .header-anchor {
-  color: inherit !important;
-}
-[data-theme="dark"] .prose-retro .header-anchor::after,
-.dark .prose-retro .header-anchor::after {
-  color: #6c7086 !important;
-}
-
-/* Inline code in dark mode (Catppuccin Pink on Surface 0) */
-[data-theme="dark"] .prose-retro code:not(pre code),
-.dark .prose-retro code:not(pre code) {
-  background-color: #313244 !important;
-  border: 1px solid #45475a !important;
-  color: #f5c2e7 !important;
-  font-family: 'Space Mono', monospace;
-  border-radius: 4px;
-}
-
-/* Discord-style -# small muted text */
-[data-theme="dark"] .prose-retro .md-small,
-.dark .prose-retro .md-small {
-  color: #7f849c !important;
-}
-
-/* Editorial blockquotes (Catppuccin Lavender accent) */
-[data-theme="dark"] .prose-retro blockquote:not(.github-alert),
-.dark .prose-retro blockquote:not(.github-alert) {
-  background-color: transparent !important;
-  border-left: 2px solid #b4befe !important;
-  color: #bac2de !important;
-  font-style: italic;
-  padding-left: 1rem;
-}
-
-/* Figure captions */
-[data-theme="dark"] .prose-retro .prose-figure figcaption,
-.dark .prose-retro .prose-figure figcaption {
-  color: #a6adc8 !important;
-}
-
-/* Code block wrapper and copy button (Catppuccin Mantle + Crust) */
-/* Code block: same flat typography-pre look in dark mode — the floating copy
-   button and corner label inherit currentColor, so nothing extra is needed. */
-
-/* -. Midnight copy-button hover tint (matches Catppuccin surface-over-scroll) */
-[data-theme="dark"] .code-copy-btn:hover,
-.dark .code-copy-btn:hover {
-  background-color: rgba(255, 255, 255, 0.08);
-  border-color: currentColor;
-}
-
-/* Tables in dark mode (Catppuccin Mantle & Surface 0) */
-[data-theme="dark"] .table-responsive-wrapper,
-.dark .table-responsive-wrapper {
-  width: 100%;
-  overflow-x: auto;
-  margin: 2rem 0;
-  background-color: #181825 !important;
-  border: 1px solid #313244 !important;
-  border-radius: 8px;
-}
-
-[data-theme="dark"] .prose-retro table,
-.dark .prose-retro table {
-  width: 100%;
-  text-align: left;
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.875rem;
-  border-collapse: collapse;
-}
-
-[data-theme="dark"] .prose-retro th,
-.dark .prose-retro th {
-  padding: 0.625rem 0.875rem;
-  background-color: #11111b !important;
-  color: #cdd6f4 !important;
-  border-bottom: 1px solid #313244 !important;
-  font-family: 'Space Mono', monospace;
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-[data-theme="dark"] .prose-retro td,
-.dark .prose-retro td {
-  padding: 0.625rem 0.875rem;
-  color: #cdd6f4 !important;
-  border-bottom: 1px solid #313244 !important;
-}
-
-[data-theme="dark"] .prose-retro tr:last-child td,
-.dark .prose-retro tr:last-child td {
-  border-bottom: none !important;
-}
-
-[data-theme="dark"] .prose-retro tr:nth-child(even) td,
-.dark .prose-retro tr:nth-child(even) td {
-  background-color: rgba(255, 255, 255, 0.02) !important;
-}
-
-/* GitHub Alert Callouts in Catppuccin Mocha */
-[data-theme="dark"] .prose-retro .github-alert,
-.dark .prose-retro .github-alert {
-  margin: 1.75rem auto;
-  max-width: 56rem;
-  padding: 0.875rem 1.125rem;
-  border-radius: 6px;
-  border: 1px solid #313244 !important;
-  box-shadow: none !important;
-  background-color: rgba(24, 24, 37, 0.7) !important;
-}
-
-[data-theme="dark"] .prose-retro .github-alert-note,
-.dark .prose-retro .github-alert-note {
-  border-color: rgba(137, 180, 250, 0.35) !important;
-  background-color: rgba(137, 180, 250, 0.06) !important;
-}
-[data-theme="dark"] .prose-retro .github-alert-note .github-alert-title,
-.dark .prose-retro .github-alert-note .github-alert-title {
-  color: #89b4fa !important;
-}
-
-[data-theme="dark"] .prose-retro .github-alert-tip,
-.dark .prose-retro .github-alert-tip {
-  border-color: rgba(166, 227, 161, 0.35) !important;
-  background-color: rgba(166, 227, 161, 0.06) !important;
-}
-[data-theme="dark"] .prose-retro .github-alert-tip .github-alert-title,
-.dark .prose-retro .github-alert-tip .github-alert-title {
-  color: #a6e3a1 !important;
-}
-
-[data-theme="dark"] .prose-retro .github-alert-important,
-.dark .prose-retro .github-alert-important {
-  border-color: rgba(203, 166, 247, 0.35) !important;
-  background-color: rgba(203, 166, 247, 0.06) !important;
-}
-[data-theme="dark"] .prose-retro .github-alert-important .github-alert-title,
-.dark .prose-retro .github-alert-important .github-alert-title {
-  color: #cba6f7 !important;
-}
-
-[data-theme="dark"] .prose-retro .github-alert-warning,
-.dark .prose-retro .github-alert-warning {
-  border-color: rgba(249, 226, 175, 0.35) !important;
-  background-color: rgba(249, 226, 175, 0.06) !important;
-}
-[data-theme="dark"] .prose-retro .github-alert-warning .github-alert-title,
-.dark .prose-retro .github-alert-warning .github-alert-title {
-  color: #f9e2af !important;
-}
-
-[data-theme="dark"] .prose-retro .github-alert-caution,
-.dark .prose-retro .github-alert-caution {
-  border-color: rgba(243, 139, 168, 0.35) !important;
-  background-color: rgba(243, 139, 168, 0.06) !important;
-}
-[data-theme="dark"] .prose-retro .github-alert-caution .github-alert-title,
-.dark .prose-retro .github-alert-caution .github-alert-title {
-  color: #f38ba8 !important;
-}
-
-/* Mermaid diagrams in dark mode */
-[data-theme="dark"] .prose-retro .mermaid-container,
-.dark .prose-retro .mermaid-container {
-  margin: 2rem auto;
-  max-width: 56rem;
-  background-color: #181825 !important;
-  border: 1px solid #313244 !important;
-  border-radius: 8px;
-  padding: 1.5rem 1rem;
-}
-
-/* Littlefoot Footnote Popovers & Buttons (Flat Retro Parchment) */
-.littlefoot {
-  --button-background-color: #fde047;
-  --button-text-color: #000000;
-  --button-active-background-color: #86efac;
-  --button-active-text-color: #000000;
-  --button-border-radius: 0;
-  --button-height: 1.25rem;
-  --button-padding: 0 0.4rem;
-  --button-transition: background-color 0.15s ease;
-  --popover-background-color: #fffdf9;
-  --popover-text-color: #000000;
-  --popover-border: 2px solid #000000;
-  --popover-border-radius: 0;
-  --popover-shadow: none;
-  --popover-horizontal-padding: 1.15rem;
-  --popover-vertical-padding: 0.85rem;
-  --popover-tooltip-size: 8px;
-  --popover-scroll-indicator-color: #000000;
-}
-
-.littlefoot__button {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  font-family: 'Space Mono', monospace !important;
-  font-weight: 800 !important;
-  font-size: 0.7rem !important;
-  line-height: 1 !important;
-  color: #000000 !important;
-  background-color: #fde047 !important;
-  border: 1.5px solid #000000 !important;
-  box-shadow: none !important;
-  vertical-align: super !important;
-  position: relative !important;
-  top: -0.15em !important;
-  margin: 0 0.25rem !important;
-  padding: 0 0.35rem !important;
-  height: 1.15rem !important;
-  min-width: 1.15rem !important;
-  border-radius: 0 !important;
-  cursor: pointer !important;
-  transition: background-color 0.15s ease !important;
-}
-
-.littlefoot__button:hover {
-  background-color: #fbbf24 !important;
-  color: #000000 !important;
-  transform: none !important;
-  box-shadow: none !important;
-}
-
-.littlefoot__button.is-active,
-.littlefoot__button:active {
-  background-color: #86efac !important;
-  color: #000000 !important;
-  box-shadow: none !important;
-  transform: none !important;
-}
-
-.littlefoot__button .littlefoot__number {
-  display: inline-block;
-  font-variant-numeric: tabular-nums;
-}
-
-.littlefoot__popover {
-  border: 2px solid #000000 !important;
-  background-color: #fffdf9 !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  z-index: 100 !important;
-}
-
-.littlefoot__tooltip {
-  background-color: #fffdf9 !important;
-  border-color: #000000 !important;
-}
-
-.littlefoot__content {
-  font-family: 'Space Grotesk', sans-serif !important;
-  font-size: 0.875rem !important;
-  line-height: 1.65 !important;
-  color: #000000 !important;
-}
-
-.littlefoot__content p {
-  margin: 0 !important;
-  color: #000000 !important;
-}
-
-.littlefoot__content a {
-  color: #000000 !important;
-  font-weight: 700 !important;
-  text-decoration: underline 2px #000000 !important;
-  text-underline-offset: 2px;
-}
-
-.littlefoot__content a:hover {
-  background-color: #fde047 !important;
-}
-
-
 /* ============================================================
    PRINT STYLES v2 — editorial publication report
    B&W text/UI, images kept in full color (print-color-adjust).
@@ -1087,8 +713,7 @@
 
   /* ...except images: cover, avatar, diagrams, inline art stay full-color */
   img,
-  .mermaid-container svg,
-  .katex * {
+  .mermaid-container svg {
     print-color-adjust: exact !important;
     -webkit-print-color-adjust: exact !important;
   }
@@ -1119,26 +744,6 @@
     gap: 8px;
   }
 
-  .print-masthead-center {
-    display: none !important;
-  }
-
-  /* --- 5. Cover image: full color, uncropped, first-page hero --- */
-  .article-cover {
-    margin: 0 !important;
-    border: 0 !important;
-    background: #ffffff !important;
-    overflow: visible !important;
-    break-after: avoid;
-    page-break-after: avoid;
-  }
-
-  .article-cover img {
-    max-height: none !important;
-    width: 100% !important;
-    height: auto !important;
-  }
-
   /* --- 6. Article header: editorial title block --- */
   article > header {
     background: #ffffff !important;
@@ -1157,20 +762,6 @@
     letter-spacing: -0.01em;
     margin: 0 0 10pt !important;
     break-after: avoid;
-  }
-
-  /* Summary callout → editorial dek */
-  article > header > div[class*="bg-[#fef3c7]"] {
-    background: #ffffff !important;
-    border: 0 !important;
-    border-left: 3px solid #000000 !important;
-    padding: 0 0 0 12px !important;
-    margin: 0 0 10pt !important;
-    font-family: Georgia, "Times New Roman", serif !important;
-    font-style: italic;
-    font-size: 11.5pt !important;
-    line-height: 1.5 !important;
-    color: #000000 !important;
   }
 
   /* --- 7. Print byline: BY NAME (HANDLE) · DATE · READ TIME + double rule --- */
@@ -1260,12 +851,6 @@
     border: 0 !important;
     padding: 0 !important;
     display: block !important;
-  }
-
-  .author-card img {
-    width: 36pt !important;
-    height: 36pt !important;
-    border: 1px solid #000000 !important;
   }
 
   .author-card [class*="bg-"] {
