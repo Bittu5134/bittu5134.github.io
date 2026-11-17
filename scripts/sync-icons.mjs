@@ -139,6 +139,14 @@ for (const c of customSymbols) {
   );
 }
 
+// Hand-drawn pixel icons for the hero badges. Sprite-only (no standalone file),
+// so they carry their own stroke styling instead of the generated defaults.
+const spriteOnlySymbols = [
+  `<symbol id="icon-minecraft-live" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><path d="M8 2 L14 5 L8 8 L2 5 Z"/><path d="M2 5 V11 L8 14 V8"/><path d="M8 8 V14 L14 11 V5"/><circle cx="13" cy="2" r="1.5" fill="currentColor" stroke="none"/></symbol>`,
+  `<symbol id="icon-grad-spark" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><path d="M8 3 L15 6 L8 9 L1 6 Z"/><path d="M4 7.5 V11.5 Q8 13.5 12 11.5 V7.5"/><path d="M14 6.5 V10.5"/><path d="M13 0.8 L13.6 1.9 L14.7 2.5 L13.6 3.1 L13 4.2 L12.4 3.1 L11.3 2.5 L12.4 1.9 Z" fill="currentColor" stroke-width="0.5"/></symbol>`,
+];
+spriteSymbols.push(...spriteOnlySymbols);
+
 // 3. Export Tech Stack Icons
 console.log("[sync-icons] Exporting Tech stack icons...");
 const techMappings = {
@@ -203,11 +211,12 @@ fs.writeFileSync(path.join(rootDir, "src/_includes/components/icons-sprite.njk")
 
 // Also create a lean homepage-only sprite by filtering to used icons
 const homepageUsedIcons = new Set([
-  "icon-terminal", "icon-pickaxe", "icon-arrow-down", "icon-arrow-right", "icon-arrow-up-right",
+  "icon-terminal", "icon-pickaxe", "icon-arrow-down", "icon-arrow-left", "icon-arrow-right", "icon-arrow-up-right",
   "icon-check", "icon-disc-3", "icon-disc3", "icon-play", "icon-pause", "icon-skip-back", "icon-skip-forward",
   "icon-volume-2", "icon-minus", "icon-external-link", "icon-menu", "icon-x", "icon-folder",
   "icon-file-text", "icon-user", "icon-mail", "icon-rss", "icon-book-open", "icon-graduation-cap",
   "icon-trophy", "icon-zap", "icon-copy", "icon-bug", "icon-star", "icon-git-fork", "icon-code",
+  "icon-minecraft-live", "icon-grad-spark",
   "icon-github", "icon-twitter", "icon-discord", "icon-patreon", "icon-reddit", "icon-linkedin",
   "icon-pixel-monster", "icon-planet-minecraft", "icon-tech-go", "icon-tech-python", "icon-tech-cplusplus",
   "icon-tech-typescript", "icon-tech-linux", "icon-tech-webrtc", "icon-tech-docker", "icon-tech-redis",
