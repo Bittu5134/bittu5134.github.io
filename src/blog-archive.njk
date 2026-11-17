@@ -4,17 +4,14 @@ title: "Articles & Engineering Notes | Bittu"
 description: "Technical deep dives, systems engineering notes, binary protocols, and architecture write-ups by Bittu."
 permalink: "/blog/index.html"
 isBlogPage: true
+isBlogArchivePage: true
 ---
 {% import "macros/icons.njk" as icons %}
+{% from "macros/post-row.njk" import postRow %}
 
 <div class="font-body relative">
-  <!-- Same edge ornamentation as the homepage: pixel vines + cherry tree (decorative) -->
-  <img src="/assets/images/scenes/vines.png?v={{ buildStamp }}" alt="" width="64" height="208" aria-hidden="true" loading="lazy" decoding="async"
-       class="hidden xl:block absolute top-0 right-0 pointer-events-none select-none -z-10"
-       style="image-rendering:pixelated;width:250px;height:auto"/>
-  <img src="/assets/images/scenes/cherry-tree.png?v={{ buildStamp }}" alt="" width="112" height="128" aria-hidden="true" loading="lazy" decoding="async"
-       class="hidden xl:block absolute bottom-0 left-0 pointer-events-none select-none -z-10"
-       style="image-rendering:pixelated;width:288px;height:auto"/>
+  <!-- Same edge ornamentation as the homepage (decorative) -->
+  {% include "components/scene-ornaments.njk" %}
 
   {% include "components/retro-header.njk" %}
 
@@ -109,67 +106,8 @@ isBlogPage: true
 
     <!-- Article rows: 2px ink frame around the list, hairlines between rows -->
     <div class="divide-y divide-black/15 border-y border-black/15" id="blog-posts-list">
-      {% set chipColors = ['bg-[#86efac]', 'bg-[#c4b5fd]', 'bg-[#38bdf8]'] %}
       {% for post in collections.blogs %}
-        {% set chip = chipColors[loop.index0 % 3] %}
-        {% set validTags = [] %}
-        {% for tag in post.data.tags %}
-          {% if tag != "posts" %}
-            {% set validTags = (validTags.push(tag), validTags) %}
-          {% endif %}
-        {% endfor %}
-
-        <article
-          class="blog-post-card group relative grid gap-3 py-8 sm:grid-cols-[1fr_auto] sm:items-start sm:gap-8"
-          data-slug="{{ post.data.slug or post.fileSlug }}"
-          data-title="{{ (post.data.title or '') | lower }}"
-          data-summary="{{ (post.data.summary or '') | lower }}"
-          data-tags="{{ (post.data.tags or []) | join('|||') | lower }}"
-          data-hidden-tags="{{ (post.data.allSeoTags or []) | join('|||') | lower }}"
-          data-date="{{ (post.data.date or post.date) | dateIso }}"
-          data-readtime="{{ post.data.readTime or '3 min read' }}"
-        >
-          <div class="min-w-0">
-            <!-- Meta: date chip + read time -->
-            <p class="font-mono text-sm font-bold flex flex-wrap items-center gap-3">
-              <span class="inline-block px-2.5 py-1 border-2 border-black {{ chip }} text-black">
-                <time datetime="{{ (post.data.date or post.date) | dateIso }}">
-                  {{ post.data.date | dateShort }}
-                </time>
-              </span>
-              <span class="text-black/65">// {{ post.data.readTime or '3 min read' }}</span>
-            </p>
-
-            <!-- Title is the row-wide link -->
-            <h2 class="font-display text-3xl sm:text-4xl text-black leading-tight mt-4">
-              <a
-                href="{{ post.url }}"
-                class="group-hover:text-[#b45309] transition-colors motion-reduce:transition-none after:absolute after:inset-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black"
-              >{{ post.data.title }}</a>
-            </h2>
-
-            <p class="font-body text-base sm:text-lg text-black/80 leading-relaxed mt-3">{{ post.data.summary }}</p>
-
-            <!-- Pagefind excerpt (populated by /assets/js/pagefind-search.js) -->
-            <div class="blog-match-snippet hidden mt-3 text-sm sm:text-base text-black/70 leading-relaxed"></div>
-
-            <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mt-4 font-mono text-sm font-bold text-black/60">
-              {% for tag in validTags.slice(0, 4) %}
-                <span>#{{ tag | lower }}</span>
-              {% endfor %}
-              {% if validTags.length > 4 %}
-                <span title="{{ validTags.slice(4) | join(', ') }}">+{{ validTags.length - 4 }}</span>
-              {% endif %}
-            </div>
-          </div>
-
-          <a
-            href="{{ post.url }}"
-            class="relative z-10 inline-flex items-center gap-1.5 self-start px-4 py-2 border-2 border-black font-mono text-sm font-bold text-black bg-[#fde047] hover:bg-[#fbbf24] transition-colors motion-reduce:transition-none whitespace-nowrap"
-          >
-            Read article {{ icons.arrowUpRight("w-3.5 h-3.5") }}
-          </a>
-        </article>
+        {{ postRow(post, loop.index0, 2, true) }}
       {% endfor %}
     </div>
 

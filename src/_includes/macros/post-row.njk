@@ -1,0 +1,63 @@
+{#
+  One blog row, shared by the homepage "latest posts" list and the /blog archive.
+
+  level: 3 under the homepage's <h2>, 2 under the archive's <h1>. Everything
+  else — chips, meta line, summary, tags, the read link — is identical, and the
+  data-* hooks are what /assets/js/pagefind-search.js reads. They are inert on
+  the homepage (no search bundle there), so one markup shape serves both.
+#}
+{% import "macros/icons.njk" as icons %}
+
+{% macro postRow(post, index, level, showTagOverflow) %}
+  {% set chipColors = ['bg-[#86efac]', 'bg-[#c4b5fd]', 'bg-[#38bdf8]'] %}
+  {% set validTags = post.data.tags | filterTags %}
+  {% set readTime = post.data.readTime or '3 min read' %}
+  <article
+    class="blog-post-card group relative grid gap-3 py-8 sm:grid-cols-[1fr_auto] sm:items-start sm:gap-8"
+    data-slug="{{ post.data.slug or post.fileSlug }}"
+    data-title="{{ (post.data.title or '') | lower }}"
+    data-summary="{{ (post.data.summary or '') | lower }}"
+    data-tags="{{ validTags | join('|||') | lower }}"
+    data-hidden-tags="{{ (post.data.allSeoTags or []) | join('|||') | lower }}"
+    data-date="{{ (post.data.date or post.date) | dateIso }}"
+    data-readtime="{{ readTime }}"
+  >
+    <div class="min-w-0">
+      <p class="font-mono text-sm font-bold flex flex-wrap items-center gap-3">
+        <span class="inline-block px-2.5 py-1 border-2 border-black {{ chipColors[index % 3] }} text-black">
+          <time datetime="{{ (post.data.date or post.date) | dateIso }}">{{ post.data.date | dateShort }}</time>
+        </span>
+        <span class="text-black/65">// {{ readTime }}</span>
+      </p>
+
+      {% set titleClass = "font-display text-3xl sm:text-4xl text-black leading-tight mt-4" %}
+      {% set titleInner %}<a href="{{ post.url }}" class="group-hover:text-[#b45309] transition-colors motion-reduce:transition-none after:absolute after:inset-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black">{{ post.data.title }}</a>{% endset %}
+      {% if level == 2 %}
+        <h2 class="{{ titleClass }}">{{ titleInner | safe }}</h2>
+      {% else %}
+        <h3 class="{{ titleClass }}">{{ titleInner | safe }}</h3>
+      {% endif %}
+
+      <p class="font-body text-base sm:text-lg text-black/80 leading-relaxed mt-3">{{ post.data.summary }}</p>
+
+      {# Pagefind excerpt, filled in by pagefind-search.js while searching #}
+      <div class="blog-match-snippet hidden mt-3 text-sm sm:text-base text-black/70 leading-relaxed"></div>
+
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mt-4 font-mono text-sm font-bold text-black/60">
+        {% for tag in validTags.slice(0, 4) %}
+          <span>#{{ tag | lower }}</span>
+        {% endfor %}
+        {% if showTagOverflow and validTags.length > 4 %}
+          <span title="{{ validTags.slice(4) | join(', ') }}">+{{ validTags.length - 4 }}</span>
+        {% endif %}
+      </div>
+    </div>
+
+    <a
+      href="{{ post.url }}"
+      class="relative z-10 inline-flex items-center gap-1.5 self-start px-4 py-2 border-2 border-black font-mono text-sm font-bold text-black bg-[#fde047] hover:bg-[#fbbf24] transition-colors motion-reduce:transition-none whitespace-nowrap"
+    >
+      Read article {{ icons.arrowUpRight("w-3.5 h-3.5") }}
+    </a>
+  </article>
+{% endmacro %}
