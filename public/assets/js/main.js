@@ -101,33 +101,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Auto-minimize the tape deck if it overlaps interactive content (filters, stats)
+  // Tape deck: starts minimized and only ever changes state on an explicit user
+  // action (open pill, minimize button, Escape). There is deliberately no
+  // overlap- or scroll-driven auto-close — the deck must never close itself.
   const cassetteDeck = document.getElementById("cassette-expanded-deck");
-  const cassetteMinBtn = document.getElementById("cassette-minimized-btn");
   const cassetteMinBtnEl = document.getElementById("cassette-minimize-btn");
-  function minimizeDeckIfOverlapping() {
-    if (!cassetteDeck || cassetteDeck.classList.contains("hidden")) return;
-    const dr = cassetteDeck.getBoundingClientRect();
-    const widget = document.getElementById("cassette-widget");
-    const targets = [...document.querySelectorAll(".project-filter-btn, .project-card, a, button")].filter((el) => !(widget && widget.contains(el)));
-    for (const el of targets) {
-      const r = el.getBoundingClientRect();
-      if (r.width && r.height && r.left < dr.right - 8 && r.right > dr.left + 8 && r.top < dr.bottom - 8 && r.bottom > dr.top + 8) {
-        cassetteMinBtnEl?.click();
-        return;
-      }
-    }
-  }
-  window.addEventListener("resize", minimizeDeckIfOverlapping, { passive: true });
-  window.addEventListener("load", minimizeDeckIfOverlapping);
-  let deckScrollPending = false;
-  window.addEventListener("scroll", () => {
-    if (deckScrollPending) return;
-    deckScrollPending = true;
-    requestAnimationFrame(() => { deckScrollPending = false; minimizeDeckIfOverlapping(); });
-  }, { passive: true });
-  setTimeout(minimizeDeckIfOverlapping, 400);
-  cassetteMinBtn?.addEventListener("click", () => setTimeout(minimizeDeckIfOverlapping, 60));
 
   menuToggleBtn?.addEventListener("click", () => setMenuOpen(!isMenuOpen));
   drawerCloseBtn?.addEventListener("click", () => setMenuOpen(false));
