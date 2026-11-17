@@ -45,7 +45,7 @@ function syncBlogsToSrc() {
 async function fetchGhchart() {
   // Keep the contribution chart local: no runtime dependency on ghchart.rshah.org.
   // Fault-tolerant by design — a network hiccup must never break the build.
-  const dest = path.resolve("assets/images/ghchart.svg");
+  const dest = path.resolve("public/assets/images/ghchart.svg");
   const url = "https://ghchart.rshah.org/16a34a/Bittu5134";
   const MAX_AGE_MS = 24 * 60 * 60 * 1000;
 
@@ -118,7 +118,7 @@ export default async function (eleventyConfig) {
     eleventyConfig.watchIgnores.add("public/sitemap.xml");
     eleventyConfig.watchIgnores.add("public/robots.txt");
     eleventyConfig.watchIgnores.add("public/llms*.txt");
-    eleventyConfig.watchIgnores.add("assets/images/ghchart.svg");
+    eleventyConfig.watchIgnores.add("public/assets/images/ghchart.svg");
   }
 
   // 4. Watch for blog content and styles
@@ -168,10 +168,9 @@ export default async function (eleventyConfig) {
   });
 
   // 7. Passthrough static assets
-  // `assets/` is the single authored static tree served from /assets/.
-  // `public/` holds only files that must sit at the site root (CNAME, favicons,
-  // redirects, generated sitemap/robots/llms feeds).
-  eleventyConfig.addPassthroughCopy({ "assets": "assets" });
+  // `public/` is Eleventy's passthrough root: public/assets/** -> /assets/**,
+  // public/CNAME -> /CNAME, etc. Blog media stays co-located under blogs/assets/
+  // and is copied with the posts (which also exposes the raw *.md files for LLMs).
   eleventyConfig.addPassthroughCopy({ "public": "." });
   eleventyConfig.addPassthroughCopy({ "public/.nojekyll": ".nojekyll" });
   eleventyConfig.addPassthroughCopy({ "blogs": "blogs" });

@@ -40,20 +40,17 @@ npm run build   # production build -> dist/
 
 ```text
 blogs/            Blog posts (Markdown) + their Eleventy data file
+  assets/         Post media, co-located with the posts (covers/, shared/, <slug>/)
 src/              Eleventy templates, layouts, macros, data and Tailwind entry CSS
-assets/           Authored static files, copied verbatim to /assets/
-  css/            Hand-written CSS (giscus theme)
-  icons/          Generated UI / brand / tech SVG icons
-  images/         All site imagery
-    blog/         Post covers and inline post images
-    blocks/       Minecraft block-art decorations
-    decorations/  Sprite decorations used around the page
-    minecraft-ui/ Minecraft UI empty-state sprites
-  js/             Client-side JavaScript bundles
-  fonts/          Subsetted fonts (generated)
+public/           Eleventy's passthrough root, copied verbatim to dist/
+  assets/         Static files served from /assets/
+    css/          Hand-written CSS (giscus theme)
+    icons/        Generated UI / brand / tech SVG icons
+    images/       Site imagery (blocks/, decorations/, minecraft-ui/)
+    js/           Client-side JavaScript bundles
+    fonts/        Subsetted fonts (generated)
+  CNAME, favicons, plus generated robots/sitemap/llms feeds
 fonts/masters/    Original font files fed to scripts/generate-fonts.py
-public/           Files that must live at the site root (CNAME, favicons,
-                  redirects) plus generated robots/sitemap/llms feeds
 scripts/          Build scripts and shared helpers
   markdown/       Remark/Rehype plugins
 ```

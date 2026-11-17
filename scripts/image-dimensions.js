@@ -13,10 +13,11 @@
  * not worth the dependency, so this parses the handful of container headers that
  * actually appear in this repo: WebP, PNG, JPEG and GIF.
  *
- * Local site-root paths (/assets/images/foo.webp) are resolved against the repo
- * root, which is the same tree Eleventy passthrough-copies to dist/. Remote and
- * data: URLs are never probed — there is nothing local to read and the request
- * would only slow the build — so callers fall back to their own defaults.
+ * Local site-root paths (/assets/images/foo.webp, /blogs/assets/...) are resolved
+ * against public/ (the passthrough root) and the repo root (blogs/ is
+ * passthrough-copied to dist/blogs/ with its post media). Remote and data: URLs
+ * are never probed — there is nothing local to read and the request would only
+ * slow the build — so callers fall back to their own defaults.
  */
 
 import fs from "node:fs";
@@ -24,16 +25,17 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-// Site-root URLs map 1:1 onto repo paths: /assets/images/x -> <repo>/assets/images/x.
+// /assets/... lives under public/; /blogs/... lives under the repo root.
+const PUBLIC_DIR = path.resolve(__dirname, "../public");
 const PROJECT_ROOT = path.resolve(__dirname, "..");
-const ASSET_ROOTS = [PROJECT_ROOT];
+const ASSET_ROOTS = [PUBLIC_DIR, PROJECT_ROOT];
 
 // WebP: a RIFF container whose "VP8 " / "VP8L" / "VP8X" chunk carries the size.
 // Lossless (VP8L) packs width-1 and height-1 into one little-endian 32-bit word.
 const WEBP_CHUNKS = new Set(["VP8 ", "VP8L", "VP8X"]);
 
 // Layout of a "VP8 " (lossy) frame payload, relative to the start of its chunk
-// header. Verified against assets/images/og-banner.webp (1400x350):
+// header. Verified against public/assets/images/og-banner.webp (1400x350):
 //   +4  chunkSize (uint32 LE)
 //   +8  3-byte frame tag
 //   +11 3-byte start code 0x9d 0x01 0x2a
@@ -124,9 +126,9 @@ export function readImageDimensions(filePath) {
 }
 
 /**
- * Resolve a site-root image path (/assets/images/foo.webp) to its file on disk.
- * Assets are passthrough-copied from the repo root, so a site-root URL is also
- * a repo-relative path. Absolute filesystem paths are used as-is.
+ * Resolve a site-root image path (/assets/images/foo.webp, /blogs/assets/...) to
+ * its file on disk. Probes public/ first, then the repo root for /blogs/.
+ * Absolute filesystem paths are used as-is.
  */
 function resolveAssetPath(urlPath) {
   const relative = urlPath.replace(/^\/+/, "");

@@ -2,7 +2,7 @@
 export default {
   content: [
     "./src/**/*.{html,njk,md,js}",
-    "./assets/js/**/*.js",
+    "./public/assets/js/**/*.js",
   ],
   darkMode: ["selector", '[data-theme="dark"]'],
   theme: {

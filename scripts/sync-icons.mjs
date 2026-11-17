@@ -6,9 +6,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, "..");
 
-const uiDir = path.join(rootDir, "assets/icons/ui");
-const brandsDir = path.join(rootDir, "assets/icons/brands");
-const techDir = path.join(rootDir, "assets/icons/tech");
+const uiDir = path.join(rootDir, "public/assets/icons/ui");
+const brandsDir = path.join(rootDir, "public/assets/icons/brands");
+const techDir = path.join(rootDir, "public/assets/icons/tech");
 
 [uiDir, brandsDir, techDir].forEach((d) => {
   if (!fs.existsSync(d)) fs.mkdirSync(d, { recursive: true });
@@ -230,4 +230,4 @@ const homeSymbols = spriteSymbols.filter(s => {
 const homeSpriteOutput = `<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="hidden" style="display:none">\n${homeSymbols.join("\n")}\n</svg>\n`;
 fs.writeFileSync(path.join(rootDir, "src/_includes/components/icons-sprite-home.njk"), homeSpriteOutput, "utf-8");
 
-console.log(`[sync-icons] Done! Synchronized ${spriteSymbols.length} official icons into assets/icons/ and icons-sprite.njk.`);
+console.log(`[sync-icons] Done! Synchronized ${spriteSymbols.length} official icons into public/assets/icons/ and icons-sprite.njk.`);

@@ -1,7 +1,7 @@
 ---
 slug: 'rock-paper-ssh'
 title: "Yet Another Rock Paper Scissors Game!"
-coverImage: "/assets/images/blog/covers/stone-paper-ssh.png"
+coverImage: "/blogs/assets/covers/stone-paper-ssh.png"
 coverAlt: "A Bubble Tea TUI streamed over SSH"
 date: "07-10-2026"
 summary: "A PvE multiplayer TUI game, built in Go and streamed over SSH."

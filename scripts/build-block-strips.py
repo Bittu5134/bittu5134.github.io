@@ -7,7 +7,7 @@ no stretching, no tiling, no resplitting into repeat segments.
 Only fully-empty border columns are cropped so the art keeps its
 true proportions. Tweak SCALE / the grid later as needed.
 
-Writes assets/images/blocks/*.png  (deployed)
+Writes public/assets/images/blocks/*.png  (deployed)
        temp/renders/<name>-preview.png
 
 
@@ -31,7 +31,7 @@ def latest_design():
     import re
     cands = sorted(VERSIONS.glob("v*.json"), key=lambda f: int(re.search(r"v(\d+)", f.name).group(1)))
     return cands[-1]
-OUT = ROOT / "assets/images/blocks"
+OUT = ROOT / "public/assets/images/blocks"
 PREVIEW = ROOT / "temp/renders"
 
 TILE = 16
@@ -202,7 +202,7 @@ def render_design(design_path, rng, out_name):
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     PREVIEW.mkdir(parents=True, exist_ok=True)
-    rng = random.Random(5)
+    rng = random.Random()  # unseeded: berry placement reshuffles on every build
     # latest vN.json is the main gutter art; every other design json (sv*, etc.)
     # renders to its friendly deployed name as a standalone decoration
     main_design = latest_design()

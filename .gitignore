@@ -21,7 +21,7 @@ docs
 src/blogs
 src/blogs/
 .wakatime-project
-assets/fonts/*
+public/assets/fonts/*
 
 # Generated at build time (scripts/generate-meta.mjs)
 public/robots.txt
