@@ -105,12 +105,19 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
-html,
+html {
+  overflow-x: clip;
+  font-family: 'Playpen Sans', cursive;
+  /* page background lives on html only: as the canvas backdrop it paints
+     beneath negative-z decorative art (body's own bg would cover it) */
+  background-color: #f3e7cc;
+  color: #14161f;
+}
+
 body,
 #root {
   overflow-x: clip;
   font-family: 'Playpen Sans', cursive;
-  background-color: #f3e7cc;
   color: #14161f;
 }
 

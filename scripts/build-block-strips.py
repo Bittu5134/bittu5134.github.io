@@ -48,7 +48,9 @@ def load_design(path=None):
 
 def load(name, scale=SCALE):
     side = round(TILE * scale)
-    for path in (SRC / f"{name}.png", MC / f"{name}.png", TEX / f"{name}.png"):
+    # blocks dir first, then mc-blocks, item textures, and the textures root
+    for path in (SRC / f"{name}.png", MC / f"{name}.png",
+                 TEX / "item" / f"{name}.png", TEX / f"{name}.png"):
         if path.exists():
             img = Image.open(path).convert("RGBA")
             w, h = img.size
