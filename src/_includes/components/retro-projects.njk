@@ -12,12 +12,15 @@
         <h2 class="heading-pop font-display text-5xl sm:text-6xl text-black leading-none">Projects</h2>
       </div>
 
-      <!-- Filter chips: same hooks the filter script reads -->
-      <div id="project-filters" class="flex flex-wrap gap-2">
+      <!-- Filter chips. The first chip is the default view, so it ships
+           aria-pressed="true"; main.js only flips that attribute. -->
+      <div id="project-filters" class="flex flex-wrap gap-2" role="group" aria-label="Filter projects">
         {% for cat in projects.categories %}
           <button
+            type="button"
             data-filter="{{ cat }}"
-            class="project-filter-btn px-4 py-2.5 border-2 border-black font-mono text-sm font-bold transition-all cursor-pointer {{ 'bg-[#fde047] shadow-brutal-xs' if loop.first else 'bg-[#fffdf9] hover:bg-[#fde047]' }}"
+            aria-pressed="{{ 'true' if loop.first else 'false' }}"
+            class="project-filter-btn px-4 py-2.5 border-2 border-black bg-[#fffdf9] font-mono text-sm font-bold transition-all cursor-pointer hover:bg-[#fde047]"
           >
             {{ cat | lower }}
           </button>
@@ -25,56 +28,55 @@
       </div>
     </div>
 
-    <!-- Pinned projects rendered server-side; the rest are injected on filter click -->
+    <!-- Every project is rendered here: the filter only shows/hides cards.
+         Non-pinned projects start hidden (the default view is PINNED). -->
     <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 gap-px bg-black/15 border border-black/15">
       {% for p in projects.projects %}
-        {% if p.isPinned %}
-          <article
-            class="project-card group relative flex flex-col bg-[#f3e7cc] transition-colors hover:bg-[#fffdf9]/60"
-            data-filter-category="{{ p.filterCategory }}"
-            data-category="{{ p.category }}"
-            data-pinned="true"
-            data-popularity="{{ (p.stars or 0) + (p.forks or 0) }}"
-            data-order="{{ p.order or 99 }}"
-          >
-            <div class="px-7 pt-5 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
-              <h3 class="font-display text-3xl sm:text-4xl text-black leading-tight">{{ p.title }}</h3>
-              <div class="flex items-center gap-1.5 shrink-0">
-                {% if p.stars > 0 %}
-                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 border-2 border-black bg-[#fde047] font-mono text-sm font-bold text-black" title="{{ p.stars }} stars on GitHub">{{ icons.star("w-3.5 h-3.5 text-black fill-black") }}{{ p.stars }}</span>
-                {% endif %}
-                {% if p.forks > 0 %}
-                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 border-2 border-black bg-[#f6eedb] font-mono text-sm font-bold text-black" title="{{ p.forks }} forks on GitHub">{{ icons.gitFork("w-3.5 h-3.5 text-black") }}{{ p.forks }}</span>
-                {% endif %}
-              </div>
+        <article
+          class="project-card group relative flex flex-col bg-[#f3e7cc] transition-colors hover:bg-[#fffdf9]/60 {{ '' if p.isPinned else ' hidden' }}"
+          data-filter-category="{{ p.filterCategory }}"
+          data-category="{{ p.category }}"
+          data-pinned="{{ 'true' if p.isPinned else 'false' }}"
+          data-popularity="{{ (p.stars or 0) + (p.forks or 0) }}"
+          data-order="{{ p.order or 99 }}"
+        >
+          <div class="px-7 pt-5 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
+            <h3 class="font-display text-3xl sm:text-4xl text-black leading-tight">{{ p.title }}</h3>
+            <div class="flex items-center gap-1.5 shrink-0">
+              {% if p.stars > 0 %}
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 border-2 border-black bg-[#fde047] font-mono text-sm font-bold text-black" title="{{ p.stars }} stars on GitHub">{{ icons.star("w-3.5 h-3.5 text-black fill-black") }}{{ p.stars }}</span>
+              {% endif %}
+              {% if p.forks > 0 %}
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 border-2 border-black bg-[#f6eedb] font-mono text-sm font-bold text-black" title="{{ p.forks }} forks on GitHub">{{ icons.gitFork("w-3.5 h-3.5 text-black") }}{{ p.forks }}</span>
+              {% endif %}
             </div>
+          </div>
 
-            {% if p.language or p.statsText %}
-              <p class="px-7 pt-2 font-mono text-sm font-bold text-black/65">
-                {% if p.language %}{{ p.language }}{% endif %}
-                {% if p.language and p.statsText %} · {% endif %}
-                {% if p.statsText %}{{ p.statsText }}{% endif %}
-              </p>
-            {% endif %}
+          {% if p.language or p.statsText %}
+            <p class="px-7 pt-2 font-mono text-sm font-bold text-black/65">
+              {% if p.language %}{{ p.language }}{% endif %}
+              {% if p.language and p.statsText %} · {% endif %}
+              {% if p.statsText %}{{ p.statsText }}{% endif %}
+            </p>
+          {% endif %}
 
+          {% if p.description %}
             <p class="px-7 pt-4 pb-6 font-body text-base text-black/85 leading-relaxed flex-1">{{ p.description }}</p>
+          {% endif %}
 
-            <div class="mt-auto flex items-center justify-end gap-2 px-7 py-4">
-              {% if p.githubUrl %}
-                <a href="{{ p.githubUrl }}" target="_blank" rel="noopener noreferrer" class="btn-pill-sm bg-transparent hover:bg-[#86efac]">{{ icons.github("w-3.5 h-3.5 text-black") }} GitHub</a>
-              {% endif %}
-              {% if p.liveUrl %}
-                <a href="{{ p.liveUrl }}" target="_blank" rel="noopener noreferrer" class="btn-pill-sm bg-[#fde047] hover:bg-[#fbbf24]">Visit {{ icons.arrowUpRight("w-3.5 h-3.5 text-black") }}</a>
-              {% endif %}
-            </div>
-          </article>
-        {% endif %}
+          <div class="mt-auto flex items-center justify-end gap-2 px-7 py-4">
+            {% if p.githubUrl %}
+              <a href="{{ p.githubUrl }}" target="_blank" rel="noopener noreferrer" class="btn-pill-sm bg-transparent hover:bg-[#86efac]">{{ icons.github("w-3.5 h-3.5 text-black") }} GitHub</a>
+            {% endif %}
+            {% if p.liveUrl %}
+              <a href="{{ p.liveUrl }}" target="_blank" rel="noopener noreferrer" class="btn-pill-sm bg-[#fde047] hover:bg-[#fbbf24]">Visit {{ icons.arrowUpRight("w-3.5 h-3.5 text-black") }}</a>
+            {% endif %}
+          </div>
+        </article>
       {% endfor %}
     </div>
 
-    <!-- Non-pinned projects: fetched from /assets/data/non-pinned-projects.json on first filter click -->
-
-    <a href="https://github.com/Bittu5134?tab=repositories" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between gap-4 border-2 border-black bg-transparent px-4 py-2.5 font-mono text-sm font-bold text-black hover:bg-[#fde047] transition-colors">
+    <a href="https://github.com/Bittu5134?tab=repositories" target="_blank" rel="noopener noreferrer" class="mt-0 flex items-center justify-between gap-4 border-2 border-black bg-transparent px-4 py-2.5 font-mono text-sm font-bold text-black hover:bg-[#fde047] transition-colors">
       <span>More tools, projects and scripts on <span class="underline underline-offset-4">GitHub</span></span>
       {{ icons.arrowUpRight("w-3.5 h-3.5 text-black shrink-0") }}
     </a>

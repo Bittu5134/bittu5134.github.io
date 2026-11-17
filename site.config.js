@@ -44,33 +44,35 @@ export default {
     url: "https://bittu.dev",
     image: "https://bittu.dev/assets/images/avatar.webp",
     jobTitle: "Software Engineer",
-    twitter: "@404lostsquid",
+    twitter: "@LostSquidXD",
     alumniOf: {
       name: "IIT Kanpur",
     },
     sameAs: [
       "https://github.com/Bittu5134",
-      "https://x.com/404lostsquid",
+      "https://x.com/LostSquidXD",
       "https://www.linkedin.com/in/bittu5134",
     ],
   },
 
   // ── Project Metadata & Editorial Cues ───────────────────────────────
-  // GitHub REST API provides stars, repo descriptions, and topics dynamically.
-  // Curated ordering ranks projects by technical impressiveness and fun factor.
+  // Stars, descriptions, languages and topics come from the GitHub REST API at
+  // build time (cached for an hour). Everything editorial lives here: the
+  // curated order, the card's category line, the filter bucket, and any live URL
+  // that is not the repo's homepage. `pinned: n` marks a project as pinned and
+  // sets its position in the PINNED view (lower first).
   projects: {
     "Rock-Paper-SSH": {
       order: 7,
       category: "SYSTEMS / SSH TUI",
       filterCategory: "SYSTEMS",
-      badge: "SSH MULTIPLAYER",
       statsText: "Wish + Bubble Tea TUI",
     },
     "PeerBasket": {
       order: 3,
+      pinned: 2,
       category: "SYSTEMS / P2P",
       filterCategory: "SYSTEMS",
-      badge: "PUBLIC API",
       statsText: "WebRTC Signaling Server",
       language: "Go",
     },
@@ -78,7 +80,6 @@ export default {
       order: 11,
       category: "DISCORD / MARKOV CHAINS",
       filterCategory: "BOTS",
-      badge: "MARKOV CHATBOT",
       statsText: "Markov Chain Discord Bot",
       tags: ["chatbot", "discord", "dumb", "markov-chain"],
     },
@@ -86,28 +87,24 @@ export default {
       order: 5,
       category: "SYSTEMS / EDR",
       filterCategory: "SYSTEMS",
-      badge: "KERNEL TELEMETRY",
       statsText: "Host Telemetry Agent",
     },
     "InfraPulse": {
       order: 8,
       category: "AI / MACHINE VISION",
       filterCategory: "AI",
-      badge: "HACKATHON WINNER",
       statsText: "Defect Detection Ensemble",
     },
     "Sharelock": {
       order: 6,
       category: "AI / RAG",
       filterCategory: "AI",
-      badge: "CAMPUS MCP AGENT",
       statsText: "Policy Manual MCP Agent",
     },
     "Lore": {
       order: 9,
       category: "AI / DEVTOOLS",
       filterCategory: "AI",
-      badge: "LOCAL ADR ENGINE",
       statsText: "Cline Plugin + MCP Wiki Engine",
       language: "TypeScript",
       tags: ["cline", "mcp", "typescript", "sqlite", "devtools"],
@@ -116,7 +113,6 @@ export default {
       order: 1,
       category: "WEB / WEBRTC GAME",
       filterCategory: "WEB",
-      badge: "P2P GAME",
       statsText: "WebRTC DataChannel Puzzle",
       language: "JavaScript",
       liveUrl: "https://geoshuffle.bittu.dev",
@@ -124,16 +120,16 @@ export default {
     },
     "ORV-Reader": {
       order: 1,
+      pinned: 1,
       category: "WEB / PUBLISHING",
       filterCategory: "WEB",
-      badge: "PUBLISHING",
       statsText: "Markdown → Web + EPUB",
     },
     "LOTM-Reader": {
       order: 2,
+      pinned: 4,
       category: "WEB / OPTIMIZATION",
       filterCategory: "WEB",
-      badge: "OFFLINE PWA",
       statsText: "High-Performance Reader",
     },
     "IITK-Resume-Model": {
@@ -141,15 +137,14 @@ export default {
       title: "Resume-Model",
       category: "TOOLS / PARSER",
       filterCategory: "MISC",
-      badge: "CAMPUS TOOL",
       statsText: "2D Coordinate PDF Extractor",
       liveUrl: "https://iitk-resume.bittu.dev",
     },
     "GH-Follow-Tracker": {
       order: 16,
+      pinned: 3,
       category: "TOOLS / SERVERLESS",
       filterCategory: "BOTS",
-      badge: "CRON WORKER",
       statsText: "SVG Badges + Alerts",
     },
 
@@ -157,7 +152,6 @@ export default {
       order: 2,
       category: "TOOLS / YT EXTENSION",
       filterCategory: "MISC",
-      badge: "RATING FILTER",
       statsText: "Userscript + Extension",
       liveUrl: "http://ratioyt.bittu.dev/",
     },
@@ -165,7 +159,6 @@ export default {
       order: 3,
       category: "DISCORD / BOT",
       filterCategory: "BOTS",
-      badge: "CHANNEL REVIVER",
       statsText: "Crown-the-Lurkers Bot",
       liveUrl: "https://awakener.bittu.dev/",
     },
@@ -173,7 +166,6 @@ export default {
       order: 10,
       category: "MINECRAFT / AUTOMATION",
       filterCategory: "BOTS",
-      badge: "BIN SNIPER",
       statsText: "Latency-Optimised Sniping",
     },
   },
@@ -194,28 +186,5 @@ export default {
     "REACT",
     "FASTAPI",
     "CLOUDFLARE WORKERS",
-  ],
-
-  // ── Core Skills & Tech Stack Badges ─────────────────────────────────
-  // Displayed in the ~/about section. Add, remove, or reorder here.
-  skills: [
-    // "Go",
-    // "Python",
-    // "C / C++",
-    // "TypeScript",
-    // "Linux & Sockets",
-    // "WebRTC",
-    // "Docker",
-    // "Redis",
-    // "FastAPI / Gin",
-    // "Cloudflare Workers",
-    // "Model Context Protocol",
-    // "YARA",
-    // "PostgreSQL",
-    // "WebSockets",
-    // "GitHub Actions",
-    // "Proxmox VE",
-    // "Cloudflare WAF & CDN",
-    // "OpenCV",
   ],
 };
