@@ -323,17 +323,17 @@ document.addEventListener("DOMContentLoaded", () => {
      spanning a random Ore-UI sprite across its bottom-left corner        */
   /* ------------------------------------------------------------------------ */
   const ORE_IMAGES = [
-    "adventure.png", "archer.png", "battle.png", "campfire.png",
-    "chest.png", "chicken-eggs.png", "chickens.png", "chorus-flower.png",
-    "command-block.png", "cow-rabbit.png", "crafting-room.png", "desert-house.png",
-    "dog-boat.png", "enderman.png", "fox.png", "group-pose.png",
-    "house.png", "jukebox.png", "king-pig.png", "librarian.png",
-    "lineup.png", "mob-encounter.png", "opening-chest.png", "painting.png",
-    "parrots.png", "pink-cow.png", "portal-meeting.png", "quartz-altar.png",
-    "rabbit-carrots.png", "snow-villager.png", "snowy-axolotl.png", "steve-chicken.png",
-    "sunset.png", "swamp.png", "turtle-trade.png", "turtles.png",
-    "underwater.png", "village-trade.png", "village.png", "villager-door.png",
-    "wooden-display.png", "zombies.png",
+    "adventure.webp", "archer.webp", "battle.webp", "campfire.webp",
+    "chest.webp", "chicken-eggs.webp", "chickens.webp", "chorus-flower.webp",
+    "command-block.webp", "cow-rabbit.webp", "crafting-room.webp", "desert-house.webp",
+    "dog-boat.webp", "enderman.webp", "fox.webp", "group-pose.webp",
+    "house.webp", "jukebox.webp", "king-pig.webp", "librarian.webp",
+    "lineup.webp", "mob-encounter.webp", "opening-chest.webp", "painting.webp",
+    "parrots.webp", "pink-cow.webp", "portal-meeting.webp", "quartz-altar.webp",
+    "rabbit-carrots.webp", "snow-villager.webp", "snowy-axolotl.webp", "steve-chicken.webp",
+    "sunset.webp", "swamp.webp", "turtle-trade.webp", "turtles.webp",
+    "underwater.webp", "village-trade.webp", "village.webp", "villager-door.webp",
+    "wooden-display.webp", "zombies.webp",
   ].map((f) => "/assets/images/mini_scene/" + f);
 
   const oreApply = () => {
