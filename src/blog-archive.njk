@@ -164,12 +164,12 @@ isBlogPage: true
             </div>
           </div>
 
-          <span
-            aria-hidden="true"
-            class="inline-flex items-center gap-1.5 self-start px-4 py-2 border-2 border-black font-mono text-sm font-bold text-black bg-[#fffdf9] group-hover:bg-[#fde047] transition-colors motion-reduce:transition-none whitespace-nowrap"
+          <a
+            href="{{ post.url }}"
+            class="relative z-10 inline-flex items-center gap-1.5 self-start px-4 py-2 border-2 border-black font-mono text-sm font-bold text-black bg-[#fde047] hover:bg-[#fbbf24] transition-colors motion-reduce:transition-none whitespace-nowrap"
           >
             Read article {{ icons.arrowUpRight("w-3.5 h-3.5") }}
-          </span>
+          </a>
         </article>
       {% endfor %}
     </div>
