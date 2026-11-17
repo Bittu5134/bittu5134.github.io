@@ -146,8 +146,8 @@
       chips.forEach((chip) => chip.setAttribute("aria-pressed", String(chip.dataset.filter === filter)));
 
       const matching = cards.filter((card) => matches(card, filter));
-      // PINNED keeps the server-rendered (GitHub pinned) order; category views
-      // are curated and capped.
+      // PINNED keeps the server-rendered (GitHub pinned) order; other views are
+      // sorted by curated order and capped.
       if (filter !== "PINNED") matching.sort(byOrder);
       const visible = filter === "PINNED" ? matching : matching.slice(0, CATEGORY_CAP);
 

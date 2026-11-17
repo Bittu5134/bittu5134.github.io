@@ -56,11 +56,12 @@ export default {
   },
 
   // ── Project Metadata & Editorial Cues ───────────────────────────────
-  // Stars, descriptions, languages and topics come from the GitHub REST API at
-  // build time (cached for an hour). Everything editorial lives here: the
-  // curated order, the card's category line, the filter bucket, and any live URL
-  // that is not the repo's homepage. `pinned: n` marks a project as pinned and
-  // sets its position in the PINNED view (lower first).
+  // Stars, descriptions, languages, topics AND the pinned set come from the
+  // GitHub at build time (cached for an hour): pinned repos are read from the
+  // profile's own pinned list, so the homepage PINNED pill always mirrors
+  // github.com/Bittu5134. Everything editorial lives here: the curated order,
+  // the card's category line, the filter bucket, and any live URL that is not
+  // the repo's homepage.
   projects: {
     "Rock-Paper-SSH": {
       order: 7,
@@ -70,7 +71,6 @@ export default {
     },
     "PeerBasket": {
       order: 3,
-      pinned: 2,
       category: "SYSTEMS / P2P",
       filterCategory: "SYSTEMS",
       statsText: "WebRTC Signaling Server",
@@ -120,14 +120,12 @@ export default {
     },
     "ORV-Reader": {
       order: 1,
-      pinned: 1,
       category: "WEB / PUBLISHING",
       filterCategory: "WEB",
       statsText: "Markdown → Web + EPUB",
     },
     "LOTM-Reader": {
       order: 2,
-      pinned: 4,
       category: "WEB / OPTIMIZATION",
       filterCategory: "WEB",
       statsText: "High-Performance Reader",
@@ -142,7 +140,6 @@ export default {
     },
     "GH-Follow-Tracker": {
       order: 16,
-      pinned: 3,
       category: "TOOLS / SERVERLESS",
       filterCategory: "BOTS",
       statsText: "SVG Badges + Alerts",
