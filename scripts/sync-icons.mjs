@@ -25,15 +25,14 @@ const spriteSymbols = [];
 
 // 1. Lucide UI icons
 const lucideIcons = [
-  "terminal",
-  "pickaxe",
+
+  "disc-3",
   "arrow-down",
   "arrow-right",
   "arrow-left",
   "arrow-up-right",
   "arrow-up",
   "check",
-  "disc-3",
   "play",
   "pause",
   "skip-back",
@@ -43,28 +42,17 @@ const lucideIcons = [
   "external-link",
   "menu",
   "x",
-  "folder",
   "file-text",
-  "user",
   "mail",
   "rss",
   "book-open",
-  "graduation-cap",
-  "gamepad-2",
-  "trophy",
-  "zap",
-  "coffee",
-  "heart",
   "copy",
   "share-2",
-  "bug",
   "star",
   "git-fork",
-  "code",
-  "sun",
-  "moon",
   "search",
-  "sliders-horizontal",
+  "sliders-horizontal"
+
 ];
 
 for (const name of lucideIcons) {

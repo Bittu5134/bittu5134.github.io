@@ -10,8 +10,9 @@
  *
  * So read the real dimensions off the file header instead. There is no image library
  * in this project (no sharp, no image-size), and pulling one in for two integers is
- * not worth the dependency, so this parses the handful of container headers that
- * actually appear in this repo: WebP, PNG, JPEG and GIF.
+ * not worth the dependency, so this parses the two containers covers actually use:
+ * WebP and PNG. Swap a cover to another format and it simply falls back to the
+ * default card size.
  *
  * Local site-root paths (/assets/images/foo.webp, /blogs/assets/...) are resolved
  * against public/ (the passthrough root) and the repo root (blogs/ is
@@ -81,31 +82,7 @@ function readPng(buf) {
   return { width: buf.readUInt32BE(16), height: buf.readUInt32BE(20) };
 }
 
-function readGif(buf) {
-  // Logical screen descriptor sits at byte 6: two little-endian uint16s.
-  if (buf.length < 10) return null;
-  return { width: buf.readUInt16LE(6), height: buf.readUInt16LE(8) };
-}
-
-function readJpeg(buf) {
-  // Walk the marker segments until a Start-Of-Frame, which stores the real size.
-  // Skip APPn/COM segments (payload already carries its own 2-byte length) so a
-  // large EXIF thumbnail cannot be mistaken for the image dimensions.
-  let offset = 2; // past SOI
-  const sofMarkers = new Set([0xc0, 0xc1, 0xc2, 0xc3, 0xc5, 0xc6, 0xc7, 0xc9, 0xca, 0xcb, 0xcd, 0xce, 0xcf]);
-  while (offset + 4 <= buf.length) {
-    if (buf[offset] !== 0xff) return null; // lost sync: not a valid JPEG
-    const marker = buf[offset + 1];
-    const segmentLength = buf.readUInt16BE(offset + 2);
-    if (sofMarkers.has(marker)) {
-      return { height: buf.readUInt16BE(offset + 5), width: buf.readUInt16BE(offset + 7) };
-    }
-    offset += 2 + segmentLength;
-  }
-  return null;
-}
-
-const READERS = { webp: readWebp, png: readPng, gif: readGif, jpg: readJpeg, jpeg: readJpeg };
+const READERS = { webp: readWebp, png: readPng };
 
 /**
  * Read the pixel dimensions of a local image file.
