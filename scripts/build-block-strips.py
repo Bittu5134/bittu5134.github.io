@@ -1,231 +1,316 @@
 #!/usr/bin/env python3
-"""Render the block design (drawn in temp/block-designer) as ONE image.
+"""Render the deployed block scenes and their animated WebP overlays.
 
-Design source: the 16x24 character grid below (exported from
-temp/block-designer/index.html). Rendered 1:1 at a uniform scale:
-no stretching, no tiling, no resplitting into repeat segments.
-Only fully-empty border columns are cropped so the art keeps its
-true proportions. Tweak SCALE / the grid later as needed.
-
-Writes public/assets/images/scenes/*.png  (deployed)
-       temp/renders/<name>-preview.png
-
-
-'^'-like J cells mix cave_vines_plant_lit / cave_vines_plant 50/50 (seeded).
-
-Run:  python3 scripts/build-block-strips.py
+No atlases. Each scene is a normal PNG with static blocks baked in and animated
+cells left transparent. Each animated block gets its own 16x16 lossless WebP;
+the site overlays that WebP on the matching cells.
 """
+from __future__ import annotations
+
 import json
 import random
+import re
+import shutil
+import subprocess
 from pathlib import Path
+
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
+VERSIONS = ROOT / "temp/designer/versions"
+OUT = ROOT / "public/assets/images/scenes"
+PREVIEW = ROOT / "temp/renders"
 TEX = ROOT / "temp/ore-scene-work/textures"
 MC = ROOT / "temp/ore-scene-work/mc-blocks"
 SRC = TEX / "blocks"
-VERSIONS = ROOT / "temp/designer/versions"
-
-def latest_design():
-    """Newest versions/vN.json the designer exported."""
-    import re
-    cands = sorted(VERSIONS.glob("v*.json"), key=lambda f: int(re.search(r"v(\d+)", f.name).group(1)))
-    return cands[-1]
-OUT = ROOT / "public/assets/images/scenes"
-PREVIEW = ROOT / "temp/renders"
 
 TILE = 16
-SCALE = 1         # compose at native 16px tiles; CSS scales up with pixelated rendering
-
-def load_design(path=None):
-    path = path or latest_design()
-    d = json.loads(path.read_text())
-    legend = {}
-    for ch, v in d["legend"].items():
-        name = Path(v["path"]).stem
-        # the berry vine texture mixes lit/plant 50/50 regardless of its letter
-        legend[ch] = None if name == "cave_vines_plant_lit" else name
-    return d["rows"], legend
-
-def load(name, scale=SCALE):
-    side = round(TILE * scale)
-    # blocks dir first, then mc-blocks, item textures, and the textures root
-    for path in (SRC / f"{name}.png", MC / f"{name}.png",
-                 TEX / "item" / f"{name}.png", TEX / f"{name}.png"):
-        if path.exists():
-            img = Image.open(path).convert("RGBA")
-            w, h = img.size
-            if h > w and h % w == 0:  # animated flipbook sheet: use the first frame
-                img = img.crop((0, 0, w, w))
-            return img.resize((side, side), Image.NEAREST)
-    raise FileNotFoundError(name)
-
-# bud/cluster textures are drawn tip-up with their base at the bottom.
-# default: each is auto-rotated so its base touches an adjacent amethyst block.
-# designs with "budMode": "random" instead get a random orientation per crystal,
-# plus their interior empty cells are filled with a darker deepslate shade that
-# the crystals are drawn over (embedded-cave look).
-CRYSTALS = {"amethyst_cluster", "small_amethyst_bud", "medium_amethyst_bud", "large_amethyst_bud"}
-BLOCKISH = {"amethyst_block", "budding_amethyst"}
-FILL_DARK = {}  # cached darkened deepslate texture
-
-# short, stable filenames for the animated flipbook sheets
-ANIM_SHEET_NAMES = {
-    "nether_portal": "portal-frames",
-    "lava_flow": "lava-frames",
+FRAME_MS = 130
+ANIM_WEBP_NAMES = {
+    "nether_portal": "portal.webp",
+    "lava_flow": "lava.webp",
+    "soul_campfire_fire": "fire.webp",
 }
 
-def dark_deepslate():
+CRYSTALS = {
+    "amethyst_cluster",
+    "small_amethyst_bud",
+    "medium_amethyst_bud",
+    "large_amethyst_bud",
+}
+BLOCKISH = {"amethyst_block", "budding_amethyst"}
+FILL_DARK: dict[str, Image.Image] = {}
+
+# Deployed scenes: output name -> designer export. None means newest v*.json.
+SCENES = {
+    "vines": None,
+    "geode": "sv6.json",
+    "portal": "sv7.json",
+    "cherry-tree": "sv8.json",
+}
+
+
+def latest_design() -> Path:
+    candidates = sorted(
+        VERSIONS.glob("v*.json"),
+        key=lambda p: int(re.search(r"v(\d+)", p.stem).group(1)),
+    )
+    if not candidates:
+        raise FileNotFoundError(f"no v*.json in {VERSIONS}")
+    return candidates[-1]
+
+
+def load_source(name: str) -> Image.Image:
+    for path in (
+        SRC / f"{name}.png",
+        MC / f"{name}.png",
+        TEX / "item" / f"{name}.png",
+        TEX / f"{name}.png",
+    ):
+        if path.exists():
+            return Image.open(path).convert("RGBA")
+    raise FileNotFoundError(name)
+
+
+def load(name: str) -> Image.Image:
+    """A single 16x16 tile; animated sheets use their first frame."""
+    img = load_source(name)
+    w, h = img.size
+    if h > w and h % w == 0:
+        img = img.crop((0, 0, w, w))
+    return img.resize((TILE, TILE), Image.NEAREST)
+
+
+def dark_deepslate() -> Image.Image:
     if "img" not in FILL_DARK:
-        base = load("deepslate")
-        px = base.load()
-        for y in range(base.height):
-            for x in range(base.width):
+        img = load("deepslate")
+        px = img.load()
+        for y in range(img.height):
+            for x in range(img.width):
                 r, g, b, a = px[x, y]
                 px[x, y] = (int(r * 0.55), int(g * 0.55), int(b * 0.55), a)
-        FILL_DARK["img"] = base
+        FILL_DARK["img"] = img
     return FILL_DARK["img"]
 
 
+def make_animated_webp(name: str, frames: int, out_name: str) -> None:
+    img = load_source(name)
+    w, h = img.size
+    if w * frames != h:
+        raise ValueError(f"{name}: expected {frames} frames, source is {w}x{h}")
 
-def render_design(design_path, rng, out_name):
-    anim_cells = []  # [{r, c, sheet, frames}] for the site-side CSS ticker
-    sheet_textures = {}  # generated sheet filename -> Minecraft texture stem
-    d = json.loads(design_path.read_text())
-    legend = {}
-    for ch, v in d["legend"].items():
-        name = Path(v["path"]).stem
-        # the berry vine texture mixes lit/plant 50/50 regardless of its letter
-        legend[ch] = None if name == "cave_vines_plant_lit" else name
-    rows = d["rows"]
-    bud_random = d.get("budMode") == "random"
-    explicit_rot = {tuple(map(int, k.split(","))): v for k, v in (d.get("rotations") or {}).items()}
-    do_fill = bud_random or d.get("interiorFill")
+    frame_dir = ROOT / "temp/anim-frames" / Path(out_name).stem
+    if frame_dir.exists():
+        shutil.rmtree(frame_dir)
+    frame_dir.mkdir(parents=True)
 
-    # crop fully-empty border rows and columns (keeps the art's true aspect)
+    for i in range(frames):
+        frame = img.crop((0, i * w, w, (i + 1) * w)).resize(
+            (TILE, TILE), Image.NEAREST
+        )
+        frame.save(frame_dir / f"frame-{i:03d}.png")
+
+    subprocess.run(
+        [
+            "ffmpeg",
+            "-y",
+            "-loglevel",
+            "error",
+            "-framerate",
+            f"1000/{FRAME_MS}",
+            "-i",
+            str(frame_dir / "frame-%03d.png"),
+            "-c:v",
+            "libwebp_anim",
+            "-lossless",
+            "1",
+            "-loop",
+            "0",
+            "-pix_fmt",
+            "rgba",
+            str(OUT / out_name),
+        ],
+        check=True,
+    )
+    shutil.rmtree(frame_dir)
+
+
+def render_design(design_path: Path, rng: random.Random, out_name: str) -> None:
+    design = json.loads(design_path.read_text())
+    rows = design["rows"]
+    legend = {
+        ch: Path(entry["path"]).stem for ch, entry in design["legend"].items()
+    }
+    bud_random = design.get("budMode") == "random"
+    explicit_rot = {
+        tuple(map(int, key.split(","))): value
+        for key, value in (design.get("rotations") or {}).items()
+    }
+    do_fill = bud_random or design.get("interiorFill")
+
     used_c = [c for c in range(len(rows[0])) if any(r[c] != " " for r in rows)]
     used_r = [r for r in range(len(rows)) if any(ch != " " for ch in rows[r])]
     if not used_c or not used_r:
         print(f"skip {design_path.name}: empty grid")
-        return None
+        return
+
     c0, c1 = min(used_c), max(used_c) + 1
     r0, r1 = min(used_r), max(used_r) + 1
-    r_orig_rows = list(range(r0, r1))  # original grid row index per cropped row
+    r_orig_rows = list(range(r0, r1))
     rows = rows[r0:r1]
 
-    def solid(rr, cc):
-        """True if the cell at the original grid coords is a full amethyst block."""
-        return 0 <= rr < len(d["rows"]) and 0 <= cc < len(d["rows"][0]) and (
-            Path(d["legend"][d["rows"][rr][cc]]["path"]).stem in BLOCKISH
-            if d["rows"][rr][cc] in d["legend"] else False)
+    def solid(rr: int, cc: int) -> bool:
+        if 0 <= rr < len(design["rows"]) and 0 <= cc < len(design["rows"][0]):
+            return legend.get(design["rows"][rr][cc]) in BLOCKISH
+        return False
 
-    def attach_deg(rr, cc, name):
-        """Rotation (deg clockwise) so a crystal's base touches an adjacent block."""
+    def attach_deg(rr: int, cc: int, name: str) -> int:
+        """Rotate a crystal so its base touches an adjacent block."""
         if name not in CRYSTALS:
             return 0
-        # priority: base left (tip right), base down (tip up), base up (tip down), base right
-        if solid(rr, cc - 1): return 90
-        if solid(rr, cc + 1): return 270
-        if solid(rr + 1, cc): return 0
-        if solid(rr - 1, cc): return 180
+        if solid(rr, cc - 1):
+            return 90
+        if solid(rr, cc + 1):
+            return 270
+        if solid(rr + 1, cc):
+            return 0
+        if solid(rr - 1, cc):
+            return 180
         return 0
 
-    fill_cells = set()
+    fill_cells: set[tuple[int, int]] = set()
     if do_fill:
-        crystal_cells = [(r, c) for r in range(len(rows)) for c in range(len(rows[0]))
-                         if rows[r][c] != " " and legend.get(rows[r][c]) in CRYSTALS]
+        crystal_cells = [
+            (r, c)
+            for r in range(len(rows))
+            for c in range(len(rows[0]))
+            if legend.get(rows[r][c]) in CRYSTALS
+        ]
         fill_cells.update(crystal_cells)
-        # empty cells touching a crystal (8-neighborhood) are cave interior
         for r, c in crystal_cells:
             for rr in range(r - 1, r + 2):
                 for cc in range(c - 1, c + 2):
-                    if 0 <= rr < len(rows) and 0 <= cc < len(rows[0]) and rows[rr][cc] == " ":
+                    if (
+                        0 <= rr < len(rows)
+                        and 0 <= cc < len(rows[0])
+                        and rows[rr][cc] == " "
+                    ):
                         fill_cells.add((rr, cc))
 
-    frames_by_name = {Path(v["path"]).stem: v.get("frames", 1) for v in d["legend"].values()}
+    frames_by_name = {
+        Path(v["path"]).stem: int(v.get("frames", 1))
+        for v in design["legend"].values()
+    }
 
-    def cell(ch, r, c_orig):
-        if legend.get(ch) is None and ch != " ":
-            # mixed berry vine: lit or plain, 50/50, seeded
-            return load("cave_vines_plant_lit" if rng.random() < 0.5 else "cave_vines_plant")
-        name = legend.get(ch)
-        if not name:
+    anim_cells: list[dict[str, str | int]] = []
+    anim_sheets: dict[str, str] = {}
+
+    def cell(ch: str, r: int, c_orig: int) -> Image.Image | None:
+        if ch == " ":
             return None
+        if ch not in legend:
+            raise KeyError(f"{design_path.name}: unknown design character {ch!r}")
+
+        name = legend[ch]
+        if name == "cave_vines_plant_lit":
+            name = (
+                "cave_vines_plant_lit"
+                if rng.random() < 0.5
+                else "cave_vines_plant"
+            )
+
         if frames_by_name.get(name, 1) > 1:
-            # animated flipbook: cutout — composite stays transparent here and the
-            # site overlays this cell with the full sheet, animated by a ticker
-            sheet = f"{ANIM_SHEET_NAMES.get(name, name.replace('_', '-') + '-frames')}.png"
-            sheet_textures[sheet] = name
-            anim_cells.append({"r": r, "c": c_orig - c0,
-                               "sheet": sheet, "frames": frames_by_name[name]})
+            sheet = ANIM_WEBP_NAMES.get(
+                name, name.replace("_", "-") + ".webp"
+            )
+            anim_sheets[sheet] = name
+            anim_cells.append({"r": r, "c": c_orig - c0, "sheet": sheet})
             return None
-        t = load(name)
-        # explicit rotations are keyed in ORIGINAL grid coords
+
+        tile = load(name)
         if (r_orig_rows[r], c_orig) in explicit_rot:
             deg = explicit_rot[(r_orig_rows[r], c_orig)]
         elif name in CRYSTALS and bud_random:
-            deg = rng.choice((0, 90, 180, 270))  # buds connect to random sides
+            deg = rng.choice((0, 90, 180, 270))
         else:
             deg = attach_deg(r_orig_rows[r], c_orig, name)
-        if deg == 90:
-            t = t.transpose(Image.Transpose.ROTATE_270)
-        elif deg == 180:
-            t = t.transpose(Image.Transpose.ROTATE_180)
-        elif deg == 270:
-            t = t.transpose(Image.Transpose.ROTATE_90)
-        return t
 
-    CS = round(TILE * SCALE)  # cell size on the canvas; works for fractional scales
-    img = Image.new("RGBA", (CS * (c1 - c0), CS * len(rows)), (0, 0, 0, 0))
-    for (r, c) in fill_cells:  # dark interior fill under the crystals
-        img.paste(dark_deepslate(), (c * CS, r * CS))
+        if deg == 90:
+            tile = tile.transpose(Image.Transpose.ROTATE_270)
+        elif deg == 180:
+            tile = tile.transpose(Image.Transpose.ROTATE_180)
+        elif deg == 270:
+            tile = tile.transpose(Image.Transpose.ROTATE_90)
+        return tile
+
+    img = Image.new("RGBA", (TILE * (c1 - c0), TILE * len(rows)), (0, 0, 0, 0))
+    for r, c in fill_cells:
+        img.paste(dark_deepslate(), (c * TILE, r * TILE))
     for r, row in enumerate(rows):
         for i, c in enumerate(range(c0, c1)):
-            t = cell(row[c], r, c)
-            if t is not None:
-                img.paste(t, (i * CS, r * CS), t)
+            block = cell(row[c], r, c)
+            if block is not None:
+                img.paste(block, (i * TILE, r * TILE), block)
+
     img.save(OUT / out_name, optimize=True)
 
-    # full flipbook sheets for animated cells + a manifest the site can wire up
+    stem = Path(out_name).stem
     if anim_cells:
-        for sheet_file, name in sheet_textures.items():
-            img2 = Image.open(SRC / f"{name}.png" if (SRC / f"{name}.png").exists() else MC / f"{name}.png").convert("RGBA")
-            w, h = img2.size
-            frames = h // w
-            # normalize every sheet to 16px-wide frames (16 x frames*16);
-            # CSS scales the overlay up with pixelated rendering
-            img2 = img2.resize((TILE * SCALE, (TILE * SCALE) * frames), Image.NEAREST)
-            img2.save(OUT / sheet_file, optimize=True)
-        import json as _json
-        (OUT / f"{Path(out_name).stem}-anim.json").write_text(_json.dumps(anim_cells, indent=1))
+        for sheet, name in anim_sheets.items():
+            make_animated_webp(name, frames_by_name[name], sheet)
+        (OUT / f"{stem}-anim.json").write_text(
+            json.dumps(
+                {
+                    "sceneCols": c1 - c0,
+                    "sceneRows": len(rows),
+                    "cells": anim_cells,
+                },
+                indent=1,
+            )
+        )
+    else:
+        (OUT / f"{stem}-anim.json").unlink(missing_ok=True)
 
-    sheet = Image.new("RGBA", (img.width + 40, img.height + 40), (243, 231, 204, 255))
-    sheet.paste(img, (20, 20), img)
-    sheet.save(PREVIEW / f"{Path(out_name).stem}-preview.png")
-    print(f"{out_name} {img.size} = {c1-c0} cols x {len(rows)} rows (native {SCALE}x)")
-    return img
+    # Preview only: fill animated cells with the first source frame.
+    preview = img.copy()
+    for anim in anim_cells:
+        source = load_source(anim_sheets[anim["sheet"]])
+        frame = source.crop((0, 0, source.width, source.width)).resize(
+            (TILE, TILE), Image.NEAREST
+        )
+        preview.paste(
+            frame,
+            (anim["c"] * TILE, anim["r"] * TILE),
+            frame,
+        )
 
-def main():
+    sheet = Image.new(
+        "RGBA",
+        (preview.width + 40, preview.height + 40),
+        (243, 231, 204, 255),
+    )
+    sheet.paste(preview, (20, 20), preview)
+    sheet.save(PREVIEW / f"{stem}-preview.png")
+
+    print(
+        f"{out_name}: {img.width}x{img.height}, "
+        f"{len(anim_cells)} animated cells"
+    )
+
+
+def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     PREVIEW.mkdir(parents=True, exist_ok=True)
-    rng = random.Random(2025)  # fixed seed: one-off berry shuffle, stable on rebuilds
-    # latest vN.json is the main gutter art; every other design json (sv*, etc.)
-    # renders to its friendly deployed name as a standalone decoration
-    main_design = latest_design()
-    render_design(main_design, rng, "vines.png")
-    # only designs referenced by the site are rendered/deployed
-    DEPLOYED = {
-        "sv6": "geode",
-        "sv7": "portal",
-        "sv8": "cherry-tree",
-    }
-    for extra in sorted(VERSIONS.glob("*.json")):
-        if extra.name == main_design.name or extra.name.startswith("v"):
-            continue
-        if extra.stem not in DEPLOYED:
-            print(f"skip {extra.name}: not deployed (edit DEPLOYED to add)")
-            continue
-        render_design(extra, rng, f"{DEPLOYED[extra.stem]}.png")
+
+    latest = latest_design()
+    rng = random.Random(2025)
+
+    for out_name, spec in SCENES.items():
+        design_path = latest if spec is None else VERSIONS / spec
+        if not design_path.exists():
+            raise FileNotFoundError(design_path)
+        render_design(design_path, rng, f"{out_name}.png")
+
 
 if __name__ == "__main__":
     main()

@@ -319,16 +319,6 @@ document.addEventListener("DOMContentLoaded", () => {
     allChip.click();
   }
 
-  /* 3.3 Animated block cells (nether portal, lava): flipbook ticker shifts
-     background-position in hard cell-height jumps, one frame per tick     */
-  setInterval(() => {
-    document.querySelectorAll(".block-anim").forEach((el) => {
-      const f = +el.dataset.frames || 1;
-      el._bf = ((el._bf || 0) + 1) % f;
-      el.style.backgroundPositionY = -((el._bf) * el.clientHeight) + "px";
-    });
-  }, 130);
-
   /* 3.4 Ore UI easter eggs — every project card has a 50% chance of
      spanning a random Ore-UI sprite across its bottom-left corner        */
   /* ------------------------------------------------------------------------ */

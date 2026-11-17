@@ -2,14 +2,17 @@
 
 <section id="blog" class="relative py-14 sm:py-20 px-4 sm:px-6 scroll-mt-20">
   <!-- Nether portal + lava scene on the right edge (decorative).
-       Animated cells are cutouts in portal.png; overlays animate them from
-       the flipbook sheets listed in portal-anim.json (7 cols x 27 rows). -->
+       Static blocks are baked into portal.png; animated cells are transparent
+       and covered by one small WebP per animated block. -->
   {% set netherPortalAnim = { cells: [] } %}
   {% for g in blockAnim %}{% if g.design == "portal" %}{% set netherPortalAnim = g %}{% endif %}{% endfor %}
-  <div class="hidden xl:block absolute right-0 top-1/2 -translate-y-1/2 w-[288px] pointer-events-none select-none -z-10" aria-hidden="true">
-    <img src="/assets/images/scenes/portal.png" alt="" width="112" height="432" loading="lazy" decoding="async" class="w-full h-auto" style="image-rendering:pixelated"/>
+  {% set sceneCols = netherPortalAnim.sceneCols or 7 %}
+  {% set sceneRows = netherPortalAnim.sceneRows or 41 %}
+  {% set sceneCell = 287 / sceneCols %}
+  <div class="hidden xl:block absolute right-0 top-[35%] -mt-8 w-[287px] pointer-events-none select-none -z-10" aria-hidden="true">
+    <img src="/assets/images/scenes/portal.png?v={{ buildStamp }}" alt="" width="{{ sceneCols * 16 }}" height="{{ sceneRows * 16 }}" loading="lazy" decoding="async" class="w-full h-auto" style="image-rendering:pixelated"/>
     {% for cell in netherPortalAnim.cells %}
-    <div class="block-anim absolute" style="left:{{ cell.c * 100 / 7 }}%;top:{{ cell.r * 100 / 27 }}%;width:{{ 100 / 7 }}%;height:{{ 100 / 27 }}%;background-image:url('/assets/images/scenes/{{ cell.sheet }}');background-size:100% calc(var(--f) * 100%);--f:{{ cell.frames }};image-rendering:pixelated" data-frames="{{ cell.frames }}"></div>
+    <div class="anim-cell absolute" style="left:{{ cell.c * sceneCell }}px;top:{{ cell.r * sceneCell }}px;width:{{ sceneCell }}px;height:{{ sceneCell }}px;background-image:url('/assets/images/scenes/{{ cell.sheet }}?v={{ buildStamp }}');background-size:100% 100%;image-rendering:pixelated"></div>
     {% endfor %}
   </div>
   <div class="max-w-5xl mx-auto">
