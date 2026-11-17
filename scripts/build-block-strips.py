@@ -7,7 +7,7 @@ no stretching, no tiling, no resplitting into repeat segments.
 Only fully-empty border columns are cropped so the art keeps its
 true proportions. Tweak SCALE / the grid later as needed.
 
-Writes public/images/blocks/lush-vines.png   (deployed)
+Writes public/assets/blocks/*.png                        (deployed)
        temp/block-variants/lush-vines-preview.png
 
 '^'-like J cells mix cave_vines_plant_lit / cave_vines_plant 50/50 (seeded).
@@ -23,15 +23,15 @@ ROOT = Path(__file__).resolve().parent.parent
 TEX = ROOT / "temp/ore-scene-work/textures"
 MC = ROOT / "temp/ore-scene-work/mc-blocks"
 SRC = TEX / "blocks"
-VERSIONS = ROOT / "temp/block-designer/versions"
+VERSIONS = ROOT / "temp/designer/versions"
 
 def latest_design():
     """Newest versions/vN.json the designer exported."""
     import re
     cands = sorted(VERSIONS.glob("v*.json"), key=lambda f: int(re.search(r"v(\d+)", f.name).group(1)))
     return cands[-1]
-OUT = ROOT / "public/images/blocks"
-PREVIEW = ROOT / "temp/block-variants"
+OUT = ROOT / "public/assets/blocks"
+PREVIEW = ROOT / "temp/renders"
 
 TILE = 16
 SCALE = 1         # compose at native 16px tiles; CSS scales up with pixelated rendering
@@ -215,8 +215,13 @@ def main():
     # renders to its own <stem>.png as a standalone decoration
     main_design = latest_design()
     render_design(main_design, rng, "lush-vines.png")
+    # only designs referenced by the site are rendered/deployed
+    DEPLOYED = {"sv6", "sv7", "sv8"}
     for extra in sorted(VERSIONS.glob("*.json")):
         if extra.name == main_design.name or extra.name.startswith("v"):
+            continue
+        if extra.stem not in DEPLOYED:
+            print(f"skip {extra.name}: not deployed (edit DEPLOYED to add)")
             continue
         render_design(extra, rng, f"{extra.stem}.png")
 
