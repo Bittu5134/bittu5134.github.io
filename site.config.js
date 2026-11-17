@@ -37,9 +37,28 @@ export default {
   },
 
   // ── Author Profile & JSON-LD Schema ─────────────────────────────────
+  // One entity with several aliases. `alternateName` tells search engines
+  // these strings all refer to the same person; `sameAs` pins the entity to
+  // external profiles that are verifiably ours.
   author: {
     name: "Bittu",
-    alternateName: "Bittu5134",
+    alternateName: ["Bittu5134", "Divyanshu", "Divyanshu A.", "Divyanshu Anand"],
+    // Separates this entity from same-named people.
+    disambiguatingDescription:
+      "Software engineer and cybersecurity student building open-source systems tools, Minecraft technical content, and webnovel reader platforms.",
+    // Topical authority: helps disambiguate WHICH Divyanshu Anand this is.
+    knowsAbout: [
+      "Go (programming language)",
+      "Cybersecurity",
+      "WebRTC",
+      "Linux",
+      "Minecraft modding",
+      "Python (programming language)",
+      "C (programming language)",
+      "TypeScript",
+      "Discord bots",
+      "Cloudflare Workers",
+    ],
     email: "hello@bittu.dev",
     url: "https://bittu.dev",
     image: "https://bittu.dev/assets/images/avatar.webp",
@@ -52,6 +71,9 @@ export default {
       "https://github.com/Bittu5134",
       "https://x.com/LostSquidXD",
       "https://www.linkedin.com/in/bittu5134",
+      "https://www.planetminecraft.com/member/bittu5134/",
+      "https://www.patreon.com/lazybittu",
+      "https://www.reddit.com/user/RealNPC_/",
     ],
   },
 
