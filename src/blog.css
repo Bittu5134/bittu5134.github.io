@@ -18,6 +18,20 @@
    template this file sees). Re-running @tailwind utilities here duplicated
    ~14 KB of identical rules on every blog page. */
 
+/* ─── Blog Archive: Tag Filter Chips ────────────────────────── */
+/* Flat dashed chips; the search controller only toggles .active and font
+   weight, so selection is shown with a plain fill (no lift, no shadow). */
+.blog-tag-filter-btn.active {
+  background-color: #fde047;
+}
+
+/* Search excerpt: plain text under the summary, with highlighted matches */
+.blog-match-snippet mark {
+  background-color: #fde047;
+  color: #000000;
+  padding: 0 0.15em;
+}
+
 /* ─── Blog Markdown Prose (Readability-First Architecture) ───── */
 .prose-retro {
   font-family: 'Space Grotesk', sans-serif;

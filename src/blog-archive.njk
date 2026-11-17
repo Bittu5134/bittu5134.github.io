@@ -7,17 +7,22 @@ isBlogPage: true
 ---
 {% import "macros/icons.njk" as icons %}
 
-<div class="font-body">
+<div class="font-body relative">
+  <!-- Same edge ornamentation as the homepage: pixel vines + cherry tree (decorative) -->
+  <img src="/assets/images/scenes/vines.png?v={{ buildStamp }}" alt="" width="64" height="208" aria-hidden="true" loading="lazy" decoding="async"
+       class="hidden xl:block absolute top-0 right-0 pointer-events-none select-none -z-10"
+       style="image-rendering:pixelated;width:250px;height:auto"/>
+  <img src="/assets/images/scenes/cherry-tree.png?v={{ buildStamp }}" alt="" width="112" height="128" aria-hidden="true" loading="lazy" decoding="async"
+       class="hidden xl:block absolute bottom-0 left-0 pointer-events-none select-none -z-10"
+       style="image-rendering:pixelated;width:288px;height:auto"/>
+
   {% include "components/retro-header.njk" %}
 
   <main class="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-20" data-pagefind-ignore>
     <!-- Page heading: display voice + RSS / LLMS.TXT affordances -->
     <header class="flex flex-col sm:flex-row sm:items-end justify-between gap-5 mb-10">
       <div>
-        <h1 class="heading-pop font-display text-5xl sm:text-6xl text-black leading-none">All articles</h1>
-        <p class="font-mono text-sm font-bold text-black/65 mt-4">
-          {{ collections.blogs.length }} post{{ '' if collections.blogs.length == 1 else 's' }} · notes on systems, protocols &amp; the web
-        </p>
+        <h1 class="heading-pop font-display text-5xl sm:text-6xl text-black leading-none">Articles</h1>
       </div>
       <div class="flex items-center gap-3">
         <a
@@ -33,10 +38,10 @@ isBlogPage: true
           href="/llms.txt"
           target="_blank"
           rel="noopener noreferrer"
-          class="btn-pill-sm bg-[#fffdf9] hover:bg-[#86efac]"
+          class="btn-pill-sm bg-[#86efac] hover:bg-[#4ade80]"
           title="Structured plain-text feed for LLMs"
         >
-          {{ icons.terminal("w-4 h-4 text-black") }} LLMS.TXT
+          {{ icons.llmsDoc("w-4 h-4 text-black") }} LLMS.TXT
         </a>
       </div>
     </header>
@@ -53,12 +58,12 @@ isBlogPage: true
             type="search"
             id="blog-search-input"
             placeholder="Search articles by title, keywords, or #tag..."
-            class="w-full font-mono text-sm text-black placeholder:text-black/65 focus:outline-none bg-transparent"
+            class="w-full text-sm text-black placeholder:text-black/65 focus:outline-none bg-transparent"
             aria-label="Search articles"
           />
           <button
             id="blog-search-clear"
-            class="hidden shrink-0 px-2 py-1 font-mono text-xs font-bold text-black bg-[#fffdf9] border-2 border-black hover:bg-[#f87171] cursor-pointer transition-colors motion-reduce:transition-none"
+            class="hidden shrink-0 px-2 py-1 text-xs font-bold text-black bg-[#fffdf9] border-2 border-black hover:bg-[#f87171] cursor-pointer transition-colors motion-reduce:transition-none"
             aria-label="Clear search"
           >
             CLEAR
@@ -66,36 +71,30 @@ isBlogPage: true
         </div>
 
         <!-- Sort select -->
-        <div class="flex items-center justify-between sm:justify-start gap-2 shrink-0 h-11 sm:h-12 px-3 sm:px-4 bg-[#fffdf9] border-2 border-black transition-colors focus-within:border-[#b45309] motion-reduce:transition-none">
-          <label for="blog-sort-select" class="flex items-center gap-1.5 font-mono text-sm font-bold text-black shrink-0 cursor-pointer">
-            {{ icons.slidersHorizontal("w-4 h-4 text-black") }}
-            <span>SORT:</span>
-          </label>
-          <select
-            id="blog-sort-select"
-            class="bg-transparent font-mono text-sm font-bold text-black focus:outline-none cursor-pointer pr-1"
-            aria-label="Sort articles"
-          >
-            <option value="date-desc">Newest First</option>
-            <option value="date-asc">Oldest First</option>
-            <option value="read-time-asc">Shortest Read</option>
-            <option value="read-time-desc">Longest Read</option>
-            <option value="title-asc">Title (A–Z)</option>
-          </select>
-        </div>
+        <select
+          id="blog-sort-select"
+          class="shrink-0 h-11 sm:h-12 px-3 sm:px-4 bg-[#fffdf9] border-2 border-black text-sm font-bold text-black focus:outline-none focus:border-[#b45309] cursor-pointer transition-colors motion-reduce:transition-none"
+          aria-label="Sort articles"
+        >
+          <option value="date-desc" selected>Newest First</option>
+          <option value="date-asc">Oldest First</option>
+          <option value="read-time-asc">Shortest Read</option>
+          <option value="read-time-desc">Longest Read</option>
+          <option value="title-asc">Title (A–Z)</option>
+        </select>
       </div>
 
-      <!-- Tag filter chips (JS toggles bg-[#fde047] / bg-[#fffdf9] on these) -->
+      <!-- Tag filter chips (JS toggles .active / font weight only) -->
       <div class="flex flex-wrap items-center gap-2 pt-1" id="blog-tags-container" aria-label="Filter articles by tag">
         <button
-          class="blog-tag-filter-btn active px-4 py-2.5 bg-[#fde047] border-2 border-black font-mono text-sm font-black text-black cursor-pointer select-none transition-colors motion-reduce:transition-none"
+          class="blog-tag-filter-btn active px-2.5 py-1.5 bg-transparent border-2 border-dashed border-black text-sm font-black text-black cursor-pointer select-none transition-colors hover:bg-[#fef3c7] motion-reduce:transition-none"
           data-tag="ALL"
         >
           ALL ({{ collections.blogs.length }})
         </button>
         {% for tag in collections.blogTags %}
           <button
-            class="blog-tag-filter-btn px-4 py-2.5 bg-[#fffdf9] hover:bg-[#fde047] border-2 border-black font-mono text-sm font-bold text-black cursor-pointer select-none transition-colors motion-reduce:transition-none"
+            class="blog-tag-filter-btn px-2.5 py-1.5 bg-transparent border-2 border-dashed border-black text-sm font-bold text-black cursor-pointer select-none transition-colors hover:bg-[#fef3c7] motion-reduce:transition-none"
             data-tag="{{ tag }}"
           >
             #{{ tag }}
@@ -103,13 +102,13 @@ isBlogPage: true
         {% endfor %}
       </div>
 
-      <div id="blog-search-status" class="hidden px-1 font-mono text-sm font-bold text-black/65">
+      <div id="blog-search-status" class="hidden px-1 font-mono text-sm font-bold text-black/65" aria-live="polite">
         <span id="blog-search-count"></span>
       </div>
     </section>
 
     <!-- Article rows: 2px ink frame around the list, hairlines between rows -->
-    <div class="divide-y divide-black/15 border-y-2 border-black" id="blog-posts-list">
+    <div class="divide-y divide-black/15 border-y border-black/15" id="blog-posts-list">
       {% set chipColors = ['bg-[#86efac]', 'bg-[#c4b5fd]', 'bg-[#38bdf8]'] %}
       {% for post in collections.blogs %}
         {% set chip = chipColors[loop.index0 % 3] %}
@@ -135,10 +134,10 @@ isBlogPage: true
             <p class="font-mono text-sm font-bold flex flex-wrap items-center gap-3">
               <span class="inline-block px-2.5 py-1 border-2 border-black {{ chip }} text-black">
                 <time datetime="{{ (post.data.date or post.date) | dateIso }}">
-                  {{ (post.data.displayDate or ((post.data.date or post.date) | dateDisplay)) | upper }}
+                  {{ post.data.date | dateShort }}
                 </time>
               </span>
-              <span class="text-black/65">// {{ (post.data.readTime or '3 min read') | upper }}</span>
+              <span class="text-black/65">// {{ post.data.readTime or '3 min read' }}</span>
             </p>
 
             <!-- Title is the row-wide link -->
@@ -152,9 +151,9 @@ isBlogPage: true
             <p class="font-body text-base sm:text-lg text-black/80 leading-relaxed mt-3">{{ post.data.summary }}</p>
 
             <!-- Pagefind excerpt (populated by /assets/js/pagefind-search.js) -->
-            <div class="blog-match-snippet hidden mt-4 p-3 bg-[#fffdf9] border-2 border-black font-mono text-sm text-black/90 leading-relaxed"></div>
+            <div class="blog-match-snippet hidden mt-3 text-sm sm:text-base text-black/70 leading-relaxed"></div>
 
-            <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mt-4 font-mono text-sm font-bold text-black/65">
+            <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mt-4 font-mono text-sm font-bold text-black/60">
               {% for tag in validTags.slice(0, 4) %}
                 <span>#{{ tag | lower }}</span>
               {% endfor %}
@@ -175,19 +174,14 @@ isBlogPage: true
     </div>
 
     <!-- Empty results state -->
-    <div id="blog-no-results" class="hidden my-10 border-[3px] border-black bg-[#fffdf9] p-8 sm:p-12 text-center">
-      <div class="inline-block px-2.5 py-1 border-2 border-black bg-[#f87171] font-mono text-sm font-bold text-black">
-        No matches
-      </div>
-      <h2 class="font-display text-3xl sm:text-4xl text-black leading-tight mt-4">Nothing here</h2>
-      <p class="font-body text-base sm:text-lg text-black/80 leading-relaxed max-w-md mx-auto mt-3">
-        No articles match your query or active tag filters. Try broader terms or clear the filters.
+    <div id="blog-no-results" class="hidden my-10 border-2 border-dashed border-black p-8 sm:p-10 text-center">
+      <h2 class="font-display text-2xl sm:text-3xl text-black leading-tight">No articles found</h2>
+      <p class="font-body text-sm sm:text-base text-black/75 leading-relaxed max-w-md mx-auto mt-2">
+        Try a different search term or clear the active filters.
       </p>
-      <div class="mt-6">
-        <button id="blog-reset-filters-btn" class="btn-pill-sm bg-[#fde047] cursor-pointer">
-          Reset all filters
-        </button>
-      </div>
+      <button id="blog-reset-filters-btn" class="mt-5 inline-flex items-center gap-2 px-4 py-2 border-2 border-black text-sm font-bold text-black bg-transparent hover:bg-[#fde047] cursor-pointer transition-colors">
+        Reset filters
+      </button>
     </div>
   </main>
 

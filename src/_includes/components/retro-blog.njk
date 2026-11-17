@@ -28,7 +28,7 @@
       </div>
     </div>
 
-    <div class="divide-y divide-black/15 border-y-2 border-black">
+    <div class="divide-y divide-black/15 border-y border-black/15">
       {% set chipColors = ['bg-[#86efac]', 'bg-[#c4b5fd]', 'bg-[#38bdf8]'] %}
       {% for post in collections.blogs.slice(0, 3) %}
         {% set chip = chipColors[loop.index0 % 3] %}
@@ -36,7 +36,7 @@
           <div class="min-w-0">
             <p class="font-mono text-sm font-bold flex flex-wrap items-center gap-3">
               <span class="inline-block px-2.5 py-1 border-2 border-black {{ chip }} text-black">{{ post.data.date | dateShort }}</span>
-              <span class="text-black/65">{{ post.data.readTime or '5 min read' }}</span>
+              <span class="text-black/65">// {{ post.data.readTime or '5 min read' }}</span>
             </p>
             <h3 class="font-display text-3xl sm:text-4xl text-black leading-tight mt-4">
               <a href="{{ post.url }}" class="group-hover:text-[#b45309] transition-colors after:absolute after:inset-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black">{{ post.data.title }}</a>

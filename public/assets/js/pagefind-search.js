@@ -78,6 +78,9 @@
       if (initialSort && this.sortSelect) {
         this.sortSelect.value = initialSort;
         this.currentSort = initialSort;
+      } else if (this.sortSelect) {
+        // Keep the default explicit (browsers may restore a stale form value on reload).
+        this.sortSelect.value = this.currentSort;
       }
 
       this.bindEvents();
@@ -149,11 +152,11 @@
         const isActive = (btnTag === "ALL" && isAllActive) || this.selectedTags.has(btnTag);
 
         if (isActive) {
-          btn.classList.add("active", "bg-[#fde047]", "font-black");
-          btn.classList.remove("bg-[#fffdf9]", "font-bold");
+          btn.classList.add("active", "font-black");
+          btn.classList.remove("font-bold");
         } else {
-          btn.classList.remove("active", "bg-[#fde047]", "font-black");
-          btn.classList.add("bg-[#fffdf9]", "font-bold");
+          btn.classList.remove("active", "font-black");
+          btn.classList.add("font-bold");
         }
       });
     }
@@ -177,41 +180,62 @@
       window.history.replaceState({}, "", newUrl);
     }
 
-    cardMatchesTags(card) {
-      if (this.selectedTags.size === 0) return true;
+    // How many of the currently selected tags this card carries.
+    // 0 means no selected tags are active (or the card matches none).
+    getTagMatchCount(card) {
+      if (this.selectedTags.size === 0) return 0;
       const rawTags = (card.getAttribute("data-tags") || "").toUpperCase();
       const cardTags = rawTags.split("|||").map((t) => t.trim()).filter(Boolean);
-      return Array.from(this.selectedTags).every((selected) => cardTags.includes(selected));
+      let count = 0;
+      Array.from(this.selectedTags).forEach((selected) => {
+        if (cardTags.includes(selected)) count += 1;
+      });
+      return count;
     }
 
-    sortCards(cards) {
-      return cards.slice().sort((a, b) => {
-        if (this.currentSort === "date-desc") {
-          const dateA = new Date(a.getAttribute("data-date") || 0).getTime();
-          const dateB = new Date(b.getAttribute("data-date") || 0).getTime();
-          return dateB - dateA;
+    // User-chosen sort, independent of tag relevance.
+    compareCards(a, b) {
+      if (this.currentSort === "date-desc") {
+        const dateA = new Date(a.getAttribute("data-date") || 0).getTime();
+        const dateB = new Date(b.getAttribute("data-date") || 0).getTime();
+        return dateB - dateA;
+      }
+      if (this.currentSort === "date-asc") {
+        const dateA = new Date(a.getAttribute("data-date") || 0).getTime();
+        const dateB = new Date(b.getAttribute("data-date") || 0).getTime();
+        return dateA - dateB;
+      }
+      if (this.currentSort === "read-time-asc") {
+        const timeA = parseInt(a.getAttribute("data-readtime") || "0", 10) || 0;
+        const timeB = parseInt(b.getAttribute("data-readtime") || "0", 10) || 0;
+        return timeA - timeB;
+      }
+      if (this.currentSort === "read-time-desc") {
+        const timeA = parseInt(a.getAttribute("data-readtime") || "0", 10) || 0;
+        const timeB = parseInt(b.getAttribute("data-readtime") || "0", 10) || 0;
+        return timeB - timeA;
+      }
+      if (this.currentSort === "title-asc") {
+        const titleA = a.getAttribute("data-title") || "";
+        const titleB = b.getAttribute("data-title") || "";
+        return titleA.localeCompare(titleB);
+      }
+      return 0;
+    }
+
+    // Rank visible entries: cards matching every selected tag first, then
+    // partial matches with the most matched tags. Ties use the user's sort
+    // (or Pagefind relevance when searching with the default sort).
+    rankCards(entries, useSearchRank) {
+      return entries.slice().sort((a, b) => {
+        const tagDiff = (b.tagCount || 0) - (a.tagCount || 0);
+        if (tagDiff !== 0) return tagDiff;
+
+        if (useSearchRank && this.currentSort === "date-desc" && a.rank !== b.rank) {
+          return (a.rank || 999) - (b.rank || 999);
         }
-        if (this.currentSort === "date-asc") {
-          const dateA = new Date(a.getAttribute("data-date") || 0).getTime();
-          const dateB = new Date(b.getAttribute("data-date") || 0).getTime();
-          return dateA - dateB;
-        }
-        if (this.currentSort === "read-time-asc") {
-          const timeA = parseInt(a.getAttribute("data-readtime") || "0", 10) || 0;
-          const timeB = parseInt(b.getAttribute("data-readtime") || "0", 10) || 0;
-          return timeA - timeB;
-        }
-        if (this.currentSort === "read-time-desc") {
-          const timeA = parseInt(a.getAttribute("data-readtime") || "0", 10) || 0;
-          const timeB = parseInt(b.getAttribute("data-readtime") || "0", 10) || 0;
-          return timeB - timeA;
-        }
-        if (this.currentSort === "title-asc") {
-          const titleA = a.getAttribute("data-title") || "";
-          const titleB = b.getAttribute("data-title") || "";
-          return titleA.localeCompare(titleB);
-        }
-        return 0;
+
+        return this.compareCards(a.card, b.card);
       });
     }
 
@@ -235,23 +259,24 @@
           const snippetEl = card.querySelector(".blog-match-snippet");
           if (snippetEl) snippetEl.classList.add("hidden");
 
-          if (this.cardMatchesTags(card)) {
+          const tagCount = this.getTagMatchCount(card);
+          if (this.selectedTags.size === 0 || tagCount > 0) {
             card.classList.remove("hidden");
-            matchedCards.push(card);
+            matchedCards.push({ card, tagCount });
           } else {
             card.classList.add("hidden");
             unmatchedCards.push(card);
           }
         });
 
-        const sortedMatched = this.sortCards(matchedCards);
+        const sortedMatched = this.rankCards(matchedCards, false);
 
         if (this.cardsContainer) {
-          sortedMatched.forEach((card) => this.cardsContainer.appendChild(card));
+          sortedMatched.forEach(({ card }) => this.cardsContainer.appendChild(card));
           unmatchedCards.forEach((card) => this.cardsContainer.appendChild(card));
         }
 
-        this.updateStatusUI(matchedCards.length, q);
+        this.updateStatusUI(sortedMatched.length, q);
         return;
       }
 
@@ -279,7 +304,8 @@
 
           this.articleCards.forEach((card) => {
             const slug = card.getAttribute("data-slug") || "";
-            const matchesTag = this.cardMatchesTags(card);
+            const tagCount = this.getTagMatchCount(card);
+            const matchesTag = this.selectedTags.size === 0 || tagCount > 0;
             const pfMatch = resultsMap.get(slug);
             const title = (card.getAttribute("data-title") || "").toLowerCase();
             const summary = (card.getAttribute("data-summary") || "").toLowerCase();
@@ -294,13 +320,13 @@
               card.classList.remove("hidden");
               if (snippetEl) {
                 if (pfMatch && pfMatch.excerpt) {
-                  snippetEl.innerHTML = `<span class="font-bold text-amber-700">Excerpt: </span>${pfMatch.excerpt}`;
+                  snippetEl.innerHTML = `<span class="font-bold text-black/50">Excerpt: </span>${pfMatch.excerpt}`;
                   snippetEl.classList.remove("hidden");
                 } else {
                   snippetEl.classList.add("hidden");
                 }
               }
-              matchedCards.push({ card, rank: pfMatch ? pfMatch.rank : 999 });
+              matchedCards.push({ card, rank: pfMatch ? pfMatch.rank : 999, tagCount });
             } else {
               card.classList.add("hidden");
               if (snippetEl) snippetEl.classList.add("hidden");
@@ -308,13 +334,7 @@
             }
           });
 
-          let finalSortedCards = [];
-          if (this.currentSort !== "date-desc") {
-            finalSortedCards = this.sortCards(matchedCards.map((m) => m.card));
-          } else {
-            matchedCards.sort((a, b) => a.rank - b.rank);
-            finalSortedCards = matchedCards.map((m) => m.card);
-          }
+          const finalSortedCards = this.rankCards(matchedCards, true).map(({ card }) => card);
 
           if (this.cardsContainer) {
             finalSortedCards.forEach((card) => this.cardsContainer.appendChild(card));
@@ -336,7 +356,8 @@
         const title = (card.getAttribute("data-title") || "").toLowerCase();
         const summary = (card.getAttribute("data-summary") || "").toLowerCase();
         const rawTags = (card.getAttribute("data-tags") || "").toLowerCase().replace(/\|\|\|/g, " ");
-        const matchesTag = this.cardMatchesTags(card);
+        const tagCount = this.getTagMatchCount(card);
+        const matchesTag = this.selectedTags.size === 0 || tagCount > 0;
         const matchesQuery = rawTokens.every(
           (t) => title.includes(t) || summary.includes(t) || rawTags.includes(t)
         );
@@ -346,20 +367,20 @@
 
         if (matchesTag && matchesQuery) {
           card.classList.remove("hidden");
-          matchedCards.push(card);
+          matchedCards.push({ card, tagCount });
         } else {
           card.classList.add("hidden");
           unmatchedCards.push(card);
         }
       });
 
-      const finalSortedCards = this.sortCards(matchedCards);
+      const finalSortedCards = this.rankCards(matchedCards, false).map(({ card }) => card);
       if (this.cardsContainer) {
         finalSortedCards.forEach((card) => this.cardsContainer.appendChild(card));
         unmatchedCards.forEach((card) => this.cardsContainer.appendChild(card));
       }
 
-      this.updateStatusUI(matchedCards.length, q);
+      this.updateStatusUI(finalSortedCards.length, q);
     }
 
     updateStatusUI(visibleCount, query) {
