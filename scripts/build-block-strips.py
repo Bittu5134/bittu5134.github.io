@@ -134,16 +134,6 @@ def render_design(design_path, rng, out_name):
                     if 0 <= rr < len(rows) and 0 <= cc < len(rows[0]) and rows[rr][cc] == " ":
                         fill_cells.add((rr, cc))
 
-    def key_out_cream(t):
-        """Amethyst sprites have baked-in cream sparkle pixels; make them transparent
-        so whatever is behind (page, dark interior fill) shows through."""
-        px = t.load()
-        for y in range(t.height):
-            for x in range(t.width):
-                if px[x, y] == (255, 253, 213, 255):
-                    px[x, y] = (0, 0, 0, 0)
-        return t
-
     frames_by_name = {Path(v["path"]).stem: v.get("frames", 1) for v in d["legend"].values()}
 
     def cell(ch, r, c_orig):
@@ -160,10 +150,9 @@ def render_design(design_path, rng, out_name):
                                "sheet": f"{Path(out_name).stem}-{name}.png", "frames": frames_by_name[name]})
             return None
         t = load(name)
-        if name in CRYSTALS:
-            t = key_out_cream(t)
-        if (r, c_orig) in explicit_rot:
-            deg = explicit_rot[(r, c_orig)]
+        # explicit rotations are keyed in ORIGINAL grid coords
+        if (r_orig_rows[r], c_orig) in explicit_rot:
+            deg = explicit_rot[(r_orig_rows[r], c_orig)]
         elif name in CRYSTALS and bud_random:
             deg = rng.choice((0, 90, 180, 270))  # buds connect to random sides
         else:
@@ -195,7 +184,10 @@ def render_design(design_path, rng, out_name):
             if name not in sheets:
                 img2 = Image.open(SRC / f"{name}.png" if (SRC / f"{name}.png").exists() else MC / f"{name}.png").convert("RGBA")
                 w, h = img2.size
-                img2 = img2.resize((round(TILE * SCALE), round(TILE * SCALE) * (h // w)), Image.NEAREST)
+                frames = h // w
+                # normalize every sheet to 16px-wide frames (16 x frames*16);
+                # CSS scales the overlay up with pixelated rendering
+                img2 = img2.resize((TILE * SCALE, (TILE * SCALE) * frames), Image.NEAREST)
                 img2.save(OUT / ac["sheet"], optimize=True)
                 sheets[name] = True
         import json as _json
