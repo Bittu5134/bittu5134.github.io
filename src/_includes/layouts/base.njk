@@ -79,8 +79,8 @@
     <!-- CSS -->
     <link rel="stylesheet" href="/assets/css/index.css?v={{ buildStamp }}" />
 
-    <!-- Blog CSS: prose typography (blog pages only) -->
-    {% if isBlogPage %}
+    <!-- Blog CSS: prose typography (post pages only — the archive does not need it) -->
+    {% if isPostPage %}
       <link rel="stylesheet" href="/assets/css/blog.css?v={{ buildStamp }}" />
     {% endif %}
 

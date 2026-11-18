@@ -45,9 +45,12 @@ OUTPUT_DIR = os.path.join(PROJECT_ROOT, "public", "assets", "fonts")
 DIST_FONTS_DIR = os.path.join(DIST_DIR, "assets", "fonts")
 
 # Fonts to process: (Master filename, Output filename)
+# Space Grotesk was dropped: posts now use Playpen Sans for prose, so it was a
+# third family for one page type. Restore it here (and the @font-face in
+# blog.css) if posts ever get their own body face again.
 FONT_TARGETS = [
-    ("SpaceGrotesk.woff2", "SpaceGrotesk-Variable.woff2"),
-    ("SpaceMono-Regular.woff2", "SpaceMono-Regular.woff2"),
+    # Space Mono is bold-only: the design uses it as a data/code voice at 700,
+    # and the 400 cut was only ever used by code blocks (now 700 too).
     ("SpaceMono-Bold.woff2", "SpaceMono-Bold.woff2"),
     ("PlaypenSans-400.woff2", "PlaypenSans-Regular.woff2"),
     ("PlaypenSans-700.woff2", "PlaypenSans-Bold.woff2"),

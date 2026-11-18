@@ -77,6 +77,10 @@ amber (#b45309) dek accent — full-width text, no card, no border box.
         />
       {% endif %}
 
+      <!-- Reading column: header, prose and footer share one measured column;
+           the cover above stays full-bleed. -->
+      <div class="mx-auto w-full max-w-[40rem]">
+
       <!-- Article Header -->
       <header class="mb-10 pb-8 border-b-2 border-black">
         <!-- Metadata Row: colored date chip + mono separators -->
@@ -96,7 +100,7 @@ amber (#b45309) dek accent — full-width text, no card, no border box.
         <!-- Summary Dek (homepage tagline style: amber display face) -->
         {% if summary %}
           <p
-            class="font-display text-lg sm:text-xl text-[#b45309] leading-snug mb-6"
+            class="font-display text-lg sm:text-xl text-[#92400e] leading-snug mb-6"
             data-pagefind-meta="summary"
           >
             {{ summary }}
@@ -341,6 +345,7 @@ amber (#b45309) dek accent — full-width text, no card, no border box.
           </div>
         </section>
       </footer>
+      </div><!-- /reading column -->
     </article>
   </main>
 
@@ -461,7 +466,7 @@ amber (#b45309) dek accent — full-width text, no card, no border box.
           actorBkg: "#fde047",
           actorBorder: "#000000",
           activationBkgColor: "#86efac",
-          fontFamily: '"Space Grotesk", sans-serif',
+          fontFamily: '"Playpen Sans", cursive',
           fontSize: "13px"
         }
       };
