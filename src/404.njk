@@ -1,66 +1,50 @@
 ---
 layout: layouts/base.njk
-title: "404 - Page Not Found | Bittu"
+title: "404 — Page Not Found | Bittu"
+description: "That page doesn't exist. Every post and link that does is one click away."
 permalink: "/404.html"
 ---
 {% import "macros/icons.njk" as icons %}
 
-<div class="min-h-screen bg-[#f6eedb] retro-dots-bg text-[#14161f] font-sans flex flex-col">
+{# Same canvas, header and footer as the homepage and /blog — a dead end should
+   still look like the rest of the site. Content is centred: this is the one page
+   with no reading column, so it gets one focal point instead. #}
+<div class="font-body relative min-h-screen flex flex-col bg-[#f3e7cc]">
+  {% include "components/scene-ornaments.njk" %}
   {% include "components/retro-header.njk" %}
 
-  <main class="flex-1 flex items-center justify-center p-4 py-16">
-    <div class="max-w-lg w-full text-center space-y-6">
+  <main class="max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-24 w-full flex-1 flex flex-col justify-center text-center">
+    <!-- Eyebrow: mono chip + slash meta, same as post headers -->
+    <div class="flex flex-wrap items-center justify-center gap-2 font-mono text-sm font-bold">
+      <span class="inline-block px-2.5 py-1 border-2 border-black bg-[#fb7185]">ERROR 404</span>
+      <span class="text-black/60">// nothing at this address</span>
+    </div>
 
-      <!-- Window Chrome Bar -->
-      <div class="bg-[#fffdf9] border-[3px] border-black shadow-brutal">
-        <div class="bg-[#fb7185] border-b-[3px] border-black p-2 flex items-center justify-between px-4">
-          <span class="font-mono text-sm font-black text-black tracking-wider uppercase">ERROR 404</span>
-          <div class="flex items-center gap-1.5">
-            <span class="w-3 h-3 rounded-full border-2 border-black bg-[#fde047] inline-block"></span>
-            <span class="w-3 h-3 rounded-full border-2 border-black bg-[#86efac] inline-block"></span>
-            <span class="w-3 h-3 rounded-full border-2 border-black bg-[#f87171] inline-block"></span>
-          </div>
-        </div>
+    <h1 class="heading-pop font-display text-5xl sm:text-7xl text-black leading-none mt-6">
+      Lost in the void<span class="text-[#b45309]">.</span>
+    </h1>
 
-        <div class="p-8 sm:p-12 space-y-5">
-          <h1 class="text-8xl sm:text-9xl font-black font-mono tracking-tight text-black select-none leading-none">
-            404
-          </h1>
+    <p class="font-body text-base sm:text-lg text-black/80 leading-relaxed max-w-xl mx-auto mt-5">
+      This page doesn't exist, or it moved somewhere else. Everything below still works.
+    </p>
 
-          <div class="inline-block bg-[#fde047] border-2 border-black px-3 py-1 text-xs font-mono font-bold uppercase shadow-brutal-sm">
-            PAGE NOT FOUND
-          </div>
+    <!-- Terminal panel: the site's retro voice, flat and ink-framed -->
+    <div class="mt-8 mx-auto max-w-md border-2 border-black bg-[#14161f] px-4 py-3.5 font-mono text-xs sm:text-sm font-bold leading-relaxed text-left shadow-brutal">
+      <div class="text-[#86efac]">$ cd ~</div>
+      <div class="text-white">$ ls blog/</div>
+      <div class="text-[#fde047] mt-1">→ {{ collections.blogs.length }} posts are one click away</div>
+    </div>
 
-          <p class="font-mono text-sm text-black/70 leading-relaxed max-w-sm mx-auto">
-            Looks like you wandered off the map. This page doesn't exist or may have been moved.
-          </p>
-
-          <!-- Terminal-style suggestion -->
-          <div class="bg-[#14161f] border-2 border-black p-4 text-left font-mono text-xs space-y-1">
-            <span class="text-[#86efac]">$ </span><span class="text-white">cd ~</span><br/>
-            <span class="text-[#86efac]">$ </span><span class="text-white">ls blog/</span><br/>
-            <span class="text-[#fde047]">→ maybe try the blog archive?</span>
-          </div>
-
-          <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
-            <a
-              href="/"
-              class="inline-flex items-center gap-2 bg-[#fde047] hover:bg-[#fb923c] text-black font-mono font-bold px-5 py-2.5 border-2 border-black shadow-brutal hover:-translate-y-0.5 hover:shadow-brutal-lg active:translate-y-0 active:shadow-none transition-all text-sm uppercase"
-            >
-              {{ icons.arrowLeft("w-4 h-4") }}
-              <span>Home</span>
-            </a>
-            <a
-              href="/blog"
-              class="inline-flex items-center gap-2 bg-[#86efac] hover:bg-[#4ade80] text-black font-mono font-bold px-5 py-2.5 border-2 border-black shadow-brutal hover:-translate-y-0.5 hover:shadow-brutal-lg active:translate-y-0 active:shadow-none transition-all text-sm uppercase"
-            >
-              {{ icons.fileText("w-4 h-4") }}
-              <span>All Articles</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
+    <div class="flex flex-wrap items-center justify-center gap-3 mt-8">
+      <a href="/" class="btn-pill bg-[#fde047] hover:bg-[#fbbf24]">
+        {{ icons.arrowLeft("w-3.5 h-3.5 text-black") }} Home
+      </a>
+      <a href="/blog/" class="btn-pill bg-[#86efac] hover:bg-[#4ade80]">
+        {{ icons.fileText("w-3.5 h-3.5 text-black") }} All articles
+      </a>
+      <a href="/#contact" class="btn-pill bg-[#38bdf8] hover:bg-[#0ea5e9]">
+        {{ icons.mail("w-4 h-4 text-black") }} Contact
+      </a>
     </div>
   </main>
 
