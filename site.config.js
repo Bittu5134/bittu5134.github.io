@@ -172,7 +172,7 @@ export default {
       category: "TOOLS / YT EXTENSION",
       filterCategory: "MISC",
       statsText: "Userscript + Extension",
-      liveUrl: "http://ratioyt.bittu.dev/",
+      liveUrl: "https://ratioyt.bittu.dev/",
     },
     "Awakener": {
       order: 3,

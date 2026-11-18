@@ -222,6 +222,10 @@ export function rehypeMermaidBlocks() {
           tagName: "div",
           properties: {
             className: ["mermaid-container"],
+            // Scrollable region: make it reachable and labelled for keyboard users.
+            tabIndex: 0,
+            role: "group",
+            ariaLabel: "Diagram (scrollable)",
             dataMermaidCode: encodeURIComponent(rawCode),
           },
           children: [
@@ -434,7 +438,14 @@ export function rehypeTableWrapper() {
         parent.children[index] = {
           type: "element",
           tagName: "div",
-          properties: { className: ["table-responsive-wrapper"] },
+          properties: {
+            className: ["table-responsive-wrapper"],
+            // Wide tables scroll horizontally on narrow screens; keep them
+            // reachable and labelled for keyboard/screen-reader users.
+            tabIndex: 0,
+            role: "group",
+            ariaLabel: "Table (scrollable)",
+          },
           children: [node],
         };
       }

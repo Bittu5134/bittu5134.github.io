@@ -19,7 +19,7 @@ I have always been fascinated with TUI applications, so today I spent my time wo
 ssh rps.bittu.dev -p 2222
 ```
 
-# The gameplay
+## The gameplay
 
 The gameplay is very minimal. You join the game, and the game picks Rock/Paper/Scissors and gives you a very obscure hint. You get 10 seconds to make your choice. If you beat the server, you win; otherwise, you lose 50% of your points, which get distributed to other winning players.
 
@@ -28,7 +28,7 @@ The gameplay is very minimal. You join the game, and the game picks Rock/Paper/S
 >[!IMPORTANT]
 > Due to network limitations, only people on an IPv6 network can connect to the server for now. Currently, I don't have the funds for an IPv4 server.
 
-# The Backend
+## The Backend
 
 This project uses these three libs as its main components.
 - [Wish](https://github.com/charmbracelet/wish)

@@ -44,7 +44,7 @@ flowchart LR
 
 No. Not even close. The reason I insist on calling this bot "dumb" is that it has no idea what it's generating. While this model "predicts the next word," similar to popular LLMs these days, the underlying mechanism is completely different.
 
-| | DumbCord | A neural network |
+| Aspect | DumbCord | A neural network |
 |---|---|---|
 | What it stores | Counted transitions between words, in a lookup table | Learned weights across layers of "neurons" |
 | How it "learns" | Counting occurrences while reading a file | Gradient descent and backpropagation |
