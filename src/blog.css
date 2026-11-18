@@ -33,10 +33,6 @@
   }
 }
 
-/* Reading measure — the whole article column (header, prose, footer) is capped
-   at max-w-[40rem] in post.njk, which lands at ~72–75 characters per line in
-   Playpen. The cover image stays full-bleed above it. */
-
 .prose-retro p {
   font-family: 'Playpen Sans', cursive;
   margin-bottom: 1.5rem;
