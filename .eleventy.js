@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { execSync } from "node:child_process";
 import { setupMarkdown } from "./scripts/markdown-engine.js";
 import { generateMeta } from "./scripts/generate-meta.mjs";
 import getReadingTime from "reading-time";
@@ -77,8 +78,25 @@ export default async function (eleventyConfig) {
   // Tell 11ty not to skip gitignored files in input dir (since src/blogs/ is gitignored)
   eleventyConfig.setUseGitIgnore(false);
 
-  // Build timestamp for cache-busting regenerated art (e.g. lush-vines.png?v=...)
-  eleventyConfig.addGlobalData("buildStamp", () => Date.now());
+  // Cache-busting token for regenerated assets (CSS/JS/scene art). Uses the
+  // commit SHA so unchanged assets keep their URL — and their cache — across
+  // the daily cron rebuilds. Locally, a dirty tree falls back to a timestamp
+  // so an edit is never served from a stale cache.
+  eleventyConfig.addGlobalData("buildStamp", () => {
+    const git = (cmd) =>
+      execSync(cmd, { encoding: "utf-8", stdio: ["ignore", "pipe", "ignore"] }).trim();
+    try {
+      const sha = git("git rev-parse --short HEAD");
+      // Only tracked edits count as dirty; build-generated artifacts (the
+      // ghchart is rewritten from GitHub on every build) are excluded so a
+      // clean checkout keeps the SHA instead of falling back to a timestamp.
+      const dirty =
+        git("git status --porcelain --untracked-files=no -- . ':(exclude)public/assets/images/ghchart.svg'") !== "";
+      return dirty ? `${sha}-${Date.now()}` : sha;
+    } catch {
+      return String(Date.now());
+    }
+  });
 
   // 0. Initial sync of blogs to src/blogs for 11ty input
   syncBlogsToSrc();
@@ -171,10 +189,12 @@ export default async function (eleventyConfig) {
   // 7. Passthrough static assets
   // `public/` is Eleventy's passthrough root: public/assets/** -> /assets/**,
   // public/CNAME -> /CNAME, etc. Blog media stays co-located under blogs/assets/
-  // and is copied with the posts (which also exposes the raw *.md files for LLMs).
+  // and is copied with the posts, which also exposes the raw *.md files for
+  // LLMs. The blogs.11tydata.js build config is intentionally not published.
   eleventyConfig.addPassthroughCopy({ "public": "." });
   eleventyConfig.addPassthroughCopy({ "public/.nojekyll": ".nojekyll" });
-  eleventyConfig.addPassthroughCopy({ "blogs": "blogs" });
+  eleventyConfig.addPassthroughCopy({ "blogs/assets": "blogs/assets" });
+  eleventyConfig.addPassthroughCopy("blogs/**/*.md");
   eleventyConfig.addPassthroughCopy({ "node_modules/littlefoot/dist/littlefoot.mjs": "assets/js/littlefoot.js" });
   eleventyConfig.addPassthroughCopy({ "node_modules/littlefoot/dist/littlefoot.css": "assets/css/littlefoot.css" });
 
