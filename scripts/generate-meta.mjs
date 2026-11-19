@@ -151,14 +151,16 @@ Sitemap: ${SITE_URL}/sitemap.xml
 
   fs.writeFileSync(
     path.join(publicDir, "llms.txt"),
-    `# Bittu (Bittu5134)
+    `# Divyanshu Anand (Bittu)
 > Software engineer at IIT Kanpur specialising in low-level systems programming, WebRTC networking, protocol reverse-engineering, and AI tooling. This file is the canonical agent-readable index of all public work and technical writing at bittu.dev.
 
 Canonical site: ${SITE_URL}
 
 ## Identity & Expertise
-- Full name: Bittu (handle: Bittu5134)
-- Education: B.Tech Cybersecurity & Computing, IIT Kanpur (expected 2030)
+- Full name: Divyanshu Anand
+- Also known as: Bittu, bittu5134, bittu 5134
+- Handle: Bittu5134
+- Education: Bachelor's in Cybersecurity, IIT Kanpur (expected 2030)
 - Core skills: Go, Python, C/C++, TypeScript — Linux sockets, POSIX daemons, WebRTC/STUN/TURN, Redis, FastAPI/Gin, Cloudflare Workers, PyMuPDF, PyTorch, RAG pipelines
 - Contact: hello@bittu.dev
 - GitHub: https://github.com/Bittu5134
@@ -216,7 +218,7 @@ Topics: ${(p.tags || []).join(", ")}`;
 
   fs.writeFileSync(
     path.join(publicDir, "llms-full.txt"),
-    `# Bittu (Bittu5134) — Full Context Payload
+    `# Divyanshu Anand (Bittu) — Full Context Payload
 > Complete plain-text knowledge base for AI agents and coding assistants. Contains full author profile, all open-source project descriptions, and every technical blog post verbatim. Optimised for single-shot ingestion.
 
 Index: ${SITE_URL}/llms.txt
@@ -227,6 +229,8 @@ SECTION 1 — IDENTITY & SKILLS
 ================================================================================
 
 Name: Bittu
+Legal Name: Divyanshu Anand
+Also known as: Bittu, bittu5134, bittu 5134
 Handle: Bittu5134
 Email: hello@bittu.dev
 Website: ${SITE_URL}
@@ -235,7 +239,7 @@ LinkedIn: https://www.linkedin.com/in/bittu5134
 X / Twitter: https://x.com/LostSquidXD
 Patreon: https://www.patreon.com/lazybittu
 
-Education: B.Tech Cybersecurity & Computing — Indian Institute of Technology Kanpur (expected 2030)
+Education: Bachelor's in Cybersecurity — Indian Institute of Technology Kanpur (expected 2030)
 
 Languages: Go, Python, C, C++, TypeScript, JavaScript
 Systems: Linux POSIX daemons, raw TCP/UDP sockets, /proc lineage tracing, SHA-256 GUIDs, memory-mapped I/O, zero-allocation Go event loops
