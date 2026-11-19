@@ -25,7 +25,7 @@ hiddenTags:
 
 I enjoy building mini-games, even if nobody plays them TwT. The problem is that adding multiplayer usually means paying for a backend server.
 
-I hit that problem while building [GeoShuffle](https://geoshuffle.bittu.dev). I wanted two players to play against each other, but the game is a static website and I did not want to start paying for a server.
+I ran into that while building [GeoShuffle](https://geoshuffle.bittu.dev). I wanted two players to play against each other, but the game is a static website and I did not want to start paying for a server.
 
 WebRTC solves most of it, because it can connect two browsers directly over the internet, and PeerJS gives it a simpler interface. What PeerJS does not do is tell you which peer ID to dial. Something still has to hold a list of who is currently looking for a game, and keeping that list yourself means paying for uptime.
 
@@ -35,7 +35,7 @@ That list is my second project, [PeerBasket](https://peerbasket.bittu.dev). It i
 
 ## How the pieces fit
 
-PeerBasket is a small tool that any browser-based P2P game can use to find players or for any other task too.
+PeerBasket is a small tool that any browser-based P2P game can use to find players.
 
 A P2P game has three jobs:
 
@@ -60,7 +60,7 @@ PeerJS's signaling server passes the connection details between the two browsers
 
 ## Add PeerBasket to your own game
 
-PeerBasket is a small Go service backed by Redis. It has a single URL and it is already hosted, so there is nothing to sign up for or run.
+PeerBasket is a small Go service backed by Redis. It has a single URL, and it is already hosted, so there is nothing to sign up for or run.
 
 Start by giving this browser a peer:
 
@@ -89,7 +89,7 @@ const { peers } = await res.json();
 }
 ```
 
-Every request does three jobs at once. It registers you, refreshes your heartbeat, and returns the peers currently in the basket, so there is no separate join, leave, or account. Your own ID comes back in that list, so filter it out before you dial.
+Every request does three jobs at once. It registers you, refreshes your heartbeat, and returns the peers currently in the basket, so there is no separate join or leave call and no account to create. Your own ID comes back in that list, so filter it out before you dial.
 
 >[!WARNING]
 > Baskets are public and unauthenticated. Anyone who knows or guesses a basket name can list its peers and join, so treat the name as public and never put secrets in one. Let the host decide what is true in the game. This is also a free service, so use it for small games rather than something you cannot afford to see break.
@@ -119,7 +119,7 @@ conn.on("data", (message) => {
 
 The important design decision is what to send. If your game plays out the same way from the same inputs, send a seed and the player inputs. If one player should be in charge, have the host send the starting board and check the important messages.
 
-Under the hood, each basket is a Redis list kept in order by the last time a peer checked in. Every request drops entries older than 30 seconds, returns the newest `limit` peers, and resets the basket's one-hour timer. Close your tab and you stop heartbeating, so 30 seconds later you are gone. No cleanup job and no ghost lobbies.
+Under the hood, each basket is a Redis list kept in order by the last time a peer checked in. Every request drops entries older than 30 seconds, returns the newest `limit` peers, and resets the basket's one-hour timer. Close your tab and you stop heartbeating, so 30 seconds later you are gone. There is no cleanup job and no ghost lobby.
 
 Even the "N online" counter in GeoShuffle is this API, because it posts a fake idle peer to a `geoshuffle-online` basket and reads the total back.
 
@@ -129,7 +129,7 @@ The repo also ships examples for a 1:1 matchmaker chat, a browser-to-browser fil
 
 A private lobby is the easiest version to build. The host generates a room code like `K3F9QZ` and uses a basket named `geoshuffle-K3F9QZ`. It posts its PeerJS ID there every 12 seconds, which leaves a couple of spare beats before the 30-second timeout drops it. The guest enters the code, posts its own ID to the same basket, and gets the host's ID back. The guest then dials the host and the game begins.
 
-Quick match uses one shared basket called `geoshuffle-public-matchmaking`. Both players post their IDs and get the list back, and without coordination both could dial at once. GeoShuffle settles it with a fixed rule: the peer whose ID comes first alphabetically dials and the other waits. Your game can use the same rule, or let the response pick the host.
+Quick match uses one shared basket called `geoshuffle-public-matchmaking`. Both players post their IDs and get the list back. Without coordination, both could dial at once, so GeoShuffle settles it with a fixed rule: the peer whose ID comes first alphabetically dials and the other waits. Your game can use the same rule, or let the response pick the host.
 
 When the dial connects, the guest sends a `match_request`, the host replies with `match_accept` and a fresh room code, and both sides switch to playing.
 
@@ -144,7 +144,7 @@ flowchart LR
     H == "DataChannel: game messages" ==> G
 ```
 
-The dashed lines are only setup. Discovery and signaling stop mattering the moment the channel opens, and the thick arrow is the only path gameplay takes.
+The dashed lines only matter during setup. Discovery and signaling stop mattering the moment the channel opens, and the thick arrow is the only path gameplay takes.
 
 ## Who owns the board
 
@@ -171,7 +171,7 @@ The board is shared once, and after that the live sync is just your move count n
 
 ## Keeping the line honest
 
-A WebRTC connection can die quietly, especially when one side walks away from the laptop. GeoShuffle catches that with a heartbeat over the data channel itself. Every 10 seconds each side sends a `ping`, and three missed beats in a row, about 30 seconds, closes the connection and shows the disconnect state.
+A WebRTC connection can die quietly, especially when one side walks away from the laptop. GeoShuffle catches that with a heartbeat over the data channel itself. Every 10 seconds, each side sends a `ping`, and three missed beats in a row, about 30 seconds in total, closes the connection and shows the disconnect state.
 
 A new connection attempt gets 10 seconds before it is considered dead. That is also how quick match recovers, because a slow candidate simply means it is time to search again.
 

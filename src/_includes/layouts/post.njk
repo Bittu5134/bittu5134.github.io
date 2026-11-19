@@ -107,13 +107,13 @@ amber (#b45309) dek accent — full-width text, no card, no border box.
         <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
           {% if tags %}
             <div class="tag-row flex flex-wrap items-center gap-2">
-              {% for tag in tags %}
+              {% for tag in tags | filterTags %}
                 {% if tag != "posts" %}
                   <a
                     href="/blog/?tag={{ tag | urlencode }}"
                     class="px-2.5 py-1 bg-transparent border-2 border-black font-mono text-xs font-bold text-black hover:bg-[#fef3c7] transition-colors"
                   >
-                    #{{ tag | lower }}
+                    #{{ tag }}
                   </a>
                 {% endif %}
               {% endfor %}

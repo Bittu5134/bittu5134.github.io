@@ -8,7 +8,7 @@ summary: "A PvE multiplayer TUI game, built in Go and streamed over SSH."
 tags:
   - Terminal
   - SSH
-  - GO
+  - Go
   - TUI
   - Project
 ---

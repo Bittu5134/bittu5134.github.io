@@ -17,7 +17,7 @@
     data-slug="{{ post.data.slug or post.fileSlug }}"
     data-title="{{ (post.data.title or '') | lower }}"
     data-summary="{{ (post.data.summary or '') | lower }}"
-    data-tags="{{ validTags | join('|||') | lower }}"
+    data-tags="{{ validTags | join('|||') }}"
     data-hidden-tags="{{ (post.data.allSeoTags or []) | join('|||') | lower }}"
     data-date="{{ (post.data.date or post.date) | dateIso }}"
     data-readtime="{{ readTime }}"
@@ -45,7 +45,7 @@
 
       <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mt-4 font-mono text-sm font-bold text-black/60">
         {% for tag in validTags.slice(0, 4) %}
-          <span>#{{ tag | lower }}</span>
+          <span>#{{ tag }}</span>
         {% endfor %}
         {% if showTagOverflow and validTags.length > 4 %}
           <span title="{{ validTags.slice(4) | join(', ') }}">+{{ validTags.length - 4 }}</span>

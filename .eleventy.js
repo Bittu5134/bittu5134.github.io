@@ -161,7 +161,8 @@ export default async function (eleventyConfig) {
     const posts = collectionApi.getFilteredByGlob(["./blogs/**/*.md", "./src/blogs/**/*.md"]);
     posts.forEach((post) => {
       (post.data.tags || []).forEach((t) => {
-        if (t && t !== "posts") tagsSet.add(t);
+        const tag = String(t ?? "").trim().toLowerCase();
+        if (tag && tag !== "posts") tagsSet.add(tag);
       });
     });
     return Array.from(tagsSet).sort((a, b) => a.localeCompare(b));
@@ -263,10 +264,22 @@ export default async function (eleventyConfig) {
     return `PT${minutes}M`;
   });
 
-  // Filter out internal tags like "posts"
+  // Tags are authored by hand, so the same tag can arrive as "Go" in one post
+  // and "GO" in another. Everything downstream (archive filters, chips, card
+  // data attributes) reads them from here, so this filter is the one place that
+  // decides the canonical form: lowercase, trimmed, deduped, and without the
+  // internal "posts" collection tag.
   eleventyConfig.addFilter("filterTags", function (tags) {
     if (!Array.isArray(tags)) return [];
-    return tags.filter((t) => t && t !== "posts");
+    const seen = new Set();
+    const result = [];
+    for (const entry of tags) {
+      const tag = String(entry ?? "").trim().toLowerCase();
+      if (!tag || tag === "posts" || seen.has(tag)) continue;
+      seen.add(tag);
+      result.push(tag);
+    }
+    return result;
   });
 
   return {
