@@ -1,6 +1,8 @@
 ---
-slug: "geoshuffle-p2p-multiplayer"
+slug: "geoshuffle-and-peerbasket-p2p-multiplayer"
 title: "How GeoShuffle's Multiplayer Works Without a Game Server"
+coverImage: "/blogs/assets/covers/geoshuffle-and-peerbasket-p2p-multiplayer.webp"
+coverAlt: "PeerBasket and GeoShuffle: P2P multiplayer without a game server"
 date: "18-11-2026"
 summary: "Two browsers, one scrambled satellite photo, and absolutely no game server. An ELI5 tour of GeoShuffle and the PeerBasket discovery server that makes it possible."
 tags:
