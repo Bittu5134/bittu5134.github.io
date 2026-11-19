@@ -13,15 +13,24 @@
   "CLOUDFLARE WORKERS"
 ] %}
 
-<div class="w-full my-6 bg-[#fde047] border-y-2 border-black py-2.5 overflow-hidden select-none font-mono text-xs sm:text-sm font-bold shadow-brutal-bottom relative z-20">
-  <div class="flex w-max animate-ticker whitespace-nowrap">
+<div class="ticker-band relative w-full z-20">
+  <!-- chicken jockey rides the skills band (animated avif, webp fallback; stays fixed) -->
+  <div style="top:-6.9rem" class="hidden sm:block absolute left-2 sm:left-10 w-20 sm:w-24 pointer-events-none z-10" aria-hidden="true">
+    <picture>
+      <source srcset="/assets/images/entities/jockey.avif" type="image/avif"/>
+      <img src="/assets/images/entities/jockey.webp" alt="" width="96" height="111" loading="lazy" class="w-full h-auto" style="image-rendering:auto"/>
+    </picture>
+  </div>
+  <div class="w-full bg-[#fde047] border-y-2 border-black py-2.5 overflow-hidden select-none font-mono text-xs sm:text-sm font-bold shadow-brutal-bottom">
+    <div class="flex w-max animate-ticker whitespace-nowrap">
     {% for i in range(0, 2) %}
       {% for skill in tickerSkills %}
-        <div class="flex items-center mx-3 sm:mx-5 text-black tracking-wider">
+        <div{% if i === 1 %} aria-hidden="true"{% endif %} class="flex items-center mx-3 sm:mx-5 text-black tracking-wider">
           <span>{{ skill }}</span>
           <span class="ml-3 sm:ml-5 text-black/40">✦</span>
         </div>
       {% endfor %}
     {% endfor %}
+    </div>
   </div>
 </div>

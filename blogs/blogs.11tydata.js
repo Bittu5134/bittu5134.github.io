@@ -1,135 +1,74 @@
 import fs from "node:fs";
 import getReadingTime from "reading-time";
+import { getDeterministicAbstractCover } from "../scripts/abstract-cover.js";
 import { formatBlogDate, parseBlogDate, toIsoBlogDate, normalizeTagList, mergeTagLists } from "../scripts/parse-blog-date.js";
 import { measureImage } from "../scripts/image-dimensions.js";
 import siteConfig from "../site.config.js";
 
-const UNSPLASH_ABSTRACT_COVERS = [
-  "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&h=630&auto=format&fit=crop&q=80",
-  "https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=1200&h=630&auto=format&fit=crop&q=80",
-  "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=1200&h=630&auto=format&fit=crop&q=80",
-  "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=1200&h=630&auto=format&fit=crop&q=80",
-  "https://images.unsplash.com/photo-1604076913837-52ab5629fba9?w=1200&h=630&auto=format&fit=crop&q=80",
-  "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=1200&h=630&auto=format&fit=crop&q=80",
-  "https://images.unsplash.com/photo-1507499739999-097706ad8914?w=1200&h=630&auto=format&fit=crop&q=80",
-  "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200&h=630&auto=format&fit=crop&q=80",
-  "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1200&h=630&auto=format&fit=crop&q=80",
-  "https://images.unsplash.com/photo-1574169208507-84376144848b?w=1200&h=630&auto=format&fit=crop&q=80",
-];
-
-function getDeterministicAbstractCover(str) {
-  let hash = 0;
-  const s = String(str || "default");
-  for (let i = 0; i < s.length; i++) {
-    hash = (hash << 5) - hash + s.charCodeAt(i);
-    hash |= 0;
+// The symlinked dist entry is read per computed property, which keeps watch-mode
+// rebuilds honest: an edited post always gets a fresh read.
+function readBody(data) {
+  if (!data.page || !data.page.inputPath) return "";
+  try {
+    return fs.readFileSync(data.page.inputPath, "utf-8").replace(/^---[\s\S]*?---\n?/, "");
+  } catch {
+    return "";
   }
-  const index = Math.abs(hash) % UNSPLASH_ABSTRACT_COVERS.length;
-  return UNSPLASH_ABSTRACT_COVERS[index];
 }
 
 export default {
   layout: "layouts/post.njk",
+  isPostPage: true,
   tags: ["posts"],
   permalink: "/blog/{{ slug or page.fileSlug }}/index.html",
   eleventyComputed: {
     slug: (data) => data.slug || data.page.fileSlug,
+
     // Eleventy requires `date` to be a real Date, but the authored DD-MM-YYYY form
     // arrives as a string. Coerce it here so every downstream consumer (sorting,
     // <time datetime>, meta tags) sees a proper Date instead of raw text.
     date: (data) => parseBlogDate(data.date),
-    // displayDate is no longer supported: the long form is always derived from
-    // `date` so a hand-written date can never disagree with the machine-readable one.
-    displayDate: (data) => {
-      const parsed = formatBlogDate(data.date);
-      return parsed || "";
-    },
+
+    // displayDate is derived from `date`, never authored, so a hand-written long
+    // form can never disagree with the machine-readable one.
+    displayDate: (data) => formatBlogDate(data.date) || "",
+
     readTime: (data) => {
-      if (data.page && data.page.inputPath) {
-        try {
-          const raw = fs.readFileSync(data.page.inputPath, "utf-8");
-          const body = raw.replace(/^---[\s\S]*?---\n?/, "");
-          const stats = getReadingTime(body);
-          return stats.text;
-        } catch {
-          // fallback
-        }
-      }
-      return "3 min read";
+      const body = readBody(data);
+      return body ? getReadingTime(body).text : "3 min read";
     },
-    coverImage: (data) => {
-      if (data.coverImage) return data.coverImage;
-      return getDeterministicAbstractCover(data.slug || data.page?.fileSlug || data.title);
+    wordCount: (data) => {
+      const body = readBody(data);
+      return body ? body.trim().split(/\s+/).filter(Boolean).length : 0;
     },
+
     coverAlt: (data) => data.coverAlt || (data.title ? `${data.title} abstract cover` : "Abstract cover"),
-    ogImage: (data) => {
-      if (data.ogImage) return data.ogImage;
-      if (data.coverImage) {
-        if (data.coverImage.endsWith(".svg")) {
-          return data.coverImage.replace(/\.svg$/, ".png");
-        }
-        return data.coverImage;
-      }
-      return getDeterministicAbstractCover(data.slug || data.page?.fileSlug || data.title);
-    },
-    // Inferred dynamically from the real image file when not explicitly declared in frontmatter.
-    // If the image is external (Unsplash) or unmeasurable, fall back to safe social standards.
+
+    // Posts without an authored coverImage get a deterministic Unsplash
+    // abstract, keyed on the slug so the art is stable across builds.
+    coverImage: (data) => data.coverImage || getDeterministicAbstractCover(data.slug || data.page?.fileSlug || data.title),
+
+    // Social cards want real pixel dimensions. Measured from the local file when
+    // possible; cards that cannot be measured fall back to the standard size.
     ogImageWidth: (data) => {
       if (data.ogImageWidth) return data.ogImageWidth;
-      const target = data.ogImage || data.coverImage;
-      const measured = measureImage(target);
-      if (measured) return measured.width;
-      if (target && target.includes("og_banner")) return 1400;
-      return 1200;
+      return measureImage(data.ogImage || data.coverImage)?.width ?? 1200;
     },
     ogImageHeight: (data) => {
       if (data.ogImageHeight) return data.ogImageHeight;
-      const target = data.ogImage || data.coverImage;
-      const measured = measureImage(target);
-      if (measured) return measured.height;
-      if (target && target.includes("og_banner")) return 350;
-      return 630;
+      return measureImage(data.ogImage || data.coverImage)?.height ?? 630;
     },
-    wordCount: (data) => {
-      if (data.page && data.page.inputPath) {
-        try {
-          const raw = fs.readFileSync(data.page.inputPath, "utf-8");
-          const body = raw.replace(/^---[\s\S]*?---\n?/, "");
-          const words = body.trim().split(/\s+/).filter(Boolean);
-          return words.length;
-        } catch {
-          // fallback
-        }
-      }
-      return 0;
-    },
-    updated: (data) => {
-      return data.updated ? parseBlogDate(data.updated) : null;
-    },
-    displayUpdated: (data) => {
-      return data.updated ? formatBlogDate(data.updated) : "";
-    },
-    dateModified: (data) => {
-      const mod = data.updated || data.date;
-      if (mod) {
-        return toIsoBlogDate(mod);
-      }
-      return "";
-    },
-    // Combines:
-    //   1. Author visible tags (`tags` minus internal "posts")
-    //   2. Post-specific `hiddenTags` (or its legacy alias `seoTags`)
-    //   3. Site-wide default tags from site.config.js (`seo.defaultTags`)
-    keywords: (data) => {
-      const visibleTags = (data.tags || []).filter((t) => t && t !== "posts");
-      const universalTags = siteConfig?.seo?.defaultTags || [];
-      const combined = mergeTagLists(visibleTags, data.hiddenTags, data.seoTags, universalTags);
-      return combined.join(", ");
-    },
+
+    dateModified: (data) => toIsoBlogDate(data.updated || data.date) || "",
+
+    // SEO keyword pool: visible tags, then post-specific hidden tags (with the
+    // legacy `seoTags` alias), then the site-wide defaults from site.config.js.
     allSeoTags: (data) => {
-      const visibleTags = (data.tags || []).filter((t) => t && t !== "posts");
-      const universalTags = siteConfig?.seo?.defaultTags || [];
-      return mergeTagLists(visibleTags, data.hiddenTags, data.seoTags, universalTags);
+      const visibleTags = normalizeTagList(data.tags).filter((t) => t !== "posts");
+      return mergeTagLists(visibleTags, data.hiddenTags, data.seoTags, siteConfig.seo.defaultTags);
     },
+    // Eleventy evaluates computed data with a proxy against sample data, so this
+    // runs once without a real allSeoTags — guard against that call.
+    keywords: (data) => (Array.isArray(data.allSeoTags) ? data.allSeoTags.join(", ") : ""),
   },
 };

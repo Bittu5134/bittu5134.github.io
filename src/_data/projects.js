@@ -1,273 +1,110 @@
-import EleventyFetch from "@11ty/eleventy-fetch";
-import meta from "./projectMeta.js";
-
-const LANGUAGE_COLORS = {
-  Python: "#3572A5",
-  Go: "#00ADD8",
-  Svelte: "#ff3e00",
-  JavaScript: "#f1e05a",
-  TypeScript: "#3178c6",
-  HTML: "#e34c26",
-  CSS: "#563d7c",
-  Rust: "#dea584",
-  C: "#555555",
-  "C++": "#f34b7d",
-  Shell: "#89e051",
-};
-
-// Curated distinct color families (Zero yellows, zero adjacent/confusable hues)
-const NEO_BRUTALIST_PALETTE = [
-  "bg-[#38bdf8]", // Sky Blue
-  "bg-[#fb923c]", // Peach Orange
-  "bg-[#f472b6]", // Bubblegum Pink
-  "bg-[#86efac]", // Mint Green
-  "bg-[#c4b5fd]", // Lavender Purple
-  "bg-[#f87171]", // Coral Red
-];
-
-function hashSeed(str) {
-  let hash = 2166136261;
-  for (let i = 0; i < str.length; i++) {
-    hash ^= str.charCodeAt(i);
-    hash = Math.imul(hash, 16777619);
-  }
-  return Math.abs(hash);
-}
-
 /**
- * Assigns deterministic seeded colors ensuring no color repeats WITHIN the same category.
- * Different categories can reuse colors. Any explicit `color` (or `headerBgClass`) in meta overrides.
+ * Project cards data.
+ *
+ * Factual data comes from GitHub at build time, cached by @11ty/eleventy-fetch
+ * for an hour:
+ *   - stars, forks, description, language, topics from the REST API
+ *   - the PINNED set + its order scraped from the profile's own pinned list,
+ *     so the homepage PINNED pill always mirrors github.com/Bittu5134
+ *
+ * Editorial data lives in site.config.js: curated order, category line,
+ * filter bucket, and live URLs that are not the repo's homepage. If GitHub is
+ * unreachable the build still succeeds with curated data only (no stars /
+ * descriptions / pins).
  */
-function assignCategoryUniqueColors(metaMap, pinnedRepoNames) {
-  const assignedColors = {};
 
-  // 1. Manual overrides take absolute precedence
-  for (const [repoName, itemMeta] of Object.entries(metaMap)) {
-    if (itemMeta.color && itemMeta.color !== "random" && itemMeta.color !== "auto") {
-      assignedColors[repoName] = itemMeta.color;
-    } else if (itemMeta.headerBgClass && itemMeta.headerBgClass !== "random" && itemMeta.headerBgClass !== "auto") {
-      assignedColors[repoName] = itemMeta.headerBgClass;
-    }
-  }
+import EleventyFetch from "@11ty/eleventy-fetch";
+import siteConfig from "../../site.config.js";
 
-  // 2. Assign PINNED category first to guarantee uniqueness among the 4 pinned cards
-  const pinnedUsed = new Set();
-  for (const name of pinnedRepoNames) {
-    if (assignedColors[name]) {
-      pinnedUsed.add(assignedColors[name]);
-    }
-  }
+const GITHUB_USER = "Bittu5134";
+const REPOS_URL = `https://api.github.com/users/${GITHUB_USER}/repos?per_page=100`;
+const PROFILE_URL = `https://github.com/${GITHUB_USER}`;
+const CATEGORIES = ["PINNED", "WEB", "SYSTEMS", "AI", "BOTS", "MISC"];
 
-  for (const name of pinnedRepoNames) {
-    if (!assignedColors[name]) {
-      const seed = hashSeed(name);
-      let idx = seed % NEO_BRUTALIST_PALETTE.length;
-      let attempts = 0;
-      while (pinnedUsed.has(NEO_BRUTALIST_PALETTE[idx]) && attempts < NEO_BRUTALIST_PALETTE.length) {
-        idx = (idx + 1) % NEO_BRUTALIST_PALETTE.length;
-        attempts++;
-      }
-      const chosen = NEO_BRUTALIST_PALETTE[idx];
-      assignedColors[name] = chosen;
-      pinnedUsed.add(chosen);
-    }
-  }
+// Pinned set used when GitHub is unreachable or the scrape comes back empty —
+// keep in sync with the profile's pinned list.
+const PINNED_FALLBACK = ["ORV-Reader", "PeerBasket", "GH-Follow-Tracker", "LOTM-Reader"];
 
-  // 3. For each domain category, ensure all cards in that category have unique colors
-  const categories = [...new Set(Object.values(metaMap).map((m) => m.filterCategory).filter(Boolean))];
-  for (const cat of categories) {
-    const catRepos = Object.keys(metaMap).filter((name) => metaMap[name].filterCategory === cat);
-    const catUsed = new Set();
-
-    for (const name of catRepos) {
-      if (assignedColors[name]) {
-        catUsed.add(assignedColors[name]);
-      }
-    }
-
-    for (const name of catRepos) {
-      if (!assignedColors[name]) {
-        const seed = hashSeed(name);
-        let idx = seed % NEO_BRUTALIST_PALETTE.length;
-        let attempts = 0;
-        while (catUsed.has(NEO_BRUTALIST_PALETTE[idx]) && attempts < NEO_BRUTALIST_PALETTE.length) {
-          idx = (idx + 1) % NEO_BRUTALIST_PALETTE.length;
-          attempts++;
-        }
-        const chosen = NEO_BRUTALIST_PALETTE[idx];
-        assignedColors[name] = chosen;
-        catUsed.add(chosen);
-      }
-    }
-  }
-
-  return assignedColors;
+function fetchOptions() {
+  return {
+    headers: {
+      "User-Agent": "bittu.dev build (Mozilla/5.0)",
+      ...(process.env.GITHUB_TOKEN ? { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` } : {}),
+    },
+  };
 }
 
-function formatRelativeTime(dateString) {
-  if (!dateString) return null;
-  const date = new Date(dateString);
-  const now = new Date();
-  const diffMs = now - date;
-  const diffSec = Math.floor(diffMs / 1000);
-  const diffMin = Math.floor(diffSec / 60);
-  const diffHours = Math.floor(diffMin / 60);
-  const diffDays = Math.floor(diffHours / 24);
-  const diffMonths = Math.floor(diffDays / 30);
-  const diffYears = Math.floor(diffDays / 365);
-
-  if (diffDays < 1) {
-    if (diffHours < 1) return "updated just now";
-    return `updated ${diffHours}h ago`;
+async function fetchJson(url, label) {
+  try {
+    return await EleventyFetch(url, { duration: "1h", type: "json", fetchOptions: fetchOptions() });
+  } catch (err) {
+    console.warn(`[projects] ${label} unavailable (${err.message}).`);
+    return null;
   }
-  if (diffDays === 1) return "updated yesterday";
-  if (diffDays < 30) return `updated ${diffDays}d ago`;
-  if (diffMonths < 12) return `updated ${diffMonths}mo ago`;
-  return `updated ${diffYears}y ago`;
+}
+
+async function fetchText(url, label) {
+  try {
+    return await EleventyFetch(url, { duration: "1h", type: "text", fetchOptions: fetchOptions() });
+  } catch (err) {
+    console.warn(`[projects] ${label} unavailable (${err.message}).`);
+    return null;
+  }
+}
+
+// The profile page marks pinned repos with a text-bold repo link.
+function scrapePinnedRepos(profileHtml) {
+  return [
+    ...profileHtml.matchAll(
+      /href="\/Bittu5134\/([^"\/]+)"[^>]*class="[^"]*text-bold[^"]*"[^>]*><span class="repo">/g
+    ),
+  ]
+    .map((match) => match[1])
+    .slice(0, 4);
 }
 
 export default async function () {
-  let repos = [];
-  const fetchHeaders = {
-    "User-Agent": "11ty-portfolio-fetcher (Mozilla/5.0)",
-    ...(process.env.GITHUB_TOKEN ? { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` } : {}),
-  };
+  const [repos, profileHtml] = await Promise.all([
+    fetchJson(REPOS_URL, "GitHub repos API"),
+    fetchText(PROFILE_URL, "GitHub profile"),
+  ]);
 
-  // 1. Fetch repos and user info from GitHub API
-  let totalReposCount = 25; // Safe fallback
-  try {
-    const userProfile = await EleventyFetch("https://api.github.com/users/Bittu5134", {
-      duration: "1h",
-      type: "json",
-      fetchOptions: { headers: fetchHeaders },
-    });
-    if (userProfile && typeof userProfile.public_repos === "number") {
-      totalReposCount = userProfile.public_repos;
-    }
-  } catch (err) {
-    console.warn(`[@11ty/eleventy-fetch] Failed to fetch GitHub user profile (${err.message}).`);
-  }
+  const repoMap = new Map((Array.isArray(repos) ? repos : []).map((repo) => [repo.name, repo]));
 
-  try {
-    repos = await EleventyFetch("https://api.github.com/users/Bittu5134/repos?per_page=100", {
-      duration: "1h",
-      type: "json",
-      fetchOptions: { headers: fetchHeaders },
-    });
-    if (Array.isArray(repos) && repos.length > 0 && totalReposCount <= 25) {
-      totalReposCount = Math.max(totalReposCount, repos.length);
-    }
-  } catch (err) {
-    console.warn(`[@11ty/eleventy-fetch] Failed to fetch GitHub repos (${err.message}). Using local fallback metadata.`);
-    repos = Object.keys(meta).map((name) => ({
-      name,
-      html_url: `https://github.com/Bittu5134/${name}`,
-      homepage: null,
-      topics: meta[name].tags || [],
-      stargazers_count: 0,
-      forks_count: 0,
-      language: null,
-      pushed_at: null,
-      description: null,
-    }));
-  }
+  const pinnedRepoNames = (() => {
+    const scraped = profileHtml ? scrapePinnedRepos(profileHtml) : [];
+    return scraped.length ? scraped : PINNED_FALLBACK;
+  })();
 
-  // 2. Fetch pinned repos from GitHub profile
-  let pinnedRepoNames = [];
-  try {
-    const profileHtml = await EleventyFetch("https://github.com/Bittu5134", {
-      duration: "1h",
-      type: "text",
-      fetchOptions: { headers: fetchHeaders },
-    });
-    pinnedRepoNames = [
-      ...profileHtml.matchAll(
-        /href="\/Bittu5134\/([^"\/]+)"[^>]*class="[^"]*text-bold[^"]*"[^>]*><span class="repo">/g
-      ),
-    ]
-      .map((m) => m[1])
-      .slice(0, 4);
-  } catch (err) {
-    console.warn(`[@11ty/eleventy-fetch] Failed to fetch pinned repos (${err.message}). Using fallback.`);
-    pinnedRepoNames = ["ORV-Reader", "PeerBasket", "GH-Follow-Tracker", "LOTM-Reader"];
-  }
-
-  if (!pinnedRepoNames || pinnedRepoNames.length === 0) {
-    pinnedRepoNames = ["ORV-Reader", "PeerBasket", "GH-Follow-Tracker", "LOTM-Reader"];
-  }
-
-  // Ensure any pinned repo is in meta (with reasonable fallbacks if not yet in projectMeta)
-  for (const pinnedName of pinnedRepoNames) {
-    if (!meta[pinnedName]) {
-      meta[pinnedName] = {
-        order: 99,
-        category: "TOOLS / DEV",
-        filterCategory: "TOOLS",
-        badge: "PINNED",
-        headerBgClass: "bg-[#fffdf9]",
-        blurb: "",
-      };
-    }
-  }
-
-  const repoMap = new Map(repos.map((r) => [r.name, r]));
-  const projectColors = assignCategoryUniqueColors(meta, pinnedRepoNames);
-
-  const featured = Object.entries(meta)
-    .map(([repoName, itemMeta]) => {
-      const r = repoMap.get(repoName) || {};
-      const topics = Array.isArray(r.topics) && r.topics.length > 0
-        ? r.topics.slice(0, 5)
-        : (itemMeta.tags || []);
-      const language = itemMeta.language || r.language || null;
-      const languageColor = LANGUAGE_COLORS[language] || "#6e7681";
-      const isPinned = pinnedRepoNames.includes(repoName);
-      const pinnedIndex = pinnedRepoNames.indexOf(repoName);
-      const headerColor = itemMeta.color || itemMeta.headerBgClass || projectColors[repoName] || "bg-[#86efac]";
-      const description = (r.description && r.description.trim()) || itemMeta.blurb || "";
-
+  const projects = Object.entries(siteConfig.projects)
+    .map(([repoName, meta]) => {
+      const repo = repoMap.get(repoName) || {};
       return {
-        title: itemMeta.title || r.name || repoName,
+        title: meta.title || repoName,
         repoName,
-        liveUrl: itemMeta.liveUrl || r.homepage || null,
-        githubUrl: itemMeta.githubUrl || r.html_url || `https://github.com/Bittu5134/${repoName}`,
-        tags: topics,
-        stars: typeof r.stargazers_count === "number" ? r.stargazers_count : 0,
-        forks: typeof r.forks_count === "number" ? r.forks_count : 0,
-        language,
-        languageColor,
-        updated: r.pushed_at || null,
-        description,
-        isPinned,
-        pinnedIndex: isPinned ? pinnedIndex : 99,
-        ...itemMeta,
-        headerBgClass: headerColor,
+        category: meta.category,
+        filterCategory: meta.filterCategory,
+        statsText: meta.statsText || "",
+        description: (repo.description || "").trim(),
+        language: meta.language || repo.language || null,
+        stars: repo.stargazers_count || 0,
+        forks: repo.forks_count || 0,
+        tags: meta.tags || (repo.topics || []).slice(0, 5),
+        liveUrl: meta.liveUrl || repo.homepage || null,
+        githubUrl: `https://github.com/${GITHUB_USER}/${repoName}`,
+        isPinned: pinnedRepoNames.includes(repoName),
+        pinnedOrder: pinnedRepoNames.indexOf(repoName),
+        order: meta.order ?? 99,
       };
     })
     .sort((a, b) => {
-      // 1. Pinned items are sorted by their GitHub profile pinned order
-      if (a.isPinned && b.isPinned) {
-        return a.pinnedIndex - b.pinnedIndex;
-      }
-      if (a.isPinned) return -1;
-      if (b.isPinned) return 1;
-
-      // 2. Sort non-pinned items by curated order (most fun & impressive first)
-      const aOrder = typeof a.order === "number" ? a.order : 99;
-      const bOrder = typeof b.order === "number" ? b.order : 99;
-      if (aOrder !== bOrder) {
-        return aOrder - bOrder;
-      }
-
-      // 3. Tie-breaker by popularity (stars + forks desc)
-      const aPopularity = (a.stars || 0) + (a.forks || 0);
-      const bPopularity = (b.stars || 0) + (b.forks || 0);
-      return bPopularity - aPopularity;
+      // Pinned first, in the profile's pinned order; the rest follow the
+      // curated order and fall back to popularity as a tie-breaker.
+      if (a.isPinned !== b.isPinned) return a.isPinned ? -1 : 1;
+      if (a.isPinned) return a.pinnedOrder - b.pinnedOrder;
+      if (a.order !== b.order) return a.order - b.order;
+      return b.stars + b.forks - (a.stars + a.forks);
     });
 
-  return {
-    categories: ["PINNED", "SYSTEMS", "AI", "WEB", "TOOLS"],
-    projects: featured,
-    totalReposCount,
-  };
+  return { categories: CATEGORIES, projects };
 }

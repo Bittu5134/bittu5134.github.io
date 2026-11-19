@@ -37,142 +37,155 @@ export default {
   },
 
   // ── Author Profile & JSON-LD Schema ─────────────────────────────────
+  // One entity with several aliases. `alternateName` tells search engines
+  // these strings all refer to the same person; `sameAs` pins the entity to
+  // external profiles that are verifiably ours.
   author: {
     name: "Bittu",
-    alternateName: "Bittu5134",
+    alternateName: ["Bittu5134", "Divyanshu", "Divyanshu A.", "Divyanshu Anand"],
+    // Separates this entity from same-named people.
+    disambiguatingDescription:
+      "Software engineer and cybersecurity student building open-source systems tools, Minecraft technical content, and webnovel reader platforms.",
+    // Topical authority: helps disambiguate WHICH Divyanshu Anand this is.
+    knowsAbout: [
+      "Go (programming language)",
+      "Cybersecurity",
+      "WebRTC",
+      "Linux",
+      "Minecraft modding",
+      "Python (programming language)",
+      "C (programming language)",
+      "TypeScript",
+      "Discord bots",
+      "Cloudflare Workers",
+    ],
     email: "hello@bittu.dev",
     url: "https://bittu.dev",
-    image: "https://bittu.dev/images/avatar.webp",
+    image: "https://bittu.dev/assets/images/avatar.webp",
     jobTitle: "Software Engineer",
-    twitter: "@404lostsquid",
+    twitter: "@LostSquidXD",
     alumniOf: {
       name: "IIT Kanpur",
     },
     sameAs: [
       "https://github.com/Bittu5134",
-      "https://x.com/404lostsquid",
+      "https://x.com/LostSquidXD",
       "https://www.linkedin.com/in/bittu5134",
+      "https://www.planetminecraft.com/member/bittu5134/",
+      "https://www.patreon.com/lazybittu",
+      "https://www.reddit.com/user/RealNPC_/",
     ],
   },
 
   // ── Project Metadata & Editorial Cues ───────────────────────────────
-  // GitHub REST API provides stars, repo descriptions, and topics dynamically.
-  // Curated ordering ranks projects by technical impressiveness and fun factor.
+  // Stars, descriptions, languages, topics AND the pinned set come from the
+  // GitHub at build time (cached for an hour): pinned repos are read from the
+  // profile's own pinned list, so the homepage PINNED pill always mirrors
+  // github.com/Bittu5134. Everything editorial lives here: the curated order,
+  // the card's category line, the filter bucket, and any live URL that is not
+  // the repo's homepage.
   projects: {
     "Rock-Paper-SSH": {
-      order: 1,
+      order: 7,
       category: "SYSTEMS / SSH TUI",
       filterCategory: "SYSTEMS",
-      badge: "SSH MULTIPLAYER",
       statsText: "Wish + Bubble Tea TUI",
-      language: "Go",
-      githubUrl: "https://github.com/Bittu5134/Rock-Paper-SSH",
     },
     "PeerBasket": {
-      order: 2,
+      order: 3,
       category: "SYSTEMS / P2P",
       filterCategory: "SYSTEMS",
-      badge: "PUBLIC API",
       statsText: "WebRTC Signaling Server",
       language: "Go",
     },
     "DumbCord": {
-      order: 3,
-      category: "AI / MARKOV",
-      filterCategory: "AI",
-      badge: "MARKOV CHATBOT",
+      order: 11,
+      category: "DISCORD / MARKOV CHAINS",
+      filterCategory: "BOTS",
       statsText: "Markov Chain Discord Bot",
-      language: "Python",
-      githubUrl: "https://github.com/Bittu5134/DumbCord",
       tags: ["chatbot", "discord", "dumb", "markov-chain"],
     },
     "NetShip": {
-      order: 4,
+      order: 5,
       category: "SYSTEMS / EDR",
       filterCategory: "SYSTEMS",
-      badge: "KERNEL TELEMETRY",
       statsText: "Host Telemetry Agent",
-      language: "Go",
     },
     "InfraPulse": {
-      order: 5,
-      category: "AI / COMPUTER VISION",
+      order: 8,
+      category: "AI / MACHINE VISION",
       filterCategory: "AI",
-      badge: "HACKATHON WINNER",
       statsText: "Defect Detection Ensemble",
-      language: "Python",
     },
     "Sharelock": {
       order: 6,
       category: "AI / RAG",
       filterCategory: "AI",
-      badge: "CAMPUS MCP AGENT",
       statsText: "Policy Manual MCP Agent",
-      language: "Python",
     },
     "Lore": {
-      order: 7,
+      order: 9,
       category: "AI / DEVTOOLS",
       filterCategory: "AI",
-      badge: "LOCAL ADR ENGINE",
       statsText: "Cline Plugin + MCP Wiki Engine",
       language: "TypeScript",
-      githubUrl: "https://github.com/Bittu5134/Lore",
       tags: ["cline", "mcp", "typescript", "sqlite", "devtools"],
     },
     "GeoShuffle": {
-      order: 8,
+      order: 1,
       category: "WEB / WEBRTC GAME",
       filterCategory: "WEB",
-      badge: "P2P GAME",
       statsText: "WebRTC DataChannel Puzzle",
       language: "JavaScript",
-      githubUrl: "https://github.com/Bittu5134/GeoShuffle",
       liveUrl: "https://geoshuffle.bittu.dev",
       tags: ["game", "multiplayer", "p2p", "webrtc"],
     },
     "ORV-Reader": {
-      order: 9,
-      category: "WEB / CLOUD",
+      order: 1,
+      category: "WEB / PUBLISHING",
       filterCategory: "WEB",
-      badge: "PUBLISHING",
       statsText: "Markdown → Web + EPUB",
     },
     "LOTM-Reader": {
-      order: 10,
+      order: 2,
       category: "WEB / OPTIMIZATION",
       filterCategory: "WEB",
-      badge: "OFFLINE PWA",
       statsText: "High-Performance Reader",
     },
-    "ThumbScore": {
-      order: 11,
-      category: "TOOLS / EXTENSION",
-      filterCategory: "TOOLS",
-      badge: "CHROME EXTENSION",
-      statsText: "DOM Mutation Metrics",
-      language: "JavaScript",
-      githubUrl: "https://github.com/Bittu5134/ThumbScore",
-      tags: ["browser-extension", "chrome-extension", "dom", "youtube"],
-    },
     "IITK-Resume-Model": {
-      order: 12,
+      order: 4,
       title: "Resume-Model",
       category: "TOOLS / PARSER",
-      filterCategory: "TOOLS",
-      badge: "CAMPUS TOOL",
+      filterCategory: "MISC",
       statsText: "2D Coordinate PDF Extractor",
-      language: "Python",
-      githubUrl: "https://github.com/Bittu5134/IITK-Resume-Model",
       liveUrl: "https://iitk-resume.bittu.dev",
     },
     "GH-Follow-Tracker": {
-      order: 13,
+      order: 16,
       category: "TOOLS / SERVERLESS",
-      filterCategory: "TOOLS",
-      badge: "CRON WORKER",
+      filterCategory: "BOTS",
       statsText: "SVG Badges + Alerts",
-      language: "TypeScript",
+    },
+
+    "RatioYT": {
+      order: 2,
+      category: "TOOLS / YT EXTENSION",
+      filterCategory: "MISC",
+      statsText: "Userscript + Extension",
+      liveUrl: "https://ratioyt.bittu.dev/",
+    },
+    "Awakener": {
+      order: 3,
+      category: "DISCORD / BOT",
+      filterCategory: "BOTS",
+      statsText: "Crown-the-Lurkers Bot",
+      liveUrl: "https://awakener.bittu.dev/",
+    },
+    "SkyBlock-Sniper": {
+      order: 10,
+      category: "MINECRAFT / AUTOMATION",
+      filterCategory: "BOTS",
+      statsText: "Latency-Optimised Sniping",
     },
   },
 
@@ -192,22 +205,5 @@ export default {
     "REACT",
     "FASTAPI",
     "CLOUDFLARE WORKERS",
-  ],
-
-  // ── Core Skills & Tech Stack Badges ─────────────────────────────────
-  // Displayed in the ~/about section.
-  // Each badge has a display name, brutalist background color class,
-  // and SVG sprite icon identifier (#icon-tech-*).
-  skills: [
-    { name: "Go", bgClass: "bg-[#38bdf8]", iconId: "icon-tech-go" },
-    { name: "Python", bgClass: "bg-[#fde047]", iconId: "icon-tech-python" },
-    { name: "C / C++", bgClass: "bg-[#fb923c]", iconId: "icon-tech-cplusplus" },
-    { name: "TypeScript", bgClass: "bg-[#86efac]", iconId: "icon-tech-typescript" },
-    { name: "Linux & Sockets", bgClass: "bg-[#c4b5fd]", iconId: "icon-tech-linux" },
-    { name: "WebRTC", bgClass: "bg-[#f472b6]", iconId: "icon-tech-webrtc" },
-    { name: "Docker", bgClass: "bg-[#38bdf8]", iconId: "icon-tech-docker" },
-    { name: "Redis", bgClass: "bg-[#fde047]", iconId: "icon-tech-redis" },
-    { name: "FastAPI / Gin", bgClass: "bg-[#a7f3d0]", iconId: "icon-tech-fastapi" },
-    { name: "Cloudflare Workers", bgClass: "bg-[#fb923c]", iconId: "icon-tech-cloudflare" },
   ],
 };

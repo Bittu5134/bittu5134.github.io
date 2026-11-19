@@ -1,0 +1,14 @@
+{# Edge ornamentation shared by the homepage and the /blog archive: pixel vines
+   in the top-right corner and a cherry tree in the bottom-left. Pure decoration,
+   so it is hidden below xl where the canvas is too narrow to spare the room. #}
+
+{# Right-gutter block art, rendered from the designer grid by scripts/build-block-strips.py.
+   4x13-block design at native 16px tiles; aspect ratio preserved, no tiling. #}
+<!-- native 16px art; SCROLL KNOB: change width below (multiples of 64px look best) -->
+<img src="/assets/images/scenes/vines.png?v={{ buildStamp }}" alt="" width="64" height="208" aria-hidden="true" loading="lazy" decoding="async"
+     class="hidden xl:block absolute top-0 right-0 pointer-events-none select-none -z-10"
+     style="image-rendering:pixelated;width:250px;height:auto"/>
+<!-- Cherry tree + bee nest scene, bottom left corner (decorative) -->
+<img src="/assets/images/scenes/cherry-tree.png?v={{ buildStamp }}" alt="" width="112" height="128" aria-hidden="true" loading="lazy" decoding="async"
+     class="hidden xl:block absolute bottom-0 left-0 pointer-events-none select-none -z-10"
+     style="image-rendering:pixelated;width:288px;height:auto"/>

@@ -1,11 +1,14 @@
 import fs from "node:fs";
 import path from "node:path";
+import { execSync } from "node:child_process";
 import { setupMarkdown } from "./scripts/markdown-engine.js";
 import { generateMeta } from "./scripts/generate-meta.mjs";
 import getReadingTime from "reading-time";
 import pluginRss from "@11ty/eleventy-plugin-rss";
 import { formatBlogDate, parseBlogDate, toIsoBlogDate, toSortableTime } from "./scripts/parse-blog-date.js";
+import { compactGhChart } from "./scripts/ghchart.js";
 import { minify } from "html-minifier-terser";
+import EleventyFetch from "@11ty/eleventy-fetch";
 
 // Shared terser options. Also read by the CLI for the standalone bundles via
 // terser.config.json, and passed to html-minifier-terser below so inline
@@ -42,9 +45,58 @@ function syncBlogsToSrc() {
   }
 }
 
+async function fetchGhchart() {
+  // Keep the contribution chart local: no runtime dependency on ghchart.rshah.org.
+  // Fault-tolerant by design — a network hiccup must never break the build.
+  const dest = path.resolve("public/assets/images/ghchart.svg");
+  const url = "https://ghchart.rshah.org/16a34a/Bittu5134";
+
+  try {
+    // Same standard Eleventy cache as the GitHub API data (1 hour).
+    const svg = await EleventyFetch(url, {
+      duration: "1h",
+      type: "text",
+      fetchOptions: { headers: { "user-agent": "bittu5134-site-build" } },
+    });
+    if (!svg.includes("<svg")) {
+      throw new Error("response did not look like SVG");
+    }
+    // ghchart ships one <rect> per day plus labels; render only the active
+    // days as a solid heatmap.
+    const compact = compactGhChart(svg);
+    if (!compact) throw new Error("could not parse the ghchart grid");
+    fs.mkdirSync(path.dirname(dest), { recursive: true });
+    fs.writeFileSync(dest, compact);
+    console.log(`[ghchart] contribution chart (${svg.length} -> ${compact.length} bytes)`);
+  } catch (err) {
+    // Keep whatever copy already exists; the build continues either way.
+    console.warn(`[ghchart] fetch failed, keeping existing chart if any: ${err.message}`);
+  }
+}
+
 export default async function (eleventyConfig) {
   // Tell 11ty not to skip gitignored files in input dir (since src/blogs/ is gitignored)
   eleventyConfig.setUseGitIgnore(false);
+
+  // Cache-busting token for regenerated assets (CSS/JS/scene art). Uses the
+  // commit SHA so unchanged assets keep their URL — and their cache — across
+  // the daily cron rebuilds. Locally, a dirty tree falls back to a timestamp
+  // so an edit is never served from a stale cache.
+  eleventyConfig.addGlobalData("buildStamp", () => {
+    const git = (cmd) =>
+      execSync(cmd, { encoding: "utf-8", stdio: ["ignore", "pipe", "ignore"] }).trim();
+    try {
+      const sha = git("git rev-parse --short HEAD");
+      // Only tracked edits count as dirty; build-generated artifacts (the
+      // ghchart is rewritten from GitHub on every build) are excluded so a
+      // clean checkout keeps the SHA instead of falling back to a timestamp.
+      const dirty =
+        git("git status --porcelain --untracked-files=no -- . ':(exclude)public/assets/images/ghchart.svg'") !== "";
+      return dirty ? `${sha}-${Date.now()}` : sha;
+    } catch {
+      return String(Date.now());
+    }
+  });
 
   // 0. Initial sync of blogs to src/blogs for 11ty input
   syncBlogsToSrc();
@@ -73,6 +125,7 @@ export default async function (eleventyConfig) {
     try {
       syncBlogsToSrc();
       await generateMeta();
+      await fetchGhchart();
     } catch (err) {
       console.warn("[11ty.before] sync/generateMeta warning:", err.message);
     }
@@ -84,6 +137,7 @@ export default async function (eleventyConfig) {
     eleventyConfig.watchIgnores.add("public/sitemap.xml");
     eleventyConfig.watchIgnores.add("public/robots.txt");
     eleventyConfig.watchIgnores.add("public/llms*.txt");
+    eleventyConfig.watchIgnores.add("public/assets/images/ghchart.svg");
   }
 
   // 4. Watch for blog content and styles
@@ -107,7 +161,8 @@ export default async function (eleventyConfig) {
     const posts = collectionApi.getFilteredByGlob(["./blogs/**/*.md", "./src/blogs/**/*.md"]);
     posts.forEach((post) => {
       (post.data.tags || []).forEach((t) => {
-        if (t && t !== "posts") tagsSet.add(t);
+        const tag = String(t ?? "").trim().toLowerCase();
+        if (tag && tag !== "posts") tagsSet.add(tag);
       });
     });
     return Array.from(tagsSet).sort((a, b) => a.localeCompare(b));
@@ -133,10 +188,14 @@ export default async function (eleventyConfig) {
   });
 
   // 7. Passthrough static assets
+  // `public/` is Eleventy's passthrough root: public/assets/** -> /assets/**,
+  // public/CNAME -> /CNAME, etc. Blog media stays co-located under blogs/assets/
+  // and is copied with the posts, which also exposes the raw *.md files for
+  // LLMs. The blogs.11tydata.js build config is intentionally not published.
   eleventyConfig.addPassthroughCopy({ "public": "." });
   eleventyConfig.addPassthroughCopy({ "public/.nojekyll": ".nojekyll" });
-  eleventyConfig.addPassthroughCopy({ "blogs": "blogs" });
-  eleventyConfig.addPassthroughCopy({ "src/assets/js": "assets/js" });
+  eleventyConfig.addPassthroughCopy({ "blogs/assets": "blogs/assets" });
+  eleventyConfig.addPassthroughCopy("blogs/**/*.md");
   eleventyConfig.addPassthroughCopy({ "node_modules/littlefoot/dist/littlefoot.mjs": "assets/js/littlefoot.js" });
   eleventyConfig.addPassthroughCopy({ "node_modules/littlefoot/dist/littlefoot.css": "assets/css/littlefoot.css" });
 
@@ -174,6 +233,14 @@ export default async function (eleventyConfig) {
     return formatBlogDate(value);
   });
 
+  eleventyConfig.addFilter("dateShort", function (value) {
+    if (!value) return "";
+    const parsed = parseBlogDate(value);
+    if (!parsed) return String(value);
+    const MONTHS_SHORT = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    return `${MONTHS_SHORT[parsed.getUTCMonth()]} ${parsed.getUTCDate()}, ${parsed.getUTCFullYear()}`;
+  });
+
   eleventyConfig.addFilter("dateIso", function (value) {
     if (!value) return "";
     return toIsoBlogDate(value);
@@ -189,15 +256,6 @@ export default async function (eleventyConfig) {
     return JSON.stringify(value);
   });
 
-  // Slug filter fallback
-  eleventyConfig.addFilter("slugifyText", function (value) {
-    return String(value)
-      .toLowerCase()
-      .replace(/[^\w\s-]/g, "")
-      .replace(/[\s_-]+/g, "-")
-      .replace(/^-+|-+$/g, "");
-  });
-
   // ISO 8601 duration filter for Schema.org timeRequired (e.g. "6 min read" -> "PT6M")
   eleventyConfig.addFilter("isoDuration", function (value) {
     if (!value) return "PT3M";
@@ -206,28 +264,22 @@ export default async function (eleventyConfig) {
     return `PT${minutes}M`;
   });
 
-  // Filter out internal tags like "posts"
+  // Tags are authored by hand, so the same tag can arrive as "Go" in one post
+  // and "GO" in another. Everything downstream (archive filters, chips, card
+  // data attributes) reads them from here, so this filter is the one place that
+  // decides the canonical form: lowercase, trimmed, deduped, and without the
+  // internal "posts" collection tag.
   eleventyConfig.addFilter("filterTags", function (tags) {
     if (!Array.isArray(tags)) return [];
-    return tags.filter((t) => t && t !== "posts");
-  });
-
-  // Filter to pick a blog post that is not current, not newer, and not older
-  eleventyConfig.addFilter("getRandomOtherPost", function (allPosts, currentUrl, newerUrl, olderUrl) {
-    if (!allPosts || !allPosts.length) return null;
-    const excluded = new Set([currentUrl, newerUrl, olderUrl].filter(Boolean));
-    const candidates = allPosts.filter((p) => !excluded.has(p.url));
-    if (candidates.length === 0) {
-      const fallback = allPosts.filter((p) => p.url !== currentUrl);
-      if (fallback.length === 0) return null;
-      return fallback[0];
+    const seen = new Set();
+    const result = [];
+    for (const entry of tags) {
+      const tag = String(entry ?? "").trim().toLowerCase();
+      if (!tag || tag === "posts" || seen.has(tag)) continue;
+      seen.add(tag);
+      result.push(tag);
     }
-    // Stable pseudo-random pick based on currentUrl char codes
-    let hash = 0;
-    for (let i = 0; i < (currentUrl || "").length; i++) {
-      hash = (hash * 31 + currentUrl.charCodeAt(i)) >>> 0;
-    }
-    return candidates[hash % candidates.length];
+    return result;
   });
 
   return {

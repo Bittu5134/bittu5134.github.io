@@ -17,7 +17,7 @@ I remember reading GeeksforGeeks pages on how to make a chatbot before the AI er
 
 To train the bot, I used chats from my [Discord server](https://bittu.dev/discord/). And, as you might expect from a Discord server, the chats were all over the place, so the bot came out completely unhinged.
 
-![I even gave it the ability to reply with GIFs](./assets/a-very-dumb-markov-chatbot/i_am_scared.png){style=max-height:50vh;}
+![I even gave it the ability to reply with GIFs](./assets/a-very-dumb-markov-chatbot/i-am-scared.png){style=max-height:50vh;}
 
 ## How it works
 
@@ -31,11 +31,11 @@ All of this code is split between two files, `bot.py` and `scraper.py`: the scra
 
 ```mermaid
 flowchart LR
-  A["Discord history"] -->|scraper.py| B["messages.jsonl"]
+  A(["Discord history"]) -->|scraper.py| B[("messages.jsonl")]
   B --> C["bot.py"]
   C --> D["Markov chain"]
-  C --> E["Media index"]
-  F["Incoming message"] --> G{"Media match?"}
+  C --> E[("Media index")]
+  F(["Incoming message"]) --> G{"Media match?"}
   G -- "yes" --> H["Send media"]
   G -- "no" --> I["Generate text"]
 ```
@@ -44,7 +44,7 @@ flowchart LR
 
 No. Not even close. The reason I insist on calling this bot "dumb" is that it has no idea what it's generating. While this model "predicts the next word," similar to popular LLMs these days, the underlying mechanism is completely different.
 
-| | DumbCord | A neural network |
+| Aspect | DumbCord | A neural network |
 |---|---|---|
 | What it stores | Counted transitions between words, in a lookup table | Learned weights across layers of "neurons" |
 | How it "learns" | Counting occurrences while reading a file | Gradient descent and backpropagation |

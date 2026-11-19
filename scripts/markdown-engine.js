@@ -23,6 +23,7 @@ import {
   rehypeMermaidBlocks,
   rehypeCodeBlockWrapper,
   rehypeGithubAlertsTransformer,
+  rehypeBlockImages,
   rehypeTableWrapper,
   rehypeBlockquoteAttribution,
   rehypeBlogRelativeImages,
@@ -78,6 +79,7 @@ export async function buildProcessor() {
       rel: ["noopener", "noreferrer"],
     })
     .use(rehypeFigure, { className: "prose-figure" })
+    .use(rehypeBlockImages)                    // tag image-only paragraphs for centring
     .use(rehypeAutolinkHeadings, {
       behavior: "wrap",
       properties: { className: ["header-anchor"] },

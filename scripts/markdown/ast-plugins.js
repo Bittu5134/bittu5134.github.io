@@ -8,7 +8,7 @@ import remarkSmartypants from "remark-smartypants";
 /**
  * Utility: Recursively extract plain text from a HAST node.
  */
-export function hastText(node) {
+function hastText(node) {
   if (!node) return "";
   if (node.type === "text") return node.value || "";
   if (Array.isArray(node.children)) return node.children.map(hastText).join("");
@@ -222,6 +222,10 @@ export function rehypeMermaidBlocks() {
           tagName: "div",
           properties: {
             className: ["mermaid-container"],
+            // Scrollable region: make it reachable and labelled for keyboard users.
+            tabIndex: 0,
+            role: "group",
+            ariaLabel: "Diagram (scrollable)",
             dataMermaidCode: encodeURIComponent(rawCode),
           },
           children: [
@@ -423,6 +427,45 @@ export function rehypeGithubAlertsTransformer() {
  * 4. rehypeTableWrapper
  * Wraps GFM rendered tables in responsive overflow scroll wrappers.
  */
+/**
+ * rehypeBlockImages
+ * Marks a paragraph whose only content is an image (or a link wrapping one)
+ * with `.img-block`, so CSS can centre it.
+ *
+ * Why not `p > img:only-child`? Because text nodes are not elements: a paragraph
+ * like `some text ![](x) more text` also has an image as its only element child,
+ * so that selector would wrongly block-ify inline images.
+ */
+export function rehypeBlockImages() {
+  const isBlankText = (node) => node.type === "text" && node.value.trim() === "";
+
+  return (tree) => {
+    visit(tree, "element", (node) => {
+      if (node.tagName !== "p") return;
+      if (node.children.some((child) => child.type === "text" && !isBlankText(child))) return;
+
+      const elements = node.children.filter((child) => child.type === "element");
+      if (elements.length !== 1) return;
+
+      const only = elements[0];
+      const isImage = only.tagName === "img";
+      const isLinkedImage =
+        only.tagName === "a" &&
+        !only.children.some((child) => child.type === "text" && !isBlankText(child)) &&
+        only.children.filter((child) => child.type === "element").length === 1 &&
+        only.children.some((child) => child.type === "element" && child.tagName === "img");
+
+      if (!isImage && !isLinkedImage) return;
+
+      const cls = node.properties?.className;
+      node.properties = {
+        ...node.properties,
+        className: [...(Array.isArray(cls) ? cls : cls ? [cls] : []), "img-block"],
+      };
+    });
+  };
+}
+
 export function rehypeTableWrapper() {
   return (tree) => {
     visit(tree, "element", (node, index, parent) => {
@@ -434,7 +477,14 @@ export function rehypeTableWrapper() {
         parent.children[index] = {
           type: "element",
           tagName: "div",
-          properties: { className: ["table-responsive-wrapper"] },
+          properties: {
+            className: ["table-responsive-wrapper"],
+            // Wide tables scroll horizontally on narrow screens; keep them
+            // reachable and labelled for keyboard/screen-reader users.
+            tabIndex: 0,
+            role: "group",
+            ariaLabel: "Table (scrollable)",
+          },
           children: [node],
         };
       }
@@ -540,7 +590,8 @@ export function rehypeBlockquoteAttribution() {
 /**
  * 6. rehypeBlogRelativeImages
  * Rewrites relative image links (e.g. ./assets/foo.png or assets/foo.png)
- * to root-relative paths under /blogs/... so browsers can resolve them on /blog/<slug>/ pages.
+ * to root-relative paths under /blogs/... so browsers can resolve them on
+ * /blog/<slug>/ pages while post media stays co-located in blogs/assets/.
  */
 export function rehypeBlogRelativeImages() {
   return (tree) => {

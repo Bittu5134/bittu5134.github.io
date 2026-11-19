@@ -1,26 +1,24 @@
 ---
 layout: layouts/base.njk
-siteName: "bittu.dev"
-title: "Bittu | Software & CyberSec"
-description: "Your friendly, neighborhood Technomancer. Cybersecurity @ IIT Kanpur '30"
 coverAlt: "Bittu | Software & CyberSec - Your friendly, neighborhood Technomancer"
-alt: "Bittu | Software & CyberSec - Your friendly, neighborhood Technomancer"
-ogImage: "/images/og_banner.webp"
+ogImage: "/assets/images/og-banner.webp"
 ogImageWidth: 1400
 ogImageHeight: 350
 permalink: "/index.html"
 ---
 
-<div class="min-h-screen bg-[#f6eedb] retro-dots-bg text-[#14161f] font-sans selection:bg-[#fde047] selection:text-black">
+<div class="font-body relative">
+  {% include "components/scene-ornaments.njk" %}
+
   <!-- Top Header with Hamburger Navigation for Mobile -->
   {% include "components/retro-header.njk" %}
 
   <!-- Main Content Area -->
-  <main class="space-y-4 pt-2">
+  <main>
     <!-- Hero Section -->
     {% include "components/retro-hero.njk" %}
 
-    <!-- Tech Stack & Skills Marquee -->
+    <!-- Skills ticker -->
     {% include "components/retro-ticker.njk" %}
 
     <!-- Featured Projects -->
@@ -41,4 +39,9 @@ permalink: "/index.html"
 
   <!-- Lo-Fi Cassette Player -->
   {% include "components/retro-cassette-player.njk" %}
+
+  <!-- Allay companion: slowly drifts toward the mouse cursor (JS in main.js) -->
+  <div id="allay-companion" class="hidden sm:block fixed top-0 left-0 w-16 pointer-events-none z-[9999]" aria-hidden="true">
+    <img src="/assets/images/entities/allay.webp" alt="" width="58" height="50" loading="lazy" class="w-full h-auto"/>
+  </div>
 </div>

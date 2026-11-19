@@ -1,131 +1,57 @@
 {% import "macros/icons.njk" as icons %}
 
-<section id="contact" class="py-6 sm:py-8 px-3 sm:px-6 scroll-mt-16 sm:scroll-mt-20 [content-visibility:auto] [contain-intrinsic-size:auto_700px]">
+<section id="contact" class="py-14 sm:py-20 px-4 sm:px-6 scroll-mt-20">
   <div class="max-w-5xl mx-auto">
+    <h2 class="heading-pop font-display text-5xl sm:text-6xl text-black leading-none mb-10">Contact</h2>
 
-    <div class="mb-6 sm:mb-8">
-      <h2 class="text-3xl sm:text-4xl md:text-5xl font-mono font-black text-black tracking-tight">
-        ~/contact
-      </h2>
-    </div>
-
-    <div class="card-brutal sm:shadow-brutal-lg overflow-hidden p-4 sm:p-8 md:p-10 space-y-6">
-
-      <!-- Email -->
-      <div class="p-3 sm:p-4 bg-[#fef08a] border-2 border-black shadow-brutal-xs flex flex-wrap items-center justify-between gap-3">
-        <div class="flex items-center gap-3 sm:gap-4">
-          {{ icons.mail("w-7 h-7 sm:w-8 sm:h-8 text-black shrink-0") }}
-          <div>
-            <div class="font-mono text-xs uppercase font-bold text-black/80">EMAIL</div>
-            <div class="font-mono text-sm sm:text-base font-bold text-black break-all">hello@bittu.dev</div>
-          </div>
-        </div>
-        <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
-          <a href="mailto:hello@bittu.dev" class="btn-brutal-white px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm hover:bg-[#86efac]">
-            <span>MAIL</span>
-            {{ icons.arrowUpRight("w-3.5 h-3.5") }}
-          </a>
-          <button id="copy-email-contact" aria-label="Copy email address hello@bittu.dev" class="btn-brutal-yellow px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm">
-            <span class="email-default flex items-center gap-1">
-              {{ icons.copy("w-3.5 h-3.5") }}
-              <span>COPY</span>
-            </span>
-            <span class="email-copied hidden">
-              <span class="flex items-center gap-1 text-emerald-800 font-black">
-                {{ icons.check("w-3.5 h-3.5 text-emerald-800 stroke-[3]") }}
-                <span>COPIED!</span>
-              </span>
-            </span>
+    <div class="relative flex flex-col gap-3">
+      <!-- drops avatar perched on the email card (like the jockey on the ticker) -->
+      <div style="top:-6rem" class="hidden sm:block absolute right-6 sm:right-14 w-20 sm:w-24 pointer-events-none z-10" aria-hidden="true">
+        <img src="/assets/images/contact-avatar.webp" alt="" width="368" height="368" loading="lazy" class="w-full h-auto"/>
+      </div>
+      <div class="group relative flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 bg-[#fde047] border-2 border-black shadow-brutal-xs px-4 py-3.5 hover:-translate-y-0.5 transition-transform">
+        <a href="mailto:hello@bittu.dev" class="flex items-center gap-3">
+          {{ icons.mail("w-5 h-5 text-black shrink-0") }}
+          <span><span class="block font-body text-sm font-bold uppercase tracking-wide text-black/70">Email</span>
+          <span class="font-mono text-base font-bold text-black">hello@bittu.dev</span></span>
+        </a>
+        <span class="flex items-center gap-2">
+          <a href="mailto:hello@bittu.dev" class="inline-flex items-center gap-1.5 whitespace-nowrap bg-transparent border-2 border-black px-3.5 py-2.5 font-body text-sm font-bold text-black hover:bg-[#fffdf9]">Mail {{ icons.arrowUpRight("w-3.5 h-3.5") }}</a>
+          <button id="copy-email-contact" type="button" data-copy-text="hello@bittu.dev" class="inline-flex items-center gap-1.5 whitespace-nowrap bg-transparent border-2 border-black px-3.5 py-2.5 font-body text-sm font-bold text-black hover:bg-[#fffdf9]">
+            <span class="copy-default email-default inline-flex whitespace-nowrap items-center gap-1.5">{{ icons.copy("w-3.5 h-3.5") }} Copy</span>
+            <span class="copy-done email-copied hidden inline-flex whitespace-nowrap items-center gap-1.5">{{ icons.check("w-3.5 h-3.5") }} Copied</span>
           </button>
-        </div>
+        </span>
       </div>
 
-      <!-- GitHub, LinkedIn, Discord, Patreon — clean standard SVGs, no black boxes -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-        <div class="p-3 sm:p-4 bg-[#c4b5fd] border-2 border-black shadow-brutal-xs flex items-center justify-between gap-2.5">
-          <div class="flex items-center gap-3 sm:gap-4">
-            {{ icons.github("w-7 h-7 sm:w-8 sm:h-8 text-black shrink-0") }}
-            <div>
-              <div class="font-mono text-xs uppercase font-bold text-black/80">GITHUB</div>
-              <div class="font-mono text-sm sm:text-base font-bold text-black">@Bittu5134</div>
-            </div>
-          </div>
-          <a href="https://github.com/Bittu5134" target="_blank" rel="noopener noreferrer" class="btn-brutal-white px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm hover:bg-[#86efac]">
-            <span>VISIT</span>
-            {{ icons.arrowUpRight("w-3.5 h-3.5") }}
-          </a>
-        </div>
-
-        <div class="p-3 sm:p-4 bg-[#38bdf8] border-2 border-black shadow-brutal-xs flex items-center justify-between gap-2.5">
-          <div class="flex items-center gap-3 sm:gap-4">
-            {{ icons.linkedin("w-7 h-7 sm:w-8 sm:h-8 text-black shrink-0") }}
-            <div>
-              <div class="font-mono text-xs uppercase font-bold text-black/80">LINKEDIN</div>
-              <div class="font-mono text-sm sm:text-base font-bold text-black">in/bittu5134</div>
-            </div>
-          </div>
-          <a href="https://www.linkedin.com/in/bittu5134" target="_blank" rel="noopener noreferrer" class="btn-brutal-white px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm hover:bg-[#86efac]">
-            <span>VISIT</span>
-            {{ icons.arrowUpRight("w-3.5 h-3.5") }}
-          </a>
-        </div>
-
-        <div class="p-3 sm:p-4 bg-[#86efac] border-2 border-black shadow-brutal-xs flex items-center justify-between gap-2.5">
-          <div class="flex items-center gap-3 sm:gap-4">
-            {{ icons.discord("w-7 h-7 sm:w-8 sm:h-8 text-black shrink-0") }}
-            <div>
-              <div class="font-mono text-xs uppercase font-bold text-black/80">DISCORD</div>
-              <div class="font-mono text-sm sm:text-base font-bold text-black">bittu5134</div>
-            </div>
-          </div>
-          <a href="/discord" target="_blank" rel="noopener noreferrer" class="btn-brutal-white px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm hover:bg-[#86efac]">
-            <span>JOIN</span>
-            {{ icons.arrowUpRight("w-3.5 h-3.5") }}
-          </a>
-        </div>
-
-        <div class="p-3 sm:p-4 bg-[#f96854] border-2 border-black shadow-brutal-xs flex items-center justify-between gap-2.5">
-          <div class="flex items-center gap-3 sm:gap-4">
-            {{ icons.patreon("w-7 h-7 sm:w-8 sm:h-8 text-black shrink-0") }}
-            <div>
-              <div class="font-mono text-xs uppercase font-bold text-black/80">PATREON</div>
-              <div class="font-mono text-sm sm:text-base font-bold text-black">@lazybittu</div>
-            </div>
-          </div>
-          <a href="https://www.patreon.com/lazybittu" target="_blank" rel="noopener noreferrer" class="btn-brutal-white px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm hover:bg-black hover:text-white">
-            <span>SUPPORT</span>
-            {{ icons.arrowUpRight("w-3.5 h-3.5") }}
-          </a>
-        </div>
-
-      </div>
-
-      <!-- Secondary links: smaller icons -->
-      <div class="flex flex-wrap gap-2 pt-2 border-t-2 border-black/10">
-        <a href="https://www.reddit.com/user/RealNPC_" target="_blank" rel="noopener noreferrer" class="profile-link hover:bg-[#fed7aa]">
-          <span class="flex items-center gap-2">
-            {{ icons.reddit("w-4 h-4 text-black shrink-0") }}
-            REDDIT: u/RealNPC_
-          </span>
-          {{ icons.arrowUpRight("w-4 h-4") }}
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <a href="https://github.com/Bittu5134" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between gap-4 bg-[#24292f] border-2 border-black shadow-brutal-xs px-4 py-3.5 hover:-translate-y-0.5 transition-transform">
+          <span class="flex items-center gap-3">{{ icons.github("w-5 h-5 text-white shrink-0") }}
+            <span><span class="block font-body text-sm font-bold uppercase tracking-wide text-white">GitHub</span><span class="font-mono text-base font-bold text-white">@Bittu5134</span></span></span>
+          <span class="inline-flex items-center gap-1.5 whitespace-nowrap bg-[#fffdf9] border-2 border-black px-4 py-2 font-body text-sm font-bold">Visit {{ icons.arrowUpRight("w-3.5 h-3.5") }}</span>
         </a>
-        <a href="https://x.com/LostSquidXD" target="_blank" rel="noopener noreferrer" class="profile-link hover:bg-[#38bdf8]">
-          <span class="flex items-center gap-2">
-            {{ icons.twitter("w-4 h-4 text-black shrink-0") }}
-            X / TWITTER: @LostSquidXD
-          </span>
-          {{ icons.arrowUpRight("w-4 h-4") }}
+        <a href="https://www.linkedin.com/in/bittu5134" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between gap-4 bg-[#0A66C2] border-2 border-black shadow-brutal-xs px-4 py-3.5 hover:-translate-y-0.5 transition-transform">
+          <span class="flex items-center gap-3">{{ icons.linkedin("w-5 h-5 text-white shrink-0") }}
+            <span><span class="block font-body text-sm font-bold uppercase tracking-wide text-white">LinkedIn</span><span class="font-mono text-base font-bold text-white">in/bittu5134</span></span></span>
+          <span class="inline-flex items-center gap-1.5 whitespace-nowrap bg-[#fffdf9] border-2 border-black px-4 py-2 font-body text-sm font-bold">Visit {{ icons.arrowUpRight("w-3.5 h-3.5") }}</span>
         </a>
-        <a href="https://www.planetminecraft.com/member/bittu5134/" target="_blank" rel="noopener noreferrer" class="profile-link hover:bg-[#86efac]">
-          <span class="flex items-center gap-2">
-            {{ icons.planetMinecraft("w-4 h-4 text-black shrink-0") }}
-            PLANET MINECRAFT: bittu5134
-          </span>
-          {{ icons.arrowUpRight("w-4 h-4") }}
+        <a href="/discord/" rel="noopener noreferrer" class="flex items-center justify-between gap-4 bg-[#5865F2] border-2 border-black shadow-brutal-xs px-4 py-3.5 hover:-translate-y-0.5 transition-transform">
+          <span class="flex items-center gap-3">{{ icons.discord("w-5 h-5 text-white shrink-0") }}
+            <span><span class="block font-body text-sm font-bold uppercase tracking-wide text-white">Discord</span><span class="font-mono text-base font-bold text-white">bittu5134</span></span></span>
+          <span class="inline-flex items-center gap-1.5 whitespace-nowrap bg-[#fffdf9] border-2 border-black px-4 py-2 font-body text-sm font-bold">Join {{ icons.arrowUpRight("w-3.5 h-3.5") }}</span>
+        </a>
+        <a href="https://www.patreon.com/lazybittu" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between gap-4 bg-[#E11D48] border-2 border-black shadow-brutal-xs px-4 py-3.5 hover:-translate-y-0.5 transition-transform">
+          <span class="flex items-center gap-3">{{ icons.patreon("w-5 h-5 text-white shrink-0") }}
+            <span><span class="block font-body text-sm font-bold uppercase tracking-wide text-white">Patreon</span><span class="font-mono text-base font-bold text-white">@lazybittu</span></span></span>
+          <span class="inline-flex items-center gap-1.5 whitespace-nowrap bg-[#fffdf9] border-2 border-black px-4 py-2 font-body text-sm font-bold">Support {{ icons.arrowUpRight("w-3.5 h-3.5") }}</span>
         </a>
       </div>
 
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <a href="https://www.reddit.com/user/RealNPC_/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between gap-2 bg-[#fffdf9] border-2 border-black px-4 py-3.5 font-body text-base font-bold text-black hover:bg-[#fde047] transition-colors">{{ icons.reddit("w-5 h-5 text-black shrink-0") }} <span class="font-bold">u/RealNPC_</span> {{ icons.arrowUpRight("w-3.5 h-3.5 text-black shrink-0") }}</a>
+        <a href="https://x.com/LostSquidXD" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between gap-2 bg-[#fffdf9] border-2 border-black px-4 py-3.5 font-body text-base font-bold text-black hover:bg-[#fde047] transition-colors">{{ icons.twitter("w-5 h-5 text-black shrink-0") }} <span class="font-bold">@LostSquidXD</span> {{ icons.arrowUpRight("w-3.5 h-3.5 text-black shrink-0") }}</a>
+        <a href="https://www.planetminecraft.com/member/bittu5134/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between gap-2 bg-[#fffdf9] border-2 border-black px-4 py-3.5 font-body text-base font-bold text-black hover:bg-[#fde047] transition-colors"><svg class="w-5 h-5 shrink-0 text-black" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 12 12" aria-hidden="true"><path d="M0 0h12v12H0z" fill="none"/><path fill="currentColor" d="M2 11h1v-1h5v1h1v-1h1V9h1V4h-1V3H9V2H8v1H7v2H6v1H5v1H4V6H3V5H2v3H1V4H0v5h1v1h1Zm1 1h5v-1H3ZM1 4h1V3H1Zm5 5V8h1V7h1v1h1v1ZM2 3h1V2H2Zm7 4V6h1v1ZM3 2h5V1H3Zm0 0"/></svg> <span class="font-bold">Planet Minecraft</span> {{ icons.arrowUpRight("w-3.5 h-3.5 text-black shrink-0") }}</a>
+      </div>
     </div>
   </div>
 </section>

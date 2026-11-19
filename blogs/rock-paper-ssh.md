@@ -8,7 +8,7 @@ summary: "A PvE multiplayer TUI game, built in Go and streamed over SSH."
 tags:
   - Terminal
   - SSH
-  - GO
+  - Go
   - TUI
   - Project
 ---
@@ -19,7 +19,7 @@ I have always been fascinated with TUI applications, so today I spent my time wo
 ssh rps.bittu.dev -p 2222
 ```
 
-# The gameplay
+## The gameplay
 
 The gameplay is very minimal. You join the game, and the game picks Rock/Paper/Scissors and gives you a very obscure hint. You get 10 seconds to make your choice. If you beat the server, you win; otherwise, you lose 50% of your points, which get distributed to other winning players.
 
@@ -28,7 +28,7 @@ The gameplay is very minimal. You join the game, and the game picks Rock/Paper/S
 >[!IMPORTANT]
 > Due to network limitations, only people on an IPv6 network can connect to the server for now. Currently, I don't have the funds for an IPv4 server.
 
-# The Backend
+## The Backend
 
 This project uses these three libs as its main components.
 - [Wish](https://github.com/charmbracelet/wish)
@@ -41,7 +41,7 @@ Here's the user flow:
 
 ```mermaid
 flowchart TD
-    A["User runs<br/>ssh rps.bittu.dev -p 2222"] --> B["SSH handshake<br/>(any password / key accepted)"]
+    A(["User runs<br/>ssh rps.bittu.dev -p 2222"]) --> B["SSH handshake<br/>(any password / key accepted)"]
     B --> D["BubbleTea initiates and SessionID assigned"]
     D --> E["Random username generated,<br/>subscribed to server events,<br/>and added to the score ledger"]
     E --> F["Round in progress<br/>show hint + countdown"]
@@ -50,7 +50,7 @@ flowchart TD
     H --> F
     G --> I["Broadcast roundEndMsg<br/>to all subscribed sessions"]
     I --> F
-    G -- "disconnect (Ctrl+C)" --> J["Cleanup: unregister session,<br/>drop subscription, pending pick and ledger entry"]
+    G -- "disconnect (Ctrl+C)" --> J(["Cleanup: unregister session,<br/>drop subscription, pending pick<br/>and ledger entry"])
 ```
 
 The game natively handles window sizing, component placement, and proper colour support for different terminals using LipGloss (mentioned above).
