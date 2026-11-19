@@ -33,4 +33,4 @@ Going forward, I will be posting all my random midnight projects here.
 
 I look forward to seeing you all around!
 
-![](./assets/shared/jumping-yay.webp)
+![](./assets/gifs/jumping-yay.webp)

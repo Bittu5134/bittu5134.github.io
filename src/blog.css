@@ -600,18 +600,38 @@
 }
 
 /* ─── Figures and Image Captions ────────────────────────────── */
+
+/* Inline images (default): `text ![](x) text` flows with the copy, since the
+   global `img { display: block }` would otherwise break the line. */
+.prose-retro img {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Block images: a standalone image (top-level, an image-only paragraph marked
+   `.img-block` at build time, or a captioned figure) sits centred on its own
+   line. Images mixed with text keep the inline-block default above. */
+.prose-retro > img,
+.prose-retro .img-block img,
+.prose-retro .prose-figure img {
+  display: block;
+  margin-inline: auto;
+}
+
 .prose-retro .prose-figure {
   margin: 2.5rem 0;
   text-align: center;
 }
 
 .prose-retro .prose-figure img {
+  display: block;
   margin: 0 auto;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 8px;
+  /* Same frame as the post cover: 2px ink, no radius, no soft shadow. */
+  border: 2px solid #000000;
+  border-radius: 0;
   max-width: 100%;
   height: auto;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  box-shadow: none;
 }
 
 .prose-retro .prose-figure figcaption {

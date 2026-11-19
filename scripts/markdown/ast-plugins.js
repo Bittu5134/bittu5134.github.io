@@ -427,6 +427,45 @@ export function rehypeGithubAlertsTransformer() {
  * 4. rehypeTableWrapper
  * Wraps GFM rendered tables in responsive overflow scroll wrappers.
  */
+/**
+ * rehypeBlockImages
+ * Marks a paragraph whose only content is an image (or a link wrapping one)
+ * with `.img-block`, so CSS can centre it.
+ *
+ * Why not `p > img:only-child`? Because text nodes are not elements: a paragraph
+ * like `some text ![](x) more text` also has an image as its only element child,
+ * so that selector would wrongly block-ify inline images.
+ */
+export function rehypeBlockImages() {
+  const isBlankText = (node) => node.type === "text" && node.value.trim() === "";
+
+  return (tree) => {
+    visit(tree, "element", (node) => {
+      if (node.tagName !== "p") return;
+      if (node.children.some((child) => child.type === "text" && !isBlankText(child))) return;
+
+      const elements = node.children.filter((child) => child.type === "element");
+      if (elements.length !== 1) return;
+
+      const only = elements[0];
+      const isImage = only.tagName === "img";
+      const isLinkedImage =
+        only.tagName === "a" &&
+        !only.children.some((child) => child.type === "text" && !isBlankText(child)) &&
+        only.children.filter((child) => child.type === "element").length === 1 &&
+        only.children.some((child) => child.type === "element" && child.tagName === "img");
+
+      if (!isImage && !isLinkedImage) return;
+
+      const cls = node.properties?.className;
+      node.properties = {
+        ...node.properties,
+        className: [...(Array.isArray(cls) ? cls : cls ? [cls] : []), "img-block"],
+      };
+    });
+  };
+}
+
 export function rehypeTableWrapper() {
   return (tree) => {
     visit(tree, "element", (node, index, parent) => {

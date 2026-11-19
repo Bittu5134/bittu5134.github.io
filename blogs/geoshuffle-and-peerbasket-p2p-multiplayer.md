@@ -1,10 +1,10 @@
 ---
 slug: "geoshuffle-and-peerbasket-p2p-multiplayer"
-title: "How GeoShuffle's Multiplayer Works Without a Game Server"
+title: "How GeoShuffle's Multiplayer Works Without a Backend Server"
 coverImage: "/blogs/assets/covers/geoshuffle-and-peerbasket-p2p-multiplayer.webp"
 coverAlt: "PeerBasket and GeoShuffle: P2P multiplayer without a game server"
-date: "18-11-2026"
-summary: "Two browsers, one scrambled satellite photo, and absolutely no game server. An ELI5 tour of GeoShuffle and the PeerBasket discovery server that makes it possible."
+date: "12-11-2026"
+summary: "A quick introduction to PeerBasket discovery server and realtime P2P gameplay."
 tags:
   - WebRTC
   - P2P
@@ -12,6 +12,9 @@ tags:
   - JavaScript
   - Project
 hiddenTags:
+  - Free Hosting
+  - Free
+  - Free Service
   - PeerJS
   - Redis
   - GeoShuffle
@@ -20,11 +23,17 @@ hiddenTags:
   - Matchmaking
 ---
 
-I have a bad habit of building multiplayer things and then refusing to pay for a multiplayer server. [GeoShuffle](https://geoshuffle.bittu.dev) is the latest one: a sliding puzzle where the picture is a satellite photo of somewhere on Earth, and the goal is to put it back together in as few moves as possible.
+I enjoy building mini-games, even if nobody plays them TwT. However, adding multiplayer usually means paying for a backend server.
 
-The part people ask about is the multiplayer, because there is no game server anywhere. Two browsers just... find each other and play.
+That was the problem I faced while building [GeoShuffle](https://geoshuffle.bittu.dev). I wanted two players to compete against each other, but the game was hosted as a static website and I did not want to pay for a server.
 
-That only works because of a second project, [PeerBasket](https://peerbasket.bittu.dev), the little discovery server I built to make the "finding each other" part not miserable. So this post is two introductions at once: what GeoShuffle is, and what PeerBasket is — explained like you're five, without pretending the hard parts don't exist.
+I looked into peer-to-peer technology and found that WebRTC can connect two browsers directly over the internet. Projects such as PeerJS provide a simpler WebRTC interface, but they do not solve one important problem: before two browsers can connect, they need a way to find each other.
+
+That is where my second project, [PeerBasket](https://peerbasket.bittu.dev), comes in. It is a discovery server that lets two users find each other with a single API call.
+
+![](assets/gifs/frieren-anime-fern.webp)
+
+PeerBasket is intentionally simple. PeerJS includes a built-in discovery server, but using it requires self-hosting, which brings us back to the cost I wanted to avoid.
 
 ## The ELI5 version
 
@@ -46,6 +55,8 @@ That's the whole architecture. GeoShuffle's puzzle data never touches PeerBasket
 ## What GeoShuffle is
 
 A sliding puzzle with a 6×4 grid, 23 numbered tiles and one empty slot. The image behind them is a satellite view of a real place, pulled from a data file of countries, regions and coordinates. Slide with WASD, the arrow keys, a click, or a swipe.
+
+![GeoShuffle, mid-puzzle](assets/geoshuffle-and-peerbasket-p2p-multiplayer/geoshuffle-board.webp)
 
 Get stuck for 45 seconds and it offers a hint. Solve it and the game reveals where on Earth you were staring at, plus a scorecard with your time, your move count and your leaderboard rank. There's a global leaderboard backed by Supabase, a local history of your own runs, and two ways into multiplayer: a private lobby with a 6-letter room code, or a quick match button that pairs you with a random person who is also clicking buttons alone.
 
@@ -76,6 +87,8 @@ const res = await fetch("https://peerbasket.bittu.dev/basket/my-room", {
 });
 const { peers } = await res.json();
 ```
+
+![The basket endpoint in action: one POST in, the peers list out](assets/geoshuffle-and-peerbasket-p2p-multiplayer/peerbasket-cli.webp)
 
 That single request does three jobs at once: it registers you, refreshes your heartbeat, and hands back everyone else. No separate join, no leave, no account.
 
