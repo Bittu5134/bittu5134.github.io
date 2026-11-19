@@ -24,7 +24,7 @@
 
     <!-- Preload the above-the-fold cover image: it is the LCP element on posts -->
     {% if coverImage %}
-      <link rel="preload" as="image" href="{{ coverUrl }}" width="{{ coverWidth }}" height="{{ coverHeight }}" fetchpriority="high" />
+      <link rel="preload" as="image" href="{{ rawCover }}" width="{{ coverWidth }}" height="{{ coverHeight }}" fetchpriority="high" />
     {% endif %}
 
     <!-- OpenGraph / Social Meta -->
