@@ -1,14 +1,14 @@
 ---
 slug: "geoshuffle-and-peerbasket-p2p-multiplayer"
-title: "How GeoShuffle's Multiplayer Works Without a Backend Server"
+title: "How GeoShuffle's Multiplayer Works Without a Game Server"
 coverImage: "/blogs/assets/covers/geoshuffle-and-peerbasket-p2p-multiplayer.webp"
 coverAlt: "PeerBasket and GeoShuffle: P2P multiplayer without a game server"
 date: "12-11-2026"
-summary: "A quick introduction to PeerBasket discovery server and realtime P2P gameplay."
+summary: "A quick introduction to the PeerBasket discovery server and real-time P2P gameplay."
 tags:
   - WebRTC
   - P2P
-  - GO
+  - Go
   - JavaScript
   - Project
 hiddenTags:
@@ -27,57 +27,45 @@ I enjoy building mini-games, even if nobody plays them TwT. However, adding mult
 
 That was the problem I faced while building [GeoShuffle](https://geoshuffle.bittu.dev). I wanted two players to compete against each other, but the game was hosted as a static website and I did not want to pay for a server.
 
-I looked into peer-to-peer technology and found that WebRTC can connect two browsers directly over the internet. Projects such as PeerJS provide a simpler WebRTC interface, but they do not solve one important problem: before two browsers can connect, they need a way to find each other.
+I looked into peer-to-peer technology and found that WebRTC can connect two browsers directly over the internet. Projects such as PeerJS provide a simpler WebRTC interface, but they do not solve one important problem: before two browsers can connect, they need a way to discover each other.
 
-That is where my second project, [PeerBasket](https://peerbasket.bittu.dev), comes in. It is a discovery server that lets two users find each other with a single API call.
+That is where my second project, [PeerBasket](https://peerbasket.bittu.dev), comes in. PeerJS will connect two browsers, but it has no idea which peer ID you want to dial -- something has to hold a list of who is currently looking for a game. Running that yourself means a service with an uptime bill, which is the exact cost I wanted to avoid. PeerBasket is that list, and it already runs at [peerbasket.bittu.dev](https://peerbasket.bittu.dev), so a game only needs to call one endpoint.
 
 ![](assets/gifs/frieren-anime-fern.webp)
 
-PeerBasket is intentionally simple. PeerJS includes a built-in discovery server, but using it requires self-hosting, which brings us back to the cost I wanted to avoid.
+## The pattern: PeerBasket for discovery, WebRTC for gameplay
 
-## The ELI5 version
+The useful part of PeerBasket is not that it runs GeoShuffle. It is that it gives any browser-based P2P game a small matchmaking primitive: a shared basket where players can temporarily find one another.
 
-Imagine you and a friend want to talk on the phone, but neither of you knows the other's number.
+A P2P game normally has three separate jobs:
 
-You need three things:
+1. **Discovery:** find another player's peer ID.
+2. **Connection:** establish a browser-to-browser WebRTC connection.
+3. **Gameplay:** exchange the actual game state and events.
 
-1. **A phone number.** In WebRTC, that's a PeerJS ID — a long random string that identifies one browser tab.
-2. **A notice board.** You write your number on a sticky note, stick it under a room name, and your friend does the same. Now you can both read each other's notes. That's PeerBasket.
-3. **A phone company to connect the call.** Once you both have numbers, something still has to turn "call this person" into an actual connection. PeerJS's signalling server handles that, and a STUN lookup tells each browser what its public address looks like from the outside.
+PeerBasket handles only the first job. PeerJS handles the connection setup, and the game sends its data through the resulting WebRTC data channel. This separation means a static game site can still support multiplayer without putting gameplay traffic through an application backend.
 
-And then the important bit: **the conversation happens directly between the two phones.** The notice board never hears it. The phone company hangs up once the call is connected.
+In GeoShuffle, the process looks like this:
 
-That's the whole architecture. GeoShuffle's puzzle data never touches PeerBasket, and PeerBasket has no idea a game is happening.
+1. Each browser creates a PeerJS ID.
+2. Both players POST their IDs to the same PeerBasket basket.
+3. PeerBasket returns the other active IDs in that basket.
+4. One player uses the discovered ID to start a PeerJS connection.
+5. Once the connection opens, GeoShuffle sends puzzle and match updates directly between the browsers.
+
+PeerJS's signaling server exchanges the details needed to establish the WebRTC channel, while a STUN server helps the browsers discover their public network addresses. Neither service is the game's matchmaking database, and neither is where GeoShuffle's ongoing game messages are sent. The roles are:
+
+- **PeerBasket:** a shared notice board for temporary player discovery
+- **PeerJS and signaling:** connection setup
+- **WebRTC:** direct data transport
+- **Your game:** rules, state, and messages
 
 >[!IMPORTANT]
 > There is no relay in the middle. If two networks refuse to talk to each other (some corporate networks and symmetric NATs do), the match simply fails to connect. That's the trade-off for not paying for a TURN server.
 
-## What GeoShuffle is
+## Add PeerBasket to your own game
 
-A sliding puzzle with a 6×4 grid, 23 numbered tiles and one empty slot. The image behind them is a satellite view of a real place, pulled from a data file of countries, regions and coordinates. Slide with WASD, the arrow keys, a click, or a swipe.
-
-![GeoShuffle, mid-puzzle](assets/geoshuffle-and-peerbasket-p2p-multiplayer/geoshuffle-board.webp)
-
-Get stuck for 45 seconds and it offers a hint. Solve it and the game reveals where on Earth you were staring at, plus a scorecard with your time, your move count and your leaderboard rank. There's a global leaderboard backed by Supabase, a local history of your own runs, and two ways into multiplayer: a private lobby with a 6-letter room code, or a quick match button that pairs you with a random person who is also clicking buttons alone.
-
-## How two browsers find each other
-
-A private lobby is the easy one. The host generates a room code like `K3F9QZ` and starts posting its PeerJS ID to a PeerBasket basket named `geoshuffle-K3F9QZ`, re-posting every 12 seconds to stay listed. The guest enters the code, posts its own ID to the same basket, and gets back the peers already sitting there. One of them is the host. The guest dials it, and the game begins.
-
-Quick match is the same idea with a shared basket called `geoshuffle-public-matchmaking`. Both players post their ID and both get the list back — which means both would dial each other at the same time if nobody intervened. So there's a tie-break: the peer with the lexicographically smaller ID dials, and the other side waits. One handshake instead of two, and no race where two connections open and one has to be thrown away.
-
-When the dial connects, the guest sends a `match_request`, the host replies with `match_accept` and a fresh room code, and both sides flip into the playing state.
-
-```mermaid
-flowchart LR
-    A["Host + guest POST peer_id<br/>to the same basket"] --> B["Each reads the<br/>other's peer_id"]
-    B --> C["PeerJS exchanges<br/>SDP + ICE"]
-    C --> D["DataChannel opens<br/>host sends map + tiles"]
-```
-
-## What PeerBasket actually is
-
-A small Go service with one endpoint, backed by Redis. You POST a `peer_id` to `/basket/:name`, and the response contains every active peer in that basket:
+PeerBasket is a small Go service with one endpoint, backed by Redis. It is already hosted, so there is nothing to sign up for or run: you POST a `peer_id` to `/basket/:name`, and the response contains every active peer in that basket:
 
 ```js
 const res = await fetch("https://peerbasket.bittu.dev/basket/my-room", {
@@ -88,9 +76,31 @@ const res = await fetch("https://peerbasket.bittu.dev/basket/my-room", {
 const { peers } = await res.json();
 ```
 
-![The basket endpoint in action: one POST in, the peers list out](assets/geoshuffle-and-peerbasket-p2p-multiplayer/peerbasket-cli.webp)
+Each request does three jobs at once: it registers you, refreshes your heartbeat, and hands back everyone else. No separate join, leave, or account is required.
 
-That single request does three jobs at once: it registers you, refreshes your heartbeat, and hands back everyone else. No separate join, no leave, no account.
+The basket name is your matchmaking strategy. Use a room-specific name for private lobbies, one shared name for quick match, or names based on a game mode, region, or map. Your client can then choose a peer from the response and connect using PeerJS:
+
+```js
+const { peers } = await findPlayers("my-game-public");
+const opponent = chooseOpponent(peers);
+const conn = peer.connect(opponent.peer_id);
+```
+
+`findPlayers` is just the request above, and `chooseOpponent` is whatever rule you use to decide who dials. The other browser does not need to poll anything; it accepts the incoming PeerJS connection with `peer.on('connection', ...)`, which is where the game messages start flowing.
+
+After `conn.open`, stop treating PeerBasket as part of the game loop. Send only the messages your game needs over the data channel:
+
+```js
+conn.on("open", () => {
+  conn.send({ type: "start_game", seed: 48291 });
+});
+
+conn.on("data", (message) => {
+  if (message.type === "move") applyOpponentMove(message);
+});
+```
+
+The important design decision is what to send. For a deterministic game, send a seed and player inputs. For a game that needs an authoritative host, have the host send the initial state and validate important events. PeerBasket does not define any of this; it only helps the peers meet.
 
 Under the hood, each basket is a Redis sorted set where the score is the last time a peer checked in. Every request drops entries older than 30 seconds, returns the most recent `limit` peers, and refreshes the key's one-hour expiry. Close your tab and you stop heartbeating; 30 seconds later you're gone. No cleanup job, no ghost lobbies.
 
@@ -98,9 +108,24 @@ Even the "N online" counter in GeoShuffle is just this API: it posts a fake prob
 
 PeerBasket isn't GeoShuffle-specific, either. The repo ships examples for a 1:1 matchmaker chat, a browser-to-browser file drop, and a group video room. It pairs with anything that has a peer ID and no desire to run a lobby database.
 
+## How GeoShuffle wires it up
+
+A private lobby is the easiest implementation. The host generates a room code like `K3F9QZ` and uses a basket named `geoshuffle-K3F9QZ`. It posts its PeerJS ID there every 12 seconds so it remains discoverable. The guest enters the code, posts its own ID to the same basket, and receives the host's ID. The guest then dials the host, and the game begins.
+
+Quick match uses the same idea with a shared basket called `geoshuffle-public-matchmaking`. Both players post their IDs and receive the list back. Without coordination, both could try to dial at once, so GeoShuffle uses a deterministic tie-break: the peer with the lexicographically smaller ID dials, while the other waits. Your game could use the same rule, or have the discovery response assign a host.
+
+When the dial connects, the guest sends a `match_request`, the host replies with `match_accept` and a fresh room code, and both sides flip into the playing state.
+
+```mermaid
+flowchart LR
+    A["Host + guest POST peer_id<br/>to the same basket"] --> B["Each reads the<br/>other's peer_id"]
+    B --> C["PeerJS exchanges<br/>SDP + ICE"]
+    C --> D["DataChannel opens<br/>host sends map + tiles"]
+```
+
 ## Who owns the board
 
-Once the channel is open, the host is the source of truth for the puzzle. It picks a map, shuffles it, and sends the whole thing across:
+Once the channel is open, GeoShuffle's host becomes the source of truth for the puzzle. It picks a map, shuffles it, and sends the whole thing across:
 
 ```js
 conn.send({ type: "start_game", mapIndex, tiles });
@@ -108,7 +133,7 @@ conn.send({ type: "start_game", mapIndex, tiles });
 
 The guest applies those tiles and starts from the exact same scrambled board, so nobody has to argue about whether the puzzle was solvable.
 
-After that the two boards run independently — this is a race, not a turn-based game. What actually crosses the wire is small:
+After that the two boards run independently -- this is a race, not a turn-based game. What actually crosses the wire is small:
 
 | Message | Sent by | What's inside |
 |---|---|---|
@@ -123,24 +148,17 @@ The board is shared once at the start, and the live sync is your move count tick
 
 ## Keeping the line honest
 
-A WebRTC connection can die quietly, especially when one side walks away from the laptop. So there's a heartbeat over the data channel itself: every 10 seconds each side sends a `ping`, and three missed beats in a row — about 30 seconds — closes the connection and shows the disconnect state. A new handshake gets 10 seconds before it's considered dead, which is also how quick match recovers: a slow candidate just means "search again".
+A WebRTC connection can die quietly, especially when one side walks away from the laptop. To catch that, GeoShuffle sends a heartbeat over the data channel itself. Every 10 seconds, each side sends a `ping`. Three missed beats in a row -- about 30 seconds -- closes the connection and shows the disconnect state.
 
-## What I would change
-
-- **Add a TURN relay.** It's the one missing piece for reliability on hostile networks, and it costs money, which is why it isn't there yet.
-- **Make presence sharper.** Thirty seconds is generous for a heartbeat and lazy for a queue. Shorter timeouts, or a real queue endpoint, would make quick match feel snappier.
-- **More than two players.** PeerBasket doesn't care how many peers sit in a basket, but a 3-player sliding puzzle race needs more thought than a 2-player one.
-
-The thing I keep coming back to is that the hard part was never the puzzle. Sliding tiles is a solved problem from 1880. The hard part was getting two strangers' browsers to agree on where to meet — and that's the bit I now reuse everywhere.
+A new handshake gets 10 seconds before it is considered dead. That is also how quick match recovers: a slow candidate simply means it is time to search again.
 
 ## Try it
 
 - Play: [geoshuffle.bittu.dev](https://geoshuffle.bittu.dev)
 - Source: [GeoShuffle](https://github.com/Bittu5134/GeoShuffle)
-- Discovery server: [PeerBasket](https://github.com/Bittu5134/PeerBasket) (Go, Gin, Redis, free for anyone to use)
+- API: [peerbasket.bittu.dev](https://peerbasket.bittu.dev)
+- Source: [PeerBasket](https://github.com/Bittu5134/PeerBasket)
 
 ## Conclusion
 
-GeoShuffle's multiplayer is two phones and a notice board. PeerBasket holds the sticky notes, PeerJS connects the call, and the game itself is two browsers shouting their move counts at each other over a direct line.
-
-If you're building something that needs peers to find each other without a backend, that notice board is the only part you actually have to write. The rest is a sliding puzzle from 1880.
+PeerBasket does not replace WebRTC or PeerJS. It solves the smaller problem that comes first: helping two browsers find each other. Once they connect, the game can keep its gameplay traffic between the players instead of sending every move through a game server.
