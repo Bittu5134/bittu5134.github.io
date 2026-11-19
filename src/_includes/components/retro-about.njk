@@ -1,34 +1,67 @@
+{% import "macros/icons.njk" as icons %}
 <section id="about" class="py-14 sm:py-20 px-4 sm:px-6 scroll-mt-20">
   <div class="max-w-5xl mx-auto">
     <h2 class="heading-pop font-display text-5xl sm:text-6xl text-black leading-none">About</h2>
-
-    <div class="w-full border-[3px] border-dashed border-black px-6 py-5 sm:px-10 sm:py-6 font-body text-base sm:text-lg text-black/90 leading-relaxed mt-10 sm:flex sm:items-start sm:gap-7">
-    
-      <img src="/assets/images/avatar-head.png" alt="Bittu's Minecraft avatar" width="160" height="160" loading="lazy" class="w-28 sm:w-36 h-auto shrink-0" />
-      {# <img src="/assets/images/avatar-chibi.png" alt="Bittu's Minecraft avatar" width="160" height="160" loading="lazy" class="w-28 sm:w-36 h-auto shrink-0" /> #}
+    <div class="w-full border-[3px] border-dashed border-black px-6 py-5 sm:px-10 sm:py-6 font-body text-base sm:text-lg
+        text-black/90 leading-relaxed mt-10 sm:flex sm:items-start sm:gap-7">
+      <img
+        src="/assets/images/avatar-head.png"
+        alt="Bittu's Minecraft avatar"
+        width="160"
+        height="160"
+        loading="lazy"
+        class="w-28 sm:w-36 h-auto shrink-0"/>
       <div class="flex-1 min-w-0 space-y-5">
-      <p>
-        I'm Bittu, an 18-year-old software engineer and cybersecurity student at
-        <a href="https://iitk.ac.in" target="_blank" rel="noopener noreferrer" class="font-bold underline underline-offset-4 hover:text-[#b45309]">IIT Kanpur</a>.
-        I work on open source, low-level systems and security, and I do freelance software work on the side.
-      </p>
-      <p>
-        I've spent a considerable time in the
-        <a href="https://www.planetminecraft.com/member/bittu5134/" target="_blank" rel="noopener noreferrer" class="font-bold underline underline-offset-4 hover:text-[#b45309]">Minecraft technical and modding</a>
-        community. One of my datapacks was featured on
-        <a href="https://youtu.be/w6zLprHHZOk?t=495" target="_blank" rel="noopener noreferrer" class="font-bold underline underline-offset-4 hover:text-[#b45309]">Minecraft Live</a>.
-        I also build reader platforms and translation tooling for webnovels.
-      </p>
-      <p>
-        When I'm not coding, I'm reading a novel, playing Minecraft or other games, or participating in game jams, hackathons, and CTFs.
-      </p>
+        <p>
+          I'm Bittu, an 18-year-old software engineer and cybersecurity student at
+          <a
+            href="https://iitk.ac.in"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-bold underline underline-offset-4 hover:text-[#b45309]">IIT Kanpur</a>.
+            I work on open source, low-level systems and security, and I do freelance software work on the side.
+          <a
+            href="https://resume.bittu.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group mt-1 inline-flex w-fit items-center text-md font-mono gap-2.5 font-bold text-black/65 transition-colors
+              hover:text-[#b45309]">
+            <span class="underline decoration-black/25 decoration-2 underline-offset-4 group-hover:decoration-[#b45309]">View my
+              resume</span>
+            {{ icons.arrowUpRight("w-3.5 h-3.5 shrink-0 text-black/50 group-hover:text-[#b45309]") }}
+          </a>
+        </p>
+        <p>
+          I've spent a considerable time in the
+          <a
+            href="https://www.planetminecraft.com/member/bittu5134/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-bold underline underline-offset-4 hover:text-[#b45309]">Minecraft technical and modding</a>
+          community. One of my datapacks was featured on
+          <a
+            href="https://youtu.be/w6zLprHHZOk?t=495"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-bold underline underline-offset-4 hover:text-[#b45309]">Minecraft Live</a>.
+                                I also build reader platforms and translation tooling for webnovels.
+        </p>
+        <p>
+          When I'm not coding, I'm reading a novel, playing Minecraft or other games, or participating in game jams, hackathons,
+          and CTFs.
+        </p>
       </div>
     </div>
-
     <div class="mt-10 w-full border-[3px] border-dashed border-black p-4">
       <p class="font-body text-sm font-bold uppercase tracking-wide text-black/70 mb-2">Contribution graph</p>
       <a href="https://github.com/Bittu5134" target="_blank" rel="noopener noreferrer">
-        <img src="/assets/images/ghchart.svg" alt="Bittu's GitHub contribution graph for the last year" width="636" height="84" loading="lazy" class="w-full h-auto"/>
+        <img
+          src="/assets/images/ghchart.svg"
+          alt="Bittu's GitHub contribution graph for the last year"
+          width="636"
+          height="84"
+          loading="lazy"
+          class="w-full h-auto"/>
       </a>
     </div>
   </div>
