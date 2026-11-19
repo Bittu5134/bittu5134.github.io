@@ -31,7 +31,7 @@ WebRTC solves most of it, because it can connect two browsers directly over the 
 
 That list is my second project, [PeerBasket](https://peerbasket.bittu.dev). It is a shared notice board that already runs at [peerbasket.bittu.dev](https://peerbasket.bittu.dev), so a game only has to post one ID to one address.
 
-![](assets/geoshuffle-and-peerbasket-p2p-multiplayer/text-animation.webp)
+![A tiny chibi character labelled "PeerBasket" next to a much taller one labelled "Your Game"](assets/geoshuffle-and-peerbasket-p2p-multiplayer/text-animation.webp)
 
 ## How the pieces fit
 

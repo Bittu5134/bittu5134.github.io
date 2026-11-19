@@ -49,8 +49,25 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # The project cards read stars, forks, descriptions and the pinned set from
+      # the GitHub API. Unauthenticated calls from shared runner IPs run out of
+      # the 60/hour budget and come back as 403, which silently drops every
+      # description and badge from the page. Using the workflow token raises that
+      # to 5000/hour, and the cached fetch means a bad run reuses the last good
+      # response instead of blanking the section.
+      - name: Cache GitHub build data
+        uses: actions/cache@v4
+        with:
+          path: .cache
+          key: eleventy-fetch-${{ hashFiles('src/_data/projects.js') }}-${{ github.run_id }}
+          restore-keys: |
+            eleventy-fetch-${{ hashFiles('src/_data/projects.js') }}-
+            eleventy-fetch-
+
       - name: Build site with metadata & Vite
         run: npm run build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

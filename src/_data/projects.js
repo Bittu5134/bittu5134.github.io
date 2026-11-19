@@ -38,7 +38,7 @@ async function fetchJson(url, label) {
   try {
     return await EleventyFetch(url, { duration: "1h", type: "json", fetchOptions: fetchOptions() });
   } catch (err) {
-    console.warn(`[projects] ${label} unavailable (${err.message}).`);
+    reportFailure(label, err);
     return null;
   }
 }
@@ -47,8 +47,19 @@ async function fetchText(url, label) {
   try {
     return await EleventyFetch(url, { duration: "1h", type: "text", fetchOptions: fetchOptions() });
   } catch (err) {
-    console.warn(`[projects] ${label} unavailable (${err.message}).`);
+    reportFailure(label, err);
     return null;
+  }
+}
+
+// A failed fetch is not fatal: the page still renders curated titles, categories
+// and stats. What it does lose is stars, forks and descriptions, which is easy to
+// miss on a screenshot, so CI gets an annotation instead of a buried log line.
+function reportFailure(label, err) {
+  const message = `[projects] ${label} unavailable (${err.message}). Falling back to curated data only.`;
+  console.warn(message);
+  if (process.env.GITHUB_ACTIONS) {
+    console.log(`::warning title=Project data missing::${message}`);
   }
 }
 
