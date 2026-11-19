@@ -1,7 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" shape-rendering="crispEdges">
-  <!-- Full-bleed split-block favicon, no margins -->
-  <rect x="0" y="0" width="32" height="32" fill="#000000" />
-  <rect x="2" y="2" width="28" height="28" fill="#fb923c" />
-  <path d="M 2 2 L 30 2 L 2 30 Z" fill="#fde047" />
-  <text x="20" y="26" font-family="Arial Black, Helvetica, sans-serif" font-size="24" font-weight="900" text-anchor="middle" fill="#000000">B</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" shape-rendering="crispEdges" viewBox="0 0 32 32"><rect width="32" height="32" x="0" y="0" fill="#000"/><rect width="28" height="28" x="2" y="2" fill="#fb923c"/><path fill="#fde047" d="M 2 2 L 30 2 L 2 30 Z"/><text x="20" y="26" fill="#000" font-family="Arial Black, Helvetica, sans-serif" font-size="24" font-weight="900" text-anchor="middle">B</text></svg>
